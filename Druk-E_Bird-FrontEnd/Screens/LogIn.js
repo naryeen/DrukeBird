@@ -25,11 +25,9 @@ const LogIn = () => {
     if (isSubmitting) {
       axios
         //GC WIFI
-        .post('http://10.9.211.203:4001/api/v1/users/Login', user)
-        //My HostPot
-        //.post('http://192.168.65.110:4001/api/v1/users/Login', user)
-        //GCIT WIFI
-        //.post('http://10.9.214.0:4001/api/v1/users/Login', user)
+        //.post('http://10.9.211.203:4001/api/v1/users/Login', user)
+        //Hosted in render
+        .post('https://druk-ebirds.onrender.com/api/v1/users/Login', user)
         .then(res => {
           if (res.data.status == "success") {
             ToastAndroid.show('LogIn Successfully',

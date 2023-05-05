@@ -32,11 +32,9 @@ const SignUp = () => {
     axios
     //.post(`${baseURL}/api/v1/users/signup`, JSON.stringify(user))
     //GC WIFI
-    .post('http://10.9.211.203:4001/api/v1/users/signup', user)
-    //my HostPot
-    //.post('http://192.168.65.110:4001/api/v1/users/signup', user)
-    //GCIT WIFI
-    //.post('http://10.9.17.155:4001/api/v1/users/signup', user)
+    //.post('http://10.9.211.203:4001/api/v1/users/signup', user)
+    //Hosted in render
+    .post('https://druk-ebirds.onrender.com/api/v1/users/signup', user)
     .then(res=>
     {
       if(res.data.status=="success"){
