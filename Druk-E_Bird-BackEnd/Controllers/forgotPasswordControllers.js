@@ -1,0 +1,76 @@
+const User = require('../Models/userModels')
+const AppError = require('../utils/appError.js')
+const nodemailer = require('nodemailer')
+const bcrypt = require("bcryptjs")
+
+exports.forgotPassword = async (req, res, next) => {
+    try {
+        const { email } = req.body;
+        console.log(email)
+        
+        const oldUser = await User.findOne({ email });
+
+        if (!oldUser) {
+            return next(new AppError('User Not Exists!!', 400))
+        }
+
+        //GCIT
+        //const link = `http://10.9.17.168:4001/FotgetPassword/${oldUser._id}`;
+
+        //GC
+        const link = `http://10.9.14.63:4001/resetPassword/${oldUser._id}`;
+
+        var transporter = nodemailer.createTransport({
+            service: "gmail",
+            auth: {
+                user:"12190099.gcit@rub.edu.bt",
+                pass: "qlszefmvnjjdymju"
+            },
+        });
+  
+        var mailOptions = {
+            from: process.env.EMAIL_USERNAME,
+            to: email,
+            subject: "Password Reset",
+            text: link,
+        };
+
+        await transporter.sendMail(mailOptions)
+
+        return res.status(201).json({message : "you should receive an email"})
+        
+    } catch (err) { 
+        return res.status(500).json({ err }) 
+    }
+
+};
+
+exports.setPassword = async (req, res, next) => {
+
+    try {
+        const { id } = req.params;
+        const { password } = req.body;
+        
+        const oldUser = await User.findOne({ _id: id });
+
+        if (!oldUser) {
+            return next(new AppError('User Not Exists!!', 400))
+        }
+       
+        const newPassword = await bcrypt.hash(password, 12);
+
+        await User.findByIdAndUpdate(
+            id,
+            {
+                password : newPassword
+            },
+            { new: true }
+        )
+        
+        res.json({message: "password reset successful"});
+
+    } catch (err) {
+
+        res.json({message: err });
+    }
+}
