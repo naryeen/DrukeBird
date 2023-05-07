@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { View, Text, TextInput, Button, StyleSheet } from "react-native";
-// import axios from 'axios';
+import axios from 'axios';
 
 const UpdatePassword = () => {
   const [currentPassword, setCurrentPassword] = useState("");
@@ -23,7 +23,7 @@ const UpdatePassword = () => {
 
     // // Call API to update password
     // axios
-    //   .put(`http://your-api-url.com/users/${userId}/password`, data)
+    //   .put(`https://drukebird.onrender.com/api/v1/users/updateMe`, data)
     //   .then(() => {
     //     console.log("Password updated successfully!");
     //   })

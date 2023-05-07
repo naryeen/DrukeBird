@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { View, Text, TextInput, Button, StyleSheet } from 'react-native';
-// import axios from 'axios';
+import axios from 'axios';
 
 const EditInfo = () => {
   const [name, setName] = useState('');
@@ -10,10 +10,11 @@ const EditInfo = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState('');
 
+
   // useEffect(() => {
   //   // Fetch user's current profile data
   //   setIsLoading(true);
-  //   axios.get('http://your-api-url.com/users/me')
+  //   axios.get('https://drukebird.onrender.com/api/v1/users/updateMe')
   //     .then((response) => {
   //       const { name, email, dob, profession } = response.data;
   //       setName(name);
@@ -38,7 +39,7 @@ const EditInfo = () => {
 
     setIsLoading(true);
     // Call API to update profile
-    axios.put('http://your-api-url.com/users/me', data)
+    axios.put('https://drukebird.onrender.com/api/v1/users/updateMe', data)
       .then(() => {
         console.log('Profile updated successfully!');
         setIsLoading(false);

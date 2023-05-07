@@ -1,116 +1,138 @@
-import * as React from "react";
-import { TextInput } from "react-native-paper";
-import { StyleSheet, View, Text, Image, ImageBackground } from "react-native";
+import React, { useState, useEffect } from "react";
+import { TextInput } from 'react-native-paper';
+import { StyleSheet, View, Text, Image, ToastAndroid } from 'react-native';
+// import Toast from 'react-native-toast-message';
+import axios from "axios";
+import { useNavigation } from '@react-navigation/native';
 import Button from "../components/Button";
+const LogIn = () => {
+  const navigation = useNavigation();
+  const [email, setEmail] = useState("")
+  const [password, setPassword] = useState("")
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
-const Login = ({ navigation }) => {
+  let user = {
+    email: email,
+    password: password,
+  }
+
+  const userlogin = () => {
+    setIsSubmitting(true);
+  }
+
+  useEffect(() => {
+    if (isSubmitting) {
+      axios
+        //GC WIFI
+        //.post('http://10.9.211.203:4001/api/v1/users/Login', user)
+        //Hosted in render
+        .post('https://druk-ebirds.onrender.com/api/v1/users/Login', user)
+        .then(res => {
+          if (res.data.status == "success") {
+            ToastAndroid.show('LogIn Successfully',
+              ToastAndroid.LONG);
+            setTimeout(()=>{
+              navigation.navigate('MyProfile')
+            }, 200)
+            var obj = res.data.data.user
+            document.cookie = 'token= ' + JSON.stringify(obj)
+          }
+        })
+        .catch(err=>{
+          // JSON.stringify(err)
+          let message = 
+                  typeof err.response !=='undefined'
+                  ?err.response.data.message
+                  :err.message
+
+           ToastAndroid.show(message, 
+              ToastAndroid.SHORT);
+        })
+      setIsSubmitting(false);
+    }
+  }, [isSubmitting, user]);
+
   return (
     <View style={styles.container}>
-      <Image
-        style={styles.image}
-        source={require("../assets/images/logo.png")}
-      />
+      <Image style={styles.image} source={require('../assets/images/logo.png')} />
+
       <TextInput
-        style={styles.email}
+        style={styles.inputStyle}
         mode="outlined"
         label="Email"
         placeholder="Write Your Email"
         left={<TextInput.Icon icon="email" />}
+        onChangeText={(text) => setEmail(text)}
+        value={email}
       />
       <TextInput
-        style={styles.password}
+        style={styles.inputStyle}
         mode="outlined"
         label="Password"
         placeholder="Write Your Password"
         left={<TextInput.Icon icon="lock" />}
+        onChangeText={(text) => setPassword(text)}
+        value={password}
+        secureTextEntry={true}
       />
-      <Text style={styles.forgetpasswordtext}>Forgot Password?</Text>
+      <Text style={styles.forgetpasswordtext} onPress={() => navigation.replace('ForgetPassword')}>
+        Forgot Password?
+      </Text>
       <View style={styles.createbutton}>
-        <Button>LogIn</Button>
+        <Button onPress={() => userlogin()}>LogIn</Button>
       </View>
       <Text style={styles.createtext}>
         Don't have an account?
-        <Text
-          style={styles.createaccountText}
-          onPress={() => navigation.replace("Register")}
-        >
-          Create a new account
-        </Text>
+        <Text style={styles.createaccountText} onPress={() => navigation.replace('SignUp')}>Create a new account</Text>
       </Text>
     </View>
   );
 };
-export default Login;
 
 const styles = StyleSheet.create({
   container: {
-    padding: 10,
+    padding: 10
   },
   text1: {
     marginTop: 60,
     fontSize: 24,
     fontWeight: "bold",
-    textAlign: "center",
+    textAlign: "center"
   },
-  name: {
+  inputStyle: {
     marginTop: 20,
-    borderColor: "#ccc",
+    borderColor: '#ccc',
     borderRadius: 5,
+    
   },
-  email: {
-    marginTop: 20,
-    borderColor: "#ccc",
-    borderRadius: 5,
+  createbutton:{
+    marginTop:50,
   },
-  dob: {
-    marginTop: 20,
-    borderColor: "#ccc",
-    borderRadius: 5,
+  createtext:{
+    marginTop:20,
+    textAlign:'center',
+    fontSize:14,
   },
-  country: {
-    marginTop: 20,
-    borderColor: "#ccc",
-    borderRadius: 5,
+  createaccountText:{
+    color:'#2437E4'
   },
-  profession: {
-    marginTop: 20,
-    borderColor: "#ccc",
-    borderRadius: 5,
+  image:{
+    maxWidth:'70%',
+    maxHeight:230,
+    alignSelf: 'center',
+    marginTop:100,
+    
   },
-  password: {
-    marginTop: 20,
-    borderColor: "#ccc",
-    borderRadius: 5,
+  forgetpasswordtext:{
+    fontSize:14,
+    marginTop:5,
+    textAlign:'right',
+    color:'#2437E4'
   },
-  cpassword: {
-    marginTop: 20,
-    borderColor: "#ccc",
-    borderRadius: 5,
-  },
-  createbutton: {
-    marginTop: 50,
-  },
-  createtext: {
-    marginTop: 10,
-    textAlign: "center",
-    fontSize: 14,
-  },
-  createaccountText: {
-    color: "#2437E4",
-  },
-  image: {
-    maxWidth: "60%",
-    maxHeight: 230,
-    alignSelf: "center",
-    marginTop: 100,
-  },
-  forgetpasswordtext: {
-    fontSize: 14,
-    marginTop: 5,
-    textAlign: "right",
-  },
-  backimage: {
-    backgroundColor: "transparent",
-    opacity: 0.2,
+  backimage:{
+    backgroundColor:'transparent',
+    opacity:0.2,
   },
 });
+
+export default LogIn;

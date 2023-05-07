@@ -11,6 +11,7 @@ import MyProfile from './screens/MyProfile';
 import EditInfo from './screens/EditInfo';
 import UpdatePassword from './screens/UpdatePassword';
 import StartBirdingCounter from './screens/dummy';
+import LogIn from './screens/Login';
 
 const Stack = createStackNavigator();
 
@@ -18,7 +19,8 @@ export default function App() {
    return (
       <NavigationContainer>
       <Stack.Navigator>
-         <Stack.Screen name="My Profile" component={MyProfile} options={{headerShown: false}} />
+         <Stack.Screen name="Login" component={LogIn} options={{headerShown: false}}/>
+         <Stack.Screen name="MyProfile" component={MyProfile} options={{headerShown: false}} />
          <Stack.Screen name="EditInfo" component={EditInfo} options={{headerShown: false}} />
          <Stack.Screen name="updateMyPassword" component={UpdatePassword} options={{headerShown: false}} />
       </Stack.Navigator>

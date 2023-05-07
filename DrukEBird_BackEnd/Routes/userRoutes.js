@@ -18,7 +18,6 @@ router.patch(
   authController.protect,
   userController.uploadUserPhoto,
   userController.updateMe
-  
 );
 router
   .route("/")

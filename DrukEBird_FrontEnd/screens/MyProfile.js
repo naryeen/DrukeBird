@@ -1,10 +1,11 @@
 import React, { useState } from "react";
 import { View, Text, TouchableOpacity, StyleSheet, Image } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
-import { Avatar, Button, IconButton, TextInput } from "react-native-paper";
+import { Avatar, IconButton } from "react-native-paper";
 import Icon from "react-native-vector-icons/FontAwesome";
 import { useNavigation } from "@react-navigation/native";
 import * as ImagePicker from 'expo-image-picker';
+import axios from 'axios';
 
 const MyProfile = () => {
   const navigation = useNavigation();
@@ -31,11 +32,30 @@ const MyProfile = () => {
       alert('Permission to access the camera roll is required!');
       return;
     }
-  
+    
     const imageResult = await ImagePicker.launchImageLibraryAsync();
     if (!imageResult.canceled) {
       const selectedAsset = imageResult.assets[0];
       setProfilePicture({ uri: selectedAsset.uri });
+
+      const formData = new FormData();
+      formData.append('profilePicture', {
+        uri: selectedAsset.uri,
+        type: 'image/jpeg',
+        name: 'profile.jpg'
+      });
+
+      try {
+        const response = await axios.post('https://drukebird.onrender.com/api/v1/users/updateMe', formData, {
+          headers: {
+            'Content-Type': 'multipart/form-data'
+          }
+        });
+
+        console.log(response.data); // Handle the response from the server
+      } catch (error) {
+        console.log(error); // Handle any error occurred during the upload
+      }
     }
   };
 
