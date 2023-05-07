@@ -4,12 +4,12 @@ const multer = require('multer')
 
 const multerStorage = multer.diskStorage({
     destination: (req, file, cb) => {
-      cb(null, '../assets/Users')
+      cb(null, '../DrukEBird_BackEnd/assets/Users')
     },
     filename: (req, file, cb) => {
-    //   var obj = JSON.parse(req.cookies.token)
+      var obj = JSON.parse(req.cookies.token)
       const ext = file.mimetype.split('/')[1];
-      cb(null, `user-${req.user.id}-${Date.now()}.${ext}`)
+      cb(null, `user-${obj['_id']}-${Date.now()}.${ext}`)
   },
   })
   const multerFilter = (req, file, cb) => {
@@ -97,8 +97,9 @@ exports.updateMe = async (req, res, next) => {
       if (req.body.photo !== 'undefined') {
         filterBody.photo = req.file.filename
       }
-  
-      const updateUser = await User.findByIdAndUpdate(req.user.id, filterBody, {
+
+      var obj = JSON.parse(req.cookies.token)
+      const updateUser = await User.findByIdAndUpdate(obj['_id'], filterBody, {
         new: true,
         runValidators: true,
       })

@@ -1,13 +1,15 @@
 import React, { useState } from "react";
-import { View, Text, TouchableOpacity, StyleSheet } from "react-native";
+import { View, Text, TouchableOpacity, StyleSheet, Image } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import { Avatar, Button, IconButton, TextInput } from "react-native-paper";
 import Icon from "react-native-vector-icons/FontAwesome";
 import { useNavigation } from "@react-navigation/native";
+import * as ImagePicker from 'expo-image-picker';
 
 const MyProfile = () => {
   const navigation = useNavigation();
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
+  const [profilePicture, setProfilePicture] = useState(require("../assets/images/Users/default.jpg"));
 
   const handleEditInfo = () => {
     navigation.navigate("EditInfo");
@@ -22,8 +24,19 @@ const MyProfile = () => {
   const handleGoBack = () => {
     navigation.goBack();
   };
-  const handleEditPicture = () => {
-    // Handle editing profile picture here
+
+  const handleEditPicture = async () => {
+    const permissionResult = await ImagePicker.requestMediaLibraryPermissionsAsync();
+    if (permissionResult.granted === false) {
+      alert('Permission to access the camera roll is required!');
+      return;
+    }
+  
+    const imageResult = await ImagePicker.launchImageLibraryAsync();
+    if (!imageResult.canceled) {
+      const selectedAsset = imageResult.assets[0];
+      setProfilePicture({ uri: selectedAsset.uri });
+    }
   };
 
   return (
@@ -42,16 +55,16 @@ const MyProfile = () => {
 
       {isDrawerOpen && (
         <View
-        style={{
-          position: "absolute",
-          top: 75,
-          right: 20,
-          backgroundColor: "#136D66",
-          borderRadius: 5,
-          padding: 10,
-          color: "white",
-          zIndex: 2, // add this line
-        }}
+          style={{
+            position: "absolute",
+            top: 75,
+            right: 20,
+            backgroundColor: "#136D66",
+            borderRadius: 5,
+            padding: 10,
+            color: "white",
+            zIndex: 2,
+          }}
         >
           <TouchableOpacity onPress={handleEditInfo}>
             <Text>Edit Information</Text>
@@ -59,7 +72,7 @@ const MyProfile = () => {
 
           <TouchableOpacity
             onPress={handleUpdatePassword}
-            style={{ zIndex: 1, marginTop:12}}
+            style={{ zIndex: 1, marginTop: 12 }}
           >
             <Text>Update Password</Text>
           </TouchableOpacity>
@@ -71,7 +84,7 @@ const MyProfile = () => {
           <TouchableOpacity onPress={handleEditPicture}>
             <Avatar.Image
               size={100}
-              source={require("../assets/images/Users/default.jpg")}
+              source={profilePicture}
             />
             <IconButton
               icon="camera"
