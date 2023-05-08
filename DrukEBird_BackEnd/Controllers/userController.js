@@ -4,12 +4,12 @@ const multer = require('multer')
 
 const multerStorage = multer.diskStorage({
     destination: (req, file, cb) => {
-      cb(null, 'DrukEBird_BackEnd/assets/Users')
+      cb(null, './assets/Users')
     },
     filename: (req, file, cb) => {
-      var obj = JSON.parse(req.cookies.token)
+      // var obj = JSON.parse(req.cookies.token)
       const ext = file.mimetype.split('/')[1];
-      cb(null, `user-${obj['_id']}-${Date.now()}.${ext}`)
+      cb(null, `user-${req.user.id}-${Date.now()}.${ext}`)
   },
   })
   const multerFilter = (req, file, cb) => {
@@ -89,7 +89,7 @@ exports.updateMe = async (req, res, next) => {
         )
       }
       console.log(req.body)
-      //fintration 
+      //filtration 
       const filterBody = filterObj(req.body, 'name', 'email', 'dob', 'profession')
       // if (req.file && req.file.filename) {
       //   filterBody.photo = req.file.filename;
@@ -98,8 +98,8 @@ exports.updateMe = async (req, res, next) => {
         filterBody.photo = req.file.filename
       }
 
-      var obj = JSON.parse(req.cookies.token)
-      const updateUser = await User.findByIdAndUpdate(obj['_id'], filterBody, {
+      // var obj = JSON.parse(req.cookies.token)
+      const updateUser = await User.findByIdAndUpdate(req.user.id, filterBody, {
         new: true,
         runValidators: true,
       })
@@ -109,7 +109,7 @@ exports.updateMe = async (req, res, next) => {
       })
     }
     catch(err) {
-      // console.log("Here")
+      console.log("Here")
       res.status(500).json({error: err.message});
     }
   }
