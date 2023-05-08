@@ -1,6 +1,7 @@
 import { useNavigation } from '@react-navigation/native';
 import {StyleSheet, Text, View, Image} from 'react-native';
 import Button from '../Components/Button';
+// import CalendarScreen from '../Components/CalenderScreen';
 
 function FirstScreen () { 
   const navigation = useNavigation();
@@ -11,6 +12,7 @@ function FirstScreen () {
   return (
     <View style={styles.container}>
       <Image style={styles.image} source={require('../assets/Image/Logo.png')} />
+      
       
       <Text style={styles.text1}>Welcome to <Text style={{color: "#136D66", fontWeight:"bold"}}>Druk eBird</Text> , your gateway</Text>
       <Text style={styles.text2}>to the fascinating world of birds and</Text>

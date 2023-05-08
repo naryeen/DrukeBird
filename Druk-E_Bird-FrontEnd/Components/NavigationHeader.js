@@ -20,10 +20,10 @@ const styles = {
     flexDirection: "row",
     justifyContent: "space-between",
     height: 60,
-    marginTop:30,
     padding: 16,
     borderRadius: 1,
     elevation: 2,
+    marginTop:30
 
   },
   title: {

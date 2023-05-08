@@ -5,7 +5,7 @@ function About(){
     return(
         <View>
             <NavigationHeader title={'About'} />
-            <Image source={require('../assets/Image/Logo.png')} style={{width: 200, height: 200, marginLeft: 90, marginTop: 10}}/>
+            <Image source={require('../assets/Image/Logo.png')} style={{width: 200, height: 200, marginLeft: 90}}/>
             <Text style={{width: 360, marginLeft:15, marginTop: 15, fontSize:16}}>Druk EBird is managed by the Royal Society for Protection of Nature on behalf of birding, research, 
             and conservation communication to provide rich and rapidly growing database of bird sighting. {'\n'}{'\n'}
             Druk EBird documents the bird distribution, abundance, and trends through checklist data collected within a simple, scientific framework.{'\n'}{'\n'}

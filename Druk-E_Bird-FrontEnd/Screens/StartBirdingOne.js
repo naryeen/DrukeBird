@@ -1,9 +1,10 @@
-import React, { useState } from 'react';
-import { Searchbar, FAB } from 'react-native-paper';
-import {StyleSheet,View} from 'react-native';
+import React, { useState, useEffect } from 'react';
+import { Searchbar, FAB, ActivityIndicator, MD2Colors } from 'react-native-paper';
+import {StyleSheet,View, FlatList} from 'react-native';
 import Button from '../Components/Button';
 import StartBirdingHeader from '../Components/StartBridingHeader';
 import { useNavigation } from '@react-navigation/native';
+import axios from "axios";
 import StartBirdingCounter from '../Components/StartBirdingCounter';
 
 const StartBirdingone = () => {
@@ -11,50 +12,55 @@ const StartBirdingone = () => {
   const [searchQuery, setSearchQuery] = React.useState('');
   const onChangeSearch = query => setSearchQuery(query);
   const [data, setData] = useState([]);
+  const [loading,setLoading] = useState(true)
 
 
   useEffect(() => {
-    axios.get('https://api.example.com/data')
-      .then(response => {
-        setData(response.data);
+    axios.get('https://druk-ebird.onrender.com/api/v1/species?limit=40')
+      .then(res => {
+        setData(res.data.species);
+        
       })
       .catch(error => {
         console.log(error);
-      });
+        console.log('API call error')
+      })
+      .finally(()=> setLoading(false))
   }, []);
 
 
-  const renderItem = ({ item }) => {
+  const renderItem = ({item}) => {
     return (
       <View>
-        <Text>{item.title}</Text>
+        <StartBirdingCounter Name={item.englishName}></StartBirdingCounter>
       </View>
     );
   };
-
-
   return (
     <View style={styles.container}>
-    <StartBirdingHeader stylings={styles.header} />
-    <Searchbar
-      placeholder="Search any birds"
-      onChangeText={onChangeSearch}
-      inputStyle={{ paddingBottom:19}}
-      placeholderTextColor="gray"
-      value={searchQuery}
-      style={styles.searchbar}
-    />
-
-    <FlatList
+      
+      <StartBirdingHeader stylings={styles.header} />
+      <Searchbar
+        placeholder="Search any birds"
+        onChangeText={onChangeSearch}
+        inputStyle={{ paddingBottom:19}}
+        placeholderTextColor="gray"
+        value={searchQuery}
+        style={styles.searchbar}
+      />
+      
+    {loading ? (
+        <ActivityIndicator animating={true} color={MD2Colors.green800} size="large" style={{marginTop:250, marginBottom:250}} />
+      ) : 
+      (
+    <FlatList style={{height:"70%"}}
         data={data}
-        keyExtractor={item => item.id.toString()}
+        keyExtractor={item => item._id}
         renderItem={renderItem}
       />
-
-
-    <StartBirdingCounter Name="My Name is Tshering"></StartBirdingCounter>
-    
-
+      
+      )} 
+      
     <FAB
     style={styles.fab}
     small
@@ -63,8 +69,8 @@ const StartBirdingone = () => {
     onPress={() => navigation.navigate('UnknownBirds')}
   />
     <View style={styles.buttonContianer}>
-    <Button styling={styles.submitbutton}>Submit</Button>
-    <Button styling={styles.stopbutton}>Stop</Button>
+      <Button styling={styles.submitbutton}>Submit</Button>
+      <Button styling={styles.stopbutton}>Stop</Button>
     </View>
     </View>
   );
@@ -72,11 +78,13 @@ const StartBirdingone = () => {
 
 const styles = StyleSheet.create({
     container: {
+      flex:1,
+      flexDirection:"column",
       backgroundColor: '#fff',
       alignItems: 'center',
-      justifyContent: 'center',
-      padding:10
+      padding:10, 
     },
+    
     searchbar:{
         marginTop:5,
         height:40,
@@ -89,11 +97,11 @@ const styles = StyleSheet.create({
         width:370,
         height:50,
         marginTop:30
-        
     },
     buttonContianer:{
       flexDirection:"row",
-      marginTop:10
+      marginTop:10,
+      
     },
     submitbutton:{
       width:163,
@@ -113,7 +121,8 @@ const styles = StyleSheet.create({
       right: 0,
       bottom: 0,
       backgroundColor:"#136D66"
-    }
+    },
+    
   });
 
 export default StartBirdingone;
