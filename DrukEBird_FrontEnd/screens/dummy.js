@@ -1,86 +1,58 @@
-import React, { useState } from "react";
-import { View, StyleSheet, Image, TouchableOpacity } from "react-native";
-import { Avatar, Button, IconButton, TextInput } from "react-native-paper";
+import React, { useState, useContext } from 'react';
+import { View, TextInput, Button, Alert } from 'react-native';
+import axios from 'axios';
 
-const Dummmy = () => {
-  const [name, setName] = useState("Cheki");
-  const [email, setEmail] = useState("cheki@gmail.com");
-  const [dob, setDob] = useState("12-3-4");
-  const [profession, setProfession] = useState("Teacher");
+import { UserContext } from '../context/userContext';
 
-  const [image, setImage] = useState(
-    require("../assets/images/Users/default.jpg")
-  );
+const MyProfile = () => {
+  const { userToken } = useContext(UserContext);
+  const [name, setName] = useState('');
+  const [profilePicture, setProfilePicture] = useState('');
 
-  const handleSaveProfile = () => {
-    // Handle saving profile changes here
+  const handleUpdateProfile = async () => {
+    try {
+      const response = await axios.put(
+        'https://drukebird.onrender.com/api/v1/users/updateMe',
+        {
+          name,
+          profilePicture,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${userToken}`,
+          },
+        }
+      );
+
+      // Check the response from the server
+      if (response.data.success) {
+        // Profile updated successfully
+        Alert.alert('Profile updated!');
+      } else {
+        // Error updating profile
+        Alert.alert('Error', 'Failed to update profile');
+      }
+    } catch (error) {
+      // Handle error
+      Alert.alert('Error', 'An error occurred during profile update');
+    }
   };
 
   return (
-    <View style={styles.container}>
-      <View style={styles.body}>
-        <TextInput
-          label="Name"
-          value={name}
-          onChangeText={setName}
-          left={<TextInput.Icon name="account" />}
-        />
-        <TextInput
-          label="Email"
-          value={email}
-          onChangeText={setEmail}
-          left={<TextInput.Icon name="email" />}
-        />
-        <TextInput
-          label="Date of Birth"
-          value={dob}
-          onChangeText={setDob}
-          left={<TextInput.Icon name="text" />}
-          // multiline={true}
-          // numberOfLines={4}
-        />
-
-        <TextInput
-          label="Profession"
-          value={profession}
-          onChangeText={setProfession}
-          left={<TextInput.Icon name="text" />}
-          // multiline={true}
-          // numberOfLines={4}
-        />
-
-        <Button
-          mode="contained"
-          onPress={handleSaveProfile}
-          style={styles.saveButton}
-        >
-          Save Profile
-        </Button>
-      </View>
+    <View>
+      <TextInput
+        placeholder="Name"
+        value={name}
+        onChangeText={setName}
+      />
+      <TextInput
+        placeholder="Profile Picture URL"
+        value={profilePicture}
+        onChangeText={setProfilePicture}
+      />
+      <Button title="Update Profile" onPress={handleUpdateProfile} />
     </View>
   );
 };
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    padding: 20,
-  },
-  header: {
-    alignItems: "center",
-  },
-  editPictureButton: {
-    position: "absolute",
-    right: 0,
-    bottom: 0,
-    backgroundColor: "#fff",
-    borderRadius: 20,
-  },
-  body: {
-    marginTop: 20,
-  },
-  saveButton: {
-    marginTop: 20,
-  },
-});
 
-export default Dummmy;
+export default MyProfile;

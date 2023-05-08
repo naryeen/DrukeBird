@@ -4,7 +4,7 @@ const multer = require('multer')
 
 const multerStorage = multer.diskStorage({
     destination: (req, file, cb) => {
-      cb(null, '../assets/Users')
+      cb(null, 'DrukEBird_BackEnd/assets/Users')
     },
     filename: (req, file, cb) => {
       var obj = JSON.parse(req.cookies.token)

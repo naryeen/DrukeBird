@@ -11,23 +11,23 @@ const EditInfo = () => {
   const [error, setError] = useState('');
 
 
-  // useEffect(() => {
-  //   // Fetch user's current profile data
-  //   setIsLoading(true);
-  //   axios.get('https://drukebird.onrender.com/api/v1/users/updateMe')
-  //     .then((response) => {
-  //       const { name, email, dob, profession } = response.data;
-  //       setName(name);
-  //       setEmail(email);
-  //       setDob(dob);
-  //       setProfession(profession);
-  //       setIsLoading(false);
-  //     })
-  //     .catch((err) => {
-  //       setError(err.response.data.message);
-  //       setIsLoading(false);
-  //     });
-  // }, []);
+  useEffect(() => {
+    // Fetch user's current profile data
+    setIsLoading(true);
+    axios.get('https://drukebird.onrender.com/api/v1/users/updateMe')
+      .then((response) => {
+        const { name, email, dob, profession } = response.data;
+        setName(name);
+        setEmail(email);
+        setDob(dob);
+        setProfession(profession);
+        setIsLoading(false);
+      })
+      .catch((err) => {
+        setError(err.response.data.message);
+        setIsLoading(false);
+      });
+  }, []);
 
   const handleUpdateProfile = () => {
     const data = {

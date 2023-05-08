@@ -7,29 +7,30 @@ const UpdatePassword = () => {
   const [newPassword, setNewPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [error, setError] = useState("");
+  
 
   const handleUpdatePassword = () => {
-    // const userId = "your_user_id"; // Replace with your user ID
-    // const data = {
-    //   currentPassword,
-    //   newPassword,
-    //   confirmPassword,
-    // };
+    const userId = "your_user_id";
+    const data = {
+      currentPassword,
+      newPassword,
+      confirmPassword,
+    };
 
-    // if (newPassword !== confirmPassword) {
-    //   setError("New password and confirm password do not match.");
-    //   return;
-    // }
+    if (newPassword !== confirmPassword) {
+      setError("New password and confirm password do not match.");
+      return;
+    }
 
-    // // Call API to update password
-    // axios
-    //   .put(`https://drukebird.onrender.com/api/v1/users/updateMe`, data)
-    //   .then(() => {
-    //     console.log("Password updated successfully!");
-    //   })
-    //   .catch((err) => {
-    //     setError(err.response.data.message);
-    //   });
+    // Call API to update password
+    axios
+      .put(`https://drukebird.onrender.com/api/v1/users/updateMyPassword`, data)
+      .then(() => {
+        console.log("Password updated successfully!");
+      })
+      .catch((err) => {
+        setError(err.response.data.message);
+      });
   };
 
   return (

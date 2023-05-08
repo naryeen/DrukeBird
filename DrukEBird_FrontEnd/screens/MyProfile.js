@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useContext} from "react";
 import { View, Text, TouchableOpacity, StyleSheet, Image } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import { Avatar, IconButton } from "react-native-paper";
@@ -7,10 +7,15 @@ import { useNavigation } from "@react-navigation/native";
 import * as ImagePicker from 'expo-image-picker';
 import axios from 'axios';
 
+import { UserContext } from '../context/userContext';
+
 const MyProfile = () => {
+  const { userToken } = useContext(UserContext);
+
   const navigation = useNavigation();
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
-  const [profilePicture, setProfilePicture] = useState(require("../assets/images/Users/default.jpg"));
+
+  const [photo, setProfilePicture] = useState(require("../assets/images/Users/default.jpg"));
 
   const handleEditInfo = () => {
     navigation.navigate("EditInfo");
@@ -39,20 +44,21 @@ const MyProfile = () => {
       setProfilePicture({ uri: selectedAsset.uri });
 
       const formData = new FormData();
-      formData.append('profilePicture', {
+      formData.append('photo', {
         uri: selectedAsset.uri,
         type: 'image/jpeg',
         name: 'profile.jpg'
       });
 
       try {
-        const response = await axios.post('https://drukebird.onrender.com/api/v1/users/updateMe', formData, {
+        const response = axios.post('https://drukebird.onrender.com/api/v1/users/updateMe', formData, {
           headers: {
-            'Content-Type': 'multipart/form-data'
+            'Content-Type': 'multipart/form-data',
+            Authorization: `Bearer ${userToken}`,
           }
         });
-
-        console.log(response.data); // Handle the response from the server
+        console.log('Image uploaded successfully');
+        //console.log(response.data); // Handle the response from the server
       } catch (error) {
         console.log(error); // Handle any error occurred during the upload
       }
@@ -104,7 +110,7 @@ const MyProfile = () => {
           <TouchableOpacity onPress={handleEditPicture}>
             <Avatar.Image
               size={100}
-              source={profilePicture}
+              source={photo}
             />
             <IconButton
               icon="camera"
