@@ -1,20 +1,23 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { View, Text, TextInput, Button, StyleSheet } from 'react-native';
 import axios from 'axios';
+import { AuthContext } from "../context/AuthContext";
 
 const EditInfo = () => {
+  const { userInfo } = useContext(AuthContext);
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [dob, setDob] = useState('');
   const [profession, setProfession] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState('');
+  const userID = userInfo.user._id;
 
-
+  
   useEffect(() => {
     // Fetch user's current profile data
     setIsLoading(true);
-    axios.get('https://drukebird.onrender.com/api/v1/users/updateMe')
+    axios.get(`https://drukebird.onrender.com/api/v1/users/${userID}`)
       .then((response) => {
         const { name, email, dob, profession } = response.data;
         setName(name);
@@ -27,7 +30,7 @@ const EditInfo = () => {
         setError(err.response.data.message);
         setIsLoading(false);
       });
-  }, []);
+  }, [userID]);
 
   const handleUpdateProfile = () => {
     const data = {
@@ -39,7 +42,7 @@ const EditInfo = () => {
 
     setIsLoading(true);
     // Call API to update profile
-    axios.put('https://drukebird.onrender.com/api/v1/users/updateMe', data)
+    axios.patch(`https://drukebird.onrender.com/api/v1/users/${userID}/updateMe`, data)
       .then(() => {
         console.log('Profile updated successfully!');
         setIsLoading(false);
@@ -48,6 +51,8 @@ const EditInfo = () => {
         setError(err.response.data.message);
         setIsLoading(false);
       });
+
+      // console.log("Here")
   };
 
   if (isLoading) {

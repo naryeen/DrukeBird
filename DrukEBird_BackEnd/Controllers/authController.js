@@ -87,14 +87,13 @@ exports.protect = async(req,res,next) =>{
 
 exports.updatePassword = async(req,res,next)=>{
   try{
-      const user  = await User.findById(req.user.id).select('+password')
-      if(!(await user.correctPassword(req.body.passwordCurrent,user.password))){
+      const user  = await User.findById(req.user._id).select('+password')
+      if(!(await user.correctPassword(req.body.passwordCurrent, user.password))){
           return next(new AppError('Your current password is wrong',401))
       }
       user.password = req.body.password
       user.passwordConfirm = req.body.passwordConfirm
       await user.save()
-      
       createSendToken(user,200,res)
   }
   catch(err){

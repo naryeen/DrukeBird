@@ -1,15 +1,18 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { TextInput } from 'react-native-paper';
 import { StyleSheet, View, Text, Image, ToastAndroid } from 'react-native';
 // import Toast from 'react-native-toast-message';
 import axios from "axios";
 import { useNavigation } from '@react-navigation/native';
 import Button from "../components/Button";
+import { AuthContext } from "../context/AuthContext";
+
 const LogIn = () => {
   const navigation = useNavigation();
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const{login} = useContext(AuthContext);
 
   let user = {
     email: email,
@@ -33,10 +36,14 @@ const LogIn = () => {
               ToastAndroid.LONG);
             setTimeout(()=>{
               navigation.navigate('MyProfile')
+              // console.log("Herefhbcjdhb")
+              // console.log(res.data.data.user._id)
             }, 200)
             var obj = res.data.data.user
             document.cookie = 'token= ' + JSON.stringify(obj)
+
           }
+
         })
         .catch(err=>{
           // JSON.stringify(err)
@@ -51,7 +58,6 @@ const LogIn = () => {
       setIsSubmitting(false);
     }
   }, [isSubmitting, user]);
-
   return (
     <View style={styles.container}>
       <Image style={styles.image} source={require('../assets/images/logo.png')} />
@@ -79,7 +85,9 @@ const LogIn = () => {
         Forgot Password?
       </Text>
       <View style={styles.createbutton}>
-        <Button onPress={() => userlogin()}>LogIn</Button>
+        {/* <Button onPress={() => userlogin()}>LogIn</Button> */}
+        <Button onPress={() => {login(email,password)}}>LogIn</Button>
+
       </View>
       <Text style={styles.createtext}>
         Don't have an account?
@@ -88,7 +96,6 @@ const LogIn = () => {
     </View>
   );
 };
-
 const styles = StyleSheet.create({
   container: {
     padding: 10

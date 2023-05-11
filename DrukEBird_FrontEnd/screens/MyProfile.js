@@ -1,5 +1,5 @@
 import React, { useState, useContext} from "react";
-import { View, Text, TouchableOpacity, StyleSheet, Image } from "react-native";
+import { View, Text, TouchableOpacity, StyleSheet} from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import { Avatar, IconButton } from "react-native-paper";
 import Icon from "react-native-vector-icons/FontAwesome";
@@ -7,15 +7,17 @@ import { useNavigation } from "@react-navigation/native";
 import * as ImagePicker from 'expo-image-picker';
 import axios from 'axios';
 
-import { UserContext } from '../context/userContext';
+import { AuthContext } from "../context/AuthContext";
 
 const MyProfile = () => {
-  const { userToken } = useContext(UserContext);
-
+  const {logout} = useContext(AuthContext);
+  const {userInfo} = useContext(AuthContext);
   const navigation = useNavigation();
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
 
   const [photo, setProfilePicture] = useState(require("../assets/images/Users/default.jpg"));
+  let userID = userInfo.user._id;
+
 
   const handleEditInfo = () => {
     navigation.navigate("EditInfo");
@@ -40,25 +42,25 @@ const MyProfile = () => {
     
     const imageResult = await ImagePicker.launchImageLibraryAsync();
     if (!imageResult.canceled) {
-      const selectedAsset = imageResult.assets[0];
-      setProfilePicture({ uri: selectedAsset.uri });
-
+      const selectedImage = imageResult.assets[0];
+      setProfilePicture({ uri: selectedImage.uri });
+  
       const formData = new FormData();
       formData.append('photo', {
-        uri: selectedAsset.uri,
-        type: 'image/jpeg',
-        name: 'profile.jpg'
+        uri: selectedImage.uri,
       });
-
+  
       try {
-        const response = axios.post('https://drukebird.onrender.com/api/v1/users/updateMe', formData, {
+        const response = await axios.patch(`https://drukebird.onrender.com/api/v1/users/${userID}/updateMe`, formData, {
+          
           headers: {
             'Content-Type': 'multipart/form-data',
-            Authorization: `Bearer ${userToken}`,
           }
-        });
+        })
+  
         console.log('Image uploaded successfully');
-        //console.log(response.data); // Handle the response from the server
+        setProfilePicture(response.data);
+        console.log(response.data)
       } catch (error) {
         console.log(error); // Handle any error occurred during the upload
       }
@@ -102,6 +104,13 @@ const MyProfile = () => {
           >
             <Text>Update Password</Text>
           </TouchableOpacity>
+
+          <TouchableOpacity
+            onPress={logout}
+            style={{ zIndex: 1, marginTop: 12 }}
+          >
+            <Text>Logout</Text>
+          </TouchableOpacity>
         </View>
       )}
 
@@ -119,7 +128,7 @@ const MyProfile = () => {
             />
           </TouchableOpacity>
 
-          <Text style={styles.name}>Cheki Lhamo</Text>
+          <Text style={styles.name}>{userInfo.user.name}</Text>
         </View>
         <View style={styles.content}>
           <View style={styles.contentContainer}>
