@@ -14,11 +14,9 @@ exports.forgotPassword = async (req, res, next) => {
             return next(new AppError('User Not Exists!!', 400))
         }
 
-        //GCIT
-        //const link = `http://10.9.17.168:4001/FotgetPassword/${oldUser._id}`;
+        //const link = `https://10.9.211.203:4001/resetPassword/${oldUser._id}`;
 
-        //GC
-        const link = `http://10.9.14.63:4001/resetPassword/${oldUser._id}`;
+        const link = `https://druk-ebird.onrender.com/resetPassword/${oldUser._id}`;
 
         var transporter = nodemailer.createTransport({
             service: "gmail",
@@ -30,7 +28,7 @@ exports.forgotPassword = async (req, res, next) => {
   
         var mailOptions = {
             from: process.env.EMAIL_USERNAME,
-            to: email,
+            to: email, 
             subject: "Password Reset",
             text: link,
         };

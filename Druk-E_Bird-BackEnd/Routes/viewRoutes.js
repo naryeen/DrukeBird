@@ -3,6 +3,6 @@ const router = express.Router()
 const viewsController = require('./../Controllers/viewControllers')
 
 
-router.get('/ResetPassword/:id', viewsController.getResetPassword)
+router.get('/resetPassword/:id', viewsController.getResetPassword)
 
 module.exports = router

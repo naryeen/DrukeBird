@@ -5,8 +5,8 @@ export const resetPassword = async (data) =>
     try {
         const res = await axios({
             method: 'POST',
-            url: 'http://10.9.211.203:4001/api/v1/resetPassword/'+id,
-            data
+            url: 'https://druk-ebird.onrender.com/api/v1/ResetPassword/'+id,
+            data,
         })
         if (res.data.status === 'success') 
         {
