@@ -90,7 +90,7 @@ exports.updateMe = async (req, res, next) => {
       }
       console.log(req.body)
       //filtration 
-      const filterBody = filterObj(req.body, 'name', 'email', 'dob', 'profession')
+      const filterBody = filterObj(req.body, 'name', 'email', 'dob', 'profession', 'photo')
       // if (req.file && req.file.filename) {
       //   filterBody.photo = req.file.filename;
       // }

@@ -12,6 +12,8 @@ import { AuthContext } from "../context/AuthContext";
 const MyProfile = () => {
   const {logout} = useContext(AuthContext);
   const {userInfo} = useContext(AuthContext);
+  const {userToken} = useContext(AuthContext);
+
   const navigation = useNavigation();
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
 
@@ -51,10 +53,11 @@ const MyProfile = () => {
       });
   
       try {
-        const response = await axios.patch(`https://drukebird.onrender.com/api/v1/users/${userID}/updateMe`, formData, {
+        const response = await axios.patch(`https://drukebird.onrender.com/api/v1/users/updateMe`, formData, {
           
           headers: {
             'Content-Type': 'multipart/form-data',
+            'headers': {Authorization: `Bearer ${userToken}`}
           }
         })
   

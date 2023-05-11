@@ -23,17 +23,18 @@ export const AuthProvider = ({ children }) => {
           ToastAndroid.show("LogIn Successfully", ToastAndroid.LONG);
         }
         let userInfo = res.data.data;
+        let userToken = res.data.token;
+
         setUserInfo(userInfo);
-        setUserToken(res.data.token);
-        // let userToken = res.data.token;
+        setUserToken(userToken);
 
         AsyncStorage.setItem("userInfo", JSON.stringify(userInfo));
-        AsyncStorage.setItem("userToken", res.data.token);
+        AsyncStorage.setItem("userToken", userToken);
 
         console.log(userInfo);
-        console.log(userInfo.user._id);
-
         console.log(userToken);
+
+        // console.log(userToken);
 
       })
       .catch(err=>{
