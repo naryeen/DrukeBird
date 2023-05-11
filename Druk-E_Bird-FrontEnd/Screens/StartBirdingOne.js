@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Searchbar, FAB, ActivityIndicator, MD2Colors } from 'react-native-paper';
-import {StyleSheet,View, FlatList} from 'react-native';
+import {StyleSheet,View, FlatList,Alert} from 'react-native';
 import Button from '../Components/Button';
 import StartBirdingHeader from '../Components/StartBridingHeader';
 import { useNavigation } from '@react-navigation/native';
@@ -14,7 +14,24 @@ const StartBirdingone = () => {
   const [data, setData] = useState([]);
   const [loading,setLoading] = useState(true)
 
-
+  const handleFabPress = () => {
+    Alert.alert(
+      'Alert ',
+      'Do you want to add the unknown birds?',
+      [
+        {
+          text: 'NO',
+          style: 'cancel',
+        },
+        {
+          text: 'YES',
+          onPress: () => navigation.navigate('UnknownBirds')
+         
+        },
+      ],
+      { cancelable: false }
+    );
+  };
   useEffect(() => {
     axios.get('https://druk-ebird.onrender.com/api/v1/species?limit=40')
       .then(res => {
@@ -39,7 +56,7 @@ const StartBirdingone = () => {
   return (
     <View style={styles.container}>
       
-      <StartBirdingHeader stylings={styles.header} />
+      <StartBirdingHeader/>
       <Searchbar
         placeholder="Search any birds"
         onChangeText={onChangeSearch}
@@ -66,7 +83,8 @@ const StartBirdingone = () => {
     small
     color='white'
     icon="plus"
-    onPress={() => navigation.navigate('UnknownBirds')}
+    onPress={handleFabPress}
+    
   />
     <View style={styles.buttonContianer}>
       <Button styling={styles.submitbutton}>Submit</Button>
@@ -80,9 +98,9 @@ const styles = StyleSheet.create({
     container: {
       flex:1,
       flexDirection:"column",
-      backgroundColor: '#fff',
       alignItems: 'center',
       padding:10, 
+      marginTop:30
     },
     
     searchbar:{
@@ -92,11 +110,6 @@ const styles = StyleSheet.create({
         backgroundColor:"white",
         borderColor:"black",
         borderWidth:1
-    },
-    header:{
-        width:370,
-        height:50,
-        marginTop:30
     },
     buttonContianer:{
       flexDirection:"row",
@@ -116,7 +129,7 @@ const styles = StyleSheet.create({
       borderRadius:7,
     },
     fab: {
-      marginLeft:330,
+      marginLeft:290,
       marginTop:10,
       right: 0,
       bottom: 0,

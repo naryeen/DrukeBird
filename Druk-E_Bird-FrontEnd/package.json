@@ -9,6 +9,8 @@
     "web": "expo start --web"
   },
   "dependencies": {
+    "@react-native-async-storage/async-storage": "^1.18.1",
+    "@react-native-community/datetimepicker": "^6.7.3",
     "@react-navigation/bottom-tabs": "^6.5.7",
     "@react-navigation/drawer": "^6.6.2",
     "@react-navigation/material-bottom-tabs": "^6.2.15",
@@ -21,7 +23,6 @@
     "expo-status-bar": "~1.4.4",
     "react": "18.2.0",
     "react-native": "0.71.7",
-    "react-native-datepicker": "^1.7.2",
     "react-native-image-slider-box": "^2.0.7",
     "react-native-paper": "^5.7.0",
     "react-native-reanimated": "~2.14.4",

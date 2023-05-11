@@ -17,7 +17,7 @@ function Setting() {
 
     ];
     return (
-        <View>
+        <View style={{marginTop:35}}>
             <NavigationHeader title={'Settings'} />
             <View style={styles.species}>
                 <Text style={styles.speciesname}>Species name display</Text>
@@ -138,8 +138,6 @@ const styles = StyleSheet.create({
         marginLeft: 13,
         marginTop: 5,
         elevation: 20,
-
-
     },
     button: {
         flex: 1,

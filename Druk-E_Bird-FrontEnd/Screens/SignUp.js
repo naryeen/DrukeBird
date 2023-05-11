@@ -4,7 +4,6 @@ import {StyleSheet, View,Text, ScrollView, ToastAndroid} from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import Button from "../Components/Button";
 import axios from "axios";
-// import Toast from 'react-native-toast-message';
 
 
 const SignUp = () => {
@@ -16,7 +15,6 @@ const SignUp = () => {
   const [profession, setProfession] = useState("")
   const [password, setPassword] = useState("")
   const [passwordConfirm, setPasswordConfirm] = useState("")
-  // const [error, setError] = useState("")
 
 
   const register = () =>{
@@ -128,7 +126,7 @@ return (
     style={styles.inputStyle}
       mode="outlined"
       secureTextEntry = {true}
-      label="ConfirmPassword"
+      label="Confirm Password"
       placeholder="Enter the Your Password Again"
       left={<TextInput.Icon icon="key-variant"/>}
       onChangeText={(text) => setPasswordConfirm(text)}

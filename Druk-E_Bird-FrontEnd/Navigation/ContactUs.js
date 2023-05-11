@@ -1,11 +1,11 @@
 import * as React from 'react';
-import {TextInput, DefaultTheme } from 'react-native-paper';
+import {TextInput} from 'react-native-paper';
 import {StyleSheet, View,Text, ScrollView} from 'react-native';
 import Button from '../Components/Button';
 import NavigationHeader from '../Components/NavigationHeader';
 const ContactUs = () => {
   return (
-    <View>
+    <View style={{marginTop:35}}>
          <NavigationHeader title={'Contact Us'} />
          <Text style={styles.messages}>Leave a message</Text>
     <View style={styles.container}>
@@ -53,7 +53,7 @@ const styles = StyleSheet.create({
     marginLeft: 16,
     borderRadius: 10,
     elevation: 20,
-    borderColor: 'black'
+    borderColor: 'black',
   },
   messages:{
     color: 'gray',

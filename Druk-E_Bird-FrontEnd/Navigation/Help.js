@@ -10,7 +10,7 @@ const Help = () => {
 
     return (
         <View style={styles.container}>
-            <NavigationHeader title={'Help'} />
+            <NavigationHeader title="Help"/>
             <View style={styles.videoContainer}>
                 <Video
                     ref={video}
@@ -37,8 +37,7 @@ const Help = () => {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: '#FFF',
-        
+        backgroundColor: '#FFF', 
     },
     video: {
      
@@ -53,9 +52,7 @@ const styles = StyleSheet.create({
   },
   videoContainer: {
       shadowOffset: { 
-          width: 0, 
-         
-           
+          width: 0,  
       },
       shadowOpacity: 0.1,
       shadowRadius: 2,
