@@ -22,6 +22,7 @@ const ForgetPassword = () => {
         if (res.data.status === 201) {
           let message = typeof res.response !== 'undefined' ? res.response.data.message : res.message;
           ToastAndroid.show(message, ToastAndroid.SHORT);
+          console.log(message)
         }
       })
       .catch(err => {
