@@ -20,9 +20,8 @@ const ForgetPassword = () => {
     axios.post('https://druk-ebirds.onrender.com/api/v1/forgotPassword', user)
       .then(res => {
         if (res.data.status === 201) {
-          let message = typeof res.response !== 'undefined' ? res.response.data.message : res.message;
-          ToastAndroid.show(message, ToastAndroid.SHORT);
-          console.log(message, "im here")
+          // let message = typeof res.response !== 'undefined' ? res.response.data.message : res.message;
+          ToastAndroid.show("Link sent succefully in your mail", ToastAndroid.SHORT);
         }
       })
       .catch(err => {
