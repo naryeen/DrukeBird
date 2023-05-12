@@ -8,7 +8,7 @@ import axios from "axios";
 const ForgetPassword = () => {
   const [email, setEmail] = useState("")
   if (!email) {
-    Toast.show('Email is required.');
+    ToastAndroid.show('Email is required.');
   }
 
   const forgetpassword = () =>{
