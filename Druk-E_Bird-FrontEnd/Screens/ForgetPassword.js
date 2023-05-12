@@ -22,14 +22,14 @@ const ForgetPassword = () => {
     .then(res=>
     {
       if(res.data.status=="success"){
-        JSON.stringify(res)
+        // JSON.stringify(res)
         let message = 
           ToastAndroid.show(message, 
         ToastAndroid.SHORT);
       }
     })
   .catch(err=>{
-    JSON.stringify(err)
+    // JSON.stringify(err)
     let message = 
             typeof err.response !=='undefined'
             ?err.response.data.message
