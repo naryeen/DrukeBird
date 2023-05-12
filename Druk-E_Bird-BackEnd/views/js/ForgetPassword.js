@@ -8,16 +8,20 @@ export const resetPassword = async (data) =>
             url: window.location.href,
             data,
         })
+
+        console.log("res ", res);
         if (res.data.status === 'success') 
         {
             showAlert('success', 'Data updated successfully!') 
         }
     } catch (err) {
+        console.log("error ", err);
         let message =
         typeof err.response !== 'undefined'
         ? err.response.data.message
         : err.message
         showAlert('error', message )
+        
         //showAlert('error', err.response.data.message)
     }
 }
