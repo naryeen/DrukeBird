@@ -27,13 +27,7 @@ const ForgetPassword = () => {
       }
     })
   .catch(err=>{
-    // JSON.stringify(err)
-    let message = 
-            typeof err.response !=='undefined'
-            ?err.response.data.message
-            :err.message
-
-     ToastAndroid.show(message, 
+     ToastAndroid.show("Enter your email", 
         ToastAndroid.SHORT);
         
   })
