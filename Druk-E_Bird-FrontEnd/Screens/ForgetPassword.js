@@ -22,10 +22,8 @@ const ForgetPassword = () => {
     .then(res=>
     {
       if(res.data.status=="success"){
-        // JSON.stringify(res)
-        let message = 
-          ToastAndroid.show(message, 
-        ToastAndroid.SHORT);
+        ToastAndroid.show('Link Successfully Sent in your mail',
+        ToastAndroid.LONG);
       }
     })
   .catch(err=>{
