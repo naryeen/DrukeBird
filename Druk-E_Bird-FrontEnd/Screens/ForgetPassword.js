@@ -14,7 +14,11 @@ const ForgetPassword = () => {
     }
     axios
     //GC WIFI
-    .post('http://10.9.211.203:4001/api/v1/forgotPassword', user)
+    //.post('http://10.9.211.203:4001/api/v1/forgotPassword', user)
+   
+    .post(' https://druk-ebirds.onrender.com/api/v1/forgotPassword', user)
+
+
     .then(res=>
     {
       if(res.data.status=="success"){
