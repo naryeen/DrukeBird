@@ -66,6 +66,7 @@ exports.setPassword = async (req, res, next) => {
         )
         
         res.status(200).json({message: "password reset successful"});
+        console.log(res)
 
     } catch (err) {
 
