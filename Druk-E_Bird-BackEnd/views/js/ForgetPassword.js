@@ -10,7 +10,7 @@ export const resetPassword = async (data) =>
         })
 
         console.log("res ", res);
-        if (res.data.status === 'success') 
+        if (res.data.status === 200) 
         {
             showAlert('success', 'Data updated successfully!') 
         }
