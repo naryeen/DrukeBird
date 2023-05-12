@@ -14,8 +14,6 @@ exports.forgotPassword = async (req, res, next) => {
             return next(new AppError('User Not Exists!!', 400))
         }
 
-        //const link = `https://10.9.211.203:4001/resetPassword/${oldUser._id}`;
-
         const link = `https://druk-ebirds.onrender.com/api/v1/resetPassword/${oldUser._id}`;
 
         var transporter = nodemailer.createTransport({
