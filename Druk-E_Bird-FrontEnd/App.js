@@ -26,7 +26,7 @@ const MainStack = () => {
          <Stack.Screen name="FirstScreen" component={FirstScreen} options={{headerShown: false}}/>
          <Stack.Screen name="LogIn" component={LogIn} options={{headerShown: false}} />
          <Stack.Screen name="SignUp" component={SignUp} options={{headerShown: false}} />
-         <Stack.Screen name="ForgetPassword" component={ForgetPassword}/>
+         <Stack.Screen name="ForgetPassword" component={ForgetPassword} options={{headerShown: false}}/>
          <Stack.Screen name="MainScreen" component={MyDrawer} options={{headerShown: false}} />
          <Stack.Screen name="About" component={About} options={{headerShown: false}} />
          <Stack.Screen name="ContactUs" component={ContactUs} options={{headerShown: false}} />

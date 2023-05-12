@@ -3,6 +3,7 @@ import { TextInput } from 'react-native-paper';
 import { StyleSheet, View, ToastAndroid } from 'react-native';
 import Button from "../Components/Button";
 import axios from "axios";
+import ForgotPasswordHeader from "../Components/ForgotPasswordHeader";
 
 const ForgetPassword = () => {
   const [email, setEmail] = useState("");
@@ -32,6 +33,7 @@ const ForgetPassword = () => {
 
   return (
     <View style={styles.container}>
+      <ForgotPasswordHeader title="Forget Password"/>
       <TextInput
         style={styles.inputStyle}
         mode="outlined"
@@ -48,7 +50,8 @@ const ForgetPassword = () => {
 
 const styles = StyleSheet.create({
   container: {
-    padding: 10
+    padding: 10,
+    marginTop:30
   },
   inputStyle: {
     marginTop: 20,
