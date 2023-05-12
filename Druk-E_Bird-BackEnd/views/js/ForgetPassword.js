@@ -12,8 +12,9 @@ export const resetPassword = async (data) =>
         console.log("res ", res);
         if (res.data.status === 200) 
         {
-            let message =
-            showAlert(message) 
+            // let message =
+            // showAlert(message) 
+            console.log("data successfully")
         }
     } catch (err) {
         console.log("error ", err);
@@ -22,6 +23,7 @@ export const resetPassword = async (data) =>
         ? err.response.data.message
         : err.message
         // showAlert('error', message )
+        console.log(err)
         
         //showAlert('error', err.response.data.message)
     }
