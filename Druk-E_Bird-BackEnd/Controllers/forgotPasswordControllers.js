@@ -50,7 +50,8 @@ exports.setPassword = async (req, res, next) => {
         const oldUser = await User.findOne({ _id: id });
 
         if (!oldUser) {
-            return next(new AppError('User Not Exists!!', 400))
+            // return next(new AppError('User Not Exists!!', 400))
+            return res.status(400).json({message:"User Not Exists"})
         }
        
         const newPassword = await bcrypt.hash(password, 12);

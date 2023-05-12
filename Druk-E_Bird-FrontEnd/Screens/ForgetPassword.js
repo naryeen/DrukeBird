@@ -21,14 +21,29 @@ const ForgetPassword = () => {
 
     .then(res=>
     {
-      if(res.data.status=="success"){
-        ToastAndroid.show('Link Successfully Sent in your mail',
-        ToastAndroid.LONG);
+      if(res.data.status==201){
+        // ToastAndroid.show('Link Successfully Sent in your mail',
+        // ToastAndroid.LONG);
+
+        let message = 
+                  typeof err.response !=='undefined'
+                  ?err.response.data.message
+                  :err.message
+
+           ToastAndroid.show(message, 
+              ToastAndroid.SHORT);
       }
     })
   .catch(err=>{
-     ToastAndroid.show("Enter your email", 
-        ToastAndroid.SHORT);
+    //  ToastAndroid.show("Enter your Vaild email", 
+    //     ToastAndroid.SHORT);
+    let message = 
+                  typeof err.response !=='undefined'
+                  ?err.response.data.message
+                  :err.message
+
+           ToastAndroid.show(message, 
+              ToastAndroid.SHORT);
         
   })
 }
