@@ -10,8 +10,8 @@ export const resetPassword = async (data) =>
         })
         if (res.data.status === 200) 
         {
-            let message =
-            showAlert(message) 
+            // let message =
+            showAlert("password reset successful") 
         }
     } catch (err) {
         console.log("error ", err);
@@ -21,8 +21,6 @@ export const resetPassword = async (data) =>
         : err.message
         showAlert('error', message )
         console.log(err)
-        
-        //showAlert('error', err.response.data.message)
     }
 }
 
@@ -31,8 +29,6 @@ const userDataForm = document.querySelector('.resetPassword')
 userDataForm.addEventListener('submit',(e)=>
 {
     e.preventDefault()
-    // const form = new FormData()
-    // form.append('password', document.getElementById('password').value)
     const password = document.getElementById('password').value
     console.log("pasword ", password);
     resetPassword({password})

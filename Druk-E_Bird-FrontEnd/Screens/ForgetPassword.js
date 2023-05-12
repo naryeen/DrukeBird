@@ -7,6 +7,9 @@ import axios from "axios";
 
 const ForgetPassword = () => {
   const [email, setEmail] = useState("")
+  if (!email) {
+    Toast.show('Email is required.');
+  }
 
   const forgetpassword = () =>{
     let user ={
@@ -26,17 +29,12 @@ const ForgetPassword = () => {
         // ToastAndroid.LONG);
 
         let message = 
-                  typeof err.response !=='undefined'
-                  ?err.response.data.message
-                  :err.message
 
            ToastAndroid.show(message, 
               ToastAndroid.SHORT);
       }
     })
   .catch(err=>{
-    //  ToastAndroid.show("Enter your Vaild email", 
-    //     ToastAndroid.SHORT);
     let message = 
                   typeof err.response !=='undefined'
                   ?err.response.data.message
