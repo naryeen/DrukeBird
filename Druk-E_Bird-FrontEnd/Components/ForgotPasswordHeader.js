@@ -7,7 +7,7 @@ const ForgotPasswordHeader = ({title}) => {
     const navigation = useNavigation();
   return (
     <View style={styles.Headercontainer}>
-      <TouchableOpacity onPress={() => navigation.goBack('LogIn')}>
+      <TouchableOpacity onPress={() => navigation.navigate('LogIn')}>
         <Icon name="arrow-left" size={20} color="#136D66" />
       </TouchableOpacity>
       <Text style={styles.title}>{title}</Text>
