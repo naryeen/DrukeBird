@@ -1,4 +1,3 @@
-import { PassThrough } from 'nodemailer/lib/xoauth2/index.js';
 import { showAlert } from './alert.js'
 export const resetPassword = async (data) => 
 {
