@@ -1,3 +1,4 @@
+import { PassThrough } from 'nodemailer/lib/xoauth2/index.js';
 import { showAlert } from './alert.js'
 export const resetPassword = async (data) => 
 {
@@ -6,7 +7,7 @@ export const resetPassword = async (data) =>
         const res = await axios({
             method: 'POST',
             url: window.location.href,
-            data,
+            data
         })
 
         console.log("res ", res);
@@ -34,10 +35,11 @@ const userDataForm = document.querySelector('.resetPassword')
 userDataForm.addEventListener('submit',(e)=>
 {
     e.preventDefault()
-    const form = new FormData()
-    form.append('password', document.getElementById('password').value)
-    
-    resetPassword(form)
+    // const form = new FormData()
+    // form.append('password', document.getElementById('password').value)
+    const password = document.getElementById('password').value
+    console.log("pasword ", password);
+    resetPassword({password})
 
 })
 
