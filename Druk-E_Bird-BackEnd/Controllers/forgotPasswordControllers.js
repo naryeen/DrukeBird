@@ -11,7 +11,8 @@ exports.forgotPassword = async (req, res, next) => {
         const oldUser = await User.findOne({ email });
 
         if (!oldUser) {
-            return next(new AppError('User Not Exists!!', 400))
+            // return next(new AppError('User Not Exists!!', 400))
+            return res.status(400).json({message : "User Not Exists!!"})
         }
 
         const link = `https://druk-ebirds.onrender.com/api/v1/resetPassword/${oldUser._id}`;
