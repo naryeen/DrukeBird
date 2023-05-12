@@ -2,6 +2,7 @@ const User = require('../Models/userModels')
 const AppError = require('../utils/appError.js')
 const nodemailer = require('nodemailer')
 const bcrypt = require("bcryptjs")
+const validator = require('validator')
 
 exports.forgotPassword = async (req, res, next) => {
     try {
@@ -64,7 +65,6 @@ exports.setPassword = async (req, res, next) => {
             },
             { new: true }
         )
-        console.log(res)
         res.status(200).json({message: "password reset successful"});
         
 
@@ -73,3 +73,10 @@ exports.setPassword = async (req, res, next) => {
         res.json({message: err });
     }
 }
+
+
+newPassword.path('password').validate(function (password){
+    ///^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/=password, that i want to include later
+    var passwordRegex = /[0-9a-zA-Z]{8,}/g;
+    return passwordRegex.test(password);
+}, 'Enter passsword more than 8')
