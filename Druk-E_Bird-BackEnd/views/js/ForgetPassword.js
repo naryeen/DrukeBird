@@ -10,8 +10,7 @@ export const resetPassword = async (data) =>
         })
         if (res.data.status === 200) 
         {
-            // let message =
-            showAlert(res.data.message) 
+            showAlert('Successfully Reset Your Password!!!') 
         }
     } catch (err) {
         let message =
