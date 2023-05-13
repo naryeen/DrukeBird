@@ -55,6 +55,11 @@ exports.setPassword = async (req, res, next) => {
             // return next(new AppError('User Not Exists!!', 400))
             return res.status(400).json({message:"User Not Exists"})
         }
+        var passwordRegex = /[0-9a-zA-Z]{8,}/g;
+        if(!passwordRegex.test(password)){
+            res.status(500).json({message: "password required"});
+            return 
+        }
        
         const newPassword = await bcrypt.hash(password, 12);
 
@@ -73,10 +78,3 @@ exports.setPassword = async (req, res, next) => {
         res.json({message: err });
     }
 }
-
-
-newPassword.path('newPassword').validate(function (newPassword){
-    ///^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/=password, that i want to include later
-    var passwordRegex = /[0-9a-zA-Z]{8,}/g;
-    return passwordRegex.test(newPassword);
-}, 'Enter passsword more than 8')

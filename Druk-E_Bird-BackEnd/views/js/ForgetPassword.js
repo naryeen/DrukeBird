@@ -29,7 +29,7 @@ userDataForm.addEventListener('submit',(e)=>
 {
     e.preventDefault()
     const password = document.getElementById('password').value
-    console.log("pasword ", password);
+    console.log("password ", password);
     resetPassword({password})
 
 })
