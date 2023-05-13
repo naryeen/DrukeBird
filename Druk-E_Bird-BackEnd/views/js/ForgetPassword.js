@@ -8,10 +8,10 @@ export const resetPassword = async (data) =>
             url: window.location.href,
             data
         })
-        if (res.data.status === 200) 
+        console.log(res)
+        if (res.status === 200) 
         {
-            showAlert('Successfully Reset Your Password!!!') 
-            console.log('Successfully Reset Your Password!!!') 
+            showAlert("message","Link is Successfully sent in Your Mail") 
         }
     } catch (err) {
         let message =

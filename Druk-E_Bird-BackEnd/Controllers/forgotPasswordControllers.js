@@ -7,12 +7,10 @@ const validator = require('validator')
 exports.forgotPassword = async (req, res, next) => {
     try {
         const { email } = req.body;
-        console.log(email)
         
         const oldUser = await User.findOne({ email });
 
         if (!oldUser) {
-            // return next(new AppError('User Not Exists!!', 400))
             return res.status(400).json({message : "User Not Exists!!"})
         }
 
@@ -46,7 +44,6 @@ exports.forgotPassword = async (req, res, next) => {
 };
 
 exports.setPassword = async (req, res, next) => {
-
     try {
         const { id } = req.params;
         const { password } = req.body;
@@ -60,7 +57,7 @@ exports.setPassword = async (req, res, next) => {
         var passwordRegex = /[0-9a-zA-Z]{8,}/g;
         if(!passwordRegex.test(password)){
             console.log("password is",passwordRegex.test(password))
-            return res.status(500).json({message: "password required"});
+            return res.status(500).json({message: "Enter passsword more than 8"});
         }
        
         const newPassword = await bcrypt.hash(password, 12);
@@ -73,9 +70,8 @@ exports.setPassword = async (req, res, next) => {
             { new: true }
         )
         return res.status(200).json({message: "password reset successful"});
-        
-
-    } catch (err) {
+    } 
+    catch (err) {
 
         res.json({message: err });
     }
