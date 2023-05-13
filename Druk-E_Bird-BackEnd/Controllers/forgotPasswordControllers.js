@@ -16,9 +16,9 @@ exports.forgotPassword = async (req, res, next) => {
             return res.status(400).json({message : "User Not Exists!!"})
         }
 
-        //const link = `https://druk-ebirds.onrender.com/api/v1/resetPassword/${oldUser._id}`;
+        const link = `https://druk-ebirds.onrender.com/api/v1/resetPassword/${oldUser._id}`;
 
-        const link = `https://localhost:4001/api/v1/resetPassword/${oldUser._id}`;
+        //const link = `http://localhost:4001/api/v1/resetPassword/${oldUser._id}`;
 
         var transporter = nodemailer.createTransport({
             service: "gmail",
@@ -58,11 +58,9 @@ exports.setPassword = async (req, res, next) => {
             return res.status(400).json({message:"User Not Exists"})
         }
         var passwordRegex = /[0-9a-zA-Z]{8,}/g;
-        console.log("error")
         if(!passwordRegex.test(password)){
             console.log("password is",passwordRegex.test(password))
-            res.status(500).json({message: "password required"});
-            return 
+            return res.status(500).json({message: "password required"});
         }
        
         const newPassword = await bcrypt.hash(password, 12);
@@ -74,7 +72,7 @@ exports.setPassword = async (req, res, next) => {
             },
             { new: true }
         )
-        res.status(200).json({message: "password reset successful"});
+        return res.status(200).json({message: "password reset successful"});
         
 
     } catch (err) {

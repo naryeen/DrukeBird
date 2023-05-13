@@ -19,7 +19,6 @@ export const resetPassword = async (data) =>
         ? err.response.data.message
         : err.message
         showAlert('error', message )
-        console.log(err)
     }
 }
 
