@@ -56,6 +56,7 @@ exports.setPassword = async (req, res, next) => {
             return res.status(400).json({message:"User Not Exists"})
         }
         var passwordRegex = /[0-9a-zA-Z]{8,}/g;
+        console.log("error")
         if(!passwordRegex.test(password)){
             console.log("password is",passwordRegex.test(password))
             res.status(500).json({message: "password required"});
