@@ -11,8 +11,9 @@ const SearchSpecies = () => {
     setSearchQuery(query);
     try {
       const response = await axios.get(`https://druk-ebird.onrender.com/api/v1/species?search=${query}`);
+      const data = await response.json()
       setSearchResults(response.data.results || []);
-      console.log(response.data);
+      console.log(data);
     } catch (error) {
       console.log(error);
     }
