@@ -15,9 +15,10 @@ const Help = () => {
                 <Video
                     ref={video}
                     style={styles.video}
-                    source={{
-                        uri: 'https://d23dyxeqlo5psv.cloudfront.net/big_buck_bunny.mp4',
-                    }}
+                    // source={{
+                    //     uri: 'https://d23dyxeqlo5psv.cloudfront.net/big_buck_bunny.mp4',
+                    // }}
+                    source={require('../assets/Video/pro.mp4')}
                     useNativeControls
                     resizeMode="cover"
                     isLooping

@@ -6,11 +6,12 @@ import StartBirdingHeader from '../Components/StartBridingHeader';
 import { useNavigation } from '@react-navigation/native';
 import axios from "axios";
 import StartBirdingCounter from '../Components/StartBirdingCounter';
+import SearchSpecies from '../Components/SearchSpecies';
 
 const StartBirdingone = () => {
   const navigation = useNavigation();
-  const [searchQuery, setSearchQuery] = React.useState('');
-  const onChangeSearch = query => setSearchQuery(query);
+  // const [searchQuery, setSearchQuery] = React.useState('');
+  // const onChangeSearch = query => setSearchQuery(query);
   const [data, setData] = useState([]);
   const [loading,setLoading] = useState(true)
 
@@ -57,14 +58,15 @@ const StartBirdingone = () => {
     <View style={styles.container}>
       
       <StartBirdingHeader/>
-      <Searchbar
+      <SearchSpecies/>
+      {/* <Searchbar
         placeholder="Search any birds"
         onChangeText={onChangeSearch}
         inputStyle={{ paddingBottom:19}}
         placeholderTextColor="gray"
         value={searchQuery}
         style={styles.searchbar}
-      />
+      /> */}
       
     {loading ? (
         <ActivityIndicator animating={true} color={MD2Colors.green800} size="large" style={{marginTop:250, marginBottom:250}} />
@@ -103,14 +105,14 @@ const styles = StyleSheet.create({
       marginTop:30
     },
     
-    searchbar:{
-        marginTop:5,
-        height:40,
-        borderRadius:10,
-        backgroundColor:"white",
-        borderColor:"black",
-        borderWidth:1
-    },
+    // searchbar:{
+    //     marginTop:5,
+    //     height:40,
+    //     borderRadius:10,
+    //     backgroundColor:"white",
+    //     borderColor:"black",
+    //     borderWidth:1
+    // },
     buttonContianer:{
       flexDirection:"row",
       marginTop:10,
