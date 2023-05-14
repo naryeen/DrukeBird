@@ -10,9 +10,9 @@ const SearchSpecies = () => {
   const onChangeSearch = async (query) => {
     setSearchQuery(query);
     try {
-      const response = await axios.get(`https://druk-ebird.onrender.com/api/v1/species?search=${query}`);
+      const response = await fetch(`https://druk-ebird.onrender.com/api/v1/species?search=${query}`);
       const data = await response.json()
-      setSearchResults(response.data.results || []);
+      setSearchResults(data.species || []);
       console.log(data);
     } catch (error) {
       console.log(error);
