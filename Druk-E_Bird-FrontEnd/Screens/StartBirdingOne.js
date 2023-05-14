@@ -72,7 +72,7 @@ const StartBirdingone = () => {
         <ActivityIndicator animating={true} color={MD2Colors.green800} size="large" style={{marginTop:250, marginBottom:250}} />
       ) : 
       (
-    <FlatList style={{height:"70%"}}
+    <FlatList style={{height:"70%", marginTop:50}}
         data={data}
         keyExtractor={item => item._id}
         renderItem={renderItem}

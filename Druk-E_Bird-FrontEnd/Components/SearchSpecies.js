@@ -10,8 +10,8 @@ const SearchSpecies = () => {
   const onChangeSearch = async (query) => {
     setSearchQuery(query);
     try {
-      const response = await axios.get(`https://druk-ebird.onrender.com/api/v1/species?search=${query}`);
-      setSearchResults(response.data.results);
+      const response = await axios.get('https://druk-ebird.onrender.com/api/v1/species?search');
+      setSearchResults(response.data.results || []);
     } catch (error) {
       console.log(error);
     }
@@ -39,9 +39,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     flexDirection: 'column',
-    alignItems: 'center',
-    padding: 10,
-    marginTop: 30,
+    alignItems: 'center'
   },
 
   searchbar: {
