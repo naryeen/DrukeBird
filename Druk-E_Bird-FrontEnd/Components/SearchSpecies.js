@@ -1,19 +1,16 @@
 import React, { useState } from 'react';
-import { Searchbar, Text } from 'react-native-paper';
+import { Searchbar} from 'react-native-paper';
 import { StyleSheet, View } from 'react-native';
 import axios from 'axios';
 
-const SearchSpecies = () => {
+const SearchSpecies = ({setData}) => {
   const [searchQuery, setSearchQuery] = useState('');
-  const [searchResults, setSearchResults] = useState([]);
 
   const onChangeSearch = async (query) => {
     setSearchQuery(query);
     try {
-      const response = await fetch(`https://druk-ebird.onrender.com/api/v1/species?search=${query}`);
-      const data = await response.json()
-      setSearchResults(data.species || []);
-      console.log(data);
+      const response = await axios.get(`https://druk-ebird.onrender.com/api/v1/species?search=${query}`);
+      setData(response.data.species);
     } catch (error) {
       console.log(error);
     }
@@ -29,10 +26,6 @@ const SearchSpecies = () => {
         value={searchQuery}
         style={styles.searchbar}
       />
-      {/* Render the search results */}
-      {searchResults.map((result) => (
-        <Text key={result._id}>{result.englishName}</Text>
-      ))}
     </View>
   );
 };

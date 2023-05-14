@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Searchbar, FAB, ActivityIndicator, MD2Colors } from 'react-native-paper';
+import {FAB, ActivityIndicator, MD2Colors } from 'react-native-paper';
 import {StyleSheet,View, FlatList,Alert} from 'react-native';
 import Button from '../Components/Button';
 import StartBirdingHeader from '../Components/StartBridingHeader';
@@ -10,8 +10,6 @@ import SearchSpecies from '../Components/SearchSpecies';
 
 const StartBirdingone = () => {
   const navigation = useNavigation();
-  // const [searchQuery, setSearchQuery] = React.useState('');
-  // const onChangeSearch = query => setSearchQuery(query);
   const [data, setData] = useState([]);
   const [loading,setLoading] = useState(true)
 
@@ -58,15 +56,7 @@ const StartBirdingone = () => {
     <View style={styles.container}>
       
       <StartBirdingHeader/>
-      <SearchSpecies/>
-      {/* <Searchbar
-        placeholder="Search any birds"
-        onChangeText={onChangeSearch}
-        inputStyle={{ paddingBottom:19}}
-        placeholderTextColor="gray"
-        value={searchQuery}
-        style={styles.searchbar}
-      /> */}
+      <SearchSpecies setData={setData}/>
       
     {loading ? (
         <ActivityIndicator animating={true} color={MD2Colors.green800} size="large" style={{marginTop:250, marginBottom:250}} />
@@ -105,14 +95,6 @@ const styles = StyleSheet.create({
       marginTop:30
     },
     
-    // searchbar:{
-    //     marginTop:5,
-    //     height:40,
-    //     borderRadius:10,
-    //     backgroundColor:"white",
-    //     borderColor:"black",
-    //     borderWidth:1
-    // },
     buttonContianer:{
       flexDirection:"row",
       marginTop:10,
