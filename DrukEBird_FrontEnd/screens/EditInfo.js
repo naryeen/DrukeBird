@@ -3,6 +3,7 @@ import { View, Text, TextInput, Button, StyleSheet } from 'react-native';
 import axios from 'axios';
 import { AuthContext } from "../context/AuthContext";
 
+
 const EditInfo = () => {
   const { userInfo } = useContext(AuthContext);
   const [name, setName] = useState('');
@@ -13,7 +14,7 @@ const EditInfo = () => {
   const [error, setError] = useState('');
   const userID = userInfo.user._id;
 
-  
+
   useEffect(() => {
     // Fetch user's current profile data
     setIsLoading(true);
@@ -42,7 +43,7 @@ const EditInfo = () => {
 
     setIsLoading(true);
     // Call API to update profile
-    axios.patch(`https://drukebird.onrender.com/api/v1/users/${userID}/updateMe`, data)
+    axios.patch(`https://drukebird.onrender.com/api/v1/users/updateMe`, data)
       .then(() => {
         console.log('Profile updated successfully!');
         setIsLoading(false);

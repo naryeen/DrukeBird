@@ -5,10 +5,8 @@ import { AuthContext } from "../context/AuthContext";
 import AppStack from "./AppStack";
 import AuthStack from "./AuthStack";
 
-
 const AppNav = () => {
   const { isLoading, userToken } = useContext(AuthContext);
-
   if (isLoading) {
     return (
       <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>

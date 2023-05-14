@@ -45,15 +45,18 @@ const MyProfile = () => {
     const imageResult = await ImagePicker.launchImageLibraryAsync();
     if (!imageResult.canceled) {
       const selectedImage = imageResult.assets[0];
-      setProfilePicture({ uri: selectedImage.uri });
+
+      console.log(`Selected: ${selectedImage.uri}`);
+      setProfilePicture({ photo: selectedImage.uri });
   
       const formData = new FormData();
       formData.append('photo', {
         uri: selectedImage.uri,
       });
-  
+      console.log(`photo ${formData.uri}`);
+
       try {
-        const response = await axios.patch(`https://drukebird.onrender.com/api/v1/users/updateMe`, formData, {
+        const response = await axios.patch(`https://drukebird.onrender.com/api/v1/users/updateMe`, {photo: selectedImage.uri}, {
           
           headers: {
             'Content-Type': 'multipart/form-data',
@@ -238,7 +241,6 @@ const styles = StyleSheet.create({
     backgroundColor: "#fff",
     borderRadius: 20,
   },
-
   title: {
     color: "#136D66",
     fontWeight: "bold",
