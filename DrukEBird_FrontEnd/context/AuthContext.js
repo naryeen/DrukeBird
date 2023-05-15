@@ -34,10 +34,6 @@ export const AuthProvider = ({ children }) => {
         console.log(userInfo);
         console.log(userToken);
 
-        // console.log(userInfo)
-
-        // console.log(userToken);
-
       })
       .catch(err=>{
         let message = 

@@ -4,7 +4,7 @@ const multer = require("multer");
 
 const multerStorage = multer.diskStorage({
   destination: (req, file, cb) => {
-    cb(null, "/assets/Users");
+    cb(null, "./assets/Users");
   },
   filename: (req, file, cb) => {
     // var obj = JSON.parse(req.cookies.token)
@@ -46,7 +46,7 @@ exports.createUser = async (req, res) => {
 
 exports.getUser = async (req, res) => {
   try {
-    const user = await User.findById(req.params.id).select("+password");
+    const user = await User.findById(req.params.id);
     res.json({ data: user, status: "success" });
   } catch (err) {
     res.status(500).json({ error: err.message });
