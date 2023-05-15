@@ -17,7 +17,7 @@ const MyProfile = () => {
   const navigation = useNavigation();
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
 
-  const [photo, setProfilePicture] = useState(require("../assets/images/Users/default.jpg"));
+  const [photo, setProfilePicture] = useState();
   let userID = userInfo.user._id;
 
 
@@ -48,15 +48,14 @@ const MyProfile = () => {
 
       console.log(`Selected: ${selectedImage.uri}`);
       // file.mimetype.split("/")[1];
-      setProfilePicture({ photo: selectedImage.uri.split("/")[14] });
   
       const formData = new FormData();
       formData.append('photo', {
+        // uri: selectedImage.uri,
         uri: selectedImage.uri,
-        // uri: selectedImage.uri.split("/")[14],
       });
       console.log(`photo ${selectedImage.uri.split("/")[14]}`);
-      console.log(userToken)
+      console.log(formData.photo)
       try {
         const response = await axios.patch(`https://drukebird.onrender.com/api/v1/users/updateMe`, formData, {
           headers: {
