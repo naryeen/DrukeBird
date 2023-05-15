@@ -29,6 +29,7 @@ const UpdatePassword = () => {
         const userData = response.data;
         console.log(userData)
         const currentPasswordFromAPI = userData.password;
+        console.log(currentPasswordFromAPI)
         
         // Compare entered current password with the one from the API
         if (currentPassword !== currentPasswordFromAPI) {

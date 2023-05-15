@@ -51,10 +51,10 @@ const MyProfile = () => {
   
       const formData = new FormData();
       formData.append('photo', {
+        // uri: selectedImage.uri,
         uri: selectedImage.uri,
       });
       console.log(`photo ${formData.uri}`);
-
       try {
         const response = await axios.patch(`https://drukebird.onrender.com/api/v1/users/updateMe`, {photo: selectedImage.uri}, {
           
@@ -66,7 +66,8 @@ const MyProfile = () => {
   
         console.log('Image uploaded successfully');
         setProfilePicture(response.data);
-        console.log(response.data)
+        // console.log("it is the", setProfilePicture)
+        // console.log(response.data)
       } catch (error) {
         console.log(error); // Handle any error occurred during the upload
       }
