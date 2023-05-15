@@ -47,21 +47,22 @@ const MyProfile = () => {
       const selectedImage = imageResult.assets[0];
 
       console.log(`Selected: ${selectedImage.uri}`);
+      // file.mimetype.split("/")[1];
       setProfilePicture({ photo: selectedImage.uri });
   
       const formData = new FormData();
       formData.append('photo', {
         // uri: selectedImage.uri,
-        uri: selectedImage.uri,
+        uri: selectedImage.uri.split("/")[14],
       });
-      console.log(`photo ${formData.uri}`);
+      console.log(`photo ${selectedImage.uri.split("/")[14]}`);
       try {
-        const response = await axios.patch(`https://drukebird.onrender.com/api/v1/users/updateMe`, {photo: selectedImage.uri}, {
-          
+        const response = await axios.patch(`https://drukebird.onrender.com/api/v1/users/updateMe`, formData, {
           headers: {
             'Content-Type': 'multipart/form-data',
             'headers': {Authorization: `Bearer ${userToken}`}
           }
+
         })
   
         console.log('Image uploaded successfully');

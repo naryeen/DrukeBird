@@ -92,7 +92,6 @@ exports.updateMe = async (req, res, next) => {
       "email",
       "dob",
       "profession",
-      "photo"
     );
 
     if (req.body.photo !== "undefined") {
