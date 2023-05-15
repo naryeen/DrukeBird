@@ -38,7 +38,6 @@ const StartBirdingone = () => {
         
       })
       .catch(error => {
-        console.log(error);
         console.log('API call error')
       })
       .finally(()=> setLoading(false))
@@ -62,7 +61,7 @@ const StartBirdingone = () => {
         <ActivityIndicator animating={true} color={MD2Colors.green800} size="large" style={{marginTop:250, marginBottom:250}} />
       ) : 
       (
-    <FlatList style={{height:"70%", marginTop:50}}
+    <FlatList style={{height:"70%", marginTop:50, borderRadius: 10}}
         data={data}
         keyExtractor={item => item._id}
         renderItem={renderItem}

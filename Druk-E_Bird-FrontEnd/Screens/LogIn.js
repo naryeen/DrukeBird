@@ -80,9 +80,7 @@ const LogIn = () => {
       <Text style={styles.forgetpasswordtext} onPress={() => navigation.replace('ForgetPassword')}>
         Forgot Password?
       </Text>
-      <View style={styles.createbutton}>
-        <Button onPress={() => userlogin()}>LogIn</Button>
-      </View>
+        <Button styling={styles.buttonstyle}  onPress={() => userlogin()}>LogIn</Button>
       <Text style={styles.createtext}>
         Don't have an account?
         <Text style={styles.createaccountText} onPress={() => navigation.replace('SignUp')}>Create a new account</Text>
@@ -107,8 +105,9 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     
   },
-  createbutton:{
+  buttonstyle:{
     marginTop:50,
+    width:"100%"
   },
   createtext:{
     marginTop:20,
