@@ -56,10 +56,8 @@
 // };
 
 // export default MyProfile;
-
-
-//For logout
-//Go to the drawer where signout is
-//import UseContext &AuthContext
+// For logout
+// Go to the drawer where signout is
+// import UseContext &AuthContext
 // const{logout} = useContext(AuthContext);
-//Onpress logout()
+// Onpress logout()
