@@ -36,7 +36,7 @@ const userSchema = new mongoose. Schema({
         required: [true,'Please provide a password!'],
         minlength: 8,
         //password wont be included when we get the users select: false,
-        select:false,
+        // select:false,
     },
     
     passwordConfirm:{

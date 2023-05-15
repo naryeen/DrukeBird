@@ -17,7 +17,7 @@ const MyProfile = () => {
   const navigation = useNavigation();
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
 
-  const [photo, setProfilePicture] = useState(userInfo.user.photo);
+  const [photo, setProfilePicture] = useState();
   let userID = userInfo.user._id;
 
 
@@ -45,6 +45,7 @@ const MyProfile = () => {
     const imageResult = await ImagePicker.launchImageLibraryAsync();
     if (!imageResult.canceled) {
       const selectedImage = imageResult.assets[0];
+      // setProfilePicture({uri: selectedImage.uri})
 
       console.log(`Selected: ${selectedImage.uri}`);
       console.log(userInfo.user.photo)
@@ -55,7 +56,6 @@ const MyProfile = () => {
         // uri: selectedImage.uri,
         uri: selectedImage.uri,
       });
-
       console.log(`photo ${selectedImage.uri.split("/")[14]}`);
       console.log(formData.photo)
       try {
