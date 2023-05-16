@@ -20,7 +20,7 @@ const userSchema = new mongoose.Schema({
         validate: [validator.isEmail, 'Please provide a valid email'],
     },
 
-    DoB: {
+    dob: {
         type: String,
         required:[true, 'Enter Your date of birth'],
         select:false
