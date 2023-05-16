@@ -23,25 +23,22 @@ const userSchema = new mongoose.Schema({
     dob: {
         type: String,
         required:[true, 'Enter Your date of birth'],
-        select:false
     },
    
     country: {
         type: String,
-        required: [true, 'Please provide a country!'],
-        select: false,   
+        required: [true, 'Please provide a country!'],  
     },
 
     profession: {
         type: String,
         required: [true, 'Please provide a profession!'],
-        select: false,   
     },
 
     password: {
         type: String,
         required: [true, 'Please provide a password!'],
-        select: false,   
+        // select: false,   
     },
 
     passwordConfirm: {
@@ -58,7 +55,7 @@ const userSchema = new mongoose.Schema({
     active: {
         type: Boolean,
         default: true,
-        select: false,
+        // select: false,
     },
 
 })

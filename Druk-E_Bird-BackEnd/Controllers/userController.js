@@ -3,6 +3,7 @@ const User = require('../Models/userModels')
 exports.getAllUsers = async (req, res, next) => {
     try {
         const users = await User.find()
+        console.log("users ", users);
         res.status(200).json({data:users, status: 'success'})
     }catch (err) {
         res.status(500).json({ error: err.message});
