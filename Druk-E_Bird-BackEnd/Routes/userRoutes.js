@@ -8,10 +8,8 @@ router.post('/signup', authController.signup)
 router.post('/login', authController.login)
 
 
-router
-    .route('/')
-    .get(userController.getAllUsers)
-    .post(userController.createUser)
+router.get(userController.getAllUsers)
+router.post(userController.createUser)
 
 router
     .route('/:id')
