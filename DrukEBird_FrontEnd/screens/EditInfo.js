@@ -6,13 +6,18 @@ import {
   Button,
   StyleSheet,
   ToastAndroid,
+  TouchableOpacity,
 } from "react-native";
+import * as ImagePicker from "expo-image-picker";
+import { Avatar, IconButton } from "react-native-paper";
+
 import axios from "axios";
 import { AuthContext } from "../context/AuthContext";
 
 const EditInfo = () => {
   const { userInfo } = useContext(AuthContext);
   const { userToken } = useContext(AuthContext);
+  const [photo, setProfilePicture] = useState();
   const [Username, setName] = useState();
   const [Useremail, setEmail] = useState();
   const [Userdob, setDob] = useState();
@@ -20,19 +25,47 @@ const EditInfo = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState("");
 
+  const handleEditPicture = async () => {
+    const permissionResult =
+      await ImagePicker.requestMediaLibraryPermissionsAsync();
+    if (permissionResult.granted === false) {
+      alert("Permission to access the camera roll is required!");
+      return;
+    }
+
+    const imageResult = await ImagePicker.launchImageLibraryAsync();
+    if (!imageResult.canceled) {
+      const selectedImage = imageResult.assets[0];
+      // setProfilePicture({uri: selectedImage.uri})
+
+      console.log(`Selected: ${selectedImage.uri}`);
+      console.log(userInfo.user.photo);
+      // file.mimetype.split("/")[1];
+
+      const formData = new FormData();
+      formData.append("photo", {
+        // uri: selectedImage.uri,
+        uri: selectedImage.uri,
+      });
+      console.log(`photo ${selectedImage.uri.split("/")[14]}`);
+      console.log(formData.photo);
+    }
+  };
   const handleUpdateProfile = () => {
     const data = {
       name: Username,
       email: Useremail,
       dob: Userdob,
       profession: Userprofession,
+      photo: setProfilePicture,
     };
 
     setIsLoading(true);
     axios
       .patch(`https://drukebird.onrender.com/api/v1/users/updateMe`, data, {
         headers: {
-          Authorization: `Bearer ${userToken}`,
+          "Content-Type": "multipart/form-data",
+          headers: { Authorization: `Bearer ${userToken}` },
         },
       })
       .then(() => {
@@ -56,51 +89,71 @@ const EditInfo = () => {
       </View>
     );
   }
-
   return (
     <View style={styles.container}>
-      <Text style={styles.heading}>Edit Profile</Text>
-      <TextInput
-        style={styles.input}
-        placeholder={userInfo.user.name}
-        value={Username}
-        onChangeText={(text) => setName(text)}
-      />
-      <TextInput
-        style={styles.input}
-        placeholder={userInfo.user.email}
-        value={Useremail}
-        onChangeText={(text) => setEmail(text)}
-      />
-      <TextInput
-        style={styles.input}
-        placeholder={userInfo.user.dob}
-        value={Userdob}
-        onChangeText={(text) => setDob(text)}
-      />
-      <TextInput
-        style={styles.input}
-        placeholder={userInfo.user.profession}
-        value={Userprofession}
-        onChangeText={(text) => setProfession(text)}
-      />
-      <Button title="Update Profile" onPress={handleUpdateProfile} />
-      {error ? <Text style={styles.error}>{error}</Text> : null}
+      <View style={styles.header}>
+        <TouchableOpacity onPress={handleEditPicture}>
+          <Avatar.Image size={120} source={photo} />
+          <IconButton
+            icon="camera"
+            size={20}
+            style={styles.editPictureButton}
+          />
+        </TouchableOpacity>
+      </View>
+      <View style={styles.container1}>
+        <TextInput
+          style={styles.input}
+          placeholder={userInfo.user.name}
+          value={Username}
+          onChangeText={(text) => setName(text)}
+        />
+        <TextInput
+          style={styles.input}
+          placeholder={userInfo.user.email}
+          value={Useremail}
+          onChangeText={(text) => setEmail(text)}
+        />
+        <TextInput
+          style={styles.input}
+          placeholder={userInfo.user.dob}
+          value={Userdob}
+          onChangeText={(text) => setDob(text)}
+        />
+        <TextInput
+          style={styles.input}
+          placeholder={userInfo.user.profession}
+          value={Userprofession}
+          onChangeText={(text) => setProfession(text)}
+        />
+        <Button title="Update Profile" onPress={handleUpdateProfile} />
+        {error ? <Text style={styles.error}>{error}</Text> : null}
+      </View>
     </View>
   );
 };
+
+export default EditInfo;
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: "center",
+  header: {
     alignItems: "center",
-    backgroundColor: "#f2f2f2",
-    padding: 20,
+    paddingVertical: 20,
+    marginTop: 150,
+    borderBottomColor: "#136D66",
+    borderBottomWidth: 1,
+    marginHorizontal: 20,
   },
-  heading: {
-    fontSize: 24,
-    fontWeight: "bold",
-    marginBottom: 20,
+  editPictureButton: {
+    position: "absolute",
+    right: 0,
+    bottom: 0,
+    backgroundColor: "#fff",
+    borderRadius: 20,
+  },
+  container1: {
+    alignItems: "center",
+    padding: 20,
+    marginTop: 10,
   },
   input: {
     width: "100%",
@@ -111,10 +164,4 @@ const styles = StyleSheet.create({
     paddingHorizontal: 10,
     marginBottom: 10,
   },
-  error: {
-    color: "red",
-    marginTop: 10,
-  },
 });
-
-export default EditInfo;

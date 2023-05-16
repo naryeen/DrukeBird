@@ -33,7 +33,6 @@ exports.getAllUsers = async (req, res, next) => {
     res.status(500).json({ error: err.message });
   }
 };
-
 exports.createUser = async (req, res) => {
   try {
     const user = await User.create(req.body);
@@ -43,7 +42,6 @@ exports.createUser = async (req, res) => {
     res.status(500).json({ error: err.message });
   }
 };
-
 exports.getUser = async (req, res) => {
   try {
     const user = await User.findById(req.params.id);
@@ -99,17 +97,6 @@ exports.updateMe = async (req, res, next) => {
       const basePath = `${req.protocol}://${req.get("host")}/assets/Users/`;
       filterBody.photo = `${basePath}${fileName}`;
     }
-    // const file = req.file;
-    // let imagepath;
-    // if (file) {
-    //   const fileName = req.file.filename;
-    //   const basePath = `${req.protocol}://${req.get("host")}/public/uploads/`;
-    //   imagepath = `${basePath}${fileName}`;
-    // } else {
-    //   imagepath = product.image; //image path is same as the old image path initially
-    // }
-
-    // var obj = JSON.parse(req.cookies.token)
     const updateUser = await User.findByIdAndUpdate(req.user._id, filterBody, {
       new: true,
       runValidators: true,
@@ -124,3 +111,6 @@ exports.updateMe = async (req, res, next) => {
     res.status(500).json({ error: err.message });
   }
 };
+
+
+

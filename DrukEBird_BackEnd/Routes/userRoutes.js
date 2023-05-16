@@ -13,10 +13,11 @@ router.patch(
   authController.updatePassword
 );
 
+
 router.patch(
   "/updateMe",
   authController.protect,
-  userController.uploadUserPhoto,
+   userController.uploadUserPhoto,
   userController.updateMe
 );
 router

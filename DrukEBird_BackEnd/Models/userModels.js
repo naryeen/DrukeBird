@@ -16,7 +16,7 @@ const userSchema = new mongoose. Schema({
     },
     photo: {
         type: String,
-        default: 'default.jpg',
+        
     },
     dob: {
         type: String,

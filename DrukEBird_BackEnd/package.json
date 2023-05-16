@@ -2,7 +2,7 @@
   "name": "drukebird",
   "version": "1.0.1",
   "description": "Final Year Project",
-  "main": "app.js",
+  "main": "server.js",
   "scripts": {
     "start": "nodemon server.js"
   },

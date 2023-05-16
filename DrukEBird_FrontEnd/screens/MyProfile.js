@@ -4,22 +4,16 @@ import { Ionicons } from "@expo/vector-icons";
 import { Avatar, IconButton } from "react-native-paper";
 import Icon from "react-native-vector-icons/FontAwesome";
 import { useNavigation } from "@react-navigation/native";
-import * as ImagePicker from 'expo-image-picker';
-import axios from 'axios';
-
 import { AuthContext } from "../context/AuthContext";
 
 const MyProfile = () => {
   const {logout} = useContext(AuthContext);
   const {userInfo} = useContext(AuthContext);
-  const {userToken} = useContext(AuthContext);
 
   const navigation = useNavigation();
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
 
   const [photo, setProfilePicture] = useState();
-  let userID = userInfo.user._id;
-
 
   const handleEditInfo = () => {
     navigation.navigate("EditInfo");
@@ -35,56 +29,13 @@ const MyProfile = () => {
     navigation.goBack();
   };
 
-  const handleEditPicture = async () => {
-    const permissionResult = await ImagePicker.requestMediaLibraryPermissionsAsync();
-    if (permissionResult.granted === false) {
-      alert('Permission to access the camera roll is required!');
-      return;
-    }
-    
-    const imageResult = await ImagePicker.launchImageLibraryAsync();
-    if (!imageResult.canceled) {
-      const selectedImage = imageResult.assets[0];
-      // setProfilePicture({uri: selectedImage.uri})
-
-      console.log(`Selected: ${selectedImage.uri}`);
-      console.log(userInfo.user.photo)
-      // file.mimetype.split("/")[1];
-  
-      const formData = new FormData();
-      formData.append('photo', {
-        // uri: selectedImage.uri,
-        uri: selectedImage.uri,
-      });
-      console.log(`photo ${selectedImage.uri.split("/")[14]}`);
-      console.log(formData.photo)
-      try {
-        const response = await axios.patch(`https://drukebird.onrender.com/api/v1/users/updateMe`, formData, {
-          headers: {
-            'Content-Type': 'multipart/form-data',
-            'headers': {Authorization: `Bearer ${userToken}`}
-          }
-        })
-  
-        console.log('Image uploaded successfully');
-        setProfilePicture(response.data);
-        // console.log("it is the", setProfilePicture)
-        // console.log(response.data)
-      } catch (error) {
-        console.log(error); // Handle any error occurred during the upload
-      }
-    }
-  };
-
   return (
     <View>
       <View style={styles.Headercontainer}>
         <TouchableOpacity onPress={handleGoBack}>
           <Ionicons name="chevron-back" size={24} color="#136D66" />
         </TouchableOpacity>
-
         <Text style={styles.title}>My Profile</Text>
-
         <TouchableOpacity onPress={() => setIsDrawerOpen(!isDrawerOpen)}>
           <Ionicons name="ellipsis-vertical" size={24} color="#136D66" />
         </TouchableOpacity>
@@ -125,21 +76,16 @@ const MyProfile = () => {
 
       <View style={styles.container}>
         <View style={styles.header}>
-          <TouchableOpacity onPress={handleEditPicture}>
+          <TouchableOpacity>
             <Avatar.Image
-              size={100}
+              size={120}
               source={photo}
-            />
-            <IconButton
-              icon="camera"
-              size={20}
-              style={styles.editPictureButton}
             />
           </TouchableOpacity>
 
           <Text style={styles.name}>{userInfo.user.name}</Text>
         </View>
-        <View style={styles.content}>
+        {/* <View style={styles.content}>
           <View style={styles.contentContainer}>
             <Icon name="briefcase" size={20} color="#4E4D4D" />
             <Text style={styles.contentText}>
@@ -154,7 +100,7 @@ const MyProfile = () => {
             <Icon name="tags" size={20} color="#4E4D4D" />
             <Text style={styles.contentText}>From Trashi Yangtse </Text>
           </View>
-        </View>
+        </View> */}
         <View style={styles.checkListContainer}>
           <Text>My Recent CheckList</Text>
           <View style={styles.checklistContentConatiner}>
@@ -203,11 +149,13 @@ const styles = StyleSheet.create({
   header: {
     alignItems: "center",
     paddingVertical: 20,
+    marginTop:20,
     borderBottomColor: "#136D66",
     borderBottomWidth: 1,
     marginHorizontal: 20,
   },
   name: {
+    marginTop:20,
     fontSize: 20,
     fontWeight: "bold",
   },
@@ -236,13 +184,6 @@ const styles = StyleSheet.create({
     marginTop: 10,
     borderBottomColor: "#978D8D",
     borderBottomWidth: 1,
-  },
-  editPictureButton: {
-    position: "absolute",
-    right: 0,
-    bottom: 0,
-    backgroundColor: "#fff",
-    borderRadius: 20,
   },
   title: {
     color: "#136D66",
