@@ -78,9 +78,9 @@ userSchema.pre('save',async function (next){
     next()
 })
 
-userSchema.path('DoB').validate(function (DoB){
+userSchema.path('dob').validate(function (dob){
     var dobRegex = /^(0?[1-9]|1[0-2])[\/](0?[1-9]|[1-2][0-9]|3[01])[\/]\d{4}$/g;
-    return dobRegex.test(DoB);
+    return dobRegex.test(dob);
 }, 'Enter DoB in MM/DD/YYYY')
 
 userSchema.path('password').validate(function (password){
