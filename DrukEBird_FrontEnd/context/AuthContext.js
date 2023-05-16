@@ -15,7 +15,7 @@ export const AuthProvider = ({ children }) => {
   const login = (email, password) => {
     setIsLoading(true);
     axios
-      .post("http://10.9.211.203:4001/api/v1/users/login", {
+      .post(postLogin, {
         email,
         password,
       })

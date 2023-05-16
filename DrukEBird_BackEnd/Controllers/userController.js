@@ -97,7 +97,7 @@ exports.updateMe = async (req, res, next) => {
       const basePath = `${req.protocol}://${req.get("host")}/assets/Users/`;
       filterBody.photo = `${basePath}${fileName}`;
     }
-    const updateUser = await User.findByIdAndUpdate(req.user._id, filterBody, {
+    const updateUser = await User.findByIdAndUpdate(req.user.id, filterBody, {
       new: true,
       runValidators: true,
     },{new:true});
