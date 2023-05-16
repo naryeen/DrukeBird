@@ -11,11 +11,11 @@ app.use('/api/v1/users',userRouter)
 
 app.use('/api/v1/',ForgetPasswordRouter)
 
-app.use(express.static( 'users'));
+//app.use(express.static( 'users'));
 
 app.use('/api/v1/', viewRouter)
 
 app.use(express.static(path.join(__dirname, 'views')))
-app.use(express.static( 'users'));
+//app.use(express.static( 'users'));
 
 module.exports=app;
