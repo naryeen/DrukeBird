@@ -1,30 +1,36 @@
 import React, { useState, useEffect, useContext } from "react";
-import { View, Text, TextInput, Button, StyleSheet, ToastAndroid } from "react-native";
+import {
+  View,
+  Text,
+  TextInput,
+  Button,
+  StyleSheet,
+  ToastAndroid,
+} from "react-native";
 import axios from "axios";
 import { AuthContext } from "../context/AuthContext";
 
 const EditInfo = () => {
   const { userInfo } = useContext(AuthContext);
   const { userToken } = useContext(AuthContext);
-  const [name, setName] = useState();
-  const [email, setEmail] = useState();
-  const [dob, setDob] = useState();
-  const [profession, setProfession] = useState();
+  const [Username, setName] = useState();
+  const [Useremail, setEmail] = useState();
+  const [Userdob, setDob] = useState();
+  const [Userprofession, setProfession] = useState();
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState("");
-  const userID = userInfo.user._id;
 
   const handleUpdateProfile = () => {
     const data = {
-      name,
-      email,
-      dob,
-      profession,
+      name: Username,
+      email: Useremail,
+      dob: Userdob,
+      profession: Userprofession,
     };
 
     setIsLoading(true);
     axios
-      .patch(`https://drukebird.onrender.com/api/v1/users/updateMe`, data,         {
+      .patch(`https://drukebird.onrender.com/api/v1/users/updateMe`, data, {
         headers: {
           Authorization: `Bearer ${userToken}`,
         },
@@ -33,10 +39,6 @@ const EditInfo = () => {
         if (res.data.status === "success") {
           ToastAndroid.show("Profile updated successfully", ToastAndroid.LONG);
           console.log("Profile updated successfully!");
-
-          // setCurrentPassword("");
-          // setNewPassword("");
-          // setConfirmPassword("");
         }
         setIsLoading(false);
       })
@@ -44,8 +46,7 @@ const EditInfo = () => {
         setError(err.response.data.message);
         setIsLoading(false);
       });
-
-    // console.log("Here")
+    console.log("Here");
   };
 
   if (isLoading) {
@@ -61,26 +62,26 @@ const EditInfo = () => {
       <Text style={styles.heading}>Edit Profile</Text>
       <TextInput
         style={styles.input}
-        placeholder="Name"
-        value={userInfo.user.name}
+        placeholder={userInfo.user.name}
+        value={Username}
         onChangeText={(text) => setName(text)}
       />
       <TextInput
         style={styles.input}
-        placeholder="Email"
-        value={userInfo.user.email}
+        placeholder={userInfo.user.email}
+        value={Useremail}
         onChangeText={(text) => setEmail(text)}
       />
       <TextInput
         style={styles.input}
-        placeholder="Date of Birth"
-        value={userInfo.user.dob}
+        placeholder={userInfo.user.dob}
+        value={Userdob}
         onChangeText={(text) => setDob(text)}
       />
       <TextInput
         style={styles.input}
-        placeholder="Profession"
-        value={userInfo.user.profession}
+        placeholder={userInfo.user.profession}
+        value={Userprofession}
         onChangeText={(text) => setProfession(text)}
       />
       <Button title="Update Profile" onPress={handleUpdateProfile} />
@@ -88,7 +89,6 @@ const EditInfo = () => {
     </View>
   );
 };
-
 const styles = StyleSheet.create({
   container: {
     flex: 1,

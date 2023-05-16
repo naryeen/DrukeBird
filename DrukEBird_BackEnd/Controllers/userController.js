@@ -110,7 +110,7 @@ exports.updateMe = async (req, res, next) => {
     // }
 
     // var obj = JSON.parse(req.cookies.token)
-    const updateUser = await User.findByIdAndUpdate(req.user.id, filterBody, {
+    const updateUser = await User.findByIdAndUpdate(req.user._id, filterBody, {
       new: true,
       runValidators: true,
     });

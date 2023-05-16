@@ -3,25 +3,26 @@ import { StyleSheet, View, Text, Image, ToastAndroid } from "react-native";
 
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import axios from "axios";
+import { postLogin } from "../api/api";
 
 export const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
   const [isLoading, setIsLoading] = useState(false);
   const [userToken, setUserToken] = useState(null);
-  const [userInfo, setUserInfo] = useState(null);
+  const [userInfo, setUserInfo] = useState([]);
 
   const login = (email, password) => {
     setIsLoading(true);
     axios
-      .post("https://druk-ebirds.onrender.com/api/v1/users/Login", {
+      .post(postLogin, {
         email,
         password,
       })
       .then((res) => {
         if (res.data.status == "success") {
           ToastAndroid.show("LogIn Successfully", ToastAndroid.LONG);
-          // console.log(res.data)
+          console.log(res.data)
         }
         let userInfo = res.data.data;
         let userToken = res.data.token;
