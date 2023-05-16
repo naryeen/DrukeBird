@@ -1,55 +1,60 @@
 import React, { useState, useContext } from "react";
-import { View, Text, TextInput, Button, StyleSheet } from "react-native";
-import axios from 'axios';
+import { View, Text, TextInput, Button, StyleSheet, ToastAndroid } from "react-native";
+import axios from "axios";
 import { AuthContext } from "../context/AuthContext";
 
 const UpdatePassword = () => {
-  const { userInfo } = useContext(AuthContext);
+  const { userToken } = useContext(AuthContext);
   const [currentPassword, setCurrentPassword] = useState("");
   const [newPassword, setNewPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [error, setError] = useState("");
 
   const handleUpdatePassword = () => {
-    let userID = userInfo.user._id;
     const data = {
-      currentPassword,
-      newPassword,
-      confirmPassword,
+      passwordCurrent: currentPassword,
+      password: newPassword,
+      passwordConfirm: confirmPassword,
     };
-
+  
+    if (newPassword === "" || confirmPassword === "" || currentPassword === "") {
+      setError("All fields are required.");
+      return;
+    }
+  
     if (newPassword !== confirmPassword) {
       setError("New password and confirm password do not match.");
       return;
     }
-
-    // Fetch user's current data including password
-    axios.get(`https://drukebird.onrender.com/api/v1/users/${userID}`)
-      .then((response) => {
-        const userData = response.data;
-        console.log(userData)
-        const currentPasswordFromAPI = userData.password;
-        console.log(currentPasswordFromAPI)
-        
-        // Compare entered current password with the one from the API
-        if (currentPassword !== currentPasswordFromAPI) {
-          setError("Current password is incorrect.");
-          return;
+  
+    console.log(data);
+    axios
+      .patch(
+        "https://drukebird.onrender.com/api/v1/users/updateMyPassword",
+        data,
+        {
+          headers: {
+            Authorization: `Bearer ${userToken}`,
+          },
         }
-
-        // Call API to update password
-        axios.patch(`https://drukebird.onrender.com/api/v1/users/${userID}/updatePassword`, data)
-          .then(() => {
-            console.log("Password updated successfully!");
-          })
-          .catch((err) => {
-            setError(err.response.data.message);
-          });
+      )
+      .then((res) => {
+        if (res.data.status === "success") {
+          ToastAndroid.show("Password updated successfully", ToastAndroid.LONG);
+          console.log("Password updated successfully!");
+          setCurrentPassword("");
+          setNewPassword("");
+          setConfirmPassword("");
+        }
       })
       .catch((err) => {
-        setError(err.response.data.message);
+        if (err.response && err.response.data) {
+          setError(err.response.data.message);
+        } else {
+          setError("An error occurred. Please try again.");
+        }
       });
-  };
+  };  
 
   return (
     <View style={styles.container}>
@@ -60,6 +65,7 @@ const UpdatePassword = () => {
         secureTextEntry={true}
         value={currentPassword}
         onChangeText={(text) => setCurrentPassword(text)}
+        required={true}
       />
       <TextInput
         style={styles.input}
@@ -67,13 +73,16 @@ const UpdatePassword = () => {
         secureTextEntry={true}
         value={newPassword}
         onChangeText={(text) => setNewPassword(text)}
+        required={true}
       />
       <TextInput
         style={styles.input}
         placeholder="Confirm Password"
         secureTextEntry={true}
         value={confirmPassword}
-        onChangeText={(text) => setConfirmPassword(text)}
+        onChangeText={(text) => setConfirmPassword(text)
+        }
+        required={true}
       />
       <Button title="Update Password" onPress={handleUpdatePassword} />
       {error ? <Text style={styles.error}>{error}</Text> : null}

@@ -17,7 +17,7 @@ const MyProfile = () => {
   const navigation = useNavigation();
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
 
-  const [photo, setProfilePicture] = useState(userInfo.user.photo);
+  const [photo, setProfilePicture] = useState();
   let userID = userInfo.user._id;
 
 

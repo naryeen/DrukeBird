@@ -21,9 +21,11 @@ export const AuthProvider = ({ children }) => {
       .then((res) => {
         if (res.data.status == "success") {
           ToastAndroid.show("LogIn Successfully", ToastAndroid.LONG);
+          // console.log(res.data)
         }
         let userInfo = res.data.data;
         let userToken = res.data.token;
+        // console.log(res.data)
 
         setUserInfo(userInfo);
         setUserToken(userToken);

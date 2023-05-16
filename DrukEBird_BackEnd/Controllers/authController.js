@@ -42,13 +42,11 @@ exports.login = async (req, res, next) => {
     if (!user || !(await user.correctPassword(password, user.password))) {
       return next(new AppError("Incorrect Email or password", 401));
     }
-
     createSendToken(user, 200, res);
   } catch (err) {
     res.status(500).json({ error: err.message });
   }
 }
-
 exports.protect = async(req,res,next) =>{
   // console.log(req.headers)
   try{

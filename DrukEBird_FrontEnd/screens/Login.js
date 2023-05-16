@@ -18,18 +18,16 @@ const LogIn = () => {
     email: email,
     password: password,
   }
-
   const userlogin = () => {
     setIsSubmitting(true);
   }
-
   useEffect(() => {
     if (isSubmitting) {
       axios
         //GC WIFI
         //.post('http://10.9.211.203:4001/api/v1/users/Login', user)
         //Hosted in render
-        .post('https://druk-ebirds.onrender.com/api/v1/users/Login', user)
+        .post('https://drukebird.onrender.com/api/v1/users/login', user)
         .then(res => {
           if (res.data.status == "success") {
             ToastAndroid.show('LogIn Successfully',
@@ -41,7 +39,6 @@ const LogIn = () => {
             }, 200)
             var obj = res.data.data.user
             document.cookie = 'token= ' + JSON.stringify(obj)
-
           }
 
         })
