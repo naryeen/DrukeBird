@@ -58,7 +58,6 @@ const EditInfo = () => {
       .then((data) => {
         console.log(data);
         setProfilePicture(data.url);
-        console.log(`Photo: ${photo}`);
       });
   };
 
@@ -69,7 +68,7 @@ const EditInfo = () => {
       profession,
       photo
     }
-    console.log(profileData)
+    console.log(`profileData: ${profileData}`)
     setIsLoading(true);
     axios
       .patch(`https://drukebird.onrender.com/api/v1/users/updateMe`, profileData, {

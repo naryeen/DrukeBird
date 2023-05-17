@@ -79,11 +79,11 @@ const filterObj = (obj, ...allowedFields) => {
 
 exports.updateMe = async (req, res, next) => {
   try {
-    if (req.body.password || req.body.passwordConfirm) {
-      return next(new AppError("Not for password updates", 400));
-    }
-    console.log(req.body);
-    //filtration
+    // if (req.body.password || req.body.passwordConfirm) {
+    //   return next(new AppError("Not for password updates", 400));
+    // }
+    // console.log(req.body);
+    // //filtration
     const filterBody = filterObj(
       req.body,
       "name",
