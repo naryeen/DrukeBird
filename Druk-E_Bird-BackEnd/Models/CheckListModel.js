@@ -48,7 +48,7 @@ const checkListSchema = new mongoose.Schema({
 })
 // mongooose middleware
 
-const CheckList = mongoose.model('User', checkListSchema )
+const CheckList = mongoose.model('CheckList', checkListSchema )
 module.exports = CheckList
 
 
