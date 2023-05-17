@@ -10,20 +10,22 @@ import {
 } from "react-native";
 import * as ImagePicker from "expo-image-picker";
 import { Avatar, IconButton } from "react-native-paper";
-
 import axios from "axios";
 import { AuthContext } from "../context/AuthContext";
 
 const EditInfo = () => {
-  const { userInfo } = useContext(AuthContext);
-  const { userToken } = useContext(AuthContext);
+  const { userInfo, userToken } = useContext(AuthContext);
   const [photo, setProfilePicture] = useState();
-  const [Username, setName] = useState();
-  const [Useremail, setEmail] = useState();
-  const [Userdob, setDob] = useState();
-  const [Userprofession, setProfession] = useState();
+  const [Username, setName] = useState(userInfo.user.name);
+  const [Userdob, setDob] = useState(userInfo.user.dob);
+  const [Userprofession, setProfession] = useState(userInfo.user.profession);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState("");
+
+  const submitData = ()=>{
+    
+
+  }
 
   const handleEditPicture = async () => {
     const permissionResult =
@@ -32,101 +34,72 @@ const EditInfo = () => {
       alert("Permission to access the camera roll is required!");
       return;
     }
-
-    const imageResult = await ImagePicker.launchImageLibraryAsync();
-    if (!imageResult.canceled) {
-      const selectedImage = imageResult.assets[0];
-      // setProfilePicture({uri: selectedImage.uri})
-
-      console.log(`Selected: ${selectedImage.uri}`);
-      console.log(userInfo.user.photo);
-      // file.mimetype.split("/")[1];
-
-      const formData = new FormData();
-      formData.append("photo", {
-        // uri: selectedImage.uri,
+    const data = await ImagePicker.launchImageLibraryAsync();
+    if (!data.canceled) {
+      const selectedImage = data.assets[0];
+      let newFile = {
         uri: selectedImage.uri,
-      });
-      console.log(`photo ${selectedImage.uri.split("/")[14]}`);
-      console.log(formData.photo);
+        type: `profile/${selectedImage.uri.split(".")[1]}`,
+        name: `profile.${selectedImage.uri.split(".")[1]}`,
+      };
+      handleUpload(newFile);
     }
-  };
-  const handleUpdateProfile = () => {
-    const data = {
-      name: Username,
-      email: Useremail,
-      dob: Userdob,
-      profession: Userprofession,
-      photo: setProfilePicture,
-    };
 
-    setIsLoading(true);
-    axios
-      .patch(`https://drukebird.onrender.com/api/v1/users/updateMe`, data, {
-        headers: {
-          "Content-Type": "multipart/form-data",
-          headers: { Authorization: `Bearer ${userToken}` },
-        },
-      })
-      .then(() => {
-        if (res.data.status === "success") {
-          ToastAndroid.show("Profile updated successfully", ToastAndroid.LONG);
-          console.log("Profile updated successfully!");
-        }
-        setIsLoading(false);
-      })
-      .catch((err) => {
-        setError(err.response.data.message);
-        setIsLoading(false);
+  };
+
+  const handleUpload = (photo) => {
+    const data = new FormData();
+    data.append("file", photo);
+    data.append("upload_preset", "DrukEBird_Users");
+    data.append("cloud_name", "cheki");
+
+    fetch("https://api.cloudinary.com/v1_1/cheki/image/upload", {
+      method: "post",
+      body: data,
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        console.log(data);
+        setProfilePicture(data.url);
       });
-    console.log("Here");
   };
 
-  if (isLoading) {
-    return (
-      <View style={styles.container}>
-        <Text>Loading...</Text>
-      </View>
-    );
-  }
+
   return (
-    <View style={styles.container}>
+    <View style={styles.container2}>
       <View style={styles.header}>
         <TouchableOpacity onPress={handleEditPicture}>
           <Avatar.Image size={120} source={photo} />
           <IconButton
-            icon="camera"
+            icon={photo == "" ? "camera" : "check"}
             size={20}
             style={styles.editPictureButton}
           />
         </TouchableOpacity>
       </View>
+
       <View style={styles.container1}>
         <TextInput
           style={styles.input}
-          placeholder={userInfo.user.name}
+          placeholder="Name"
           value={Username}
           onChangeText={(text) => setName(text)}
         />
+
         <TextInput
           style={styles.input}
-          placeholder={userInfo.user.email}
-          value={Useremail}
-          onChangeText={(text) => setEmail(text)}
-        />
-        <TextInput
-          style={styles.input}
-          placeholder={userInfo.user.dob}
+          placeholder="Date of Birth"
           value={Userdob}
           onChangeText={(text) => setDob(text)}
         />
+
         <TextInput
           style={styles.input}
-          placeholder={userInfo.user.profession}
+          placeholder="Profession"
           value={Userprofession}
           onChangeText={(text) => setProfession(text)}
         />
-        <Button title="Update Profile" onPress={handleUpdateProfile} />
+        <Button title="Update Profile" />
         {error ? <Text style={styles.error}>{error}</Text> : null}
       </View>
     </View>
@@ -134,11 +107,19 @@ const EditInfo = () => {
 };
 
 export default EditInfo;
+
 const styles = StyleSheet.create({
+  container: {
+    marginTop: 400,
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  container2: {
+    flex: 1,
+  },
   header: {
     alignItems: "center",
     paddingVertical: 20,
-    marginTop: 150,
     borderBottomColor: "#136D66",
     borderBottomWidth: 1,
     marginHorizontal: 20,
@@ -163,5 +144,9 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     paddingHorizontal: 10,
     marginBottom: 10,
+  },
+  error: {
+    color: "red",
+    marginTop: 10,
   },
 });

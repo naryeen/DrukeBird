@@ -10,21 +10,22 @@
   },
   "dependencies": {
     "@callstack/react-theme-provider": "^3.0.8",
+    "@react-native-async-storage/async-storage": "1.17.11",
     "@react-navigation/drawer": "^6.6.2",
     "@react-navigation/native": "^6.1.6",
     "@react-navigation/stack": "^6.3.16",
     "axios": "^1.4.0",
+    "cloudinary": "^1.37.0",
     "expo": "~48.0.15",
     "expo-image-picker": "~14.1.1",
     "expo-status-bar": "~1.4.4",
     "jwt-decode": "^3.1.2",
     "react": "18.2.0",
-    "react-native": "0.71.7",
+    "react-native": "0.71.8",
     "react-native-image-picker": "^5.3.1",
     "react-native-paper": "^5.7.2",
     "react-native-reanimated": "^2.14.4",
-    "react-native-simple-toast": "^2.0.0",
-    "@react-native-async-storage/async-storage": "1.17.11"
+    "react-native-simple-toast": "^2.0.0"
   },
   "devDependencies": {
     "@babel/core": "^7.20.0",

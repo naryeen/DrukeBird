@@ -11,6 +11,8 @@ export const AuthProvider = ({ children }) => {
   const [isLoading, setIsLoading] = useState(false);
   const [userToken, setUserToken] = useState(null);
   const [userInfo, setUserInfo] = useState([]);
+  // set update 
+  const [isUpdate, setUpdate] = useState(false)
 
   const login = (email, password) => {
     setIsLoading(true);
@@ -30,13 +32,10 @@ export const AuthProvider = ({ children }) => {
 
         setUserInfo(userInfo);
         setUserToken(userToken);
-
         AsyncStorage.setItem("userInfo", JSON.stringify(userInfo));
         AsyncStorage.setItem("userToken", userToken);
-
         console.log(userInfo);
         console.log(userToken);
-
       })
       .catch(err=>{
         let message = 

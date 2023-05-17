@@ -12,6 +12,7 @@ const multerStorage = multer.diskStorage({
     cb(null, `user-${req.user.id}-${Date.now()}.${ext}`);
   },
 });
+
 const multerFilter = (req, file, cb) => {
   if (file.mimetype.startsWith("image")) {
     cb(null, true);
@@ -88,15 +89,16 @@ exports.updateMe = async (req, res, next) => {
       req.body,
       "name",
       "email",
+      "photo",
       "dob",
       "profession",
     );
-
-    if (req.body.photo !== "undefined") {
-      const fileName = req.file.filename;
-      const basePath = `${req.protocol}://${req.get("host")}/assets/Users/`;
-      filterBody.photo = `${basePath}${fileName}`;
-    }
+    // if (req.body.photo !== "undefined") {
+    //   const fileName = req.file.filename;
+    //   // const basePath = `${req.protocol}://${req.get("host")}/assets/Users/`;
+    //   // filterBody.photo = `${basePath}${fileName}`;
+    //   filterBody.photo = fileName;
+    // }
     const updateUser = await User.findByIdAndUpdate(req.user.id, filterBody, {
       new: true,
       runValidators: true,
