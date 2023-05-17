@@ -15,17 +15,14 @@ import { AuthContext } from "../context/AuthContext";
 
 const EditInfo = () => {
   const { userInfo, userToken } = useContext(AuthContext);
-  const [photo, setProfilePicture] = useState();
-  const [Username, setName] = useState(userInfo.user.name);
-  const [Userdob, setDob] = useState(userInfo.user.dob);
-  const [Userprofession, setProfession] = useState(userInfo.user.profession);
+  const [photo, setProfilePicture] = useState(userInfo.user.photo);
+  const [name, setName] = useState(userInfo.user.name);
+  const [dob, setDob] = useState(userInfo.user.dob);
+  const [profession, setProfession] = useState(userInfo.user.profession);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState("");
 
-  const submitData = ()=>{
-    
-
-  }
+  const submitData = () => {};
 
   const handleEditPicture = async () => {
     const permissionResult =
@@ -43,13 +40,13 @@ const EditInfo = () => {
         name: `profile.${selectedImage.uri.split(".")[1]}`,
       };
       handleUpload(newFile);
+      console.log(newFile);
     }
-
   };
 
-  const handleUpload = (photo) => {
+  const handleUpload = (image) => {
     const data = new FormData();
-    data.append("file", photo);
+    data.append("file", image);
     data.append("upload_preset", "DrukEBird_Users");
     data.append("cloud_name", "cheki");
 
@@ -61,15 +58,50 @@ const EditInfo = () => {
       .then((data) => {
         console.log(data);
         setProfilePicture(data.url);
+        console.log(`Photo: ${photo}`);
       });
   };
 
-
+  const handleUpdateProfile = () => {
+    let profileData = {
+      name,
+      dob,
+      profession,
+      photo
+    }
+    console.log(profileData)
+    setIsLoading(true);
+    axios
+      .patch(`https://drukebird.onrender.com/api/v1/users/updateMe`, profileData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+          Authorization: `Bearer ${userToken}`,
+        },
+      })
+      .then((res) => {
+        if (res.data.status === "success") {
+          ToastAndroid.show("Profile updated successfully", ToastAndroid.LONG);
+          console.log("Profile updated successfully!");
+        }
+        setIsLoading(false);
+      })
+      .catch((err) => {
+        setError(err.response.data.error);
+        setIsLoading(false);
+      });
+  };
+  if (isLoading) {
+    return (
+      <View style={styles.container}>
+        <Text>Loading...</Text>
+      </View>
+    );
+  }
   return (
     <View style={styles.container2}>
       <View style={styles.header}>
         <TouchableOpacity onPress={handleEditPicture}>
-          <Avatar.Image size={120} source={photo} />
+          <Avatar.Image size={120} source={{uri: photo}} />
           <IconButton
             icon={photo == "" ? "camera" : "check"}
             size={20}
@@ -77,29 +109,29 @@ const EditInfo = () => {
           />
         </TouchableOpacity>
       </View>
-
       <View style={styles.container1}>
         <TextInput
           style={styles.input}
           placeholder="Name"
-          value={Username}
+          value={name}
           onChangeText={(text) => setName(text)}
         />
 
         <TextInput
           style={styles.input}
           placeholder="Date of Birth"
-          value={Userdob}
+          value={dob}
           onChangeText={(text) => setDob(text)}
         />
 
         <TextInput
           style={styles.input}
           placeholder="Profession"
-          value={Userprofession}
+          value={profession}
           onChangeText={(text) => setProfession(text)}
         />
-        <Button title="Update Profile" />
+        <Button title="Update Profile" onPress={handleUpdateProfile} />
+
         {error ? <Text style={styles.error}>{error}</Text> : null}
       </View>
     </View>

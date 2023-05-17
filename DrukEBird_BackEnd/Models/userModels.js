@@ -16,7 +16,7 @@ const userSchema = new mongoose. Schema({
     },
     photo: {
         type: String,
-        //http://res.cloudinary.com/cheki/image/upload/v1684309596/ietnmi5axvciw3dnornw.jpg
+        default: `http://res.cloudinary.com/cheki/image/upload/v1684309596/ietnmi5axvciw3dnornw.jpg`
         
     },
     dob: {

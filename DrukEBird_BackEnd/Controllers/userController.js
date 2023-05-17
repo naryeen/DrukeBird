@@ -2,28 +2,28 @@ const User = require("./../Models/userModels");
 const AppError = require("../utils/appError");
 const multer = require("multer");
 
-const multerStorage = multer.diskStorage({
-  destination: (req, file, cb) => {
-    cb(null, "./assets/Users");
-  },
-  filename: (req, file, cb) => {
-    // var obj = JSON.parse(req.cookies.token)
-    const ext = file.mimetype.split("/")[1];
-    cb(null, `user-${req.user.id}-${Date.now()}.${ext}`);
-  },
-});
-const multerFilter = (req, file, cb) => {
-  if (file.mimetype.startsWith("image")) {
-    cb(null, true);
-  } else {
-    cb(new AppError("Not an image! Please upload only images.", 400), false);
-  }
-};
-const upload = multer({
-  storage: multerStorage,
-  fileFilter: multerFilter,
-});
-exports.uploadUserPhoto = upload.single("photo");
+// const multerStorage = multer.diskStorage({
+//   destination: (req, file, cb) => {
+//     cb(null, "./assets/Users");
+//   },
+//   filename: (req, file, cb) => {
+//     // var obj = JSON.parse(req.cookies.token)
+//     const ext = file.mimetype.split("/")[1];
+//     cb(null, `user-${req.user.id}-${Date.now()}.${ext}`);
+//   },
+// });
+// const multerFilter = (req, file, cb) => {
+//   if (file.mimetype.startsWith("image")) {
+//     cb(null, true);
+//   } else {
+//     cb(new AppError("Not an image! Please upload only images.", 400), false);
+//   }
+// };
+// const upload = multer({
+//   storage: multerStorage,
+//   fileFilter: multerFilter,
+// });
+// exports.uploadUserPhoto = upload.single("photo");
 
 exports.getAllUsers = async (req, res, next) => {
   try {
@@ -87,16 +87,10 @@ exports.updateMe = async (req, res, next) => {
     const filterBody = filterObj(
       req.body,
       "name",
-      "email",
       "dob",
       "profession",
+      "photo"
     );
-
-    if (req.body.photo !== "undefined") {
-      const fileName = req.file.filename;
-      const basePath = `${req.protocol}://${req.get("host")}/assets/Users/`;
-      filterBody.photo = `${basePath}${fileName}`;
-    }
     const updateUser = await User.findByIdAndUpdate(req.user.id, filterBody, {
       new: true,
       runValidators: true,
