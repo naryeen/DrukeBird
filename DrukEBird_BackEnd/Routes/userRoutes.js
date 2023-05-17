@@ -15,7 +15,7 @@ router.patch(
 
 router.patch(
   "/updateMe",
-  authController.protect,
+  // authController.protect,
   userController.updateMe
 );
 router
