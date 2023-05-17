@@ -1,7 +1,7 @@
 const checklists = require('./../Models/CheckListModel')
 const jwt = require('jsonwebtoken')
 //const promisify = require('util.promisify')
-const { db } = require('./../models/cartModel')
+const { db } = require('./../Models/CheckListModel')
 
 exports.getAllCheckList = async (req, res) => {
     try {
