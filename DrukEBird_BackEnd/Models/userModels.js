@@ -7,7 +7,6 @@ const userSchema = new mongoose. Schema({
     name: {type: String, 
     required:[ true,'Please tell us your name!'],
     },
-
     email: {
         type: String,
         required: [true, 'Please provide your email'],
@@ -15,27 +14,24 @@ const userSchema = new mongoose. Schema({
         lowercase: true, 
         validate: [validator.isEmail ,'Please provide a valid email'],
     },
-
     photo: {
         type: String,
         //http://res.cloudinary.com/cheki/image/upload/v1684309596/ietnmi5axvciw3dnornw.jpg
+        
     },
-
     dob: {
         type: String,
         required:[ true,'Please write us your date of birth!'],
+        
     },
-
     country: {
         type: String, 
         required:[ true,'Please write us your country!'],
     }, 
-
     profession: {
         type: String, 
         required:[ true,'Please write us your profession!'],
-    },
-
+    }, 
     password:{
         type: String, 
         required: [true,'Please provide a password!'],
@@ -55,7 +51,6 @@ const userSchema = new mongoose. Schema({
             message:'Passwords are not the same'
         }
     }, 
-    
     active: {
         type: Boolean, 
         default: true, 
