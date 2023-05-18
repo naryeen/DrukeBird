@@ -1,19 +1,17 @@
-import React, { useState, useContext} from "react";
-import { View, Text, TouchableOpacity, StyleSheet} from "react-native";
+import React, { useState, useContext } from "react";
+import { View, Text, TouchableOpacity, StyleSheet } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
-import { Avatar, IconButton } from "react-native-paper";
+import { Avatar } from "react-native-paper";
 import Icon from "react-native-vector-icons/FontAwesome";
 import { useNavigation } from "@react-navigation/native";
 import { AuthContext } from "../context/AuthContext";
 
 const MyProfile = () => {
-  const {logout} = useContext(AuthContext);
-  const {userInfo} = useContext(AuthContext);
+  const { logout } = useContext(AuthContext);
+  const { userInfo } = useContext(AuthContext);
 
   const navigation = useNavigation();
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
-
-  const [photo, setProfilePicture] = useState();
 
   const handleEditInfo = () => {
     navigation.navigate("EditInfo");
@@ -55,7 +53,7 @@ const MyProfile = () => {
           }}
         >
           <TouchableOpacity onPress={handleEditInfo}>
-            <Text>Edit Information</Text>
+            <Text>Edit Profile</Text>
           </TouchableOpacity>
 
           <TouchableOpacity
@@ -76,31 +74,10 @@ const MyProfile = () => {
 
       <View style={styles.container}>
         <View style={styles.header}>
-          <TouchableOpacity>
-            <Avatar.Image
-              size={120}
-              source={photo}
-            />
-          </TouchableOpacity>
-
+          <Avatar.Image size={120} source={{ uri: userInfo.user.photo }} />
           <Text style={styles.name}>{userInfo.user.name}</Text>
+          <Text style={styles.role}>{userInfo.user.profession}</Text>
         </View>
-        {/* <View style={styles.content}>
-          <View style={styles.contentContainer}>
-            <Icon name="briefcase" size={20} color="#4E4D4D" />
-            <Text style={styles.contentText}>
-              Student at Gyalpozhing College of Information Technology
-            </Text>
-          </View>
-          <View style={styles.contentContainer}>
-            <Icon name="home" size={20} color="#4E4D4D" />
-            <Text style={styles.contentText}>Lives in Thimphu </Text>
-          </View>
-          <View style={styles.contentContainer}>
-            <Icon name="tags" size={20} color="#4E4D4D" />
-            <Text style={styles.contentText}>From Trashi Yangtse </Text>
-          </View>
-        </View> */}
         <View style={styles.checkListContainer}>
           <Text>My Recent CheckList</Text>
           <View style={styles.checklistContentConatiner}>
@@ -149,15 +126,18 @@ const styles = StyleSheet.create({
   header: {
     alignItems: "center",
     paddingVertical: 20,
-    marginTop:20,
+    marginTop: 20,
     borderBottomColor: "#136D66",
     borderBottomWidth: 1,
     marginHorizontal: 20,
   },
   name: {
-    marginTop:20,
+    marginTop: 20,
     fontSize: 20,
     fontWeight: "bold",
+  },
+  role: {
+    fontSize: 18,
   },
   bio: {
     fontSize: 16,

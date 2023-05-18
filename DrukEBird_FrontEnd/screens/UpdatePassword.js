@@ -9,6 +9,7 @@ const UpdatePassword = () => {
   const [newPassword, setNewPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [error, setError] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleUpdatePassword = () => {
     const data = {
@@ -26,7 +27,6 @@ const UpdatePassword = () => {
       setError("New password and confirm password do not match.");
       return;
     }
-  
     console.log(data);
     axios
       .patch(
@@ -54,7 +54,7 @@ const UpdatePassword = () => {
           setError("An error occurred. Please try again.");
         }
       });
-  };  
+  }; 
 
   return (
     <View style={styles.container}>

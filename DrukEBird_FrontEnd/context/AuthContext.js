@@ -11,8 +11,7 @@ export const AuthProvider = ({ children }) => {
   const [isLoading, setIsLoading] = useState(false);
   const [userToken, setUserToken] = useState(null);
   const [userInfo, setUserInfo] = useState([]);
-  // set update 
-  const [isUpdate, setUpdate] = useState(false)
+
 
   const login = (email, password) => {
     setIsLoading(true);
@@ -29,7 +28,6 @@ export const AuthProvider = ({ children }) => {
         let userInfo = res.data.data;
         let userToken = res.data.token;
         // console.log(res.data)
-
         setUserInfo(userInfo);
         setUserToken(userToken);
         AsyncStorage.setItem("userInfo", JSON.stringify(userInfo));
@@ -50,6 +48,10 @@ export const AuthProvider = ({ children }) => {
     setIsLoading(false);
   };
   // console.log(userToken);
+
+  const updateUserInfo = (newUserInfo) => {
+    setUserInfo(newUserInfo);
+  };
 
   const logout = () => {
     setIsLoading(true);
@@ -77,13 +79,12 @@ export const AuthProvider = ({ children }) => {
       console.log(`isLogged in Error ${e}`);
     }
   };
-
   useEffect(() => {
     isLoggedIn();
   }, []);
 
   return (
-    <AuthContext.Provider value={{ login, logout, isLoading, userToken, userInfo }}>
+    <AuthContext.Provider value={{ login, logout, isLoading, userToken, userInfo, updateUserInfo }}>
       {children}
     </AuthContext.Provider>
   );

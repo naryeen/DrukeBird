@@ -14,15 +14,13 @@ import axios from "axios";
 import { AuthContext } from "../context/AuthContext";
 
 const EditInfo = () => {
-  const { userInfo, userToken } = useContext(AuthContext);
+  const { userInfo, userToken, updateUserInfo } = useContext(AuthContext);
   const [photo, setProfilePicture] = useState(userInfo.user.photo);
   const [name, setName] = useState(userInfo.user.name);
   const [dob, setDob] = useState(userInfo.user.dob);
   const [profession, setProfession] = useState(userInfo.user.profession);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState("");
-
-  const submitData = () => {};
 
   const handleEditPicture = async () => {
     const permissionResult =
@@ -49,7 +47,7 @@ const EditInfo = () => {
     data.append("file", image);
     data.append("upload_preset", "DrukEBird_Users");
     data.append("cloud_name", "cheki");
-
+    setIsLoading(true)
     fetch("https://api.cloudinary.com/v1_1/cheki/image/upload", {
       method: "post",
       body: data,
@@ -58,6 +56,8 @@ const EditInfo = () => {
       .then((data) => {
         console.log(data);
         setProfilePicture(data.url);
+        setIsLoading(false)
+
       });
   };
 
@@ -73,7 +73,6 @@ const EditInfo = () => {
     axios
       .patch(`https://drukebird.onrender.com/api/v1/users/updateMe`, profileData, {
         headers: {
-          "Content-Type": "multipart/form-data",
           Authorization: `Bearer ${userToken}`,
         },
       })
@@ -82,6 +81,8 @@ const EditInfo = () => {
           ToastAndroid.show("Profile updated successfully", ToastAndroid.LONG);
           console.log("Profile updated successfully!");
         }
+        console.log(res.data)
+        updateUserInfo(res.data.data);
         setIsLoading(false);
       })
       .catch((err) => {
@@ -102,7 +103,7 @@ const EditInfo = () => {
         <TouchableOpacity onPress={handleEditPicture}>
           <Avatar.Image size={120} source={{uri: photo}} />
           <IconButton
-            icon={photo == "" ? "camera" : "check"}
+            icon="camera"
             size={20}
             style={styles.editPictureButton}
           />
