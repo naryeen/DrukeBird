@@ -11,50 +11,8 @@ const LogIn = () => {
   const navigation = useNavigation();
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
-  const [isSubmitting, setIsSubmitting] = useState(false);
   const{login} = useContext(AuthContext);
 
-  let user = {
-    email: email,
-    password: password,
-  }
-  const userlogin = () => {
-    setIsSubmitting(true);
-  }
-  useEffect(() => {
-    if (isSubmitting) {
-      axios
-        //GC WIFI
-        //.post('http://10.9.211.203:4001/api/v1/users/Login', user)
-        //Hosted in render
-        .post('https://drukebird.onrender.com/api/v1/users/login', user)
-        .then(res => {
-          if (res.data.status == "success") {
-            ToastAndroid.show('LogIn Successfully',
-              ToastAndroid.LONG);
-            setTimeout(()=>{
-              navigation.navigate('MyProfile')
-              // console.log("Herefhbcjdhb")
-              // console.log(res.data.data.user._id)
-            }, 200)
-            var obj = res.data.data.user
-            document.cookie = 'token= ' + JSON.stringify(obj)
-          }
-
-        })
-        .catch(err=>{
-          // JSON.stringify(err)
-          let message = 
-                  typeof err.response !=='undefined'
-                  ?err.response.data.message
-                  :err.message
-
-           ToastAndroid.show(message, 
-              ToastAndroid.SHORT);
-        })
-      setIsSubmitting(false);
-    }
-  }, [isSubmitting, user]);
   return (
     <View style={styles.container}>
       <Image style={styles.image} source={require('../assets/images/logo.png')} />
