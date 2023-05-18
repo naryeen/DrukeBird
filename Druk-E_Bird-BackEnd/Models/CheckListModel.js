@@ -25,20 +25,26 @@ const checkListSchema = new mongoose.Schema({
         required: [true, 'BirdName'],
         default:"null"
     },
-
     Count: {
         type: Number,
         required: [true, 'Count'],
         defualt: 0
     },
-
     EndpointLoaction: {
         type: String,
         required: [true, 'EndPointLoaction!'],
         default:"null"
     },
-
-
+    BirdType: {
+        type: String,
+        enum: ['Adult', 'Juvenile'],
+        default: 'Adult',
+    },
+    JAcounts:{
+        type:Number,
+        require: [true, 'JAcount'],
+        default:0
+    },
     active: {
         type: Boolean,
         default: true,

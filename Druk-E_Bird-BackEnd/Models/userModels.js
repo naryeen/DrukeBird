@@ -19,6 +19,11 @@ const userSchema = new mongoose.Schema({
         lowercase: true,
         validate: [validator.isEmail, 'Please provide a valid email'],
     },
+    photo: {
+        type: String,
+        default: `http://res.cloudinary.com/cheki/image/upload/v1684309596/ietnmi5axvciw3dnornw.jpg`
+        
+    },
 
     dob: {
         type: String,
@@ -33,6 +38,11 @@ const userSchema = new mongoose.Schema({
     profession: {
         type: String,
         required: [true, 'Please provide a profession!'],
+    },
+    photo: {
+        type: String,
+        default: `http://res.cloudinary.com/cheki/image/upload/v1684309596/ietnmi5axvciw3dnornw.jpg`
+        
     },
 
     password: {
@@ -94,6 +104,21 @@ userSchema.methods.correctPassword = async function(
 ){
     return await bcrypt.compare(candidatePassword, userPassword)
 }
+
+userSchema.pre('findOneAndUpdate', async function (next) {
+    const update = this.getUpdate();
+    if (update.password !== '' &&
+    update.password !== undefined &&
+    update.password == update.passwordConfirm) {
+        this.getUpdate().password = await bcrypt.hash(update.password, 12)
+
+        //Delete passwordConfirm Field
+        update.passwordConfirm = undefined
+        next()
+    } else
+    next()
+})
+
 
 const User = mongoose.model('User', userSchema )
 module.exports = User

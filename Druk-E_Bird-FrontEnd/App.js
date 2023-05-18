@@ -16,6 +16,7 @@ import StartbirdingScreen from './Screens/StartBirdingScreen';
 import UnknownBird from './Screens/UnknownBirds';
 
 
+
 const Stack = createStackNavigator();
 
 
@@ -32,7 +33,7 @@ const MainStack = () => {
          <Stack.Screen name="ContactUs" component={ContactUs} options={{headerShown: false}} />
          <Stack.Screen name="Setting" component={Setting} options={{headerShown: false}} />
          <Stack.Screen name="Help" component={Help} options={{headerShown: false}} />
-         <Stack.Screen name="StartBirdingone" component={StartBirdingone} options={{headerShown: false}} />
+         <Stack.Screen name="StartBirdingone" component={StartBirdingone}/>
          <Stack.Screen name="StartBirding" component={StartbirdingScreen} options={{headerShown: false}} />
          <Stack.Screen name="UnknownBirds" component={UnknownBird} options={{headerShown: false}} />
       </Stack.Navigator>

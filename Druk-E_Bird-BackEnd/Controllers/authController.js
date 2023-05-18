@@ -85,3 +85,54 @@ exports.login = async(req, res, next)=>
 
     }
 }
+
+exports.protect = async(req,res,next) =>{
+    // console.log(req.headers)
+    try{
+        // 1) Getting token and check of it's there
+        let token
+        if(req.headers.authorization &&
+            req.headers.authorization.startsWith('Bearer')
+        ){
+            token = req.headers.authorization.split(' ')[1]
+        }
+        if(!token){
+            return next(
+                new AppError('you are not logged in! Please login in to get access.',401),
+            )
+        }
+        // 2) Verification token
+        // const decoded = await promisify(jwt.verify)(token,process.env.JWT_SECRET)
+        const decoded =  jwt.verify(token,process.env.JWT_SECRET)
+        console.log(decoded) 
+        // 3) Check if user still exists
+        const freshUser = await User.findById(decoded.id)
+        if(!freshUser){
+            return next(
+                new AppError('The user belonging to this token no longer exist',401),
+            )
+        }
+        // Grant access to protected route
+        req.user = freshUser;
+        next()
+    }
+    catch(err){
+        res.status(500).json({error:err.message});
+    }
+  }
+  exports.updatePassword = async(req,res,next)=>{
+    try{
+        const user  = await User.findById(req.user._id).select('+password')
+        if(!(await user.correctPassword(req.body.passwordCurrent, user.password))){
+            return next(new AppError('Your current password is wrong',401))
+        }
+        user.password = req.body.password
+        user.passwordConfirm = req.body.passwordConfirm
+        await user.save()
+        createSendToken(user,200,res)
+    }
+    catch(err){
+        res.status(500).json({error:err.message});
+    }
+  }
+    

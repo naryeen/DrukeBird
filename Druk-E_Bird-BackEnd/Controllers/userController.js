@@ -46,5 +46,42 @@ exports.deleteUser = async (req, res) => {
     }
 }
 
+const filterObj = (obj, ...allowedFields) => {
+    const newObj = {};
+    Object.keys(obj).forEach((el) => {
+      if (allowedFields.includes(el)) newObj[el] = obj[el];
+    });
+    return newObj;
+  };
+  
+  exports.updateMe = async (req, res, next) => {
+    try {
+      if (req.body.password || req.body.passwordConfirm) {
+        return next(new AppError("Not for password updates", 400));
+      }
+      console.log(req.body);
+      // //filtration
+      const filterBody = filterObj(
+        req.body,
+        "name",
+        "dob",
+        "profession",
+        "photo"
+      );
+      const updateUser = await User.findByIdAndUpdate(req.user.id, filterBody, {
+        new: true,
+        runValidators: true,
+      },{new:true});
+      
+      res.status(200).json({
+        status: "success",
+        data: { user: updateUser },
+      });
+    } catch (err) {
+      console.log("Here");
+      res.status(500).json({ error: err.message });
+    }
+  };
+  
 
 

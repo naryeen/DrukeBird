@@ -4,44 +4,74 @@ import Button from '../Components/Button';
 import TimePicker from '../Components/TimePicker';
 import DatePicker from '../Components/DatePicker';
 import { MaterialIcons } from '@expo/vector-icons';
-import React, { useState } from "react";
-import RecordTrack from './RecordTrack';
+import React, { useState, useEffect} from "react";
+import RecordTrack from '../Components/RecordTrack';
+import moment from 'moment';
 
 function StartbirdingScreen() {
   const navigation = useNavigation();
-  const navigateHandler = () => {
-    navigation.navigate('StartBirdingone');
-  }
+
+  const navigateHandler = (StartbirdingData) => {
+    if (isLocationEnabled) {
+      navigation.navigate('StartBirdingone', { StartbirdingData: StartbirdingData });
+    } else {
+      navigation.navigate('FirstScreen');
+    }
+  };
 
   const [selectedTime, setSelectedTime] = useState(new Date());
 
-  const handleTimeSelected = (time) => {setSelectedTime(time);};
+  const handleTimeSelected = (time) => {
+    setSelectedTime(time);
+  };
 
   const [selectedDate, setSelectedDate] = useState(new Date());
+
+  const [isLocationEnabled, setIsLocationEnabled] = useState(false);
+
+  const [currentLocation, setCurrentLocation] = useState(null);
+
+  useEffect(() => {
+    if (currentLocation !== null) {
+      console.log(currentLocation);
+    }
+  }, [currentLocation]);
 
   const handleDateSelected = (date) => {
     setSelectedDate(date);
   };
 
+  const StartbirdingdataSave = () => {
+    const StartbirdingData = {
+      selectedTime: moment(selectedTime).format('HH:mm:ss'),
+      selectedDate: moment(selectedDate).format('YYYY-MM-DD'),
+      currentLocation:currentLocation
+    };
+    navigateHandler(StartbirdingData);
+  };
+
+  // console.log(selectedTime);
+  // console.log(selectedDate);
+
   return (
     <View style={styles.container}>
       <View style={styles.Tcontainer}>
-  <TimePicker onTimeSelected={handleTimeSelected} />
-  <View>
-    {selectedTime && (
-      <Text style={styles.Ttext}>
-        Time: {selectedTime.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: true })}
-      </Text>
-    )}
-  </View>
-</View>
+        <TimePicker onTimeSelected={handleTimeSelected} />
+        <View>
+          {selectedTime && (
+            <Text style={styles.Ttext}>
+              Time: {selectedTime.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: true })}
+            </Text>
+          )}
+        </View>
+      </View>
 
       <View style={styles.Dcontainer}>
         <DatePicker onDateSelected={handleDateSelected} />
         <View>
           {selectedDate && (
             <Text style={styles.Dtext}>
-              Date: {selectedDate.toLocaleDateString('en-GB', {day: 'numeric', month: 'numeric', year: 'numeric'})}
+              Date: {selectedDate.toLocaleDateString('en-GB', { day: 'numeric', month: 'numeric', year: 'numeric' })}
             </Text>
           )}
         </View>
@@ -52,13 +82,11 @@ function StartbirdingScreen() {
         <Text style={styles.locationText}>Choose Your Location</Text>
       </View>
 
-        <RecordTrack/>
-        
-      
-        <Button onPress={navigateHandler} styling={styles.buttonview}>
-          Start CheckList
-        </Button>
-     
+      <RecordTrack isLocationEnabled={isLocationEnabled} setIsLocationEnabled={setIsLocationEnabled} currentLocation={currentLocation} setCurrentLocation={setCurrentLocation} />
+      <Button onPress={StartbirdingdataSave} styling={styles.buttonview}>
+        Start CheckList
+      </Button>
+
     </View>
   );
 }
