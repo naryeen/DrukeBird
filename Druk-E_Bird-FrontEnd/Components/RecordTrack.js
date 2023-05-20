@@ -52,7 +52,11 @@ const RecordTrack = ({isLocationEnabled, setIsLocationEnabled , currentLocation,
     try {
       const { status } = await Location.requestForegroundPermissionsAsync();
       if (status === 'granted') {
-        const location = await Location.getCurrentPositionAsync({});
+        var GPSlocation = await Location.getCurrentPositionAsync({});
+        
+        var location = {}
+        location["latitude"] = GPSlocation.coords.latitude
+        location["longitude"] = GPSlocation.coords.longitude
         setCurrentLocation(location);
       } else {
         setIsLocationEnabled(false);

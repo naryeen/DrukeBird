@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from "react";
 import { FAB, ActivityIndicator, MD2Colors } from "react-native-paper";
-import { StyleSheet, View, FlatList, Alert, Text, SafeAreaView } from "react-native";
+import { StyleSheet, View, FlatList, Alert, Text, SafeAreaView, TouchableOpacity, LogBox } from "react-native";
 import Button from "../Components/Button";
 import { useNavigation } from "@react-navigation/native";
 import axios from "axios";
+import { Ionicons } from '@expo/vector-icons';
 import StartBirdingCounter from "../Components/StartBirdingCounter";
 import SearchSpecies from "../Components/SearchSpecies";
 
@@ -31,7 +32,7 @@ const StartBirdingone = ({ route }) => {
   useEffect(() => {
     //console.log(seconds);
   }, [seconds]);
-  
+
   useEffect(() => {
     // console.log(data);
     // console.log(startbirding1data);
@@ -54,12 +55,16 @@ const StartBirdingone = ({ route }) => {
   useEffect(() => {
     navigation.setOptions({
       headerLeft: () => (
-        <Text style={{ fontSize: 18 }}>{formatTime(seconds)}</Text>
-      ),
+        <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+          <TouchableOpacity onPress={() => navigation.goBack()} style={{ marginLeft: 10 }}>
+            <Ionicons name="arrow-back" size={24} color="black" />
+          </TouchableOpacity>
+          <Text style={{ marginLeft: 10, fontSize: 18 }}>
+            {formatTime(seconds)}
+          </Text>
+        </View>),
     });
   }, [navigation, seconds]);
-  //console.log(formatTime(seconds))
-
 
   const handleFabPress = () => {
     Alert.alert(
@@ -83,12 +88,11 @@ const StartBirdingone = ({ route }) => {
     axios
       .get("https://druk-ebird.onrender.com/api/v1/species?limit=6")
       .then((res) => {
-        
         const speciesData = res.data.species.map((item) => ({
           ...item,
           count: 0,
         }));
-        
+
         setData(speciesData);
       })
       .catch((error) => {
@@ -112,22 +116,34 @@ const StartBirdingone = ({ route }) => {
   };
 
   const StartbirdingonedataSave = () => {
-    const StartbirdingoneData = {
-      StartbirdingData: StartbirdingData,
-      startbirding1data: startbirding1data
-    };
-    console.log(StartbirdingoneData)
 
-    // Make an HTTP PATCH request to your backend API endpoint
-    axios
-      .post("https://druk-ebirds.onrender.com/api/v1/checkList", StartbirdingoneData)
-      .then((response) => {
-        // Data successfully post in the database
-        console.log("Data post:", response.data);
-      })
-      .catch((error) => {
-        console.error("Error post data:", error);
-      });
+    var detailOfBirds = []
+    startbirding1data.map((bird) => {
+      if (bird.count) {
+        StartbirdingData["count"] = bird.count
+        const StartbirdingoneData = {
+          StartbirdingData: [StartbirdingData],
+          BirdName: bird.englishname
+        };
+
+        detailOfBirds.push(StartbirdingoneData)
+      }
+    })
+
+    try {
+      // Make an HTTP POST request to your backend API endpoint
+      axios
+        .post("https://druk-ebirds.onrender.com/api/v1/checkList", detailOfBirds)
+        .then((response) => {
+          // Data successfully posted to the database
+          console.log("Data post:", response.data);
+        })
+        .catch((error) => {
+          console.error("Error post data:", error);
+        });
+    } catch (error) {
+      console.error("Error:", error);
+    }
   };
 
 
@@ -135,34 +151,34 @@ const StartBirdingone = ({ route }) => {
   return (
     <View style={styles.container}>
       <SearchSpecies setData={setData} />
-      <SafeAreaView style={{marginTop:59}}>
-      {loading ? (
-        <ActivityIndicator
-          animating={true}
-          color={MD2Colors.green800}
-          size="large"
-          style={{ marginTop: 250, marginBottom: 250 }}
-        />
-      ) : (
-        <FlatList
-          style={{ height: "70%", marginTop: 10, borderRadius: 10 }}
-          data={data}
-          keyExtractor={(item) => item._id}
-          renderItem={renderItem}
-        />
-      )}
+      <SafeAreaView style={{ marginTop: 59 }}>
+        {loading ? (
+          <ActivityIndicator
+            animating={true}
+            color={MD2Colors.green800}
+            size="large"
+            style={{ marginTop: 250, marginBottom: 250 }}
+          />
+        ) : (
+          <FlatList
+            style={{ height: "70%", marginTop: 10, borderRadius: 10 }}
+            data={data}
+            keyExtractor={(item) => item._id}
+            renderItem={renderItem}
+          />
+        )}
 
-      <FAB
-        style={styles.fab}
-        small
-        color="white"
-        icon="plus"
-        onPress={handleFabPress}
-      />
-      <View style={styles.buttonContianer}>
-        <Button styling={styles.submitbutton} onPress={StartbirdingonedataSave}>Submit</Button>
-        <Button styling={styles.stopbutton}>Stop</Button>
-      </View>
+        <FAB
+          style={styles.fab}
+          small
+          color="white"
+          icon="plus"
+          onPress={handleFabPress}
+        />
+        <View style={styles.buttonContianer}>
+          <Button styling={styles.submitbutton} onPress={StartbirdingonedataSave}>Submit</Button>
+          <Button styling={styles.stopbutton}>Stop</Button>
+        </View>
       </SafeAreaView>
     </View>
   );

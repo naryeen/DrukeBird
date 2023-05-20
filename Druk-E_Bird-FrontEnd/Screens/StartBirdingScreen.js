@@ -42,7 +42,7 @@ function StartbirdingScreen() {
   };
 
   const StartbirdingdataSave = () => {
-    const StartbirdingData = {
+    var StartbirdingData = {
       selectedTime: moment(selectedTime).format('HH:mm:ss'),
       selectedDate: moment(selectedDate).format('YYYY-MM-DD'),
       currentLocation:currentLocation
@@ -83,6 +83,7 @@ function StartbirdingScreen() {
       </View>
 
       <RecordTrack isLocationEnabled={isLocationEnabled} setIsLocationEnabled={setIsLocationEnabled} currentLocation={currentLocation} setCurrentLocation={setCurrentLocation} />
+
       <Button onPress={StartbirdingdataSave} styling={styles.buttonview}>
         Start CheckList
       </Button>

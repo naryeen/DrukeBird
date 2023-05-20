@@ -17,8 +17,7 @@ exports.getAllCheckList = async (req, res) => {
 exports.createCheckList = async (req, res) => {
   try{
     //req.user = currentUserId(req)
-
-    const NewCheckList = await checklists.create(req.body)
+    const NewCheckList = await checklists.insertMany(req.body)
     res.json({data: NewCheckList, status: "success"});
 
   }catch (err){
