@@ -27,9 +27,15 @@ const StartBirdingone = ({ route }) => {
   const [startbirding1data, setStartbirding1data] = useState(null);
   const { StartbirdingData } = route.params;
 
+
   useEffect(() => {
-    //console.log(data);
-  }, [data]);
+    //console.log(seconds);
+  }, [seconds]);
+  
+  useEffect(() => {
+    // console.log(data);
+    // console.log(startbirding1data);
+  }, [data, startbirding1data]);
 
   useEffect(() => {
     StartbirdingData;
@@ -52,6 +58,8 @@ const StartBirdingone = ({ route }) => {
       ),
     });
   }, [navigation, seconds]);
+  //console.log(formatTime(seconds))
+
 
   const handleFabPress = () => {
     Alert.alert(
@@ -70,6 +78,7 @@ const StartBirdingone = ({ route }) => {
       { cancelable: false }
     );
   };
+
   useEffect(() => {
     axios
       .get("https://druk-ebird.onrender.com/api/v1/species?limit=6")
@@ -81,13 +90,6 @@ const StartBirdingone = ({ route }) => {
         }));
         
         setData(speciesData);
-        
-        const tempData = speciesData.map((item) => ({
-          englishname: item.englishName,
-          count: 0,
-        }));
-        console.log(tempData)
-        setStartbirding1data(tempData);
       })
       .catch((error) => {
         console.log("API call error");
@@ -103,11 +105,33 @@ const StartBirdingone = ({ route }) => {
           item={item}
           data={data}
           setData={setData}
-          
+          setStartbirding1data={setStartbirding1data}
         />
       </View>
     );
   };
+
+  const StartbirdingonedataSave = () => {
+    const StartbirdingoneData = {
+      StartbirdingData: StartbirdingData,
+      startbirding1data: startbirding1data
+    };
+    console.log(StartbirdingoneData)
+
+    // Make an HTTP PATCH request to your backend API endpoint
+    axios
+      .post("https://druk-ebirds.onrender.com/api/v1/checkList", StartbirdingoneData)
+      .then((response) => {
+        // Data successfully post in the database
+        console.log("Data post:", response.data);
+      })
+      .catch((error) => {
+        console.error("Error post data:", error);
+      });
+  };
+
+
+
   return (
     <View style={styles.container}>
       <SearchSpecies setData={setData} />
@@ -136,7 +160,7 @@ const StartBirdingone = ({ route }) => {
         onPress={handleFabPress}
       />
       <View style={styles.buttonContianer}>
-        <Button styling={styles.submitbutton}>Submit</Button>
+        <Button styling={styles.submitbutton} onPress={StartbirdingonedataSave}>Submit</Button>
         <Button styling={styles.stopbutton}>Stop</Button>
       </View>
       </SafeAreaView>

@@ -1,7 +1,7 @@
 import { View, Text, StyleSheet } from "react-native";
 import { Button } from "react-native-paper";
 
-const StartBirdingCounter = ({ Name, data, setData, item }) => {
+const StartBirdingCounter = ({ Name, data, setData, item, setStartbirding1data}) => {
 
   const handleButtonPress = (action) => {
     const updatedData = data.map((dataItem) => {
@@ -16,6 +16,11 @@ const StartBirdingCounter = ({ Name, data, setData, item }) => {
     });
   
     setData(updatedData);
+    const tempData = updatedData.map((item) => ({
+      englishname: item.englishName,
+      count: item.count,
+    }));
+    setStartbirding1data(tempData);
   };
   
 
