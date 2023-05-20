@@ -42,7 +42,7 @@ const checkListSchema = new mongoose.Schema({
         default:"null"
     },
     Count: {
-        type: Number,
+        type: String,
         required: [true, 'Count'],
         defualt: 0
     },
