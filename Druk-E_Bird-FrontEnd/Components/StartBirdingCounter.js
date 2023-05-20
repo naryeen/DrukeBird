@@ -24,7 +24,6 @@ const StartBirdingCounter = ({ Name, data, setData, item, setStartbirding1data})
    
   };
   
-
   return (
     <View style={styles.container}>
       <Button

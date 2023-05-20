@@ -18,16 +18,14 @@ const currentLocation = new mongoose.Schema({
 const detailSchema = new mongoose.Schema({
     selectedDate: {
         type: String,
-        // type: Date,
-        // required: [true, 'Date' ],
-        // default: moment().format('YYYY-MM-DD'),
+        required: [true, 'Date' ],
+        default: moment().format('YYYY-MM-DD'),
     },
 
     selectedTime: {
         type: String,
-        // type: Date,
-        // required: [true, 'Time'],
-        // default: moment().format('HH:mm:ss'),
+        required: [true, 'Time'],
+        default: moment().format('HH:mm:ss')
     },
     
     currentLocation: currentLocation,
@@ -56,7 +54,7 @@ const BirdsSchema = new mongoose.Schema({
     StartbirdingData: [detailSchema]
 })
 
-const Birds = mongoose.model('Birds', BirdsSchema )
-module.exports = Birds
+const checkList = mongoose.model('checkList', BirdsSchema )
+module.exports = checkList
 
 
