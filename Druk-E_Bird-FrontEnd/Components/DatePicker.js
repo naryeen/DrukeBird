@@ -27,7 +27,7 @@ const DatePicker = ({ onDateSelected }) => {
             {showPicker && (
                 <DateTimePicker
                     mode="date"
-                    display="spinner"
+                    display="default"
                     value={selectedDate}
                     onChange={handleDateChange}
                 />

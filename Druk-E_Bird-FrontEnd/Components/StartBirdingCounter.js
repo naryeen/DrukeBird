@@ -1,72 +1,33 @@
-// import React, { useState } from 'react';
-// import { View, Text, StyleSheet } from 'react-native';
-// import { Button } from 'react-native-paper';
+import { View, Text, StyleSheet } from "react-native";
+import { Button } from "react-native-paper";
 
-// const StartBirdingCounter = ({Name, count,setCount}) => {
+const StartBirdingCounter = ({ Name, data, setData, item }) => {
+
+  const handleButtonPress = (action) => {
+    const updatedData = data.map((dataItem) => {
+      if (dataItem._id === item._id) {
+        if (action === "increase") {
+          return { ...dataItem, count: dataItem.count + 1 };
+        } else if (action === "decrease" && dataItem.count > 0) {
+          return { ...dataItem, count: dataItem.count - 1 };
+        }
+      }
+      return dataItem;
+    });
   
-//   function countIt(){
-//     if(!!count){
-//       setCount(count-1)
-//     } 
-//   }
-
-//   return (
-//     <View style={styles.container}>
-//       <Button icon="plus-box-outline"  onPress={() => setCount(count + 1)}/>
-//       <Text style={styles.countText}>{count}</Text>
-//       <Text style={styles.speciesText}>{Name}</Text>
-//       <Button icon="minus-box-outline" onPress={() => countIt()}/>
-//     </View>
-    
-//   );
-// };
-
-// const styles = StyleSheet.create({
-//     container:{
-//       flex:1,
-//         flexDirection: "row",
-//         justifyContent: 'space-between',
-//         borderWidth:1,
-//         marginTop:10
-//     },
-//     countText:{
-//         marginTop:10,
-//         fontWeight:"bold"
-//     },
-//     speciesText:{
-//         marginTop:7,
-//         marginLeft:20,
-//         fontSize:16
-//     }
-// });
-
-// export default StartBirdingCounter;
-
-import React, { useState } from 'react';
-import { View, Text, StyleSheet } from 'react-native';
-import { Button } from 'react-native-paper';
-
-const StartBirdingCounter = ({ Name, count, setCount }) => {
-  function countIt() {
-    if (!!count) {
-      setCount(count - 1);
-    }
-  }
-
-  function handleButtonPress(name) {
-    if (name === 'increase') {
-      setCount(count + 1);
-    } else if (name === 'change') {
-      setCount(0);
-    }
-  }
+    setData(updatedData);
+  };
+  
 
   return (
     <View style={styles.container}>
-      <Button icon="plus-box-outline" onPress={() => handleButtonPress('increase')} />
-      <Text style={styles.countText}>{count}</Text>
+      <Button
+        icon="plus-box-outline"
+        onPress={() => handleButtonPress("increase")}
+      />
+      <Text style={styles.countText}>{item.count}</Text>
       <Text style={styles.speciesText}>{Name}</Text>
-      <Button icon="minus-box-outline" onPress={countIt} />
+      <Button icon="minus-box-outline" onPress={() => handleButtonPress("decrease")}  />
     </View>
   );
 };
@@ -74,14 +35,14 @@ const StartBirdingCounter = ({ Name, count, setCount }) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    flexDirection: 'row',
-    justifyContent: 'space-between',
+    flexDirection: "row",
+    justifyContent: "space-between",
     borderWidth: 1,
     marginTop: 10,
   },
   countText: {
     marginTop: 10,
-    fontWeight: 'bold',
+    fontWeight: "bold",
   },
   speciesText: {
     marginTop: 7,

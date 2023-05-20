@@ -1,12 +1,11 @@
 import { useNavigation } from '@react-navigation/native';
 import {StyleSheet, Text, View, Image} from 'react-native';
 import Button from '../Components/Button';
-// import CalendarScreen from '../Components/CalenderScreen';
 
 function FirstScreen () { 
   const navigation = useNavigation();
   const navigateHandler = () => {
-    navigation.navigate('LogIn')
+    navigation.navigate('Login')
   }
 
   return (

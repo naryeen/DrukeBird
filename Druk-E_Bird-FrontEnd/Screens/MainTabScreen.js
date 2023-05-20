@@ -24,7 +24,8 @@ const MainTabScreen = () => (
             options={{tabBarLabel: 'Home',
             activeColor:'green',
             tabBarColor:'green',
-            tabBarIcon: () => (<FontAwesome5 name="home" size={29} color="white" />),}}/>
+            tabBarIcon: () => (<FontAwesome5 name="home" 
+            size={29} color="white" />),}}/>
         <Tab.Screen
             name="StartBirding"
             component={StartBirdingScreen}

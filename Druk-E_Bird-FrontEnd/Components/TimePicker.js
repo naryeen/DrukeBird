@@ -27,7 +27,7 @@ const TimePicker = ({ onTimeSelected }) => {
       {showPicker && (
         <DateTimePicker
           mode="time"
-          display="spinner"
+          display="default"
           value={selectedTime}
           onChange={handleTimeChange}
         />

@@ -136,7 +136,7 @@ return (
     <Button styling={styles.buttonstyle} onPress ={()=> register()}>Create Account</Button>
     <Text style={styles.createtext}>
     Already have an account?
-      <Text style={styles.loginText} onPress={()=>navigation.replace('LogIn')}>Login</Text>
+      <Text style={styles.loginText} onPress={()=>navigation.replace('Login')}>Login</Text>
     </Text>
     </ScrollView>
     </View>

@@ -15,7 +15,7 @@ function StartbirdingScreen() {
     if (isLocationEnabled) {
       navigation.navigate('StartBirdingone', { StartbirdingData: StartbirdingData });
     } else {
-      navigation.navigate('FirstScreen');
+      navigation.navigate('StartBirdingTwo');
     }
   };
 
@@ -33,7 +33,7 @@ function StartbirdingScreen() {
 
   useEffect(() => {
     if (currentLocation !== null) {
-      console.log(currentLocation);
+      currentLocation
     }
   }, [currentLocation]);
 

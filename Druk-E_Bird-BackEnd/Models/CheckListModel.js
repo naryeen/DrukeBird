@@ -1,5 +1,19 @@
 const mongoose = require ('mongoose')
 
+const currentLocation = new mongoose.Schema({
+    latitude:{
+        type:Number,
+        required: [true, 'latitude' ],
+        default:0
+    },
+
+    longtitude:{
+        type:Number,
+        required: [true, 'longtitude' ],
+        default:0
+    }
+})
+
 const checkListSchema = new mongoose.Schema({
     Date: {
         type: Date,
@@ -13,12 +27,14 @@ const checkListSchema = new mongoose.Schema({
         default: Date.now
     },
 
-    Location: {
-        type: Date,
-        type: [Number], // Array of numbers representing latitude and longitude
-        default: [0, 0],// Default location set to [0, 0] (latitude, longitude)
-        required:[true, 'Location'],
-    },
+    // Location: {
+    //     type: String,
+    //     type: [Number], // Array of numbers representing latitude and longitude
+    //     default: [0, 0],// Default location set to [0, 0] (latitude, longitude)
+    //     required:[true, 'Location'],
+    // },
+    
+    Location: currentLocation,
    
     BirdName: {
         type: String,

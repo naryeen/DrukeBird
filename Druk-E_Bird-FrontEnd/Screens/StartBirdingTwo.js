@@ -1,0 +1,177 @@
+import React, { useState, useEffect } from 'react';
+import {FAB, ActivityIndicator, MD2Colors } from 'react-native-paper';
+import {StyleSheet,View, FlatList, Alert, Text} from 'react-native';
+import Button from '../Components/Button';
+import { useNavigation } from '@react-navigation/native';
+import axios from "axios";
+import StartBirdingCounter from '../Components/StartBirdingCounter';
+import SearchSpecies from '../Components/SearchSpecies';
+import HeaderDateTimePicker from '../Components/HeaderDateTimePicker';
+
+const StartBirdingTwo = ({route}) => {
+  const navigation = useNavigation();
+  const [data, setData] = useState([]);
+  const [loading,setLoading] = useState(true)
+
+  const handleFabPress = () => {
+    Alert.alert(
+      'Alert ',
+      'Do you want to add the unknown birds?',
+      [
+        {
+          text: 'NO',
+          style: 'cancel',
+        },
+        {
+          text: 'YES',
+          onPress: () => navigation.navigate('UnknownBirds')
+         
+        },
+      ],
+      { cancelable: false }
+    );
+  };
+  useEffect(() => {
+    axios.get('https://druk-ebird.onrender.com/api/v1/species?limit=40')
+      .then(res => {
+        //setData(res.data.species);
+        const speciesData = res.data.species.map(item => ({ ...item, count: 0 }));
+        setData(speciesData);
+        
+      })
+      .catch(error => {
+        console.log('API call error')
+      })
+      .finally(()=> setLoading(false))
+  }, []);
+
+
+//Fisrt apporach
+  // const renderItem = ({item}) => {
+  //   return (
+  //     <View>
+  //       <StartBirdingCounter Name={item.englishName} count={count} setCount={setCount}></StartBirdingCounter>
+  //     </View>
+  //   );
+  // };
+///Second appoarch
+  // const renderItem = ({ item }) => {
+  //   const handleCountChange = (action) => {
+  //     if (action === 'increase') {
+  //       setCount((prevCount) => prevCount + 1);
+  //     } else if (action === 'change') {
+  //       setCount(0);
+  //     }
+  //   };
+  
+  //   return (
+  //     <View>
+  //       <StartBirdingCounter Name={item.englishName} count={count} setCount={handleCountChange} />
+  //     </View>
+  //   );
+  // };
+  const handleCountChange = (action, index) => {
+    setData(prevData => {
+      const updatedData = [...prevData];
+      const currentItem = updatedData[index];
+  
+      if (action === 'increase') {
+        currentItem.count += 1;
+      } else if (action === 'change') {
+        currentItem.count = 0;
+      }
+  
+      return updatedData;
+    });
+  };
+
+  const renderItem = ({ item, index }) => {
+    // const handleCountChange = (action) => {
+    //       if (action === 'increase') {
+    //         setCount((prevCount) => prevCount + 1);
+    //       } else if (action === 'change') {
+    //         setCount(0);
+    //       }
+    //     };
+    return (
+      <View>
+        <StartBirdingCounter
+          Name={item.englishName}
+          count={item.count}
+          setCount={action => handleCountChange(action, index)}
+        />
+      </View>
+    );
+  };
+  return (
+    <View style={styles.container}>
+      
+      <HeaderDateTimePicker/>
+      
+      <SearchSpecies setData={setData}/>
+      
+    {loading ? (
+        <ActivityIndicator animating={true} color={MD2Colors.green800} size="large" style={{marginTop:250, marginBottom:250}} />
+      ) : 
+      (
+    <FlatList style={{height:"70%", marginTop:10, borderRadius: 10}}
+        data={data}
+        keyExtractor={item => item._id}
+        renderItem={renderItem}
+      />
+      
+      )} 
+      
+    <FAB
+    style={styles.fab}
+    small
+    color='white'
+    icon="plus"
+    onPress={handleFabPress}
+    
+  />
+    <View style={styles.buttonContianer}>
+      <Button styling={styles.submitbutton}>Submit</Button>
+      <Button styling={styles.stopbutton}>Stop</Button>
+    </View>
+    </View>
+  );
+};
+
+const styles = StyleSheet.create({
+    container: {
+      flex:1,
+      flexDirection:"column",
+      alignItems: 'center',
+      paddingLeft:10,
+      paddingRight:10
+    },
+    
+    buttonContianer:{
+      flexDirection:"row",
+      marginTop:10,
+      
+    },
+    submitbutton:{
+      width:163,
+      marginRight:10,
+      height:50,
+      borderRadius:7,
+    },
+    stopbutton:{
+      width:163,
+      marginLeft:10,
+      height:50,
+      borderRadius:7,
+    },
+    fab: {
+      marginLeft:290,
+      marginTop:10,
+      right: 0,
+      bottom: 0,
+      backgroundColor:"#136D66"
+    },
+    
+  });
+
+export default StartBirdingTwo;

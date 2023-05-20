@@ -28,7 +28,6 @@ const createSendToken = (user, statusCode, res) =>
 }
 
 exports.signup=async(req, res, next)=> {
-    //console.log("this is authcontoller",req)
     try
     {   
         
@@ -43,7 +42,6 @@ exports.signup=async(req, res, next)=> {
 }
     catch(err)
     {   
-        // console.log("catch ", Object.values(err.errors).map(val => val.message)[0]);
         res.status(400).json({message: Object.values(err.errors).map(val => val.message)[0]});
         
     } 
