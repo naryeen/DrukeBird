@@ -8,6 +8,7 @@ router
     .route('/')
     .get(checkListController.getAllCheckList)
     .post(checkListController.createCheckList)
+    .patch(checkListController.updateCheckList)
 
 router
     .route('/:id')
