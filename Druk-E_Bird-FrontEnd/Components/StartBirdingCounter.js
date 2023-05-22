@@ -21,7 +21,6 @@ const StartBirdingCounter = ({ Name, data, setData, item, setStartbirding1data})
       count: item.count,
     }));
     setStartbirding1data(tempData);
-   
   };
   
   return (

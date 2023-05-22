@@ -35,7 +35,7 @@ const StartBirdingone = ({ route }) => {
 
   useEffect(() => {
     // console.log(data);
-    // console.log(startbirding1data);
+    //console.log(startbirding1data);
   }, [data, startbirding1data]);
 
   useEffect(() => {
@@ -120,15 +120,21 @@ const StartBirdingone = ({ route }) => {
     var detailOfBirds = []
     startbirding1data.map((bird) => {
       if (bird.count) {
-        StartbirdingData["count"] = bird.count
-        const StartbirdingoneData = {
-          StartbirdingData: [StartbirdingData],
-          BirdName: bird.englishname
-        };
+        var temp = [{
+          "count": bird.count,
+          "currentLocation": StartbirdingData.currentLocation,
+          "selectedDate": StartbirdingData.selectedDate,
+          "selectedTime": StartbirdingData.selectedTime,
+        }]
 
+        const StartbirdingoneData = {
+          "StartbirdingData": temp,
+          "BirdName": bird.englishname,
+        };
         detailOfBirds.push(StartbirdingoneData)
       }
     })
+    // console.log("detailOfBirds ", detailOfBirds)
 
     try {
       // Make an HTTP POST request to your backend API endpoint
@@ -145,9 +151,6 @@ const StartBirdingone = ({ route }) => {
       console.error("Error:", error);
     }
   };
-
-
-
   return (
     <View style={styles.container}>
       <SearchSpecies setData={setData} />
