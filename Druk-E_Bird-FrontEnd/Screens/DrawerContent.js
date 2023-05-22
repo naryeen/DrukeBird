@@ -2,7 +2,6 @@
 import { View, StyleSheet, Alert, TouchableOpacity, Text, } from 'react-native';
 
 import { Octicons } from '@expo/vector-icons';
-import { Feather } from '@expo/vector-icons';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { MaterialIcons } from '@expo/vector-icons';
 import { DrawerContentScrollView, DrawerItem } from '@react-navigation/drawer';
@@ -55,16 +54,6 @@ export function DrawerContent(props) {
               label="About"
               labelStyle={{ color: 'white' }}
               onPress={() => navigation.navigate('About')}
-            />
-          </Drawer.Section>
-          <Drawer.Section style={styles.drawerSection}>
-            <DrawerItem
-              icon={({ color, size }) => (
-                <Feather name="settings" size={24} color="white" />
-              )}
-              label="Setting"
-              labelStyle={{ color: 'white' }}
-              onPress={() => navigation.navigate('Setting')}
             />
           </Drawer.Section>
           <Drawer.Section style={styles.drawerSection}>

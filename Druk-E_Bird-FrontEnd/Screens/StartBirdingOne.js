@@ -1,12 +1,11 @@
 import React, { useState, useEffect } from "react";
-import { FAB, ActivityIndicator, MD2Colors } from "react-native-paper";
-import { StyleSheet, View, FlatList, Alert, Text, SafeAreaView, TouchableOpacity, LogBox } from "react-native";
+import { FAB, ActivityIndicator, MD2Colors, Searchbar, ToastAndroid } from "react-native-paper";
+import { StyleSheet, View, FlatList, Alert, Text, SafeAreaView, TouchableOpacity} from "react-native";
 import Button from "../Components/Button";
 import { useNavigation } from "@react-navigation/native";
 import axios from "axios";
 import { Ionicons } from '@expo/vector-icons';
 import StartBirdingCounter from "../Components/StartBirdingCounter";
-import SearchSpecies from "../Components/SearchSpecies";
 
 const formatTime = (time) => {
   const hours = Math.floor(time / 3600);
@@ -25,7 +24,11 @@ const StartBirdingone = ({ route }) => {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
   const [seconds, setSeconds] = useState(0);
-  const [startbirding1data, setStartbirding1data] = useState(null);
+  const [startbirding1data, setStartbirding1data] = useState([]);
+  const [searchQuery, setSearchQuery] = useState("");
+  const [filteredData, setFilteredData] = useState([]);
+  const [searchFound, setSearchFound] = useState(true);
+  const [query, setQuery] = useState("");
   const { StartbirdingData } = route.params;
 
 
@@ -34,8 +37,7 @@ const StartBirdingone = ({ route }) => {
   }, [seconds]);
 
   useEffect(() => {
-    // console.log(data);
-    //console.log(startbirding1data);
+    handleSearch(query);
   }, [data, startbirding1data]);
 
   useEffect(() => {
@@ -86,7 +88,7 @@ const StartBirdingone = ({ route }) => {
 
   useEffect(() => {
     axios
-      .get("https://druk-ebird.onrender.com/api/v1/species?limit=6")
+      .get("https://druk-ebird.onrender.com/api/v1/species?limit=40")
       .then((res) => {
         const speciesData = res.data.species.map((item) => ({
           ...item,
@@ -94,6 +96,7 @@ const StartBirdingone = ({ route }) => {
         }));
 
         setData(speciesData);
+        setFilteredData(speciesData);
       })
       .catch((error) => {
         console.log("API call error");
@@ -101,13 +104,25 @@ const StartBirdingone = ({ route }) => {
       .finally(() => setLoading(false));
   }, []);
 
+  const handleSearch = (query) => {
+    setSearchQuery(query);
+  
+    const filtered = data.filter((item) =>
+      item.englishName.toLowerCase().includes(query.toLowerCase())
+    );
+  
+    setFilteredData(filtered);
+    setSearchFound(filtered.length > 0);
+  };
+
   const renderItem = ({ item, index }) => {
     return (
       <View>
         <StartBirdingCounter
           Name={item.englishName}
           item={item}
-          data={data}
+          //data = {data}
+          data={searchQuery.length > 0 ? filteredData : data}
           setData={setData}
           setStartbirding1data={setStartbirding1data}
         />
@@ -134,7 +149,6 @@ const StartBirdingone = ({ route }) => {
         detailOfBirds.push(StartbirdingoneData)
       }
     })
-    // console.log("detailOfBirds ", detailOfBirds)
 
     try {
       // Make an HTTP POST request to your backend API endpoint
@@ -142,6 +156,8 @@ const StartBirdingone = ({ route }) => {
         .post("https://druk-ebirds.onrender.com/api/v1/checkList", detailOfBirds)
         .then((response) => {
           // Data successfully posted to the database
+        //   ToastAndroid.show('Data successfully posted', 
+        // ToastAndroid.LONG);
           console.log("Data post:", response.data);
         })
         .catch((error) => {
@@ -153,8 +169,18 @@ const StartBirdingone = ({ route }) => {
   };
   return (
     <View style={styles.container}>
-      <SearchSpecies setData={setData} />
-      <SafeAreaView style={{ marginTop: 59 }}>
+      <SafeAreaView>
+
+      <Searchbar
+        placeholder="Search any birds"
+        onChangeText={(text) => {
+          setQuery(text);
+          handleSearch(text);
+        }}
+        value={searchQuery}
+        inputStyle={{ paddingBottom: 19 }}
+        style={styles.searchbar}/>
+
         {loading ? (
           <ActivityIndicator
             animating={true}
@@ -163,14 +189,19 @@ const StartBirdingone = ({ route }) => {
             style={{ marginTop: 250, marginBottom: 250 }}
           />
         ) : (
+          <>
+          {!searchFound && searchQuery.length > 0 && (
+            <Text style={styles.searchNotFoundText}>Can't find your bird name</Text>
+          )}
           <FlatList
             style={{ height: "70%", marginTop: 10, borderRadius: 10 }}
-            data={data}
+            //data={data}
+            data={searchQuery.length > 0 ? filteredData : data}
             keyExtractor={(item) => item._id}
             renderItem={renderItem}
           />
+          </>
         )}
-
         <FAB
           style={styles.fab}
           small
@@ -219,6 +250,20 @@ const styles = StyleSheet.create({
     bottom: 0,
     backgroundColor: "#136D66",
   },
+  searchbar: {
+    marginTop: 5,
+    height: 40,
+    borderRadius: 10,
+    backgroundColor: 'white',
+    borderColor: 'black',
+    borderWidth: 1,
+  },
+  searchNotFoundText:{
+    fontSize:16,
+    textAlign:'center',
+    fontWeight:'bold',
+    marginTop:30
+  }
 });
 
 export default StartBirdingone;

@@ -6,7 +6,6 @@ import UpdatePassword from "../Screens/UpdatePassword";
 import MyDrawer from "../Main";
 import About from "../Navigation/AboutUs"
 import ContactUs from "../Navigation/ContactUs"
-import Setting from "../Navigation/Setting"
 import Help from "../Navigation/Help"
 import StartbirdingScreen from "../Screens/StartBirdingScreen";
 import StartBirdingone from "../Screens/StartBirdingOne"
@@ -24,7 +23,6 @@ const AppStack = () => {
       <Stack.Screen name="updateMyPassword" component={UpdatePassword} options={{ headerShown: false }}/>
       <Stack.Screen name="About" component={About} options={{headerShown: false}} />
       <Stack.Screen name="ContactUs" component={ContactUs} options={{headerShown: false}} />
-      <Stack.Screen name="Setting" component={Setting} options={{headerShown: false}} />
       <Stack.Screen name="Help" component={Help} options={{headerShown: false}} />
       <Stack.Screen name="StartBirdingone" component={StartBirdingone}/>
       <Stack.Screen name="StartBirding" component={StartbirdingScreen} options={{headerShown: false}} />
