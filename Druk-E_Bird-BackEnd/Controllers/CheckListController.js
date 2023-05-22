@@ -6,7 +6,17 @@ const { db } = require('./../Models/CheckListModel')
 exports.getAllCheckList = async (req, res) => {
     try {
 
-    const checklists1 = await checklists.find()
+      const birdName = req.query.bird_name || "";
+
+
+
+    const checklists1 = await checklists.find({
+      BirdName: {$regex: `^${birdName}`, $options: "i"}
+    }).limit(2)
+
+    console.log(checklists1)
+
+
     res.status(200).json({data:checklists1,status: 'success'})
 
   } catch (err) {
