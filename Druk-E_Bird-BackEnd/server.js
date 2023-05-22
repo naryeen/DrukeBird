@@ -12,7 +12,10 @@ mongoose.connect(DB).then((con)=>{
     console.log('DB connection succesful')
 }).catch(error =>console.log(error));
 
-app.use(cors())
+app.use(cors({
+    methods:"GET, POST, DELETE, PATCH",
+    credentials:true
+}))
 
 const port=4001
 app.listen(port, ()=>{
