@@ -121,7 +121,6 @@ const StartBirdingone = ({ route }) => {
         <StartBirdingCounter
           Name={item.englishName}
           item={item}
-          //data = {data}
           data={searchQuery.length > 0 ? filteredData : data}
           setData={setData}
           setStartbirding1data={setStartbirding1data}
