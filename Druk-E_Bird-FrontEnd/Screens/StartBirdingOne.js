@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { FAB, ActivityIndicator, MD2Colors, Searchbar, ToastAndroid } from "react-native-paper";
 import { StyleSheet, View, FlatList, Alert, Text, SafeAreaView, TouchableOpacity} from "react-native";
 import Button from "../Components/Button";
@@ -6,6 +6,7 @@ import { useNavigation } from "@react-navigation/native";
 import axios from "axios";
 import { Ionicons } from '@expo/vector-icons';
 import StartBirdingCounter from "../Components/StartBirdingCounter";
+import { AuthContext } from "../Context/AuthContext";
 
 
 const formatTime = (time) => {
@@ -30,10 +31,9 @@ const StartBirdingone = ({ route }) => {
   const [filteredData, setFilteredData] = useState([]);
   const [searchFound, setSearchFound] = useState(true);
   const [query, setQuery] = useState("");
+  const { userInfo } = useContext(AuthContext);
+  const name = userInfo.user.name
   const { StartbirdingData } = route.params;
-  // console.log(userInfo)
-
-
 
   useEffect(() => {
     //console.log(seconds);
@@ -157,15 +157,19 @@ const StartBirdingone = ({ route }) => {
           "observer":StartbirdingData.userName
         }]
 
+        const randomNumber = Math.floor(Math.random() * 1000);
+
         const StartbirdingoneData = {
           "StartbirdingData": temp,
-          "BirdName": bird.englishname,
+          "CheckListName":`${name}-${randomNumber}`,
+          "BirdName": bird.englishname
         };
         detailOfBirds.push(StartbirdingoneData)
-        console.log(temp)
+        console.log(StartbirdingoneData)
       }
+      
     })
-
+    
     try {
       // Make an HTTP POST request to your backend API endpoint
       axios

@@ -57,6 +57,11 @@ const BirdsSchema = new mongoose.Schema({
         required: [true, 'BirdName'],
         default:"null"
     },
+    CheckListName: {
+        type: String,
+        required: [true, 'CheckListName'],
+        default:"null"
+    },
     StartbirdingData: [detailSchema]
 })
 

@@ -23,7 +23,6 @@ function NotSubmitted() {
 
   const renderItem = ({ item }) => {
     console.log("item", item); // Add this line to log the item
-    console.log("i am here");
     return (
       <View>
         <View style={{marginLeft:30}}>
