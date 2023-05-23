@@ -49,7 +49,7 @@ function NotSubmitted() {
     <View style={{ flex: 1 }}>
       <FlatList
         data={data}
-        keyExtractor={(item) => item._id}
+        keyExtractor={(item) => item._id.toString()}
         renderItem={renderItem}
       />
     </View>

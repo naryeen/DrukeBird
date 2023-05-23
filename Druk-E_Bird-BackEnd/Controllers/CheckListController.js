@@ -12,7 +12,8 @@ exports.getAllCheckList = async (req, res) => {
 
     const checklists1 = await checklists.find({
       BirdName: {$regex: `^${birdName}`, $options: "i"}
-    }).limit(2)
+    })
+    //.limit(2)
 
     console.log(checklists1)
 
