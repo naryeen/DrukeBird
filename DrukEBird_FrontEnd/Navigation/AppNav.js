@@ -4,6 +4,7 @@ import { NavigationContainer } from "@react-navigation/native";
 import { AuthContext } from "../context/AuthContext";
 import AppStack from "./AppStack";
 import AuthStack from "./AuthStack";
+import UnknownBird from "../screens/UnknownBirds";
 
 const AppNav = () => {
   const { isLoading, userToken } = useContext(AuthContext);
@@ -16,7 +17,8 @@ const AppNav = () => {
   }
   return (
     <NavigationContainer>
-      {userToken !== null ? <AppStack /> : <AuthStack />}
+      {/* {userToken !== null ? <AppStack /> : <AuthStack />} */}
+      <UnknownBird/>
     </NavigationContainer>
   );
   
