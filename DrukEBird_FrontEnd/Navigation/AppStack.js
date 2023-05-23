@@ -7,7 +7,6 @@ import EditInfo from "../screens/EditInfo";
 import UpdatePassword from "../screens/UpdatePassword";
 
 const Stack = createStackNavigator();
-
 const AppStack = () => {
   return (
     <Stack.Navigator>

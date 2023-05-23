@@ -122,7 +122,6 @@ const EditInfo = () => {
 };
 
 export default EditInfo;
-
 const styles = StyleSheet.create({
   container: {
     alignItems: "center",
