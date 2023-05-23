@@ -3,7 +3,7 @@ import { Searchbar } from 'react-native-paper';
 import { StyleSheet, View } from 'react-native';
 import axios from 'axios';
 
-const SearchSpecies = ({ setData }) => {
+const SearchbridingSites = ({ setData }) => {
   const [searchQuery, setSearchQuery] = useState('');
 
   const onChangeSearch = async (query) => {
@@ -34,7 +34,7 @@ const SearchSpecies = ({ setData }) => {
   return (
     <View style={styles.container}>
       <Searchbar
-        placeholder="Search any birds"
+        placeholder="Search birding sites"
         onChangeText={onChangeSearch}
         inputStyle={{ paddingBottom: 19 }}
         placeholderTextColor="gray"
@@ -62,5 +62,5 @@ const styles = StyleSheet.create({
   },
 });
 
-export default SearchSpecies;
+export default SearchbridingSites;
 

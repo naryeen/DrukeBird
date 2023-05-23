@@ -4,12 +4,16 @@ import Button from '../Components/Button';
 import TimePicker from '../Components/TimePicker';
 import DatePicker from '../Components/DatePicker';
 import { MaterialIcons } from '@expo/vector-icons';
-import React, { useState, useEffect} from "react";
+import React, { useState, useEffect,useContext} from "react";
 import RecordTrack from '../Components/RecordTrack';
 import moment from 'moment';
+import { AuthContext } from "../Context/AuthContext";
 
 function StartbirdingScreen() {
   const navigation = useNavigation();
+  const { userInfo } = useContext(AuthContext);
+  const name = userInfo.user.name
+
 
   const navigateHandler = (StartbirdingData) => {
     if (isLocationEnabled) {
@@ -45,9 +49,11 @@ function StartbirdingScreen() {
     var StartbirdingData = {
       selectedTime: moment(selectedTime).format('HH:mm:ss'),
       selectedDate: moment(selectedDate).format('YYYY-MM-DD'),
-      currentLocation:currentLocation
+      currentLocation:currentLocation,
+      userName:name
     };
     navigateHandler(StartbirdingData);
+    console.log(StartbirdingData)
   };
 
   // console.log(selectedTime);

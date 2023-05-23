@@ -7,6 +7,7 @@ import axios from "axios";
 import { Ionicons } from '@expo/vector-icons';
 import StartBirdingCounter from "../Components/StartBirdingCounter";
 
+
 const formatTime = (time) => {
   const hours = Math.floor(time / 3600);
   const minutes = Math.floor((time % 3600) / 60);
@@ -30,6 +31,8 @@ const StartBirdingone = ({ route }) => {
   const [searchFound, setSearchFound] = useState(true);
   const [query, setQuery] = useState("");
   const { StartbirdingData } = route.params;
+  // console.log(userInfo)
+
 
 
   useEffect(() => {
@@ -68,7 +71,7 @@ const StartBirdingone = ({ route }) => {
     });
   }, [navigation, seconds]);
 
-  const handleFabPress = () => {
+  const handleFabPress = (UnknownBirdsdata) => {
     Alert.alert(
       "Alert ",
       "Do you want to add the unknown birds?",
@@ -79,7 +82,8 @@ const StartBirdingone = ({ route }) => {
         },
         {
           text: "YES",
-          onPress: () => navigation.navigate("UnknownBirds"),
+          // navigation.navigate('StartBirdingone', { StartbirdingData: StartbirdingData });
+          onPress: () => navigation.navigate("UnknownBirds", { UnknownBirdsdata: UnknownBirdsdata }),
         },
       ],
       { cancelable: false }
@@ -129,6 +133,17 @@ const StartBirdingone = ({ route }) => {
     );
   };
 
+  //data pass to unknown birds
+  const UnknownBirdsdataSave = () => {
+    var UnknownBirdsdata = {
+      StartbirdingData:StartbirdingData,
+      BirdName:"Unknown"
+    };
+    handleFabPress(UnknownBirdsdata);
+    console.log(UnknownBirdsdata)
+  };
+
+
   const StartbirdingonedataSave = () => {
 
     var detailOfBirds = []
@@ -139,6 +154,7 @@ const StartBirdingone = ({ route }) => {
           "currentLocation": StartbirdingData.currentLocation,
           "selectedDate": StartbirdingData.selectedDate,
           "selectedTime": StartbirdingData.selectedTime,
+          "observer":StartbirdingData.userName
         }]
 
         const StartbirdingoneData = {
@@ -146,6 +162,7 @@ const StartBirdingone = ({ route }) => {
           "BirdName": bird.englishname,
         };
         detailOfBirds.push(StartbirdingoneData)
+        console.log(temp)
       }
     })
 
@@ -206,7 +223,7 @@ const StartBirdingone = ({ route }) => {
           small
           color="white"
           icon="plus"
-          onPress={handleFabPress}
+          onPress={UnknownBirdsdataSave}
         />
         <View style={styles.buttonContianer}>
           <Button styling={styles.submitbutton} onPress={StartbirdingonedataSave}>Submit</Button>

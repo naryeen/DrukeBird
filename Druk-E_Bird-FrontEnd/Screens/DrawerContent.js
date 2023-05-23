@@ -128,7 +128,7 @@ const styles = StyleSheet.create({
     marginRight: 5
   },
   drawerSection: {
-    marginTop: 35
+    marginTop: 70
   }
 });
 

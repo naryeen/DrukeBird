@@ -27,6 +27,12 @@ const detailSchema = new mongoose.Schema({
         required: [true, 'Time'],
         default: moment().format('HH:mm:ss')
     },
+
+    observer: {
+        type: String,
+        required: [true, 'observer'],
+        default: "null"
+    },
     
     currentLocation: currentLocation,
    

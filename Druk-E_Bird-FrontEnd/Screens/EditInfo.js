@@ -86,8 +86,8 @@ const EditInfo = () => {
   };
   if (isLoading) {
     return (
-      <View style={styles.container}>
-        <ActivityIndicator animating={true} color={MD2Colors.green800} size="large" />
+      <View>
+        <ActivityIndicator style={{marginTop:400}} animating={true} color={MD2Colors.green800} size="large" />
       </View>
     );
   }
@@ -136,7 +136,7 @@ export default EditInfo;
 
 const styles = StyleSheet.create({
   container1: {
-    
+    marginTop:100,
     alignItems: "center",
     justifyContent: "center",
   },

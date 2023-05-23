@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, View, Text, SafeAreaView, TouchableOpacity } from 'react-native';
+import { StyleSheet, View, Text, SafeAreaView } from 'react-native';
 import image1 from '../assets/Image/image1.png';
 import image2 from '../assets/Image/image2.png';
 import image3 from '../assets/Image/image3.png';
@@ -11,11 +11,13 @@ import { useNavigation } from '@react-navigation/native';
 
 const HomeScreen = () => {
     const navigation = useNavigation();
+
     const images = [
         image1,
         image2,
         image3,
     ];
+
 
     return (
         <View style={styles.container}>
