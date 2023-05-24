@@ -175,8 +175,6 @@ const StartBirdingone = ({ route }) => {
         };
         detailOfBirds.push(StartbirdingoneData)
 
-        console.log(detailOfBirds);
-
       }
       
     })
@@ -186,7 +184,7 @@ const StartBirdingone = ({ route }) => {
       axios
         .post("https://druk-ebirds.onrender.com/api/v1/checkList", detailOfBirds)
         .then((response) => {
-          console.log("hiii")
+          console.log(detailOfBirds);
           // Data successfully posted to the database
         ToastAndroid.show('Data successfully posted', ToastAndroid.LONG);
           console.log("Data post:", response.data);

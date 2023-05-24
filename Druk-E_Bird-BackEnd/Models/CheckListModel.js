@@ -43,7 +43,6 @@ const detailSchema = new mongoose.Schema({
     },
     photo:{
         type: Number,
-        required: [true, 'photo'],
         default: "null"
     },
     
