@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useContext } from "react";
-import { FAB, ActivityIndicator, MD2Colors, Searchbar, ToastAndroid } from "react-native-paper";
-import { StyleSheet, View, FlatList, Alert, Text, SafeAreaView, TouchableOpacity} from "react-native";
+import { FAB, ActivityIndicator, MD2Colors, Searchbar} from "react-native-paper";
+import { StyleSheet, View, FlatList, Alert, Text, SafeAreaView, TouchableOpacity, ToastAndroid } from "react-native";
 import Button from "../Components/Button";
 import { useNavigation } from "@react-navigation/native";
 import axios from "axios";
@@ -92,7 +92,7 @@ const StartBirdingone = ({ route }) => {
 
   useEffect(() => {
     axios
-      .get("https://druk-ebird.onrender.com/api/v1/species?limit=40")
+      .get("https://druk-ebird.onrender.com/api/v1/species?limit=20")
       .then((res) => {
         const speciesData = res.data.species.map((item) => ({
           ...item,
@@ -137,10 +137,20 @@ const StartBirdingone = ({ route }) => {
   const UnknownBirdsdataSave = () => {
     var UnknownBirdsdata = {
       StartbirdingData:StartbirdingData,
-      BirdName:"Unknown"
+      BirdName:"Unknown Birds"
     };
     handleFabPress(UnknownBirdsdata);
     console.log(UnknownBirdsdata)
+  };
+
+  //data pass to SubmittingBirding
+  const SubmittedBirdsdataSave = () => {
+    var SubmittedBirdsdata = {
+      StartbirdingData:StartbirdingData,
+      startbirding1data:startbirding1data
+    };
+    navigation.navigate('SubmittingBirding', { SubmittedBirdsdata: SubmittedBirdsdata });
+    // console.log(SubmittedBirdsdata);
   };
 
 
@@ -156,16 +166,17 @@ const StartBirdingone = ({ route }) => {
           "selectedTime": StartbirdingData.selectedTime,
           "observer":StartbirdingData.userName
         }]
-
         const randomNumber = Math.floor(Math.random() * 1000);
 
         const StartbirdingoneData = {
           "StartbirdingData": temp,
-          "CheckListName":`${name}-${randomNumber}`,
-          "BirdName": bird.englishname
+          "BirdName": bird.englishname,
+          "CheckListName":`${name}-${randomNumber}`
         };
         detailOfBirds.push(StartbirdingoneData)
-        console.log(StartbirdingoneData)
+
+        console.log(detailOfBirds);
+
       }
       
     })
@@ -176,8 +187,7 @@ const StartBirdingone = ({ route }) => {
         .post("https://druk-ebirds.onrender.com/api/v1/checkList", detailOfBirds)
         .then((response) => {
           // Data successfully posted to the database
-        //   ToastAndroid.show('Data successfully posted', 
-        // ToastAndroid.LONG);
+        ToastAndroid.show('Data successfully posted', ToastAndroid.LONG);
           console.log("Data post:", response.data);
         })
         .catch((error) => {
@@ -230,8 +240,8 @@ const StartBirdingone = ({ route }) => {
           onPress={UnknownBirdsdataSave}
         />
         <View style={styles.buttonContianer}>
-          <Button styling={styles.submitbutton} onPress={StartbirdingonedataSave}>Submit</Button>
-          <Button styling={styles.stopbutton}>Stop</Button>
+          <Button styling={styles.submitbutton} onPress={SubmittedBirdsdataSave}>Submit</Button>
+          <Button styling={styles.stopbutton} onPress={StartbirdingonedataSave}>Stop</Button>
         </View>
       </SafeAreaView>
     </View>

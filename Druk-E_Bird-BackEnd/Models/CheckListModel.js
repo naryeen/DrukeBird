@@ -41,6 +41,11 @@ const detailSchema = new mongoose.Schema({
         required: [true, 'Count'],
         default: 0
     },
+    photo:{
+        type: Number,
+        required: [true, 'photo'],
+        default: "null"
+    },
     
     EndpointLoaction: {
         type: String,
@@ -52,14 +57,14 @@ const detailSchema = new mongoose.Schema({
 
 // mongooose middleware
 const BirdsSchema = new mongoose.Schema({
-    BirdName: {
-        type: String,
-        required: [true, 'BirdName'],
-        default:"null"
-    },
     CheckListName: {
         type: String,
         required: [true, 'CheckListName'],
+        default:"null"
+    },
+    BirdName: {
+        type: String,
+        required: [true, 'BirdName'],
         default:"null"
     },
     StartbirdingData: [detailSchema]
