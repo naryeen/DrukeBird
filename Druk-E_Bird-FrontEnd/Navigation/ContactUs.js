@@ -1,88 +1,83 @@
-import * as React from 'react';
-import {TextInput} from 'react-native-paper';
-import {StyleSheet, View,Text, ScrollView} from 'react-native';
+import React from 'react';
+import { TextInput } from 'react-native-paper';
+import { StyleSheet, View, Text, ScrollView, Dimensions } from 'react-native';
 import Button from '../Components/Button';
 import NavigationHeader from '../Components/NavigationHeader';
+
+const { width, height } = Dimensions.get('window');
+
 const ContactUs = () => {
   return (
-    <View style={{marginTop:35}}>
-         <NavigationHeader title={'Contact Us'} />
-         <Text style={styles.messages}>Leave a message</Text>
-    <View style={styles.container}>
-    {/* <KeyboardAvoidingView  behavior={Platform.OS === 'ios' ? 'padding' : undefined}
-      keyboardVerticalOffset={Platform.OS === 'ios' ? 64 : 0} > */}
-    <ScrollView>
-    <TextInput
-    style={styles.name}
-      mode="outlined"
-      label="Name"
-      placeholder="Write Your Name"
-      // left={<TextInput.Icon icon="account-circle" />}
-    />
-    <TextInput
-    style={styles.email}
-      mode="outlined"
-      label="Email"
-      placeholder="Write Your Email"
-      // left={<TextInput.Icon icon="email" />}
-    />
-
-<TextInput
-    style={styles.message}
-    mode="outlined"
-    label="Message"
-    placeholder="Write Your Message"
-    multiline
-      // left={<TextInput.Icon icon="email" />}
-    />
-    <Button styling={styles.buttonstyle}>Send Message</Button>
-    {/* </KeyboardAvoidingView> */}
-    </ScrollView>
-    </View>
+    <View>
+      <NavigationHeader title={'Contact Us'} />
+      <Text style={styles.messages}>Leave a message</Text>
+      <View style={styles.container}>
+        <ScrollView>
+          <TextInput
+            style={styles.name}
+            mode="outlined"
+            label="Name"
+            placeholder="Write Your Name"
+          />
+          <TextInput
+            style={styles.email}
+            mode="outlined"
+            label="Email"
+            placeholder="Write Your Email"
+          />
+          <TextInput
+            style={styles.message}
+            mode="outlined"
+            label="Message"
+            placeholder="Write Your Message"
+            multiline
+          />
+          <Button styling={styles.buttonStyle}>Send Message</Button>
+        </ScrollView>
+      </View>
     </View>
   );
 };
 
 const styles = StyleSheet.create({
-  container:{
-    padding:10,
+  container: {
+    padding: width * 0.03,
     backgroundColor: '#FFFFFF',
-    height: 410,
-    marginTop: 40,
-    width: 350,
-    marginLeft: 16,
-    borderRadius: 10,
+    height: height * 0.7,
+    marginTop: height * 0.04,
+    width: width * 0.95,
+    marginLeft: width * 0.025,
+    borderRadius: width * 0.02,
     elevation: 20,
     borderColor: 'black',
   },
-  messages:{
+  messages: {
     color: 'gray',
-    marginLeft: 25,
-    marginTop: 35,
-
+    marginLeft: width * 0.07,
+    marginTop: height * 0.035,
+    fontSize: width * 0.05,
   },
   name: {
-    marginTop:20,
+    marginTop: height * 0.02,
     borderColor: '#ccc',
-    borderRadius: 10,
-    
+    borderRadius: width * 0.02,
   },
   email: {
-    marginTop:20,
+    marginTop: height * 0.02,
     borderColor: '#ccc',
-    borderRadius: 10,
-    
+    borderRadius: width * 0.02,
   },
-  message:{
-    marginTop:20,
+  message: {
+    marginTop: height * 0.02,
     borderColor: '#ccc',
-    borderRadius: 10,
+    borderRadius: width * 0.02,
+    height: height*0.3,
   },
-  buttonstyle:{
-    backgroundColor:'#136D66',
-    marginTop:80,
-    width:"100%"
-  }
+  buttonStyle: {
+    backgroundColor: '#136D66',
+    marginTop: height * 0.08,
+    width: '100%',
+  },
 });
 
 export default ContactUs;

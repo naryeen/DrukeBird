@@ -1,14 +1,17 @@
 import React, { useState } from "react";
 import { TextInput } from 'react-native-paper';
-import { StyleSheet, View, ToastAndroid } from 'react-native';
+import { StyleSheet, View, ToastAndroid, Dimensions } from 'react-native';
 import Button from "../Components/Button";
 import axios from "axios";
+const windowDimensions = Dimensions.get('window');
 import ForgotPasswordHeader from "../Components/ForgotPasswordHeader";
+// const windowDimensions = Dimensions.get('window');
+const marginTopDistance = windowDimensions.height < 380 ? 30 : 50;
 
 const ForgetPassword = () => {
   const [email, setEmail] = useState("");
 
-  const forgetpassword = () => {
+  const forgetPassword = () => {
     if (!email) {
       ToastAndroid.show('Email is required.', ToastAndroid.SHORT);
       return;
@@ -34,35 +37,49 @@ const ForgetPassword = () => {
   return (
     <View style={styles.container}>
       <ForgotPasswordHeader title="Forget Password"/>
+      <View>
       <TextInput
         style={styles.inputStyle}
         mode="outlined"
-        label="email"
+        label="Email"
         placeholder="Write Your Email"
-        left={<TextInput.Icon icon="email" />}
+        left={<TextInput.Icon name="email" />}
         onChangeText={(text) => setEmail(text)}
         value={email}
       />
-      <Button styling={styles.buttonstyle} onPress={() => forgetpassword()}>Send</Button>
+      <Button styling={styles.buttonStyle} onPress={() => forgetPassword()}>Send</Button>
+    </View>
     </View>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
-    padding: 10,
-    marginTop:30
+    flex: 1,
+    marginTop: 30,
+    // Use widthPercentageToDP to set responsive horizontal padding
+  
+  },
+  // forgot: {
+  //   marginTop: hp('3%'),
+  //   paddingVertical: hp('2%'), // Use heightPercentageToDP to set responsive vertical padding
+  //   paddingHorizontal: wp('0.4%'),
+  // },
+  text1: {
+    marginTop: marginTopDistance,
+    fontSize: 24,
+    fontWeight: "bold",
+    textAlign: "center",
   },
   inputStyle: {
     marginTop: 20,
     borderColor: '#ccc',
     borderRadius: 5,
   },
-  buttonstyle: {
-    backgroundColor: '#136D66',
-    marginTop: 30,
-    width: "100%"
-  }
+  buttonStyle: {
+    marginTop: 20,
+    width: "100%",
+  },
 });
 
 export default ForgetPassword;
