@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   View,
   Text,
@@ -12,10 +12,13 @@ import { IconButton } from "react-native-paper";
 import { Button } from "react-native-paper";
 import SubmitButton from "../components/Button";
 
+
 const UnknownBird = () => {
-  const [image, setImage] = useState(null);
+  const [image, setImage] = useState();
   const [modalVisible, setModalVisible] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+
+
 
   const pickImageFromGallery = async () => {
     const { status } = await ImagePicker.requestMediaLibraryPermissionsAsync();
@@ -32,12 +35,10 @@ const UnknownBird = () => {
       const selectedImage = result.assets[0];
       let newFile = {
         uri: selectedImage.uri,
-        type: `profile/${selectedImage.uri.split(".")[1]}`,
-        name: `profile.${selectedImage.uri.split(".")[1]}`,
+        type: `bird/${selectedImage.uri.split(".")[1]}`,
+        name: `bird.${selectedImage.uri.split(".")[1]}`,
       };
       handleUpload(newFile);
-      console.log(newFile);
-      // setImage(result.uri);
     }
 
     setModalVisible(false);
@@ -57,12 +58,10 @@ const UnknownBird = () => {
       const capturedImage = pickerResult.assets[0];
       let newFile = {
         uri: capturedImage.uri,
-        type: `profile/${capturedImage.uri.split(".")[1]}`,
-        name: `profile.${capturedImage.uri.split(".")[1]}`,
+        type: `bird/${capturedImage.uri.split(".")[1]}`,
+        name: `bird.${capturedImage.uri.split(".")[1]}`,
       };
       handleUpload(newFile);
-      console.log(newFile);
-
     } else {
       alert("You did not select any image.");
     }
@@ -82,10 +81,20 @@ const UnknownBird = () => {
       .then((res) => res.json())
       .then((data) => {
         console.log(data);
-        setImage(data.url);
+        const imageUrl = data.url; // Extract the URL from the response data
+        console.log(imageUrl)
+        setImage(imageUrl); // Set the image state with the URL
+        setIsLoading(false);
+        console.log("Hereh");
+        console.log(image); // Log the URL to verify it is correctly set
+      })
+      .catch((error) => {
+        console.error(error);
         setIsLoading(false);
       });
+
   };
+
   if (isLoading) {
     return (
       <View style={styles.loading}>

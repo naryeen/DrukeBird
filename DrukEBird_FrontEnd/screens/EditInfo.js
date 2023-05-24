@@ -55,9 +55,10 @@ const EditInfo = () => {
       .then((res) => res.json())
       .then((data) => {
         console.log(data);
+        console.log("here")
         setProfilePicture(data.url);
         setIsLoading(false)
-
+        console.log(photo)
       });
   };
 
