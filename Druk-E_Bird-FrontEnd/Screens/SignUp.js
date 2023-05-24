@@ -36,7 +36,7 @@ const SignUp = () => {
             ToastAndroid.LONG);
 
           setTimeout(() => {
-            navigation.navigate('LogIn');
+            navigation.navigate('Login');
           }, 200);
         }
       })
