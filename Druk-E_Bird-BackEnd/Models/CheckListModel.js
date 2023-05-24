@@ -42,13 +42,12 @@ const detailSchema = new mongoose.Schema({
         default: 0
     },
     photo:{
-        type: Number,
+        type: String,
         default: "null"
     },
     
     EndpointLoaction: {
         type: String,
-        // required: [true, 'EndPointLoaction!'],
         default:"null"
     }
 
