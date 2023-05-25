@@ -1,6 +1,5 @@
 import { useNavigation } from '@react-navigation/native';
 import { StyleSheet, Text, View, Image, useWindowDimensions } from 'react-native';
-
 import Button from '../Components/Button';
 
 function FirstScreen() {

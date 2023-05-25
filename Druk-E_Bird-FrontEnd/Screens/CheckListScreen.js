@@ -7,6 +7,7 @@ import { ActivityIndicator, MD2Colors } from "react-native-paper";
 const getCheckList = "https://druk-ebirds.onrender.com/api/v1/checkList"
 
 
+
 function NotSubmitted() {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -81,9 +82,9 @@ function Submitted() {
       <View>
         <View style={{marginLeft:30}}>
         <Text style={{fontWeight:'bold'}}>{item.BirdName}</Text>
+        <Text>{item.StartbirdingData[0].EndpointLoaction}</Text>
         <Text>{item.StartbirdingData[0].selectedDate} {item.StartbirdingData[0].selectedTime}</Text>
         <Text>{item.StartbirdingData[0].count} species report</Text>
-        <Text style={{textAlign:"right", fontWeight:'bold', color:'green'}}>Not Submit</Text>
         </View>
         <View style={{borderBottomWidth:0.5, borderBottomColor: 'gray', marginVertical: 10}} />
       </View>

@@ -18,7 +18,7 @@ function StartbirdingScreen() {
     if (isLocationEnabled) {
       navigation.navigate('StartBirdingone', { StartbirdingData: StartbirdingData });
     } else {
-      navigation.navigate('StartBirdingTwo');
+      navigation.navigate('StartBirdingTwo', { StartbirdingData: StartbirdingData });
     }
   };
 

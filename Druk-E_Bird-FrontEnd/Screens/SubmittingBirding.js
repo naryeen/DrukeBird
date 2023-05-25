@@ -1,16 +1,41 @@
 import React, { useState,useContext} from 'react';
 import { View, StyleSheet, Text, ToastAndroid} from 'react-native';
-import { TextInput } from 'react-native-paper';
+import { Picker } from '@react-native-picker/picker';
 import Button from "../Components/Button";
 import Icon from 'react-native-vector-icons/FontAwesome';
 import axios from 'axios'; // Import axios for making HTTP requests
 import { AuthContext } from "../Context/AuthContext";
+import BhutanDzongkhags from "../Components/BhutanDzongkha"
 
 const SubmittingBirding = ({ route }) => {
   const { SubmittedBirdsdata } = route.params;
   const { userInfo } = useContext(AuthContext);
   const name = userInfo.user.name
-  const [location, setLocation] = useState("");
+  const [selectedDzongkhag, setSelectedDzongkhag] = useState('');
+  const [selectedGewog, setSelectedGewog] = useState('');
+  const [selectedVillage, setSelectedVillage] = useState('');
+  const [gewogOptions, setGewogOptions] = useState([]);
+  const [villageOptions, setVillageOptions] = useState([]);
+
+  const handleDzongkhagChange = (value) => {
+    setSelectedDzongkhag(value);
+    setSelectedGewog('');
+    setSelectedVillage('');
+    setVillageOptions([]);
+
+    const gewogs = BhutanDzongkhags[value];
+    const gewogOptions = Object.keys(gewogs);
+    setGewogOptions(gewogOptions);
+  };
+
+  const handleGewogChange = (value) => {
+    setSelectedGewog(value);
+    setSelectedVillage('');
+
+    const villages = BhutanDzongkhags[selectedDzongkhag][value];
+    const villageOptions = villages.map((village) => ({ label: village, value: village }));
+    setVillageOptions(villageOptions);
+  };
 
   // Filter the birds with count greater than 0
   const birdsWithCount = SubmittedBirdsdata.startbirding1data.filter(
@@ -26,7 +51,11 @@ const SubmittingBirding = ({ route }) => {
           "selectedDate": SubmittedBirdsdata.StartbirdingData.selectedDate,
           "selectedTime": SubmittedBirdsdata.StartbirdingData.selectedTime,
           "observer": SubmittedBirdsdata.StartbirdingData.userName,
-          "EndpointLoaction": location
+          "EndpointLoaction": {
+            "dzongkhag":selectedDzongkhag,
+            "gewog":selectedGewog,
+            "village":selectedVillage
+          }
     }];
     const randomNumber = Math.floor(Math.random() * 1000);
 
@@ -60,15 +89,44 @@ const SubmittingBirding = ({ route }) => {
 
   return (
     <View style={styles.container}>
-      <TextInput
-        style={styles.inputStyle}
-        mode="outlined"
-        label="Location"
-        left={<TextInput.Icon icon="map-marker"/>}
-        placeholder="Enter your location"
-        value={location}
-        onChangeText={setLocation}
-      />
+      <Text style={styles.label}>Select Dzongkhag:</Text>
+      <Picker
+        selectedValue={selectedDzongkhag}
+        onValueChange={handleDzongkhagChange}
+        style={styles.picker}
+      >
+        <Picker.Item label="Select Dzongkhag" value="" />
+        {Object.keys(BhutanDzongkhags).map((dzongkhag) => (
+          <Picker.Item key={dzongkhag} label={dzongkhag} value={dzongkhag} />
+        ))}
+      </Picker>
+
+      <Text style={styles.label}>Select Gewog:</Text>
+      <Picker
+        selectedValue={selectedGewog}
+        onValueChange={handleGewogChange}
+        enabled={selectedDzongkhag !== ''}
+        style={styles.picker}
+      >
+        <Picker.Item label="Select Gewog" value="" />
+        {gewogOptions.map((gewog) => (
+          <Picker.Item key={gewog} label={gewog} value={gewog} />
+        ))}
+      </Picker>
+
+      <Text style={styles.label}>Select Village:</Text>
+      <Picker
+        selectedValue={selectedVillage}
+        onValueChange={setSelectedVillage}
+        enabled={selectedDzongkhag !== '' && selectedGewog !== ''}
+        style={styles.picker}
+      >
+        <Picker.Item label="Select Village" value="" />
+        {villageOptions.map((village) => (
+          <Picker.Item key={village.value} label={village.label} value={village.value} />
+        ))}
+      </Picker>
+
       {birdsWithCount.length > 0 ? (
         <Text style={{ fontWeight: 'bold', fontSize: 20, marginTop: 10 }}>
           Number of observed <Icon name="twitter" size={30} color="#000" />: {birdsWithCount.length}
@@ -104,6 +162,18 @@ const styles = StyleSheet.create({
     marginTop: 150,
     width: 321,
   },
+  label: {
+    fontSize: 16,
+    marginBottom: 8,
+  },
+  picker: {
+    width: 200,
+    height: 10,
+    marginBottom: 16,
+    backgroundColor: '#FFFFFF',
+    borderRadius: 4,
+  },
+
 });
 
 export default SubmittingBirding;
