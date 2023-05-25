@@ -9,6 +9,7 @@ const Verifyingdata = new mongoose.Schema({
       type: String,
       required: [true, 'latitude'],
       required: [true, 'Please provide your email'],
+      validate: [validator.isEmail, 'Please provide a valid email'],
       unique: true,
       lowercase: true,
     },
@@ -33,7 +34,7 @@ const userSchema = new mongoose.Schema({
     // },
 
     Verifyingdata:Verifyingdata,
-    
+
     photo: {
         type: String,
         default: `http://res.cloudinary.com/cheki/image/upload/v1684309596/ietnmi5axvciw3dnornw.jpg`
