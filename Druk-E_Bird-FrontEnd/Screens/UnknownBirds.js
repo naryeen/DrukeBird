@@ -135,6 +135,26 @@ const UnknownBird = ({ route }) => {
   };
 
   const UnknownBirdsdataSave = () => {
+    if (!selectedDzongkhag) {
+      ToastAndroid.show('Please select Dzongkha', ToastAndroid.LONG);
+      return;
+    }
+    else if(!selectedGewog)
+    {
+      ToastAndroid.show('Please select Gewong', ToastAndroid.LONG);
+      return;
+    }
+    else if(!selectedVillage){
+      ToastAndroid.show('Please select Village', ToastAndroid.LONG);
+      return;
+    }
+    else if (!image) {
+      ToastAndroid.show('Please select an image', ToastAndroid.LONG);
+      return;
+    } else if (count === 0) {
+      ToastAndroid.show('Please set the count', ToastAndroid.LONG);
+      return;
+    }
 
     var detailOfBirds = []
     var endpointLocation = {

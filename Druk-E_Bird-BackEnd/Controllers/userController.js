@@ -1,4 +1,78 @@
 const User = require('../Models/userModels')
+const nodemailer = require("nodemailer");
+const randomstring = require("randomstring");
+
+var OTP = "123456"
+
+const sendResetPasswordMail = async(name,email,token)=>{
+  try {
+      const transporter = nodemailer.createTransport({
+          host:'smtp.gmail.com',
+          port:587,
+          secure:false,
+          requireTLS:true,
+          auth:{
+            user:"12190099.gcit@rub.edu.bt",
+            pass: "qlszefmvnjjdymju"
+          }
+      });
+
+      const mailOptions = {
+          from:"12190099.gcit@rub.edu.bt",
+          to: email,
+          subject:'For Reset password',
+          html:`<p> Hii `+name+`, Please copy the token </p><br>
+          <h1>`+token+`</h1><br> 
+          <p>enter OTP to reset your password</p>` 
+      }
+      transporter.sendMail(mailOptions,function(error,info){
+          if(error){
+              console.log(error);
+          }
+          else{
+              console.log("Mail has been sent:- ",info.response);
+          }
+      })
+      
+  } catch (error) {
+      res.status(400).send({success:false,msg:error.message})
+  }
+}
+exports.signupVerification = async(req,res)=>{
+  try {
+      const name = req.body.name
+      const email = req.body.email;
+      const randomString = randomstring.generate(6);
+      OTP = randomString;
+      console.log(OTP)
+      sendResetPasswordMail(name,email,randomString); 
+      
+      res.status(200).json({
+          status:'success',
+          msg:"please check your mail."})
+
+  } catch (error) {
+      res.status(400).json({
+          error:err.message});
+  }
+}
+exports.enter_OTP = async(req,res)=>{
+  try {
+      const OTP_recieved = req.body.otp;
+      if(OTP_recieved===OTP){
+          res.status(200).json({status:'success',msg:"Correct OTP"});
+      }
+      else{
+          res.status(200).json({error:'error',msg:"OPT invalid"});
+      }
+  } catch (error) {
+      res.status(500).json({error:err.message});
+  }
+
+}
+
+
+
 
 exports.getAllUsers = async (req, res, next) => {
     try {

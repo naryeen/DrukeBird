@@ -17,6 +17,7 @@
     "moment": "^2.29.4",
     "mongoose": "^7.0.4",
     "nodemailer": "^6.9.1",
+    "randomstring": "^1.2.3",
     "validator": "^13.9.0"
   },
   "devDependencies": {

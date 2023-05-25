@@ -157,6 +157,7 @@ const StartBirdingone = ({ route }) => {
   const StartbirdingonedataSave = () => {
 
     var detailOfBirds = []
+    var dataSubmitted = false;
     startbirding1data.map((bird) => {
       if (bird.count) {
         var temp = [{
@@ -174,10 +175,15 @@ const StartBirdingone = ({ route }) => {
           "CheckListName":`${name}-${randomNumber}`
         };
         detailOfBirds.push(StartbirdingoneData)
-
+        dataSubmitted = true;
       }
       
-    })
+    });
+    if (!dataSubmitted) {
+      // Show the message that no data is submitted
+      Alert.alert("No Data Submitted", "Please select at least one bird count before stopping.", [{ text: "OK" }]);
+      return;
+    }
     
     try {
       // Make an HTTP POST request to your backend API endpoint
