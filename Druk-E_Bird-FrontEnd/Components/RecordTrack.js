@@ -38,8 +38,8 @@ const RecordTrack = ({isLocationEnabled, setIsLocationEnabled , currentLocation,
         'Location Feature',
         'Are you sure you want to turn off the location feature?',
         [
-          { text: 'Cancel', style: 'cancel' },
-          { text: 'Turn Off', onPress: () => setIsLocationEnabled(false) }
+          { text: 'No', style: 'cancel' },
+          { text: 'Yes', onPress: () => setIsLocationEnabled(false) }
         ]
       );
     } else {

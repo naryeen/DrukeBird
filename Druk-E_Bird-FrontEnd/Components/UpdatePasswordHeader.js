@@ -5,14 +5,14 @@ import { Ionicons } from "@expo/vector-icons";
 
 const { width, height } = Dimensions.get('window');
 
-const ForgotPasswordHeader = ({ title }) => {
+const UpdatePasswordHeader = ({ title }) => {
   const navigation = useNavigation();
 
   return (
     <View style={styles.container}>
       <StatusBar backgroundColor="#ffffff" barStyle="dark-content" />
       <View style={styles.header}>
-        <TouchableOpacity onPress={() => navigation.navigate('Login')}>
+      <TouchableOpacity onPress={() => navigation.goBack('MainScreen')}>
           <Ionicons name="chevron-back" size={24} color="#136D66" />
         </TouchableOpacity>
         <Text style={styles.title}>{title}</Text>
@@ -27,8 +27,11 @@ const styles = {
     alignItems: "center",
     height: 0.08 * height,
     paddingHorizontal: 0.04 * width,
-    elevation: 2,
-    backgroundColor: "#ffffff",
+    borderRadius: 1,
+    elevation: 1,
+    shadowOffset: { width: 1, height: 1 },
+    shadowOpacity: 0.2,
+    shadowRadius: 2,
   },
   title: {
     color: "#136D66",
@@ -38,4 +41,4 @@ const styles = {
   },
 };
 
-export default ForgotPasswordHeader;
+export default UpdatePasswordHeader;

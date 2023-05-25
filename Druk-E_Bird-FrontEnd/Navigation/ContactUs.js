@@ -7,6 +7,9 @@ import NavigationHeader from '../Components/NavigationHeader';
 const { width, height } = Dimensions.get('window');
 
 const ContactUs = () => {
+  const sendMessage = () => {
+    alert('You have successfully send the message');
+  };
   return (
     <View>
       <NavigationHeader title={'Contact Us'} />
@@ -32,7 +35,7 @@ const ContactUs = () => {
             placeholder="Write Your Message"
             multiline
           />
-          <Button styling={styles.buttonStyle}>Send Message</Button>
+          <Button styling={styles.buttonStyle} onPress={sendMessage}>Send Message</Button>
         </ScrollView>
       </View>
     </View>
@@ -78,6 +81,7 @@ const styles = StyleSheet.create({
     marginTop: height * 0.08,
     width: '100%',
   },
+ 
 });
 
 export default ContactUs;

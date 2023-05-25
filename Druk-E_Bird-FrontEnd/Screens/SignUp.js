@@ -92,7 +92,7 @@ const SignUp = () => {
         <TextInput
           style={styles.inputStyle}
           mode="outlined"
-          label="name"
+          label="Name"
           placeholder="Write Your name"
           left={<TextInput.Icon icon="account-circle" />}
           onChangeText={(text) => setName(text)}
@@ -101,7 +101,7 @@ const SignUp = () => {
         <TextInput
           style={styles.inputStyle}
           mode="outlined"
-          label="email"
+          label="Email"
           placeholder="Write Your Email"
           left={<TextInput.Icon icon="email" />}
           onChangeText={(text) => setEmail(text)}

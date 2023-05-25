@@ -93,10 +93,10 @@ const EditInfo = () => {
   }
   return (
     <View style={styles.container2}>
-      <NavigationHeader title="My Profile"/>
+      <NavigationHeader title="Edit Profile"/>
       <View style={styles.header}>
         <TouchableOpacity onPress={handleEditPicture}>
-          <Avatar.Image size={120} source={{uri: photo}} />
+          <Avatar.Image size={180} source={{uri: photo}} />
           <IconButton
             icon="camera"
             size={20}
@@ -135,19 +135,19 @@ const EditInfo = () => {
 export default EditInfo;
 
 const styles = StyleSheet.create({
+  container2: {
+    flex: 1,
+  },
+
   container1: {
-    marginTop:100,
+    // marginTop:200,
     alignItems: "center",
     justifyContent: "center",
   },
-  container2: {
-    flex: 1,
-    marginTop:35,
-    padding:20
-  },
+
   header: {
     alignItems: "center",
-    paddingVertical: 20,
+    paddingVertical: 50,
     borderBottomColor: "#136D66",
     borderBottomWidth: 1,
     marginHorizontal: 20,
@@ -162,11 +162,11 @@ const styles = StyleSheet.create({
   container1: {
     alignItems: "center",
     padding: 20,
-    marginTop: 10,
+    marginTop: 20,
   },
   input: {
     width: "100%",
-    height: 40,
+    height: 60,
     borderWidth: 1,
     borderColor: "#ccc",
     borderRadius: 5,
@@ -180,7 +180,7 @@ const styles = StyleSheet.create({
   buttonstyle:{
     backgroundColor:'#136D66',
     marginTop:30,
-    width:"100%",
+    width:"90%",
+    marginLeft:20
   }
 });
-

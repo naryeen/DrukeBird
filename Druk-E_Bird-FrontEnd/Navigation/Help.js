@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, StyleSheet, StatusBar, ScrollView, Dimensions } from 'react-native';
+import { View, StyleSheet, StatusBar, ScrollView, Dimensions} from 'react-native';
 import { Video } from 'expo-av';
 import FlexTrail from '../Components/FlexBox';
 import NavigationHeader from '../Components/NavigationHeader';
@@ -37,7 +37,6 @@ const Help = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#FFF',
   },
   video: {
     alignSelf: 'center',

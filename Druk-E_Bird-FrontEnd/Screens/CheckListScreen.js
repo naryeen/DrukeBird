@@ -141,8 +141,6 @@ function CheckList() {
 export default CheckList
 
 
-
-
 // import { Text, View, FlatList } from 'react-native';
 // import React, { useEffect, useState, TouchableOpacity } from "react";
 // import axios from "axios";

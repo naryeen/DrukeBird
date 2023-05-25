@@ -5,6 +5,8 @@ import Button from "../Components/Button";
 import axios from "axios";
 const windowDimensions = Dimensions.get('window');
 import ForgotPasswordHeader from "../Components/ForgotPasswordHeader";
+// import NavigationHeader from '../Components/NavigationHeader';
+
 // const windowDimensions = Dimensions.get('window');
 const marginTopDistance = windowDimensions.height < 380 ? 30 : 50;
 
@@ -36,7 +38,8 @@ const ForgetPassword = () => {
 
   return (
     <View style={styles.container}>
-      <ForgotPasswordHeader title="Forget Password"/>
+      <ForgotPasswordHeader title={"Forget Password"}/>
+      {/* <NavigationHeader title="Forget Password"/> */}
       <View>
       <TextInput
         style={styles.inputStyle}
@@ -56,30 +59,21 @@ const ForgetPassword = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    marginTop: 30,
     // Use widthPercentageToDP to set responsive horizontal padding
   
   },
-  // forgot: {
-  //   marginTop: hp('3%'),
-  //   paddingVertical: hp('2%'), // Use heightPercentageToDP to set responsive vertical padding
-  //   paddingHorizontal: wp('0.4%'),
-  // },
-  text1: {
-    marginTop: marginTopDistance,
-    fontSize: 24,
-    fontWeight: "bold",
-    textAlign: "center",
-  },
+
   inputStyle: {
     marginTop: 20,
     borderColor: '#ccc',
     borderRadius: 5,
+    width: 380,
+    marginLeft: 5,
   },
   buttonStyle: {
     marginTop: 20,
-    width: "100%",
-  },
+    marginLeft:5
+},
 });
 
 export default ForgetPassword;

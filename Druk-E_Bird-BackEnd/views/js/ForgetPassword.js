@@ -11,7 +11,7 @@ export const resetPassword = async (data) =>
         console.log(res)
         if (res.status === 200) 
         {
-            showAlert("message","Your password is succefully reset") 
+            showAlert("message","Password reset successful") 
         }
     } catch (err) {
         let message =

@@ -45,9 +45,9 @@ const SubmittingBirding = ({ route }) => {
   const StartbirdingonedataSave = () => {
     var detailOfBirds = [];
     var endpointLocation = {
-      dzongkhag: selectedDzongkhag,
-      gewog: selectedGewog,
-      village: selectedVillage
+      "dzongkhag": selectedDzongkhag,
+      "gewog": selectedGewog,
+      "village": selectedVillage
     };
     SubmittedBirdsdata.startbirding1data.map((bird) => {
       if (bird.count) {

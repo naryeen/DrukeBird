@@ -4,10 +4,12 @@ import { ActivityIndicator, MD2Colors } from "react-native-paper";
 import * as ImagePicker from "expo-image-picker";
 import axios from 'axios'; // Import axios for making HTTP requests
 import { IconButton } from "react-native-paper";
+import { Picker } from '@react-native-picker/picker';
 import { Button } from "react-native-paper";
 import SubmitButton from "../Components/Button";
 import NavigationHeader from '../Components/NavigationHeader';
 import { AuthContext } from "../Context/AuthContext";
+import BhutanDzongkhags from "../Components/BhutanDzongkha"
 
 const UnknownBird = ({ route }) => {
   const {UnknownBirdsdata} = route.params
@@ -17,6 +19,32 @@ const UnknownBird = ({ route }) => {
   const [modalVisible, setModalVisible] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [count, setCount] = useState(0)
+  const [selectedDzongkhag, setSelectedDzongkhag] = useState('');
+  const [selectedGewog, setSelectedGewog] = useState('');
+  const [selectedVillage, setSelectedVillage] = useState('');
+  const [gewogOptions, setGewogOptions] = useState([]);
+  const [villageOptions, setVillageOptions] = useState([]);
+
+
+  const handleDzongkhagChange = (value) => {
+    setSelectedDzongkhag(value);
+    setSelectedGewog('');
+    setSelectedVillage('');
+    setVillageOptions([]);
+
+    const gewogs = BhutanDzongkhags[value];
+    const gewogOptions = Object.keys(gewogs);
+    setGewogOptions(gewogOptions);
+  };
+
+  const handleGewogChange = (value) => {
+    setSelectedGewog(value);
+    setSelectedVillage('');
+
+    const villages = BhutanDzongkhags[selectedDzongkhag][value];
+    const villageOptions = villages.map((village) => ({ label: village, value: village }));
+    setVillageOptions(villageOptions);
+  };
 
   const pickImageFromGallery = async () => {
     const { status } = await ImagePicker.requestMediaLibraryPermissionsAsync();
@@ -109,13 +137,19 @@ const UnknownBird = ({ route }) => {
   const UnknownBirdsdataSave = () => {
 
     var detailOfBirds = []
+    var endpointLocation = {
+      "dzongkhag": selectedDzongkhag,
+      "gewog": selectedGewog,
+      "village": selectedVillage
+    };
       var temp = [{
           "count":count,
           "currentLocation": UnknownBirdsdata.StartbirdingData.currentLocation,
           "selectedDate": UnknownBirdsdata.StartbirdingData.selectedDate,
           "selectedTime": UnknownBirdsdata.StartbirdingData.selectedTime,
           "observer": UnknownBirdsdata.StartbirdingData.userName,
-          "photo":image
+          "photo":image,
+          "EndpointLocation": [endpointLocation]
         }];
 
         const randomNumber = Math.floor(Math.random() * 1000);
@@ -153,6 +187,43 @@ const UnknownBird = ({ route }) => {
     <View style={styles.container}>
       <NavigationHeader title="Unknown Birds"/>
       <View style={styles.subcontainer}>
+      <Text style={styles.label}>Select Dzongkhag:</Text>
+      <Picker
+        selectedValue={selectedDzongkhag}
+        onValueChange={handleDzongkhagChange}
+        style={styles.picker}
+      >
+        <Picker.Item label="Select Dzongkhag" value="" />
+        {Object.keys(BhutanDzongkhags).map((dzongkhag) => (
+          <Picker.Item key={dzongkhag} label={dzongkhag} value={dzongkhag} />
+        ))}
+      </Picker>
+
+      <Text style={styles.label}>Select Gewog:</Text>
+      <Picker
+        selectedValue={selectedGewog}
+        onValueChange={handleGewogChange}
+        enabled={selectedDzongkhag !== ''}
+        style={styles.picker}
+      >
+        <Picker.Item label="Select Gewog" value="" />
+        {gewogOptions.map((gewog) => (
+          <Picker.Item key={gewog} label={gewog} value={gewog} />
+        ))}
+      </Picker>
+
+      <Text style={styles.label}>Select Village:</Text>
+      <Picker
+        selectedValue={selectedVillage}
+        onValueChange={setSelectedVillage}
+        enabled={selectedDzongkhag !== '' && selectedGewog !== ''}
+        style={styles.picker}
+      >
+        <Picker.Item label="Select Village" value="" />
+        {villageOptions.map((village) => (
+          <Picker.Item key={village.value} label={village.label} value={village.value} />
+        ))}
+      </Picker>
       <TouchableOpacity
         style={styles.iconContainer}
         onPress={() => setModalVisible(true)}
@@ -223,7 +294,6 @@ const styles = StyleSheet.create({
     borderBottomWidth: 1,
     borderBottomColor: "#136D66",
     width: "80%",
-    marginTop: 100,
     justifyContent: "center",
     alignItems: "center",
   },
@@ -284,13 +354,24 @@ const styles = StyleSheet.create({
   },
   submitBtn: {
     alignItems: "center",
-    marginTop: 50,
     width: 290,
+    marginTop:20
   },
   loading: {
     marginTop: 400,
     alignItems: "center",
     justifyContent: "center",
+  },
+  label: {
+    fontSize: 16,
+    marginBottom: 8,
+  },
+  picker: {
+    width: 200,
+    height: 10,
+    marginBottom: 16,
+    backgroundColor: '#FFFFFF',
+    borderRadius: 4,
   },
 });
 
