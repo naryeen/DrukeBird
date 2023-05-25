@@ -51,11 +51,13 @@ const SubmittingBirding = ({ route }) => {
           "selectedDate": SubmittedBirdsdata.StartbirdingData.selectedDate,
           "selectedTime": SubmittedBirdsdata.StartbirdingData.selectedTime,
           "observer": SubmittedBirdsdata.StartbirdingData.userName,
-          "EndpointLoaction": {
-            "dzongkhag":selectedDzongkhag,
-            "gewog":selectedGewog,
-            "village":selectedVillage
-          }
+          "EndpointLocation": [
+            {
+              "dzongkhag": selectedDzongkhag,
+              "gewog": selectedGewog,
+              "village": selectedVillage
+            }
+          ]
     }];
     const randomNumber = Math.floor(Math.random() * 1000);
 
