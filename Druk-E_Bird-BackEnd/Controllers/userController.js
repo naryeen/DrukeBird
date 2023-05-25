@@ -2,9 +2,11 @@ const User = require('../Models/userModels')
 const nodemailer = require("nodemailer");
 const randomstring = require("randomstring");
 
-var OTP = "123456"
-export var name;
-export var email;
+var OTP = "123456";
+// exports.Name = "";
+// exports.Email = "";
+
+
 
 const sendResetPasswordMail = async(name,email,token)=>{
   try {
@@ -43,9 +45,9 @@ const sendResetPasswordMail = async(name,email,token)=>{
 exports.signupVerification = async(req,res)=>{
   try {
       const recievedname = req.body.name
-      name = recievedname
+    //   Name = recievedname
       const recievedemail = req.body.email
-      email=recievedemail
+    //   Email=recievedemail
       const randomString = randomstring.generate(6);
       OTP = randomString;
       console.log(OTP)
@@ -62,6 +64,7 @@ exports.signupVerification = async(req,res)=>{
 }
 exports.enter_OTP = async(req,res)=>{
   try {
+      console.log(Name,Email)
       const OTP_recieved = req.body.otp;
       if(OTP_recieved===OTP){
           res.status(200).json({status:'success',msg:"Correct OTP"});
@@ -74,9 +77,6 @@ exports.enter_OTP = async(req,res)=>{
   }
 
 }
-
-
-
 
 exports.getAllUsers = async (req, res, next) => {
     try {
@@ -160,6 +160,7 @@ const filterObj = (obj, ...allowedFields) => {
       res.status(500).json({ error: err.message });
     }
   };
+  
   
 
 
