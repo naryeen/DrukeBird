@@ -9,7 +9,7 @@ const VerifyingOTPdata = new mongoose.Schema({
       type: String,
       required: [true, 'latitude'],
       required: [true, 'Please provide your email'],
-      validate: [validator.isEmail, 'Please provide a valid email'],
+    //   validate: [validator.isEmail, 'Please provide a valid email'],
       unique: true,
       lowercase: true,
     },
