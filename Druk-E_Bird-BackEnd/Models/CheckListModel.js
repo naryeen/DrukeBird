@@ -49,7 +49,7 @@ const detailSchema = new mongoose.Schema({
         default: "null"
     },
     
-    currentLocation: [currentLocation],
+    currentLocation: currentLocation,
    
     count: {
         type: Number,
@@ -61,7 +61,7 @@ const detailSchema = new mongoose.Schema({
         default: "null"
     },
     
-    EndpointLoaction: EndpointLocation
+    EndpointLoaction: [EndpointLocation]
 
 })
 
