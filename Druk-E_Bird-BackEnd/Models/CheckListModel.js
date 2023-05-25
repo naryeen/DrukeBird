@@ -14,8 +14,7 @@ const currentLocation = new mongoose.Schema({
   },
 });
 
-const EndpointLocation = [
-  new mongoose.Schema({
+const EndpointLocation =new mongoose.Schema({
     dzongkhag: {
       type: String,
       default: "null",
@@ -28,8 +27,7 @@ const EndpointLocation = [
       type: String,
       default: "null",
     },
-  }),
-];
+  })
 
 const detailSchema = new mongoose.Schema({
   selectedDate: {
@@ -57,7 +55,7 @@ const detailSchema = new mongoose.Schema({
     type: String,
     default: "null",
   },
-  EndpointLocation: EndpointLocation,
+  EndpointLocation: [EndpointLocation],
 });
 
 const BirdsSchema = new mongoose.Schema({
