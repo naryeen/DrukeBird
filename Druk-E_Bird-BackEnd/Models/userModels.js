@@ -4,7 +4,7 @@ const mongoose = require ('mongoose')
 const validator = require('validator')
 const bcrypt = require("bcryptjs")
 
-const Verifyingdata = new mongoose.Schema({
+const VerifyingOTPdata = new mongoose.Schema({
     email: {
       type: String,
       required: [true, 'latitude'],
@@ -33,7 +33,7 @@ const userSchema = new mongoose.Schema({
     //     lowercase: true,
     // },
 
-    Verifyingdata:Verifyingdata,
+    VerifyingOTPdata:VerifyingOTPdata,
 
     photo: {
         type: String,
