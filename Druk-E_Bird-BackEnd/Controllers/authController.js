@@ -1,7 +1,6 @@
 const User = require('../Models/userModels')
 const jwt = require('jsonwebtoken')
 const AppError = require('../utils/appError.js')
-import { name, email } from './userController';
 
 
 const signToken = (id) => {

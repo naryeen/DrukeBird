@@ -87,10 +87,6 @@ const OTP = () => {
           value={OTP}
         />
         <Button styling={styles.buttonstyle} onPress={() => verifyOTP()}>Submit</Button>
-        <Text style={styles.createtext}>
-          Already have an account?
-          <Text style={styles.loginText} onPress={() => navigation.replace('Login')}>Login</Text>
-        </Text>
       </ScrollView>
     </View>
   );
