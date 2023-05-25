@@ -5,21 +5,20 @@ import { useNavigation } from '@react-navigation/native';
 import Button from "../Components/Button";
 import axios from "axios";
 
-const SignUp = () => {
+const SignUp = ({route}) => {
   const navigation = useNavigation();
-  const [name, setName] = useState("");
-  const [email, setEmail] = useState("");
   const [DoB, setDoB] = useState("");
   const [country, setCountry] = useState("");
   const [profession, setProfession] = useState("");
   const [password, setPassword] = useState("");
   const [passwordConfirm, setPasswordConfirm] = useState("");
+  const { VerifyingOTPdata } = route.params;
   const windowDimensions = Dimensions.get('window');
-
   const marginTopDistance = windowDimensions.height < 380 ? 30 : 60;
 
   const register = () => {
     let user = {
+      VerifyingOTPdata:VerifyingOTPdata,
       dob: DoB,
       country: country,
       profession: profession,

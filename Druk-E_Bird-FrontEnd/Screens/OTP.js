@@ -5,10 +5,11 @@ import { useNavigation } from '@react-navigation/native';
 import Button from "../Components/Button";
 import axios from "axios";
 
-const OTP = () => {
+const OTP = ({route}) => {
   const navigation = useNavigation();
   const [OTP, setOTP] = useState("");
   const windowDimensions = Dimensions.get('window');
+  const { Verifyingdata } = route.params;
 
   const marginTopDistance = windowDimensions.height < 380 ? 30 : 60;
 
@@ -24,7 +25,7 @@ const OTP = () => {
             ToastAndroid.LONG);
 
           setTimeout(() => {
-            navigation.navigate('SignUp');
+            VerifyingOTPdataSave()
           }, 200);
         }
       })
@@ -38,6 +39,14 @@ const OTP = () => {
         ToastAndroid.show(message,
           ToastAndroid.SHORT);
       });
+  };
+
+   //data pass to VerifyingdataSave
+   const VerifyingOTPdataSave = () => {
+    var VerifyingOTPdata = {
+      Verifyingdata:Verifyingdata
+    };
+    navigation.navigate('SignUp', { VerifyingOTPdata: VerifyingOTPdata});
   };
 
   const styles = StyleSheet.create({
@@ -72,7 +81,6 @@ const OTP = () => {
 
   return (
     <View style={styles.container}>
-
       <Text style={styles.text1}>
         Create Account
       </Text>

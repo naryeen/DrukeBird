@@ -4,20 +4,36 @@ const mongoose = require ('mongoose')
 const validator = require('validator')
 const bcrypt = require("bcryptjs")
 
-
+const Verifyingdata = new mongoose.Schema({
+    email: {
+      type: String,
+      required: [true, 'latitude'],
+      required: [true, 'Please provide your email'],
+      unique: true,
+      lowercase: true,
+    },
+    name: {
+      type: String,
+      required: [true, 'Please tell us your name!' ],
+      default: 0,
+    },
+  });
 
 const userSchema = new mongoose.Schema({
-    name: {
-        type: String,
-        required: [true, 'Please tell us your name!' ],
-    },
+    // name: {
+    //     type: String,
+    //     required: [true, 'Please tell us your name!' ],
+    // },
 
-    email: {
-        type: String,
-        required: [true, 'Please provide your email'],
-        unique: true,
-        lowercase: true,
-    },
+    // email: {
+    //     type: String,
+    //     required: [true, 'Please provide your email'],
+    //     unique: true,
+    //     lowercase: true,
+    // },
+
+    Verifyingdata:Verifyingdata,
+    
     photo: {
         type: String,
         default: `http://res.cloudinary.com/cheki/image/upload/v1684309596/ietnmi5axvciw3dnornw.jpg`
