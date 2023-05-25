@@ -25,6 +25,7 @@ const SignUp = ({route}) => {
       password: password,
       passwordConfirm: passwordConfirm
     };
+    console.log(user)
     axios
       .post('https://druk-ebirds.onrender.com/api/v1/users/signup', user)
       .then(res => {
@@ -86,24 +87,6 @@ const SignUp = ({route}) => {
         Create Account
       </Text>
       <ScrollView>
-        {/* <TextInput
-          style={styles.inputStyle}
-          mode="outlined"
-          label="Name"
-          placeholder="Write Your name"
-          left={<TextInput.Icon icon="account-circle" />}
-          onChangeText={(text) => setName(text)}
-          value={name}
-        />
-        <TextInput
-          style={styles.inputStyle}
-          mode="outlined"
-          label="Email"
-          placeholder="Write Your Email"
-          left={<TextInput.Icon icon="email" />}
-          onChangeText={(text) => setEmail(text)}
-          value={email}
-        /> */}
         <TextInput
           style={styles.inputStyle}
           mode="outlined"
