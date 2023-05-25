@@ -5,36 +5,29 @@ import { useNavigation } from '@react-navigation/native';
 import Button from "../Components/Button";
 import axios from "axios";
 
-const SignUp = () => {
+const Verifying = () => {
   const navigation = useNavigation();
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
-  const [DoB, setDoB] = useState("");
-  const [country, setCountry] = useState("");
-  const [profession, setProfession] = useState("");
-  const [password, setPassword] = useState("");
-  const [passwordConfirm, setPasswordConfirm] = useState("");
   const windowDimensions = Dimensions.get('window');
 
   const marginTopDistance = windowDimensions.height < 380 ? 30 : 60;
 
-  const register = () => {
-    let user = {
-      dob: DoB,
-      country: country,
-      profession: profession,
-      password: password,
-      passwordConfirm: passwordConfirm
+  const Verify = () => {
+    let verifydata = {
+      name: name,
+      email: email,
     };
+    
     axios
-      .post('https://druk-ebirds.onrender.com/api/v1/users/signup', user)
+      .post('https://druk-ebirds.onrender.com/api/v1/users/verification', verifydata)
       .then(res => {
         if (res.data.status == "success") {
-          ToastAndroid.show('Successfully Created Your Account',
+          ToastAndroid.show('Please check your mail',
             ToastAndroid.LONG);
 
           setTimeout(() => {
-            navigation.navigate('Login');
+            navigation.navigate('OTP');
           }, 200);
         }
       })
@@ -49,6 +42,7 @@ const SignUp = () => {
           ToastAndroid.SHORT);
       });
   };
+
 
   const styles = StyleSheet.create({
     container: {
@@ -87,7 +81,7 @@ const SignUp = () => {
         Create Account
       </Text>
       <ScrollView>
-        {/* <TextInput
+        <TextInput
           style={styles.inputStyle}
           mode="outlined"
           label="Name"
@@ -104,55 +98,9 @@ const SignUp = () => {
           left={<TextInput.Icon icon="email" />}
           onChangeText={(text) => setEmail(text)}
           value={email}
-        /> */}
-        <TextInput
-          style={styles.inputStyle}
-          mode="outlined"
-          label="DoB"
-          placeholder="MM/DD/YYYY"
-          left={<TextInput.Icon icon="calendar" />}
-          onChangeText={(text) => setDoB(text)}
-          value={DoB}
         />
-        <TextInput
-          style={styles.inputStyle}
-          mode="outlined"
-          label="Country"
-          placeholder="Write Your Country"
-          left={<TextInput.Icon icon="flag" />}
-          onChangeText={(text) => setCountry(text)}
-          value={country}
-        />
-        <TextInput
-          style={styles.inputStyle}
-          mode="outlined"
-          label="Profession"
-          placeholder="Write Your Profession"
-          left={<TextInput.Icon icon="briefcase" />}
-          onChangeText={(text) => setProfession(text)}
-          value={profession}
-        />
-        <TextInput
-          style={styles.inputStyle}
-          mode="outlined"
-          secureTextEntry={true}
-          label="Password"
-          placeholder="Write Your Password"
-          left={<TextInput.Icon icon="lock" />}
-          onChangeText={(text) => setPassword(text)}
-          value={password}
-        />
-        <TextInput
-          style={styles.inputStyle}
-          mode="outlined"
-          secureTextEntry={true}
-          label="Confirm Password"
-          placeholder="Enter the Your Password Again"
-          left={<TextInput.Icon icon="key-variant" />}
-          onChangeText={(text) => setPasswordConfirm(text)}
-          value={passwordConfirm}
-        />
-        <Button styling={styles.buttonstyle} onPress={() => register()}>Create Account</Button>
+        
+        <Button styling={styles.buttonstyle} onPress={() => Verify()}>Create Account</Button>
         <Text style={styles.createtext}>
           Already have an account?
           <Text style={styles.loginText} onPress={() => navigation.replace('Login')}>Login</Text>
@@ -162,4 +110,4 @@ const SignUp = () => {
   );
 };
 
-export default SignUp;
+export default Verifying;
