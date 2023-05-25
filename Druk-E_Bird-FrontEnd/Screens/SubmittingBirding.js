@@ -44,6 +44,11 @@ const SubmittingBirding = ({ route }) => {
 
   const StartbirdingonedataSave = () => {
     var detailOfBirds = [];
+    var endpointLocation = {
+      dzongkhag: selectedDzongkhag,
+      gewog: selectedGewog,
+      village: selectedVillage
+    };
     SubmittedBirdsdata.startbirding1data.map((bird) => {
       if (bird.count) {
         var temp = [{
@@ -51,13 +56,7 @@ const SubmittingBirding = ({ route }) => {
           "selectedDate": SubmittedBirdsdata.StartbirdingData.selectedDate,
           "selectedTime": SubmittedBirdsdata.StartbirdingData.selectedTime,
           "observer": SubmittedBirdsdata.StartbirdingData.userName,
-          "EndpointLocation": [
-            {
-              "dzongkhag": selectedDzongkhag,
-              "gewog": selectedGewog,
-              "village": selectedVillage
-            }
-          ]
+          "EndpointLocation": [endpointLocation]
     }];
     const randomNumber = Math.floor(Math.random() * 1000);
 
@@ -73,7 +72,6 @@ const SubmittingBirding = ({ route }) => {
     try {
       // Make an HTTP POST request to your backend API endpoint
     console.log("detailOfBirds",detailOfBirds);
-
       axios
         .post("https://druk-ebirds.onrender.com/api/v1/checkList", detailOfBirds)
         .then((response) => {

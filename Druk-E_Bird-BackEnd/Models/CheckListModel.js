@@ -15,20 +15,21 @@ const currentLocation = new mongoose.Schema({
     }
 })
 
-const EndpointLocation = new mongoose.Schema({
-    dzongkhag:{
-        type:String,
-        default:"null"
+const EndpointLocation = [new mongoose.Schema({
+    dzongkhag: {
+      type: String,
+      default: "null",
     },
-    gewog:{
-        type:String,
-        default:"null"
+    gewog: {
+      type: String,
+      default: "null",
     },
-    village:{
-        type:String,
-        default:"null"
-    }
-}) 
+    village: {
+      type: String,
+      default: "null",
+    },
+  })];
+   
 
 const detailSchema = new mongoose.Schema({
     selectedDate: {
@@ -61,7 +62,7 @@ const detailSchema = new mongoose.Schema({
         default: "null"
     },
     
-    EndpointLoaction: [EndpointLocation]
+    EndpointLoaction: EndpointLocation
 
 })
 
