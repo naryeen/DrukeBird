@@ -3,8 +3,8 @@ const nodemailer = require("nodemailer");
 const randomstring = require("randomstring");
 
 var OTP = "123456"
-var Name = null;
-var Email = null;
+var Name = "Tshering";
+var Email = "humblewangs777@gmail.com";
 
 exports.getNameAndEmail = (req, res ,next) =>{
     res.locals.nameAndEmail = [Name, Email];
@@ -27,7 +27,7 @@ const sendResetPasswordMail = async(name,email,token)=>{
       const mailOptions = {
           from:"12190099.gcit@rub.edu.bt",
           to: email,
-          subject:'For Reset password',
+          subject:'Verifying User',
           html:`<p> Hii `+name+`, Please copy the token </p><br>
           <h1>`+token+`</h1><br> 
           <p>enter OTP to reset your password</p>` 
@@ -52,9 +52,6 @@ exports.signupVerification = async(req,res, next)=>{
       Name = name;
       Email = email;
     
-
-    //   exports.Name = Name;
-    //   exports.Email = Email;
       const randomString = randomstring.generate(6);
       OTP = randomString;
       console.log(OTP)
@@ -65,16 +62,12 @@ exports.signupVerification = async(req,res, next)=>{
       res.status(200).json({
           status:'success',
           msg:"please check your mail."})
-        //   setNameAndEmail(name, email)
-        // next()
 
   } catch (error) {
       res.status(400).json({
           error:err.message});
   }
 }
-
-
 
 exports.enter_OTP = async(req,res)=>{
   try {

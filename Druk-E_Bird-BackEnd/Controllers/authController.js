@@ -1,9 +1,6 @@
 const User = require('../Models/userModels')
 const jwt = require('jsonwebtoken')
 const AppError = require('../utils/appError.js')
-const { getNameAndEmail } = require('./userController');
-
-// console.log("name and email", getNameAndEmail());
 
 const signToken = (id) => {
     return jwt.sign({id},
@@ -33,14 +30,12 @@ const createSendToken = (user, statusCode, res) =>
 exports.signup=async(req, res, next)=> {
     try
     {   
-        const userCredentisl = res.locals.nameAndEmail;
-        var name = userCredentisl[0]
-        var email = userCredentisl[1]
+        const userCredentials = res.locals.nameAndEmail;
+        var name = userCredentials[0]
+        var email = userCredentials[1]
         
         const {dob, country, profession, password, passwordConfirm } = req.body;
-        console.log("This is the name :"+email, name);
         
-        // const{email} = req.body
         const user = await User.findOne({email})
         if(user) return res.status(400).json({message:"user already exist"})
 
@@ -59,7 +54,7 @@ exports.signup=async(req, res, next)=> {
 }
     catch(err)
     {   
-        res.status(401).json({message:"Try again"});
+        res.status(401).json({message: Object.values(err.errors).map(val => val.message)[0]});
         
     } 
 }
