@@ -253,6 +253,7 @@ const SubmittingBirding = ({ route }) => {
             selectedTime: SubmittedBirdsdata.StartbirdingData.selectedTime,
             observer: SubmittedBirdsdata.StartbirdingData.userName,
             EndpointLocation: [endpointLocation],
+            "status":"submittedchecklist"
           },
         ];
         const randomNumber = Math.floor(Math.random() * 1000);

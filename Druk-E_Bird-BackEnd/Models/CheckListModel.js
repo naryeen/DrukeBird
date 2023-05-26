@@ -56,6 +56,10 @@ const detailSchema = new mongoose.Schema({
     default: "null",
   },
   EndpointLocation: [EndpointLocation],
+  status: {
+    type: String,
+    default: "draftchecklist",
+  },
 });
 
 const BirdsSchema = new mongoose.Schema({
