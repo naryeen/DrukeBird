@@ -52,6 +52,7 @@ exports.login = async(req, res, next)=>
 {
     try{
         const {email, password} = req.body
+        
         //1) check if email and password exist
         if(!email || !password)
         {

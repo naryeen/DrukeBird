@@ -13,12 +13,15 @@ const SignUp = ({route}) => {
   const [password, setPassword] = useState("");
   const [passwordConfirm, setPasswordConfirm] = useState("");
   const { VerifyingOTPdata } = route.params;
+  const [email, setEmail] = useState(VerifyingOTPdata.email);
+  const [name, setName] = useState(VerifyingOTPdata.name);
   const windowDimensions = Dimensions.get('window');
   const marginTopDistance = windowDimensions.height < 380 ? 30 : 60;
 
   const register = () => {
     let user = {
-      VerifyingOTPdata:VerifyingOTPdata,
+      name:name,
+      email:email,
       dob: DoB,
       country: country,
       profession: profession,
