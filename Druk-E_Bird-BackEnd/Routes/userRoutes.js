@@ -6,7 +6,7 @@ const router = express.Router()
 
 router.post('/verification', userController.signupVerification)
 router.post('/OTP',userController.enter_OTP)
-router.post('/signup',authController.signup)
+router.post('/signup',userController.getNameAndEmail, authController.signup)
 
 router.post('/login', authController.login)
 

@@ -3,8 +3,13 @@ const nodemailer = require("nodemailer");
 const randomstring = require("randomstring");
 
 var OTP = "123456"
-exports.Name = "Hello";
-exports.Email = "World";
+var Name = null;
+var Email = null;
+
+exports.getNameAndEmail = (req, res ,next) =>{
+    res.locals.nameAndEmail = [Name, Email];
+    next()
+}
 
 const sendResetPasswordMail = async(name,email,token)=>{
   try {
@@ -40,26 +45,37 @@ const sendResetPasswordMail = async(name,email,token)=>{
       res.status(400).send({success:false,msg:error.message})
   }
 }
-exports.signupVerification = async(req,res)=>{
+exports.signupVerification = async(req,res, next)=>{
   try {
       const name = req.body.name
       const email = req.body.email;
-      exports.Name = name;
-      exports.Email = email;
+      Name = name;
+      Email = email;
+    
+
+    //   exports.Name = Name;
+    //   exports.Email = Email;
       const randomString = randomstring.generate(6);
       OTP = randomString;
       console.log(OTP)
-      sendResetPasswordMail(name,email,randomString); 
-      
+      sendResetPasswordMail(name,email,randomString);
+
+      res.name = name
+      res.email = email
       res.status(200).json({
           status:'success',
           msg:"please check your mail."})
+        //   setNameAndEmail(name, email)
+        // next()
 
   } catch (error) {
       res.status(400).json({
           error:err.message});
   }
 }
+
+
+
 exports.enter_OTP = async(req,res)=>{
   try {
       const OTP_recieved = req.body.otp;
@@ -158,5 +174,5 @@ const filterObj = (obj, ...allowedFields) => {
     }
   };
   
-
+  
 
