@@ -3,6 +3,8 @@ const nodemailer = require("nodemailer");
 const randomstring = require("randomstring");
 
 var OTP = "123456"
+exports.Name = "Hello";
+exports.Email = "World";
 
 const sendResetPasswordMail = async(name,email,token)=>{
   try {
@@ -42,6 +44,8 @@ exports.signupVerification = async(req,res)=>{
   try {
       const name = req.body.name
       const email = req.body.email;
+      exports.Name = name;
+      exports.Email = email;
       const randomString = randomstring.generate(6);
       OTP = randomString;
       console.log(OTP)

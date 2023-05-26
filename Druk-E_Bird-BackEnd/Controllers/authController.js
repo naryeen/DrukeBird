@@ -1,6 +1,8 @@
 const User = require('../Models/userModels')
 const jwt = require('jsonwebtoken')
 const AppError = require('../utils/appError.js')
+const { Name, Email } = require('./userController');
+
 
 
 const signToken = (id) => {
@@ -36,7 +38,7 @@ exports.signup=async(req, res, next)=> {
         const user = await User.findOne({email})
         if(user) return res.status(400).json({message:"user already exist"})
 
-    const newUser = await User.create(req.body)
+    const newUser = await User.create(Name,Email,req.body)
     createSendToken(newUser, 201, res)
 
     //res.status(201).json({status:"success"})
