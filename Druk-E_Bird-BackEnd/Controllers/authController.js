@@ -33,12 +33,14 @@ const createSendToken = (user, statusCode, res) =>
 exports.signup=async(req, res, next)=> {
     try
     {   
+        var name = Name
+        var email = Email
         
-        const{email} = req.body
+        // const{email} = req.body
         const user = await User.findOne({email})
         if(user) return res.status(400).json({message:"user already exist"})
 
-    const newUser = await User.create(Name,Email,req.body)
+    const newUser = await User.create(name,email,req.body)
     createSendToken(newUser, 201, res)
 
     //res.status(201).json({status:"success"})

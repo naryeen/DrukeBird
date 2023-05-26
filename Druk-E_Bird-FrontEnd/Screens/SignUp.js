@@ -19,8 +19,6 @@ const SignUp = () => {
 
   const register = () => {
     let user = {
-      name:name,
-      email:email,
       dob: DoB,
       country: country,
       profession: profession,
