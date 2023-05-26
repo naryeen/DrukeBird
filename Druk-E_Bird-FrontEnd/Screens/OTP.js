@@ -5,11 +5,11 @@ import { useNavigation } from '@react-navigation/native';
 import Button from "../Components/Button";
 import axios from "axios";
 
-const OTP = ({route}) => {
+const OTP = () => {
   const navigation = useNavigation();
   const [OTP, setOTP] = useState("");
   const windowDimensions = Dimensions.get('window');
-  const { Verifyingdata } = route.params;
+  // const { Verifyingdata } = route.params;
 
   const marginTopDistance = windowDimensions.height < 380 ? 30 : 60;
 
@@ -25,7 +25,7 @@ const OTP = ({route}) => {
             ToastAndroid.LONG);
 
           setTimeout(() => {
-            VerifyingOTPdataSave()
+            navigation.navigate('SignUp');
           }, 200);
         }
       })
@@ -42,12 +42,12 @@ const OTP = ({route}) => {
   };
 
    //data pass to VerifyingdataSave
-   const VerifyingOTPdataSave = () => {
-    var VerifyingOTPdata = {
-      Verifyingdata:Verifyingdata
-    };
-    navigation.navigate('SignUp', { VerifyingOTPdata: VerifyingOTPdata});
-  };
+  //  const VerifyingOTPdataSave = () => {
+  //   var VerifyingOTPdata = {
+  //     Verifyingdata:Verifyingdata
+  //   };
+  //   navigation.navigate('SignUp', { VerifyingOTPdata: VerifyingOTPdata});
+  // };
 
   const styles = StyleSheet.create({
     container: {

@@ -27,7 +27,7 @@ const Verifying = () => {
             ToastAndroid.LONG);
 
           setTimeout(() => {
-            VerifyingdataSave()
+            navigation.navigate('OTP');
           }, 200);
         }
       })
@@ -44,13 +44,13 @@ const Verifying = () => {
   };
 
    //data pass to VerifyingdataSave
-   const VerifyingdataSave = () => {
-    var Verifyingdata = {
-      name: name,
-      email: email,
-    };
-    navigation.navigate('OTP', { Verifyingdata: Verifyingdata });
-  };
+  //  const VerifyingdataSave = () => {
+  //   var Verifyingdata = {
+  //     name: name,
+  //     email: email,
+  //   };
+  //   navigation.navigate('OTP', { Verifyingdata: Verifyingdata });
+  // };
 
 
   const styles = StyleSheet.create({

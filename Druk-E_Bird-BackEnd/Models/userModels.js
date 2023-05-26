@@ -66,62 +66,6 @@ const userSchema = new mongoose.Schema({
 
 })
 
-// const userSchema = new mongoose.Schema({
-//     VerifyingOTPdata: {
-//       type: {
-//         Verifyingdata: {
-//           type: {
-//             email: {
-//               type: String,
-//               required: [true, 'email'],
-//               unique: true,
-//               lowercase: true,
-//             },
-//             name: {
-//               type: String,
-//               required: [true, 'name'],
-//             },
-//           },
-//           required: true,
-//         },
-//       },
-//       required: true,
-//     },
-//     country: {
-//       type: String,
-//       required: [true, 'Please provide a country!'],
-//     },
-//     dob: {
-//       type: String,
-//       required: [true, 'Enter Your date of birth'],
-//     },
-//     profession: {
-//       type: String,
-//       required: [true, 'Please provide a profession!'],
-//     },
-//     password: {
-//       type: String,
-//       required: [true, 'Please provide a password!'],
-//     },
-//     passwordConfirm: {
-//       type: String,
-//       required: [true, 'Please confirm your password'],
-//       validate: {
-//         validator: function (el) {
-//           return el === this.password;
-//         },
-//         message: 'Passwords are not the same!',
-//       },
-//     },
-//     photo: {
-//       type: String,
-//       default: 'http://res.cloudinary.com/cheki/image/upload/v1684309596/ietnmi5axvciw3dnornw.jpg',
-//     },
-//     active: {
-//       type: Boolean,
-//       default: true,
-//     },
-//   });
 // mongooose middleware
 
 
