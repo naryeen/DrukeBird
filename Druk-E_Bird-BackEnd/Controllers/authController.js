@@ -35,12 +35,17 @@ exports.signup=async(req, res, next)=> {
     {   
         var name = Name
         var email = Email
+        var dob = req.body.dob
+        var country = req.body.country
+        var profession = req.body.profession
+        var password= req.body.password
+        var passwordConfirm= req.body.passwordConfirm
         
         // const{email} = req.body
         const user = await User.findOne({email})
         if(user) return res.status(400).json({message:"user already exist"})
 
-    const newUser = await User.create(name,email,req.body)
+    const newUser = await User.create(name,email,dob,country,profession,password,passwordConfirm)
     createSendToken(newUser, 201, res)
 
     //res.status(201).json({status:"success"})
