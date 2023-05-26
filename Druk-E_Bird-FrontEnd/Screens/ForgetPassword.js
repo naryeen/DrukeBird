@@ -5,9 +5,6 @@ import Button from "../Components/Button";
 import axios from "axios";
 const windowDimensions = Dimensions.get('window');
 import ForgotPasswordHeader from "../Components/ForgotPasswordHeader";
-// import NavigationHeader from '../Components/NavigationHeader';
-
-// const windowDimensions = Dimensions.get('window');
 const marginTopDistance = windowDimensions.height < 380 ? 30 : 50;
 
 const ForgetPassword = () => {
@@ -39,17 +36,16 @@ const ForgetPassword = () => {
   return (
     <View style={styles.container}>
       <ForgotPasswordHeader title={"Forget Password"}/>
-      {/* <NavigationHeader title="Forget Password"/> */}
       <View>
       <TextInput
-        style={styles.inputStyle}
-        mode="outlined"
-        label="Email"
-        placeholder="Write Your Email"
-        left={<TextInput.Icon name="email" />}
-        onChangeText={(text) => setEmail(text)}
-        value={email}
-      />
+          style={styles.inputStyle}
+          mode="outlined"
+          label="Email"
+          placeholder="Write Your Email"
+          left={<TextInput.Icon icon="email" />}
+          onChangeText={(text) => setEmail(text)}
+          value={email}
+        />
       <Button styling={styles.buttonStyle} onPress={() => forgetPassword()}>Send</Button>
     </View>
     </View>

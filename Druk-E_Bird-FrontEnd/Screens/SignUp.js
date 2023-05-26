@@ -12,7 +12,7 @@ const SignUp = () => {
   const [profession, setProfession] = useState("");
   const [password, setPassword] = useState("");
   const [passwordConfirm, setPasswordConfirm] = useState("");
-  // const { VerifyingOTPdata } = route.params;
+  const [passwordVisible, setPasswordVisible] = useState(false);
   
   const windowDimensions = Dimensions.get('window');
   const marginTopDistance = windowDimensions.height < 380 ? 30 : 60;
@@ -25,7 +25,6 @@ const SignUp = () => {
       password: password,
       passwordConfirm: passwordConfirm
     };
-    console.log(user)
     axios
       .post('https://druk-ebirds.onrender.com/api/v1/users/signup', user)
       .then(res => {
@@ -48,6 +47,11 @@ const SignUp = () => {
         ToastAndroid.show(message,
           ToastAndroid.SHORT);
       });
+  };
+
+
+  const togglePasswordVisibility = () => {
+    setPasswordVisible(!passwordVisible);
   };
 
   const styles = StyleSheet.create({
@@ -117,20 +121,32 @@ const SignUp = () => {
         <TextInput
           style={styles.inputStyle}
           mode="outlined"
-          secureTextEntry={true}
+          secureTextEntry={!passwordVisible}
           label="Password"
           placeholder="Write Your Password"
           left={<TextInput.Icon icon="lock" />}
+          right={
+            <TextInput.Icon
+              name={passwordVisible ? 'eye' : 'eye-slash'}
+              onPress={togglePasswordVisibility}
+            />
+          }
           onChangeText={(text) => setPassword(text)}
           value={password}
         />
         <TextInput
           style={styles.inputStyle}
           mode="outlined"
-          secureTextEntry={true}
+          secureTextEntry={!passwordVisible}
           label="Confirm Password"
           placeholder="Enter the Your Password Again"
           left={<TextInput.Icon icon="key-variant" />}
+          right={
+            <TextInput.Icon
+              name={passwordVisible ? 'eye' : 'eye-slash'}
+              onPress={togglePasswordVisibility}
+            />
+          }
           onChangeText={(text) => setPasswordConfirm(text)}
           value={passwordConfirm}
         />
@@ -143,5 +159,6 @@ const SignUp = () => {
     </View>
   );
 };
+
 
 export default SignUp;

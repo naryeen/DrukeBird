@@ -14,6 +14,16 @@ const Verifying = () => {
   const marginTopDistance = windowDimensions.height < 380 ? 30 : 60;
 
   const Verify = () => {
+    if (name.trim() === "") {
+      ToastAndroid.show('Please enter your name', ToastAndroid.SHORT);
+      return;
+    }
+
+    else if (email.trim() === "") {
+      ToastAndroid.show('Please enter your email', ToastAndroid.SHORT);
+      return;
+    }
+
     let verifydata = {
       name: name,
       email: email,
@@ -42,15 +52,6 @@ const Verifying = () => {
           ToastAndroid.SHORT);
       });
   };
-
-   //data pass to VerifyingdataSave
-  //  const VerifyingdataSave = () => {
-  //   var Verifyingdata = {
-  //     name: name,
-  //     email: email,
-  //   };
-  //   navigation.navigate('OTP', { Verifyingdata: Verifyingdata });
-  // };
 
 
   const styles = StyleSheet.create({

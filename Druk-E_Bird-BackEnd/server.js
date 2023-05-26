@@ -13,6 +13,7 @@ mongoose.connect(DB).then((con)=>{
 }).catch(error =>console.log(error));
 
 app.use(cors({
+    origin:["https://druk-ebird.onrender.com", "http://localhost:8080"],
     methods:"GET, POST, DELETE, PATCH",
     credentials:true
 }))

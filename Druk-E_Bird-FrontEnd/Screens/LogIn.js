@@ -4,6 +4,7 @@ import { StyleSheet, View, Text, Image, Dimensions } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import Button from '../Components/Button';
 import { AuthContext } from "../Context/AuthContext";
+
 const windowDimensions = Dimensions.get('window');
 const marginTopDistance = windowDimensions.height < 380 ? 30 : 50;
 const LogIn = () => {
@@ -11,6 +12,11 @@ const LogIn = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const { login } = useContext(AuthContext);
+  const [passwordVisible, setPasswordVisible] = useState(false);
+
+  const togglePasswordVisibility = () => {
+    setPasswordVisible(!passwordVisible);
+  };
   
 
   return (
@@ -32,9 +38,15 @@ const LogIn = () => {
         label="Password"
         placeholder="Write Your Password"
         left={<TextInput.Icon icon="lock" />}
+        right={
+          <TextInput.Icon
+            name="eye"
+            onPress={togglePasswordVisibility}
+          />
+        }
         onChangeText={(text) => setPassword(text)}
         value={password}
-        secureTextEntry={true}
+        secureTextEntry={!passwordVisible}
       />
       <Text style={styles.forgetpasswordtext} onPress={() => navigation.replace('ForgetPassword')}>
         Forgot Password?

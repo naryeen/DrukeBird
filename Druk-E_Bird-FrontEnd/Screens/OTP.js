@@ -9,11 +9,15 @@ const OTP = () => {
   const navigation = useNavigation();
   const [OTP, setOTP] = useState("");
   const windowDimensions = Dimensions.get('window');
-  // const { Verifyingdata } = route.params;
 
   const marginTopDistance = windowDimensions.height < 380 ? 30 : 60;
 
   const verifyOTP = () => {
+    if (OTP.trim() === "") {
+      ToastAndroid.show('Please enter your OTP', ToastAndroid.SHORT);
+      return;
+    }
+
     let verifyOTPdata = {
       otp:OTP
     };
@@ -40,14 +44,6 @@ const OTP = () => {
           ToastAndroid.SHORT);
       });
   };
-
-   //data pass to VerifyingdataSave
-  //  const VerifyingOTPdataSave = () => {
-  //   var VerifyingOTPdata = {
-  //     Verifyingdata:Verifyingdata
-  //   };
-  //   navigation.navigate('SignUp', { VerifyingOTPdata: VerifyingOTPdata});
-  // };
 
   const styles = StyleSheet.create({
     container: {
