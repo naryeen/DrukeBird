@@ -169,7 +169,8 @@ const UnknownBird = ({ route }) => {
           "selectedTime": UnknownBirdsdata.StartbirdingData.selectedTime,
           "observer": UnknownBirdsdata.StartbirdingData.userName,
           "photo":image,
-          "EndpointLocation": [endpointLocation]
+          "EndpointLocation": [endpointLocation],
+          "status":"submittedchecklist"
         }];
 
         const randomNumber = Math.floor(Math.random() * 1000);
