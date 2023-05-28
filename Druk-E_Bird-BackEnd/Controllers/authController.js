@@ -33,8 +33,11 @@ exports.signup=async(req, res, next)=> {
         const userCredentials = res.locals.nameAndEmail;
         var name = userCredentials[0]
         var email = userCredentials[1]
-        
-        const {dob, country, profession, password, passwordConfirm } = req.body;
+        var dob = userCredentials[2] 
+        var country = userCredentials[3] 
+        var profession = userCredentials[4] 
+        var password = userCredentials[5]
+        var passwordConfirm = userCredentials[6] 
         
         const user = await User.findOne({email})
         if(user) return res.status(400).json({message:"user already exist"})

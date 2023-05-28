@@ -139,7 +139,12 @@ const Verifying = () => {
   const [email, setEmail] = useState("");
   const [showOTP, setShowOTP] = useState(false); // New state for OTP modal visibility
   const [OTPValue, setOTPValue] = useState(""); // New state for OTP value
-  
+  const [DoB, setDoB] = useState("");
+  const [country, setCountry] = useState("");
+  const [profession, setProfession] = useState("");
+  const [password, setPassword] = useState("");
+  const [passwordConfirm, setPasswordConfirm] = useState("");
+  const [passwordVisible, setPasswordVisible] = useState(false);
 
   const Verify = () => {
     if (name.trim() === "") {
@@ -155,6 +160,11 @@ const Verifying = () => {
     let verifydata = {
       name: name,
       email: email,
+      dob: DoB,
+      country: country,
+      profession: profession,
+      password: password,
+      passwordConfirm: passwordConfirm
     };
     
     axios
@@ -191,6 +201,7 @@ const Verifying = () => {
         if (res.data.status === "success") {
           ToastAndroid.show('OTP matched', ToastAndroid.LONG);
           setShowOTP(false); // Hide OTP modal
+          .post('https://druk-ebirds.onrender.com/api/v1/users/signup', user)
           navigation.navigate('SignUp');
         }
       })
@@ -225,6 +236,66 @@ const Verifying = () => {
           left={<TextInput.Icon icon="email" />}
           onChangeText={text => setEmail(text)}
           value={email}
+        />
+
+        <TextInput
+          style={styles.inputStyle}
+          mode="outlined"
+          label="DoB"
+          placeholder="MM/DD/YYYY"
+          left={<TextInput.Icon icon="calendar" />}
+          onChangeText={(text) => setDoB(text)}
+          value={DoB}
+        />
+        <TextInput
+          style={styles.inputStyle}
+          mode="outlined"
+          label="Country"
+          placeholder="Write Your Country"
+          left={<TextInput.Icon icon="flag" />}
+          onChangeText={(text) => setCountry(text)}
+          value={country}
+        />
+        <TextInput
+          style={styles.inputStyle}
+          mode="outlined"
+          label="Profession"
+          placeholder="Write Your Profession"
+          left={<TextInput.Icon icon="briefcase" />}
+          onChangeText={(text) => setProfession(text)}
+          value={profession}
+        />
+        <TextInput
+          style={styles.inputStyle}
+          mode="outlined"
+          secureTextEntry={!passwordVisible}
+          label="Password"
+          placeholder="Write Your Password"
+          left={<TextInput.Icon icon="lock" />}
+          right={
+            <TextInput.Icon
+              name={passwordVisible ? 'eye' : 'eye-slash'}
+              onPress={togglePasswordVisibility}
+            />
+          }
+          onChangeText={(text) => setPassword(text)}
+          value={password}
+        />
+        <TextInput
+          style={styles.inputStyle}
+          mode="outlined"
+          secureTextEntry={!passwordVisible}
+          label="Confirm Password"
+          placeholder="Enter the Your Password Again"
+          left={<TextInput.Icon icon="key-variant" />}
+          right={
+            <TextInput.Icon
+              name={passwordVisible ? 'eye' : 'eye-slash'}
+              onPress={togglePasswordVisibility}
+            />
+          }
+          onChangeText={(text) => setPasswordConfirm(text)}
+          value={passwordConfirm}
         />
   
         <Button styling={styles.buttonstyle} onPress={Verify}>
