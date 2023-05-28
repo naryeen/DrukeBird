@@ -1,4 +1,4 @@
-import { Text, View, FlatList, TouchableOpacity } from 'react-native';
+import { Text, View, FlatList, TouchableOpacity} from 'react-native';
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';

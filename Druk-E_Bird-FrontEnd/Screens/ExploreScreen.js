@@ -157,11 +157,12 @@
 // }
 // export default ExploreScreen;
 
-import { Text, View, FlatList } from 'react-native';
+import { Text, View, FlatList, TouchableOpacity } from 'react-native';
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
 import React, { useState, useEffect } from 'react';
 import { ActivityIndicator, MD2Colors } from "react-native-paper";
 import axios from "axios";
+import { useNavigation } from '@react-navigation/native';
 
 const getCheckList = "https://druk-ebirds.onrender.com/api/v1/checkList";
 
@@ -169,6 +170,7 @@ function ObservedSpecies() {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
   const [uniqueBirdNames, setUniqueBirdNames] = useState([]);
+  const navigation = useNavigation();
 
   useEffect(() => {
     axios.get(getCheckList)
@@ -192,14 +194,21 @@ function ObservedSpecies() {
     setUniqueBirdNames(uniqueNames);
   }, [data]);
 
-  const renderBirdName = (birdName) => {
+  const renderBirdName = (birdName, navigation) => {
+    const handleBirdClick = () => {
+      navigation.navigate('ExploreBridInfo', { birdName: birdName });
+
+    };
+  
     return (
-      <View>
-        <View style={{ marginLeft: 30 }}>
-          <Text style={{ fontWeight: 'bold' }}>{birdName}</Text>
+      <TouchableOpacity onPress={handleBirdClick}>
+        <View>
+          <View style={{ marginLeft: 30 }}>
+            <Text style={{ fontWeight: 'bold' }}>{birdName}</Text>
+          </View>
+          <View style={{ borderBottomWidth: 0.5, borderBottomColor: 'gray', marginVertical: 10 }} />
         </View>
-        <View style={{ borderBottomWidth: 0.5, borderBottomColor: 'gray', marginVertical: 10 }} />
-      </View>
+      </TouchableOpacity>
     );
   };
 
@@ -225,7 +234,7 @@ function ObservedSpecies() {
         style={{ height: "70%", marginTop: 10, borderRadius: 10 }}
         data={uniqueBirdNames}
         keyExtractor={(item, index) => index.toString()}
-        renderItem={({ item }) => renderBirdName(item)}
+        renderItem={({ item }) => renderBirdName(item, navigation)}
       />
     </View>
   );
@@ -234,6 +243,7 @@ function ObservedSpecies() {
 function BirdingSites() {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
+  const navigation = useNavigation();
 
   useEffect(() => {
     axios.get(getCheckList)
@@ -245,6 +255,11 @@ function BirdingSites() {
       })
       .finally(() => setLoading(false));
   }, []);
+
+  const handleItemClick = (dzongkhag) => {
+    console.log(dzongkhag)
+    navigation.navigate('ExploreDzongkhagInfo', { dzongkhag:dzongkhag });
+  };
 
   const renderDzongkhag = (item, index) => {
     if (index === 0 || item.StartbirdingData[0]?.EndpointLocation[0]?.dzongkhag !== data[index - 1]?.StartbirdingData[0]?.EndpointLocation[0]?.dzongkhag) {
@@ -263,9 +278,9 @@ function BirdingSites() {
   const renderItem = ({ item, index }) => {
     if (item.StartbirdingData[0].status === "submittedchecklist") {
       return (
-        <>
+        <TouchableOpacity onPress={() => handleItemClick(item.StartbirdingData[0].EndpointLocation[0].dzongkhag)}>
           {renderDzongkhag(item, index)}
-        </>
+          </TouchableOpacity>
       );
     }
   };
