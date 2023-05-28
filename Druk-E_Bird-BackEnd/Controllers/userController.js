@@ -5,14 +5,9 @@ const randomstring = require("randomstring");
 var OTP = "123456"
 var Name = "Tshering";
 var Email = "humblewangs777@gmail.com";
-var Dob= "";
-var Country= ""
-var Profession= ""
-var Password = ""
-var PasswordConfirm = ""
 
 exports.getNameAndEmail = (req, res ,next) =>{
-    res.locals.nameAndEmail = [Name, Email, Dob, Country, Profession, Password, PasswordConfirm];
+    res.locals.nameAndEmail = [Name, Email];
     next()
 }
 
@@ -52,21 +47,10 @@ const sendResetPasswordMail = async(name,email,token)=>{
 }
 exports.signupVerification = async(req,res, next)=>{
   try {
-      const name = req.body.name;
+      const name = req.body.name
       const email = req.body.email;
-      const dob = req.body.dob
-      const country = req.body.country;
-      const profession = req.body.profession
-      const password = req.body.password;
-      const passwordConfirm = req.body.passwordConfirm;
-      
       Name = name;
       Email = email;
-      Dob = dob;
-      Country = country;
-      Profession = profession;
-      Password =password;
-      PasswordConfirm = passwordConfirm
     
       const randomString = randomstring.generate(6);
       OTP = randomString;
