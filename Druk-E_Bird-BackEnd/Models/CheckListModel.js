@@ -77,7 +77,7 @@ const detailSchema = new mongoose.Schema({
     type: String,
     default: "draftchecklist",
   },
-  Userid:{
+  userId:{
     type: String,
     required: [true, 'Userid'],
   }

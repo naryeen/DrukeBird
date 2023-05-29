@@ -82,7 +82,7 @@ const SubmittingBirding = ({ route }) => {
           StartbirdingData: temp,
           BirdName: bird.englishname,
           CheckListName: `${name}-${randomNumber}`,
-          "_id": userId
+          "Userid": userId
         };
         detailOfBirds.push(StartbirdingoneData);
         dataSubmitted = true;
