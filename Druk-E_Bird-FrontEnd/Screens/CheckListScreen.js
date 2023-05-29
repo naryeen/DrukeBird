@@ -36,8 +36,6 @@ function NotSubmitted() {
 
   const handleItemClick = (itemId, count,birdName) => {
     navigation.navigate('StartBirdingone', { itemId: itemId, count:count, birdName: birdName});
-    // console.log(count)
-    // console.log(birdName)
   };
 
   const renderSwipeableContent = (itemId) => (
@@ -111,22 +109,23 @@ function Submitted() {
         })
         .finally(() => setLoading(false));
     }, []);
-  
+
     const renderItem = ({ item }) => {
-      if (item.StartbirdingData[0].status === "submittedchecklist"){
+      if (item.StartbirdingData[0].status === "submittedchecklist" && item.StartbirdingData[0].EndpointLocation[0]) {
+        const { dzongkhag, gewog, village } = item.StartbirdingData[0].EndpointLocation[0];
         return (
           <View>
-            <View style={{marginLeft:30}}>
-            <Text style={{fontWeight:'bold'}}>{item.BirdName}</Text>
-            <Text>{item.StartbirdingData[0].EndpointLocation[0].dzongkhag} {item.StartbirdingData[0].EndpointLocation[0].gewog}  {item.StartbirdingData[0].EndpointLocation[0].village} </Text>
-            <Text>{item.StartbirdingData[0].selectedDate} {item.StartbirdingData[0].selectedTime}</Text>
-            <Text>{item.StartbirdingData[0].count} species report</Text>
+            <View style={{ marginLeft: 30 }}>
+              <Text style={{ fontWeight: 'bold' }}>{item.BirdName}</Text>
+              <Text>{dzongkhag} {gewog} {village}</Text>
+              <Text>{item.StartbirdingData[0].selectedDate} {item.StartbirdingData[0].selectedTime}</Text>
+              <Text>{item.StartbirdingData[0].count} species report</Text>
             </View>
-            <View style={{borderBottomWidth:0.5, borderBottomColor: 'gray', marginVertical: 10}} />
+            <View style={{ borderBottomWidth: 0.5, borderBottomColor: 'gray', marginVertical: 10 }} />
           </View>
         );
       }
-      
+      return null;
     };
   
     if (loading) {

@@ -11,6 +11,7 @@ router
 
 router
     .route('/:id')
+    .get(checkListController.getCheckList)
     .patch(checkListController.updateCheckList)
     .delete(checkListController.deleteCheckList)
     .delete(checkListController.deleteAllCheckList)

@@ -103,11 +103,14 @@ function BirdingSites() {
   };
 
   const renderDzongkhag = (item, index) => {
-    if (index === 0 || item.StartbirdingData[0]?.EndpointLocation[0]?.dzongkhag !== data[index - 1]?.StartbirdingData[0]?.EndpointLocation[0]?.dzongkhag) {
+    const currentEndpointLocation = item.StartbirdingData[0]?.EndpointLocation[0];
+    const previousEndpointLocation = data[index - 1]?.StartbirdingData[0]?.EndpointLocation[0];
+  
+    if (index === 0 || currentEndpointLocation?.dzongkhag !== previousEndpointLocation?.dzongkhag) {
       return (
         <View key={index}>
           <View style={{ marginLeft: 30 }}>
-            <Text>{item.StartbirdingData[0].EndpointLocation[0].dzongkhag}</Text>
+            <Text>{currentEndpointLocation?.dzongkhag}</Text>
           </View>
           <View style={{ borderBottomWidth: 0.5, borderBottomColor: 'gray', marginVertical: 10 }} />
         </View>

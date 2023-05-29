@@ -77,7 +77,9 @@ const detailSchema = new mongoose.Schema({
     type: String,
     default: "draftchecklist",
   },
-});
+},
+{ _id: false } // Disable the default _id field
+);
 
 const BirdsSchema = new mongoose.Schema({
   CheckListName: {

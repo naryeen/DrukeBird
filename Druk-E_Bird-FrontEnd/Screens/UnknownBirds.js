@@ -309,7 +309,6 @@ const styles = StyleSheet.create({
   },
   subcontainer:{
     alignItems:'center'
-
   },
   iconContainer: {
     borderBottomWidth: 1,

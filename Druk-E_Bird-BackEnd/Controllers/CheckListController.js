@@ -35,6 +35,15 @@ exports.createCheckList = async (req, res) => {
       res.status(500).json({error: err.message});
   }
 }
+
+exports.getCheckList = async (req, res) => {
+  try{
+      const userCheckList = await checklists.findById(req.params.id, req.body);
+      res.json({data: userCheckList, status: "success"});
+  }catch (err){
+      res.status(500).json({error: err.message});
+  }
+}
  
 exports.updateCheckList = async (req, res) => {
   try {

@@ -212,8 +212,8 @@ const StartBirdingone = ({ route }) => {
       console.error("Error:", error);
     }
   };
-  const openPopup = (name) => {
-    setSelectedBirdName(name);
+  const openPopup = (birdName) => {
+    setSelectedBirdName(birdName);
     setShowPopup(true);
   };
   return (
@@ -265,7 +265,7 @@ const StartBirdingone = ({ route }) => {
       </SafeAreaView>
       {/* Pop-up Screen */}
       {showPopup && (
-        <PopupScreen birdName={selectedBirdName} />
+        <PopupScreen birdName={selectedBirdName} startbirdingData={StartbirdingData} route={route} />
       )}
     </View>
   );
