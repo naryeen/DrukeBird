@@ -77,10 +77,6 @@ const detailSchema = new mongoose.Schema({
     type: String,
     default: "draftchecklist",
   },
-  userId:{
-    type: String,
-    required: [true, 'Userid'],
-  }
 },
 );
 
@@ -94,6 +90,10 @@ const BirdsSchema = new mongoose.Schema({
     type: String,
     required: [true, 'BirdName'],
     default: "null",
+  },
+  userId:{
+    type: String,
+    required: [true, 'userId'],
   },
   StartbirdingData: [detailSchema],
 });
