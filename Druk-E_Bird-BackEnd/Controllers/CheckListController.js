@@ -6,18 +6,10 @@ const { db } = require('./../Models/CheckListModel')
 exports.getAllCheckList = async (req, res) => {
     try {
 
-      const birdName = req.query.bird_name || "";
-
-
-
+    const birdName = req.query.bird_name || "";
     const checklists1 = await checklists.find({
       BirdName: {$regex: `^${birdName}`, $options: "i"}
     })
-    //.limit(2)
-
-    console.log(checklists1)
-
-
     res.status(200).json({data:checklists1,status: 'success'})
 
   } catch (err) {
@@ -38,7 +30,7 @@ exports.createCheckList = async (req, res) => {
 
 exports.getCheckList = async (req, res) => {
   try{
-      const userCheckList = await checklists.findById(req.params.id, req.body);
+      const userCheckList = await checklists.findOne(req.params.userId, req.body);
       res.json({data: userCheckList, status: "success"});
   }catch (err){
       res.status(500).json({error: err.message});

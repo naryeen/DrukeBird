@@ -187,7 +187,7 @@
 // export default CheckList;
 
 import { Text, View, FlatList, TouchableOpacity } from 'react-native';
-import React, { useEffect, useState, useContext } from "react";
+import React, { useEffect, useState, useContext} from "react";
 import axios from "axios";
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
 import { ActivityIndicator, MD2Colors } from "react-native-paper";
@@ -195,15 +195,21 @@ import { Swipeable } from 'react-native-gesture-handler';
 import { useNavigation } from '@react-navigation/native';
 import { AuthContext } from '../Context/AuthContext';
 
+const getCheckList = `https://druk-ebirds.onrender.com/api/v1/checkList`;
+
 function NotSubmitted() {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
   const navigation = useNavigation();
+  // const userId = "yourUserId"; // Replace with the actual userId
   const { userInfo } = useContext(AuthContext);
-  const userId = userInfo.user._id;
+  const userid = userInfo.user._id;
+  
 
   useEffect(() => {
-    axios.get(`https://druk-ebirds.onrender.com/api/v1/checkList/${userId}`)
+    console.log(userId)
+    axios.get(`${getCheckList}?userId=${userid}`)
+    
       .then((res) => {
         setData(res.data.data);
       })
@@ -211,10 +217,10 @@ function NotSubmitted() {
         console.error('Error fetching data:', error);
       })
       .finally(() => setLoading(false));
-  }, []);
+  }, [userId]);
 
   const handleDelete = (itemId) => {
-    axios.delete(`https://druk-ebirds.onrender.com/api/v1/checkList/${itemId}`)
+    axios.delete(`${getCheckList}/${itemId}`)
       .then(() => {
         setData(prevData => prevData.filter(item => item._id !== itemId));
       })
@@ -263,7 +269,7 @@ function NotSubmitted() {
     );
   }
 
-  const notsubmittedChecklistItems = data ? data.filter(item => item.StartbirdingData[0].status === "draftchecklist") : [];
+  const notsubmittedChecklistItems = data.filter(item => item.StartbirdingData[0].status === "draftchecklist");
 
   if (notsubmittedChecklistItems.length === 0) {
     return (
@@ -276,7 +282,7 @@ function NotSubmitted() {
   return (
     <View style={{ flex: 1 }}>
       <FlatList
-        data={notsubmittedChecklistItems}
+        data={data}
         keyExtractor={(item) => item._id.toString()}
         renderItem={renderItem}
       />
@@ -287,11 +293,10 @@ function NotSubmitted() {
 function Submitted() {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
-  const { userInfo } = useContext(AuthContext);
-  const userId = userInfo.user._id;
+  const userId = "yourUserId"; // Replace with the actual userId
 
   useEffect(() => {
-    axios.get(`https://druk-ebirds.onrender.com/api/v1/checkList/${userId}`)
+    axios.get(`${getCheckList}?userId=${userId}`)
       .then((res) => {
         setData(res.data.data);
       })
@@ -299,7 +304,7 @@ function Submitted() {
         console.error('Error fetching data:', error);
       })
       .finally(() => setLoading(false));
-  }, []);
+  }, [userId]);
 
   const renderItem = ({ item }) => {
     if (item.StartbirdingData[0].status === "submittedchecklist" && item.StartbirdingData[0].EndpointLocation[0]) {
@@ -327,7 +332,7 @@ function Submitted() {
     );
   }
 
-  const submittedChecklistItems = data ? data.filter(item => item.StartbirdingData[0].status === "submittedchecklist") : [];
+  const submittedChecklistItems = data.filter(item => item.StartbirdingData[0].status === "submittedchecklist");
 
   if (submittedChecklistItems.length === 0) {
     return (
@@ -340,7 +345,7 @@ function Submitted() {
   return (
     <View style={{ flex: 1 }}>
       <FlatList
-        data={submittedChecklistItems}
+        data={data}
         keyExtractor={(item) => item._id.toString()}
         renderItem={renderItem}
       />
@@ -376,4 +381,3 @@ function CheckList() {
 }
 
 export default CheckList;
-
