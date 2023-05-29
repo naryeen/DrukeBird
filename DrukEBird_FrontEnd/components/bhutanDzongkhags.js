@@ -4554,7 +4554,6 @@ const bhutanDzongkhags = {
         "Tshanglajong",
         "Zurphel",
       ],
-  
     },
 }
 export default bhutanDzongkhags;
