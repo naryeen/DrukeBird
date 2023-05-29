@@ -82,7 +82,6 @@ const detailSchema = new mongoose.Schema({
     required: [true, 'Userid'],
   }
 },
-{ _id: false } // Disable the default _id field
 );
 
 const BirdsSchema = new mongoose.Schema({
