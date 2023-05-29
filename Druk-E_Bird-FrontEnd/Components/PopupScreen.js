@@ -70,6 +70,9 @@ const PopupScreen = ({birdName, route }) => {
             ToastAndroid.show('Please enter your remarks', ToastAndroid.SHORT);
             return;
           }
+          const adultCount = parseInt(Adult);
+          const juvenileCount = parseInt(Juvenile);
+          const count = adultCount + juvenileCount;
 
         var detailOfBirds = [];
         var endpointLocation = {
@@ -80,14 +83,16 @@ const PopupScreen = ({birdName, route }) => {
         var dataSubmitted = false;
         var temp = [{
             "Totalcount": {
-                "Adult": Adult,
-                "Juvenile": Juvenile,
-                "Remarks": Remarks,
+                "Adult": adultCount.toString(),
+                "Juvenile": juvenileCount.toString(),
+                "Remarks": Remarks
             },
+            "count":count,
             "currentLocation": startbirdingData.currentLocation,
             "selectedDate": startbirdingData.selectedDate,
             "selectedTime": startbirdingData.selectedTime,
             "observer": name,
+            "photo":image,
             "EndpointLocation": [endpointLocation],
             "status":"submittedchecklist"
         }];
@@ -202,9 +207,8 @@ const PopupScreen = ({birdName, route }) => {
     }
 
     return (
-        <View style={styles.popupContainer}>
-            
-
+    <View style={styles.popupContainer}>
+    
     <Text style={styles.label}>Select Dzongkhag:</Text>
       <Picker
         selectedValue={selectedDzongkhag}
@@ -315,7 +319,6 @@ const PopupScreen = ({birdName, route }) => {
           </View>
         </View>
       </Modal>
-        
     </View>
     );
 };
@@ -324,10 +327,8 @@ const styles = StyleSheet.create({
     popupContainer: {
         flex: 1,
         position: 'absolute',
-        top: '15%',
         left: '32%',
         width: '90%',
-        height: '80%',
         transform: [{ translateX: -90 }, { translateY: -80 }],
         backgroundColor: '#fff',
         borderRadius: 8,

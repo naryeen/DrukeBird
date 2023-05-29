@@ -77,6 +77,10 @@ const detailSchema = new mongoose.Schema({
     type: String,
     default: "draftchecklist",
   },
+  Userid:{
+    type: String,
+    required: [true, 'Userid'],
+  }
 },
 { _id: false } // Disable the default _id field
 );

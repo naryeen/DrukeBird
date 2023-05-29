@@ -11,6 +11,7 @@ const SubmittingBirding = ({ route }) => {
   const { SubmittedBirdsdata } = route.params;
   const { userInfo } = useContext(AuthContext);
   const name = userInfo.user.name;
+  const userId = userInfo.user._id;
   const [selectedDzongkhag, setSelectedDzongkhag] = useState('');
   const [selectedGewog, setSelectedGewog] = useState('');
   const [selectedVillage, setSelectedVillage] = useState('');
@@ -81,6 +82,7 @@ const SubmittingBirding = ({ route }) => {
           StartbirdingData: temp,
           BirdName: bird.englishname,
           CheckListName: `${name}-${randomNumber}`,
+          "_id": userId
         };
         detailOfBirds.push(StartbirdingoneData);
         dataSubmitted = true;

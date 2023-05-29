@@ -39,8 +39,7 @@ const StartBirdingone = ({ route }) => {
   const name = userInfo.user.name
   const { StartbirdingData } = route.params;
   const { birdName, count } = route.params;
-  // console.log(birdName)
-  // console.log(count)
+
 
 
   useEffect(() => {
@@ -137,6 +136,7 @@ const StartBirdingone = ({ route }) => {
           data={searchQuery.length > 0 ? filteredData : data}
           setData={setData}
           setStartbirding1data={setStartbirding1data}
+          count={count}
         />
       </View>
       </TouchableOpacity>
