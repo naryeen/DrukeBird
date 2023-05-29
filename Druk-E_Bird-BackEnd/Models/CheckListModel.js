@@ -51,6 +51,23 @@ const detailSchema = new mongoose.Schema({
     required: [true, 'Count'],
     default: 0,
   },
+  Totalcount:{
+    Adult: {
+      type: Number,
+      required: [true, 'Adult'],
+      default: 0
+    },
+    Juvenile: {
+      type: Number,
+      required: [true, 'Juvenile'],
+      default: 0
+    },
+    Remarks: {
+      type: String,
+      required: [true, 'Remarks'],
+      default: "null",
+    },
+  },
   photo: {
     type: String,
     default: "null",

@@ -7,6 +7,7 @@ import axios from "axios";
 import { Ionicons } from '@expo/vector-icons';
 import StartBirdingCounter from "../Components/StartBirdingCounter";
 import { AuthContext } from "../Context/AuthContext";
+import PopupScreen from "../Components/PopupScreen";
 
 
 const formatTime = (time) => {
@@ -31,9 +32,16 @@ const StartBirdingone = ({ route }) => {
   const [filteredData, setFilteredData] = useState([]);
   const [searchFound, setSearchFound] = useState(true);
   const [query, setQuery] = useState("");
+  const [showPopup, setShowPopup] = useState(false);
+  const [selectedBirdName, setSelectedBirdName] = useState("");
+
   const { userInfo } = useContext(AuthContext);
   const name = userInfo.user.name
   const { StartbirdingData } = route.params;
+  const { birdName, count } = route.params;
+  // console.log(birdName)
+  // console.log(count)
+
 
   useEffect(() => {
     //console.log(seconds);
@@ -121,6 +129,7 @@ const StartBirdingone = ({ route }) => {
 
   const renderItem = ({ item, index }) => {
     return (
+      <TouchableOpacity onPress={() => openPopup(item.englishName)}>
       <View>
         <StartBirdingCounter
           Name={item.englishName}
@@ -130,6 +139,7 @@ const StartBirdingone = ({ route }) => {
           setStartbirding1data={setStartbirding1data}
         />
       </View>
+      </TouchableOpacity>
     );
   };
 
@@ -202,6 +212,10 @@ const StartBirdingone = ({ route }) => {
       console.error("Error:", error);
     }
   };
+  const openPopup = (name) => {
+    setSelectedBirdName(name);
+    setShowPopup(true);
+  };
   return (
     <View style={styles.container}>
       <SafeAreaView>
@@ -249,6 +263,10 @@ const StartBirdingone = ({ route }) => {
           <Button styling={styles.stopbutton} onPress={StartbirdingonedataSave}>Stop</Button>
         </View>
       </SafeAreaView>
+      {/* Pop-up Screen */}
+      {showPopup && (
+        <PopupScreen birdName={selectedBirdName} />
+      )}
     </View>
   );
 };

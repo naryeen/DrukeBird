@@ -12,7 +12,7 @@ import StartBirdingone from "../Screens/StartBirdingOne"
 import UnknownBird from "../Screens/UnknownBirds"
 import StartBirdingTwo from "../Screens/StartBirdingTwo";
 import SubmittingBirding from "../Screens/SubmittingBirding";
-import ExploreInfo from "../Screens/ExploreDzongkhagInfo";
+import ExploreDzongkhagInfo from "../Screens/ExploreDzongkhagInfo";
 import ExploreBridInfo from "../Screens/ExploreBirdInfo";
 
 const Stack = createStackNavigator();
@@ -32,7 +32,7 @@ const AppStack = () => {
       <Stack.Screen name="UnknownBirds" component={UnknownBird} options={{headerShown: false}} />
       <Stack.Screen name="StartBirdingTwo" component={StartBirdingTwo} />
       <Stack.Screen name="SubmittingBirding" component={SubmittingBirding} options={{headerShown: false}} />
-      <Stack.Screen name="ExploreDzongkhagInfo" component={ExploreInfo} options={{headerShown: false}} />
+      <Stack.Screen name="ExploreDzongkhagInfo" component={ExploreDzongkhagInfo} options={{headerShown: false}} />
       <Stack.Screen name="ExploreBridInfo" component={ExploreBridInfo} options={{headerShown: false}} />
 
 

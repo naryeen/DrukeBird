@@ -34,9 +34,10 @@ function NotSubmitted() {
       });
   };
 
-  const handleItemClick = (itemId) => {
-    console.log(itemId)
-    navigation.navigate('StartBirdingone', { itemId: itemId });
+  const handleItemClick = (itemId, count,birdName) => {
+    navigation.navigate('StartBirdingone', { itemId: itemId, count:count, birdName: birdName});
+    // console.log(count)
+    // console.log(birdName)
   };
 
   const renderSwipeableContent = (itemId) => (
@@ -51,7 +52,7 @@ function NotSubmitted() {
     if (item.StartbirdingData[0].status === "draftchecklist") {
       return (
         <Swipeable renderRightActions={() => renderSwipeableContent(item._id)} onSwipeableRightOpen={() => handleDelete(item._id)}>
-          <TouchableOpacity onPress={() => handleItemClick(item._id)}>
+          <TouchableOpacity onPress={() => handleItemClick(item._id, item.StartbirdingData[0].count, item.BirdName)}>
             <View>
               <View style={{ marginLeft: 30 }}>
                 <Text style={{ fontWeight: 'bold' }}>{item.BirdName}</Text>
