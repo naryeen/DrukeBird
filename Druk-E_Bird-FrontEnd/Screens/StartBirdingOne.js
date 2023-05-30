@@ -38,6 +38,8 @@ const StartBirdingone = ({ route }) => {
   const name = userInfo.user.name
   const { StartbirdingData } = route.params;
   const { birdName, count } = route.params;
+  
+
 
 
 
@@ -55,6 +57,7 @@ const StartBirdingone = ({ route }) => {
   }, [StartbirdingData]);
 
   useEffect(() => {
+
     const interval = setInterval(() => {
       setSeconds((seconds) => seconds + 1);
     }, 1000);
@@ -100,10 +103,13 @@ const StartBirdingone = ({ route }) => {
     axios
       .get("https://druk-ebird.onrender.com/api/v1/species?limit=20")
       .then((res) => {
-        const speciesData = res.data.species.map((item) => ({
-          ...item,
-          count: 0,
-        }));
+        const speciesData = res.data.species.map((item) => {
+          if (item.englishName === birdName){
+            return {...item, count: count}
+          }
+
+          return {...item, count: 0}
+        });
 
         setData(speciesData);
         setFilteredData(speciesData);
