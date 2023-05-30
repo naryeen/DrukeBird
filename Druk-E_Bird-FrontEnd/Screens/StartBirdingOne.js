@@ -7,7 +7,7 @@ import axios from "axios";
 import { Ionicons } from '@expo/vector-icons';
 import StartBirdingCounter from "../Components/StartBirdingCounter";
 import { AuthContext } from "../Context/AuthContext";
-import PopupScreen from "../Components/PopupScreen";
+
 
 
 const formatTime = (time) => {
@@ -32,10 +32,9 @@ const StartBirdingone = ({ route }) => {
   const [filteredData, setFilteredData] = useState([]);
   const [searchFound, setSearchFound] = useState(true);
   const [query, setQuery] = useState("");
-  const [showPopup, setShowPopup] = useState(false);
-  const [selectedBirdName, setSelectedBirdName] = useState("");
 
   const { userInfo } = useContext(AuthContext);
+  const userId = userInfo.user._id;
   const name = userInfo.user.name
   const { StartbirdingData } = route.params;
   const { birdName, count } = route.params;
@@ -126,19 +125,24 @@ const StartBirdingone = ({ route }) => {
     setSearchFound(filtered.length > 0);
   };
 
+  const handleItemClick = (itemId, birdName, StartbirdingData) => {
+    navigation.navigate('BirdTypeInfo', { itemId: itemId, birdName: birdName, StartbirdingData: StartbirdingData});
+  };
+  
   const renderItem = ({ item, index }) => {
     return (
-      <TouchableOpacity onPress={() => openPopup(item.englishName)}>
-      <View>
-        <StartBirdingCounter
-          Name={item.englishName}
-          item={item}
-          data={searchQuery.length > 0 ? filteredData : data}
-          setData={setData}
-          setStartbirding1data={setStartbirding1data}
-          count={count}
-        />
-      </View>
+      <TouchableOpacity onPress={() => handleItemClick(item._id, item.englishName, route.params.StartbirdingData)}>
+        <View>
+          <StartBirdingCounter
+            Name={item.englishName}
+            item={item}
+            data={searchQuery.length > 0 ? filteredData : data}
+            setData={setData}
+            setStartbirding1data={setStartbirding1data}
+            count={count}
+            birdName={birdName}
+          />
+        </View>
       </TouchableOpacity>
     );
   };
@@ -182,7 +186,8 @@ const StartBirdingone = ({ route }) => {
         const StartbirdingoneData = {
           "StartbirdingData": temp,
           "BirdName": bird.englishname,
-          "CheckListName":`${name}-${randomNumber}`
+          "CheckListName":`${name}-${randomNumber}`,
+          "userId":userId
         };
         detailOfBirds.push(StartbirdingoneData)
         dataSubmitted = true;
@@ -211,10 +216,6 @@ const StartBirdingone = ({ route }) => {
     } catch (error) {
       console.error("Error:", error);
     }
-  };
-  const openPopup = (birdName) => {
-    setSelectedBirdName(birdName);
-    setShowPopup(true);
   };
   return (
     <View style={styles.container}>
@@ -263,10 +264,6 @@ const StartBirdingone = ({ route }) => {
           <Button styling={styles.stopbutton} onPress={StartbirdingonedataSave}>Stop</Button>
         </View>
       </SafeAreaView>
-      {/* Pop-up Screen */}
-      {showPopup && (
-        <PopupScreen birdName={selectedBirdName} startbirdingData={StartbirdingData} route={route} />
-      )}
     </View>
   );
 };

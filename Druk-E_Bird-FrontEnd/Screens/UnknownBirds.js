@@ -24,6 +24,7 @@ const UnknownBird = ({ route }) => {
   const [selectedVillage, setSelectedVillage] = useState('');
   const [gewogOptions, setGewogOptions] = useState([]);
   const [villageOptions, setVillageOptions] = useState([]);
+  const userId = userInfo.user._id;
 
 
   const handleDzongkhagChange = (value) => {
@@ -179,7 +180,8 @@ const UnknownBird = ({ route }) => {
         const StartbirdingoneData = {
           "StartbirdingData": temp,
           "BirdName": UnknownBirdsdata.BirdName,
-          "CheckListName":`${name}-${randomNumber}`
+          "CheckListName":`${name}-${randomNumber}`,
+          "userId":userId
         };
         detailOfBirds.push(StartbirdingoneData)
         // console.log(StartbirdingoneData)
