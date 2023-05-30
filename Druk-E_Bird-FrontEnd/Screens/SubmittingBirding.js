@@ -69,7 +69,7 @@ const SubmittingBirding = ({ route }) => {
       if (bird.count) {
         var temp = [
           {
-            count: bird.count,
+            Totalcount: bird.count,
             selectedDate: SubmittedBirdsdata.StartbirdingData.selectedDate,
             selectedTime: SubmittedBirdsdata.StartbirdingData.selectedTime,
             observer: SubmittedBirdsdata.StartbirdingData.userName,

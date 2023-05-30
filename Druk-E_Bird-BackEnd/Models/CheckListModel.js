@@ -62,11 +62,11 @@ const detailSchema = new mongoose.Schema({
       required: [true, 'Juvenile'],
       default: 0
     },
-    Remarks: {
-      type: String,
-      required: [true, 'Remarks'],
-      default: "null",
-    },
+  },
+  Remarks: {
+    type: String,
+    required: [true, 'Remarks'],
+    default: "null",
   },
   photo: {
     type: String,

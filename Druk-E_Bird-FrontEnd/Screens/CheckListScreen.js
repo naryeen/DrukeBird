@@ -58,7 +58,7 @@ function NotSubmitted() {
               <View style={{ marginLeft: 30 }}>
                 <Text style={{ fontWeight: 'bold' }}>{item.BirdName}</Text>
                 <Text>{item.StartbirdingData[0].selectedDate} {item.StartbirdingData[0].selectedTime}</Text>
-                <Text>{item.StartbirdingData[0].count} species report</Text>
+                <Text>{item.StartbirdingData[0].Totalcount} species report</Text>
                 <Text style={{ textAlign: "right", fontWeight: 'bold', color: 'green' }}>Not Submit</Text>
               </View>
               <View style={{ borderBottomWidth: 0.5, borderBottomColor: 'gray', marginVertical: 10 }} />
@@ -126,7 +126,7 @@ function Submitted() {
               <Text style={{ fontWeight: 'bold' }}>{item.BirdName}</Text>
               <Text>{dzongkhag} {gewog} {village}</Text>
               <Text>{item.StartbirdingData[0].selectedDate} {item.StartbirdingData[0].selectedTime}</Text>
-              <Text>{item.StartbirdingData[0].count} species report</Text>
+              <Text>{item.StartbirdingData[0].Totalcount} species report</Text>
             </View>
             <View style={{ borderBottomWidth: 0.5, borderBottomColor: 'gray', marginVertical: 10 }} />
           </View>

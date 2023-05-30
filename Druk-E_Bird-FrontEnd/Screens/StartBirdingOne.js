@@ -178,7 +178,7 @@ const StartBirdingone = ({ route }) => {
     startbirding1data.map((bird) => {
       if (bird.count) {
         var temp = [{
-          "count": bird.count,
+          "Totalcount": bird.count,
           "currentLocation": StartbirdingData.currentLocation,
           "selectedDate": StartbirdingData.selectedDate,
           "selectedTime": StartbirdingData.selectedTime,

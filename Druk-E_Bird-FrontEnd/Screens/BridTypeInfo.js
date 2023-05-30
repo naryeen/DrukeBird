@@ -82,12 +82,12 @@ const BirdTypeInfo = ({route}) => {
        };
      var dataSubmitted = false;
      var temp = [{
-         "Totalcount": {
+         "JAcount": {
              "Adult": adultCount.toString(),
              "Juvenile": juvenileCount.toString(),
-             "Remarks": Remarks
          },
-         "count":count,
+         "Remarks": Remarks,
+         "Totalcount":count,
          "currentLocation": StartbirdingData.currentLocation,
          "selectedDate": StartbirdingData.selectedDate,
          "selectedTime": StartbirdingData.selectedTime,

@@ -164,7 +164,7 @@ const UnknownBird = ({ route }) => {
       "village": selectedVillage
     };
       var temp = [{
-          "count":count,
+          "Totalcount":count,
           "currentLocation": UnknownBirdsdata.StartbirdingData.currentLocation,
           "selectedDate": UnknownBirdsdata.StartbirdingData.selectedDate,
           "selectedTime": UnknownBirdsdata.StartbirdingData.selectedTime,
