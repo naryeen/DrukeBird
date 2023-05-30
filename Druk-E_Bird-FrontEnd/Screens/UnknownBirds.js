@@ -25,7 +25,7 @@ const UnknownBird = ({ route }) => {
   const [gewogOptions, setGewogOptions] = useState([]);
   const [villageOptions, setVillageOptions] = useState([]);
   const userId = userInfo.user._id;
-
+  const [randomNumber, setRandomNumber] = useState(Math.floor(Math.random() * 1000));
 
   const handleDzongkhagChange = (value) => {
     setSelectedDzongkhag(value);
@@ -173,9 +173,6 @@ const UnknownBird = ({ route }) => {
           "EndpointLocation": [endpointLocation],
           "status":"submittedchecklist"
         }];
-
-        const randomNumber = Math.floor(Math.random() * 1000);
-
 
         const StartbirdingoneData = {
           "StartbirdingData": temp,

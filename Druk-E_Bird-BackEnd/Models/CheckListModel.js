@@ -46,12 +46,12 @@ const detailSchema = new mongoose.Schema({
     default: "null",
   },
   currentLocation: currentLocation,
-  count: {
+  Totalcount: {
     type: Number,
     required: [true, 'Count'],
     default: 0,
   },
-  Totalcount:{
+  JAcount:{
     Adult: {
       type: Number,
       required: [true, 'Adult'],
@@ -76,6 +76,10 @@ const detailSchema = new mongoose.Schema({
   status: {
     type: String,
     default: "draftchecklist",
+  },
+  Approvedstatus: {
+    type: String,
+    default: "approvedpending",
   },
 },
 );

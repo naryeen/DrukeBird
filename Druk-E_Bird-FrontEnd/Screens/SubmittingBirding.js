@@ -17,6 +17,7 @@ const SubmittingBirding = ({ route }) => {
   const [selectedVillage, setSelectedVillage] = useState('');
   const [gewogOptions, setGewogOptions] = useState([]);
   const [villageOptions, setVillageOptions] = useState([]);
+  const [randomNumber, setRandomNumber] = useState(Math.floor(Math.random() * 1000));
 
   const handleDzongkhagChange = (value) => {
     setSelectedDzongkhag(value);
@@ -76,8 +77,7 @@ const SubmittingBirding = ({ route }) => {
             "status":"submittedchecklist"
           },
         ];
-        const randomNumber = Math.floor(Math.random() * 1000);
-
+        
         const StartbirdingoneData = {
           StartbirdingData: temp,
           BirdName: bird.englishname,

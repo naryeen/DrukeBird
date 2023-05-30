@@ -38,10 +38,7 @@ const StartBirdingone = ({ route }) => {
   const name = userInfo.user.name
   const { StartbirdingData } = route.params;
   const { birdName, count } = route.params;
-  
-
-
-
+  const [randomNumber, setRandomNumber] = useState(Math.floor(Math.random() * 1000));
 
   useEffect(() => {
     //console.log(seconds);
@@ -187,7 +184,6 @@ const StartBirdingone = ({ route }) => {
           "selectedTime": StartbirdingData.selectedTime,
           "observer":StartbirdingData.userName
         }]
-        const randomNumber = Math.floor(Math.random() * 1000);
 
         const StartbirdingoneData = {
           "StartbirdingData": temp,

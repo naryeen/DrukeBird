@@ -24,6 +24,7 @@ const BirdTypeInfo = ({route}) => {
   const { userInfo } = useContext(AuthContext);
   const name = userInfo.user.name;
   const userId = userInfo.user._id;
+  const [randomNumber, setRandomNumber] = useState(Math.floor(Math.random() * 1000));
 
   const handleDzongkhagChange = (value) => {
     setSelectedDzongkhag(value);
@@ -95,8 +96,6 @@ const BirdTypeInfo = ({route}) => {
          "EndpointLocation": [endpointLocation],
          "status":"submittedchecklist"
      }];
-     const randomNumber = Math.floor(Math.random() * 1000);
- 
      const StartbirdingoneData = {
          "StartbirdingData": temp,
          "BirdName": birdName,
@@ -111,7 +110,6 @@ const BirdTypeInfo = ({route}) => {
          Alert.alert("No Data Submitted", "Please select at least one bird count before stopping.", [{ text: "OK" }]);
          return;
      }
-     
      try {
          // Make an HTTP POST request to your backend API endpoint
          axios
