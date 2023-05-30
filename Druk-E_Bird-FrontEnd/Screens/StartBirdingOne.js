@@ -104,7 +104,6 @@ const StartBirdingone = ({ route }) => {
           if (item.englishName === birdName){
             return {...item, count: count}
           }
-
           return {...item, count: 0}
         });
 
@@ -112,7 +111,7 @@ const StartBirdingone = ({ route }) => {
         setFilteredData(speciesData);
       })
       .catch((error) => {
-        console.log("API call error");
+        console.log(error);
       })
       .finally(() => setLoading(false));
   }, []);
@@ -142,8 +141,6 @@ const StartBirdingone = ({ route }) => {
             data={searchQuery.length > 0 ? filteredData : data}
             setData={setData}
             setStartbirding1data={setStartbirding1data}
-            count={count}
-            birdName={birdName}
           />
         </View>
       </TouchableOpacity>
