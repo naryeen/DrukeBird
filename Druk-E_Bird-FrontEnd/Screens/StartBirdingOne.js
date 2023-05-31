@@ -8,8 +8,6 @@ import { Ionicons } from '@expo/vector-icons';
 import StartBirdingCounter from "../Components/StartBirdingCounter";
 import { AuthContext } from "../Context/AuthContext";
 
-
-
 const formatTime = (time) => {
   const hours = Math.floor(time / 3600);
   const minutes = Math.floor((time % 3600) / 60);
@@ -37,7 +35,6 @@ const StartBirdingone = ({ route }) => {
   const userId = userInfo.user._id;
   const name = userInfo.user.name
   const { StartbirdingData } = route.params;
-  const { birdName, count } = route.params;
   const [randomNumber, setRandomNumber] = useState(Math.floor(Math.random() * 1000));
 
   useEffect(() => {
@@ -88,7 +85,6 @@ const StartBirdingone = ({ route }) => {
         },
         {
           text: "YES",
-          // navigation.navigate('StartBirdingone', { StartbirdingData: StartbirdingData });
           onPress: () => navigation.navigate("UnknownBirds", { UnknownBirdsdata: UnknownBirdsdata }),
         },
       ],
@@ -101,9 +97,6 @@ const StartBirdingone = ({ route }) => {
       .get("https://druk-ebird.onrender.com/api/v1/species?limit=20")
       .then((res) => {
         const speciesData = res.data.species.map((item) => {
-          if (item.englishName === birdName){
-            return {...item, count: count}
-          }
           return {...item, count: 0}
         });
 
@@ -206,7 +199,7 @@ const StartBirdingone = ({ route }) => {
         .then((response) => {
           console.log(detailOfBirds);
           // Data successfully posted to the database
-        ToastAndroid.show('Data successfully posted', ToastAndroid.LONG);
+          ToastAndroid.show('Data successfully posted', ToastAndroid.LONG);
           console.log("Data post:", response.data);
         })
         .catch((error) => {

@@ -4,17 +4,18 @@ import { TextInput } from 'react-native-paper';
 import * as ImagePicker from 'expo-image-picker';
 import axios from "axios";
 import { Picker } from '@react-native-picker/picker';
-import { IconButton, MD2Colors } from 'react-native-paper';
 import BhutanDzongkhags from "../Components/BhutanDzongkha"
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scrollview';
 import Button from "../Components/Button";
 import { AuthContext } from '../Context/AuthContext';
+import { IconButton,ActivityIndicator, MD2Colors } from "react-native-paper";
 
 const BirdTypeInfo = ({route}) => {
   const [image, setImage] = useState(null);
   const [Adult, setAdult] = useState('');
   const [Juvenile, setJuvenile] = useState('');
   const [Remarks, setRemarks] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
   const [selectedDzongkhag, setSelectedDzongkhag] = useState('');
   const [selectedGewog, setSelectedGewog] = useState('');
   const [selectedVillage, setSelectedVillage] = useState('');
@@ -170,8 +171,16 @@ const BirdTypeInfo = ({route}) => {
       .then((data) => {
         console.log(data);
         setImage(data.url);
+        setIsLoading(false);
       });
   };
+  if (isLoading) {
+    return (
+      <View style={styles.loading}>
+        <ActivityIndicator animating={true} color={MD2Colors.green800} size="large" />
+      </View>
+    );
+  }
 
   return (
     <KeyboardAwareScrollView>
