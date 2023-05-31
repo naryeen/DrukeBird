@@ -15,6 +15,7 @@ import SubmittingBirding from "../Screens/SubmittingBirding";
 import ExploreDzongkhagInfo from "../Screens/ExploreDzongkhagInfo";
 import ExploreBridInfo from "../Screens/ExploreBirdInfo";
 import BirdTypeInfo from "../Screens/BridTypeInfo";
+import DraftCheckListSubmitted from "../Screens/DraftCheckListSubmitted";
 
 const Stack = createStackNavigator();
 
@@ -36,8 +37,7 @@ const AppStack = () => {
       <Stack.Screen name="ExploreDzongkhagInfo" component={ExploreDzongkhagInfo} options={{headerShown: false}} />
       <Stack.Screen name="ExploreBridInfo" component={ExploreBridInfo} options={{headerShown: false}} />
       <Stack.Screen name="BirdTypeInfo" component={BirdTypeInfo} options={{headerShown: false}} />
-
-
+      <Stack.Screen name="DraftCheckListSubmitted" component={DraftCheckListSubmitted} options={{headerShown: false}} />
 
     </Stack.Navigator>
   );

@@ -1,13 +1,5 @@
 import React, { useState, useContext, useEffect } from "react";
-import {
-  View,
-  StyleSheet,
-  Text,
-  TouchableOpacity,
-  Modal,
-  FlatList,
-} from "react-native";
-
+import {View,StyleSheet,Text,TouchableOpacity,Modal,FlatList,} from "react-native";
 import { Avatar } from "react-native-paper";
 import { AuthContext } from "../Context/AuthContext";
 import axios from "axios";
@@ -18,6 +10,7 @@ const NotificationScreen = () => {
   const [notifications, setNotifications] = useState([]);
   const [modalVisible, setModalVisible] = useState(false);
   const [selectedNotification, setSelectedNotification] = useState(null);
+  const [loading, setLoading] = useState(true);
 
   const openModal = (item) => {
     setSelectedNotification(item);
@@ -30,9 +23,10 @@ const NotificationScreen = () => {
 
   useEffect(() => {
     axios
-      .get(`http://10.9.8.205:4001/api/v1/notifications/${userId}`)
+      .get(`https://drukebird.onrender.com/api/v1/notifications/${userId}`)
       .then((res) => {
         setNotifications(res.data.data);
+        console.log(res.data.data)
       })
       .catch((error) => {
         console.error("Error fetching notifications:", error);

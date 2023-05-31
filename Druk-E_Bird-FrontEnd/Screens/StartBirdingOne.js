@@ -12,11 +12,9 @@ const formatTime = (time) => {
   const hours = Math.floor(time / 3600);
   const minutes = Math.floor((time % 3600) / 60);
   const seconds = Math.floor(time % 60);
-
   const formattedHours = String(hours).padStart(2, "0");
   const formattedMinutes = String(minutes).padStart(2, "0");
   const formattedSeconds = String(seconds).padStart(2, "0");
-
   return `${formattedHours}:${formattedMinutes}:${formattedSeconds}`;
 };
 
@@ -30,7 +28,6 @@ const StartBirdingone = ({ route }) => {
   const [filteredData, setFilteredData] = useState([]);
   const [searchFound, setSearchFound] = useState(true);
   const [query, setQuery] = useState("");
-
   const { userInfo } = useContext(AuthContext);
   const userId = userInfo.user._id;
   const name = userInfo.user.name
@@ -99,7 +96,6 @@ const StartBirdingone = ({ route }) => {
         const speciesData = res.data.species.map((item) => {
           return {...item, count: 0}
         });
-
         setData(speciesData);
         setFilteredData(speciesData);
       })
@@ -159,8 +155,6 @@ const StartBirdingone = ({ route }) => {
     navigation.navigate('SubmittingBirding', { SubmittedBirdsdata: SubmittedBirdsdata });
     // console.log(SubmittedBirdsdata);
   };
-
-
   const StartbirdingonedataSave = () => {
 
     var detailOfBirds = []

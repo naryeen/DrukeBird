@@ -28,7 +28,7 @@ function ExploreDzongkhagInfo({ route }) {
       {birdData.map((item, index) => (
         <View key={index}>
           <Text>Bird Name: {item.BirdName}</Text>
-          <Text>Count: {item.StartbirdingData[0]?.count}</Text>
+          <Text>Count: {item.StartbirdingData[0]?.Totalcount}</Text>
         </View>
       ))}
     </View>

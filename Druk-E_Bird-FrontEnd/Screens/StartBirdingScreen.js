@@ -54,10 +54,6 @@ function StartbirdingScreen() {
     navigateHandler(StartbirdingData);
     console.log(StartbirdingData)
   };
-
-  // console.log(selectedTime);
-  // console.log(selectedDate);
-
   return (
     <View style={styles.container}>
       <View style={styles.Tcontainer}>
