@@ -92,7 +92,7 @@ userSchema.path('password').validate(function (password) {
     
     if (password.length < 8) {
         throw new Error("Enter a password more than 8 characters.");
-    } else if (!/[a-z]/.test(password) || !/[A-Z]/.test(password)) {
+    } else if (!/[a-z]/.test(password)) {
         throw new Error("Enter at least one lowercase letter.");
     }else if (!/[A-Z]/.test(password)) {
         throw new Error("Enter at least one uppercase letter.");
