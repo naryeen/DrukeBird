@@ -89,7 +89,7 @@ userSchema.path('dob').validate(function (dob){
 
 userSchema.path('password').validate(function (password){
     ///^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/=password, that i want to include later
-    var passwordRegex = /[0-9a-zA-Z]{8,}/g;
+    var passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}/g;
     return passwordRegex.test(password);
 }, 'Enter passsword more than 8')
 

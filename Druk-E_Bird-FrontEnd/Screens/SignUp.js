@@ -2,8 +2,11 @@ import React, { useState } from "react";
 import { TextInput } from 'react-native-paper';
 import { StyleSheet, View, Text, ScrollView, Dimensions, ToastAndroid } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
+import { Picker } from '@react-native-picker/picker';
+import Icon from 'react-native-vector-icons/FontAwesome';
 import Button from "../Components/Button";
 import axios from "axios";
+import countryOptions from "../Components/Country";
 
 const SignUp = () => {
   const navigation = useNavigation();
@@ -69,6 +72,22 @@ const SignUp = () => {
       borderColor: '#ccc',
       borderRadius: 5,
     },
+    countryContainer: {
+      marginTop: 20,
+      borderColor: '#ccc',
+      borderRadius: 5,
+      borderWidth: 1,
+      flexDirection: 'row',
+      alignItems: 'center',
+      paddingLeft: 10,
+      backgroundColor:'white'
+    },
+    countryPicker: {
+      flex: 1,
+    },
+    flagIcon: {
+      marginRight: 10,
+    },
     createtext: {
       marginTop: 20,
       textAlign: 'center',
@@ -100,15 +119,20 @@ const SignUp = () => {
           onChangeText={(text) => setDoB(text)}
           value={DoB}
         />
-        <TextInput
-          style={styles.inputStyle}
-          mode="outlined"
-          label="Country"
-          placeholder="Write Your Country"
-          left={<TextInput.Icon icon="flag" />}
-          onChangeText={(text) => setCountry(text)}
-          value={country}
-        />
+        <View style={styles.countryContainer}>
+          <Icon name="flag" size={20} color="#000" style={styles.flagIcon} />
+          <View style={styles.countryPicker}>
+            <Picker
+              selectedValue={country}
+              onValueChange={(itemValue) => setCountry(itemValue)}
+            >
+              <Picker.Item label="Select Country" value="" />
+              {countryOptions.map((option, index) => (
+                <Picker.Item key={index} label={option} value={option} />
+              ))}
+            </Picker>
+          </View>
+        </View>
         <TextInput
           style={styles.inputStyle}
           mode="outlined"
