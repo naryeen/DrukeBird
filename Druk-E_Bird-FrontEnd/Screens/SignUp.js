@@ -7,6 +7,7 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 import Button from "../Components/Button";
 import axios from "axios";
 import countryOptions from "../Components/Country";
+import DateTimePicker from '@react-native-community/datetimepicker';
 
 const SignUp = () => {
   const navigation = useNavigation();
@@ -16,6 +17,7 @@ const SignUp = () => {
   const [password, setPassword] = useState("");
   const [passwordConfirm, setPasswordConfirm] = useState("");
   const [passwordVisible, setPasswordVisible] = useState(false);
+  const [showDatePicker, setShowDatePicker] = useState(false);
   
   const windowDimensions = Dimensions.get('window');
   const marginTopDistance = windowDimensions.height < 380 ? 30 : 60;
@@ -56,6 +58,18 @@ const SignUp = () => {
   const togglePasswordVisibility = () => {
     setPasswordVisible(!passwordVisible);
   };
+
+  const handleDateChange = (event, date) => {
+    setShowDatePicker(false);
+
+    if (date !== undefined) {
+        setDoB(date);
+    }
+};
+
+const showDatepicker = () => {
+    setShowDatePicker(true);
+};
 
   const styles = StyleSheet.create({
     container: {
@@ -101,6 +115,10 @@ const SignUp = () => {
       marginTop: 30,
       width: "100%",
     },
+    datePickerContainer: {
+      position: 'relative',
+      flex: 1,
+  },
   });
 
   return (
@@ -110,15 +128,32 @@ const SignUp = () => {
         Create Account
       </Text>
       <ScrollView>
-        <TextInput
-          style={styles.inputStyle}
-          mode="outlined"
-          label="DoB"
-          placeholder="MM/DD/YYYY"
-          left={<TextInput.Icon icon="calendar" />}
-          onChangeText={(text) => setDoB(text)}
-          value={DoB}
-        />
+      <View style={styles.datePickerContainer}>
+                    <TextInput
+                        style={styles.inputStyle}
+                        mode="outlined"
+                        label="DoB"
+                        placeholder="MM/DD/YYYY"
+                        left={
+                            <TextInput.Icon
+                                icon="calendar"
+                                onPress={showDatepicker}
+                                forceTextInputFocus={false}
+                            />
+                        }
+                        onTouchStart={showDatepicker}
+                        value={DoB ? DoB.toLocaleDateString('en-GB', { day: 'numeric', month: 'numeric', year: 'numeric' }) : ''}
+                        editable={false} // Allow manual entry of date
+                    />
+                    {showDatePicker && (
+                        <DateTimePicker
+                            mode="date"
+                            display="default"
+                            value={DoB ? new Date(DoB) : new Date()}
+                            onChange={handleDateChange}
+                        />
+                    )}
+                </View>
         <View style={styles.countryContainer}>
           <Icon name="flag" size={20} color="#000" style={styles.flagIcon} />
           <View style={styles.countryPicker}>

@@ -8,6 +8,7 @@ function ExploreBirdInfo({ route }) {
   const { birdName } = route.params;
 
   const [birdData, setBirdData] = useState([]);
+  const [dzongkhagCounts, setDzongkhagCounts] = useState({});
 
   useEffect(() => {
     axios.get(getCheckList)
@@ -16,6 +17,15 @@ function ExploreBirdInfo({ route }) {
           item.BirdName === birdName && item.StartbirdingData[0]?.status === "submittedchecklist"
         );
         setBirdData(filteredData);
+
+        // Calculate dzongkhag counts
+        const counts = {};
+        filteredData.forEach(item => {
+          const dzongkhag = item.StartbirdingData[0]?.EndpointLocation[0]?.dzongkhag;
+          const count = item.StartbirdingData[0]?.Totalcount || 0;
+          counts[dzongkhag] = (counts[dzongkhag] || 0) + count;
+        });
+        setDzongkhagCounts(counts);
       })
       .catch((error) => {
         console.error('Error fetching data:', error);
@@ -25,10 +35,10 @@ function ExploreBirdInfo({ route }) {
   return (
     <View style={{ marginTop: 100 }}>
       <Text>Bird Name: {birdName}</Text>
-      {birdData.map((item, index) => (
-        <View key={index}>
-          <Text>Dzongkhag: {item.StartbirdingData[0]?.EndpointLocation[0]?.dzongkhag}</Text>
-          <Text>Count: {item.StartbirdingData[0]?.Totalcount}</Text>
+      {Object.entries(dzongkhagCounts).map(([dzongkhag, count]) => (
+        <View key={dzongkhag}>
+          <Text>Dzongkhag: {dzongkhag}</Text>
+          <Text>Total Count: {count}</Text>
         </View>
       ))}
     </View>

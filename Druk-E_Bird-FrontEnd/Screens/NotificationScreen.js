@@ -1,7 +1,8 @@
 import React, { useState, useContext, useEffect } from "react";
 import { View, StyleSheet, Text, TouchableOpacity, Modal, FlatList } from "react-native";
-import { Avatar, ActivityIndicator, MD2Colors } from "react-native-paper"
+import { Avatar, ActivityIndicator, MD2Colors } from "react-native-paper";
 import { AuthContext } from "../Context/AuthContext";
+import { Swipeable } from "react-native-gesture-handler";
 import axios from "axios";
 
 const NotificationScreen = () => {
@@ -23,9 +24,10 @@ const NotificationScreen = () => {
 
   useEffect(() => {
     axios
-      .get(`https://drukebird.onrender.com/api/v1/notifications/${userId}`)
+      .get(`https://druk-ebirds.onrender.com/api/v1/notifications/${userId}`)
       .then((res) => {
-        setNotifications(res.data.data);
+        const reversedNotifications = res.data.data.reverse();
+        setNotifications(reversedNotifications);
         console.log(res.data.data);
       })
       .catch((error) => {
@@ -34,21 +36,44 @@ const NotificationScreen = () => {
       .finally(() => setLoading(false));
   }, []);
 
+  const deleteNotification = (notificationId) => {
+    // Send a request to delete the notification from the database
+    axios
+      .delete(`https://druk-ebirds.onrender.com/api/v1/notifications/${notificationId}`)
+      .then(() => {
+        // Remove the deleted notification from the state
+        setNotifications((prevNotifications) =>
+          prevNotifications.filter((notification) => notification._id !== notificationId)
+        );
+      })
+      .catch((error) => {
+        console.error("Error deleting notification:", error);
+      });
+  };
+
   if (loading) {
     return (
       <View>
-        <ActivityIndicator style={{marginTop:250}} animating={true} color={MD2Colors.green800} size="large" />
+        <ActivityIndicator style={{ marginTop: 250 }} animating={true} color={MD2Colors.green800} size="large" />
       </View>
     );
   }
 
   const renderItem = ({ item }) => (
-    <View style={styles.content}>
-      <TouchableOpacity onPress={() => openModal(item)}>
-        <Avatar.Image source={{ uri: item.avatar }} style={styles.image} />
-        <Text style={styles.text}>{item.message}</Text>
+    <Swipeable
+      renderRightActions={() => (
+        <TouchableOpacity style={styles.deleteButton} onPress={() => deleteNotification(item._id)}>
+          <Text style={styles.deleteButtonText}>Delete</Text>
+        </TouchableOpacity>
+      )}
+    >
+      <TouchableOpacity style={styles.content} onPress={() => openModal(item)}>
+        <View>
+          <Avatar.Image source={{ uri: item.photoUrl }} style={styles.image} />
+          <Text style={styles.text}>The Unknown Bird has been verified by the Admin</Text>
+        </View>
       </TouchableOpacity>
-    </View>
+    </Swipeable>
   );
 
   return (
@@ -68,7 +93,7 @@ const NotificationScreen = () => {
         <View style={styles.modalContainer}>
           <View style={styles.modalContent}>
             {selectedNotification && (
-              <Text>Bird name is {selectedNotification.BirdName}</Text>
+              <Text>The name of your bird is {selectedNotification.BirdName}</Text>
             )}
             <TouchableOpacity style={styles.closeButton} onPress={closeModal}>
               <Text style={styles.closeButtonText}>Close</Text>
@@ -86,7 +111,7 @@ const styles = StyleSheet.create({
   },
   content: {
     marginTop: 5,
-    height: 80,
+    height: 100,
     width: "100%",
     borderRadius: 1,
     elevation: 1,
@@ -95,12 +120,12 @@ const styles = StyleSheet.create({
     shadowRadius: 2,
   },
   image: {
-    marginTop: 6,
-    marginLeft: 6,
+    marginTop: 18,
+    marginLeft: 15,
   },
   text: {
     marginTop: -50,
-    marginLeft: 80,
+    marginLeft: 90,
   },
   modalContainer: {
     flex: 1,
@@ -110,20 +135,27 @@ const styles = StyleSheet.create({
   },
   modalContent: {
     backgroundColor: "white",
-    padding: 20,
-    borderRadius: 10,
+    padding: 10,
+    borderRadius: 5,
   },
   closeButton: {
-    marginTop: 10,
+    marginTop: 20,
     alignItems: "center",
   },
   closeButtonText: {
     color: "blue",
   },
-  loadingContainer: {
-    flex: 1,
+  deleteButton: {
+    backgroundColor: "red",
     justifyContent: "center",
     alignItems: "center",
+    marginTop:5,
+    width: 80,
+    height: "100%",
+  },
+  deleteButtonText: {
+    color: "white",
+    fontWeight: "bold",
   },
 });
 

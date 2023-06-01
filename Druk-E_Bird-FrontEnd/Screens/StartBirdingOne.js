@@ -48,7 +48,6 @@ const StartBirdingone = ({ route }) => {
   }, [StartbirdingData]);
 
   useEffect(() => {
-
     const interval = setInterval(() => {
       setSeconds((seconds) => seconds + 1);
     }, 1000);

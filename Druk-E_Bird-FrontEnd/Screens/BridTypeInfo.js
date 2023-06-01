@@ -161,8 +161,9 @@ const BirdTypeInfo = ({route}) => {
   const handleUpload = (image) => {
     const data = new FormData();
     data.append("file", image);
-    data.append("upload_preset", "DrukEBird_Users");
+    data.append("upload_preset", "DrukEBird");
     data.append("cloud_name", "cheki");
+    data.append("folder", "DrukEBird/BirdPhoto");
     fetch("https://api.cloudinary.com/v1_1/cheki/image/upload", {
       method: "post",
       body: data,

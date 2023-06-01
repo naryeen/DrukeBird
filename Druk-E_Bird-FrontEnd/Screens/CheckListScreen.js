@@ -49,7 +49,7 @@ function NotSubmitted() {
 
   const renderSwipeableContent = (itemId) => (
     <View style={{ flexDirection: 'row', justifyContent: 'flex-end' }}>
-      <TouchableOpacity style={{ backgroundColor: 'red', paddingTop: 30, height: 86 }} onPress={() => handleDelete(itemId)}>
+      <TouchableOpacity style={{ backgroundColor: 'red', paddingTop: 30, height:"100%", marginBottom:20 }} onPress={() => handleDelete(itemId)}>
         <Text style={{ color: 'white' }}>Delete</Text>
       </TouchableOpacity>
     </View>

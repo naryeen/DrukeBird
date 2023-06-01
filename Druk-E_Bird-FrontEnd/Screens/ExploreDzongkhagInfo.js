@@ -7,6 +7,7 @@ const getCheckList = "https://druk-ebirds.onrender.com/api/v1/checkList";
 function ExploreDzongkhagInfo({ route }) {
   const { dzongkhag } = route.params;
   const [birdData, setBirdData] = useState([]);
+  const [birdNameCounts, setBirdNameCounts] = useState({});
 
   useEffect(() => {
     axios.get(getCheckList)
@@ -16,6 +17,15 @@ function ExploreDzongkhagInfo({ route }) {
           item.StartbirdingData[0]?.status === "submittedchecklist"
         );
         setBirdData(filteredData);
+
+        // Calculate birdName counts
+        const counts = {};
+        filteredData.forEach(item => {
+          const birdName = item.BirdName;
+          const count = item.StartbirdingData[0]?.Totalcount || 0;
+          counts[birdName] = (counts[birdName] || 0) + count;
+        });
+        setBirdNameCounts(counts);
       })
       .catch((error) => {
         console.error('Error fetching data:', error);
@@ -25,10 +35,10 @@ function ExploreDzongkhagInfo({ route }) {
   return (
     <View style={{ marginTop: 100 }}>
       <Text>Dzongkhag: {dzongkhag}</Text>
-      {birdData.map((item, index) => (
-        <View key={index}>
-          <Text>Bird Name: {item.BirdName}</Text>
-          <Text>Count: {item.StartbirdingData[0]?.Totalcount}</Text>
+      {Object.entries(birdNameCounts).map(([birdName, count]) => (
+        <View key={birdName}>
+          <Text>Bird Name: {birdName}</Text>
+          <Text>Total Count: {count}</Text>
         </View>
       ))}
     </View>
@@ -36,4 +46,3 @@ function ExploreDzongkhagInfo({ route }) {
 }
 
 export default ExploreDzongkhagInfo;
-
