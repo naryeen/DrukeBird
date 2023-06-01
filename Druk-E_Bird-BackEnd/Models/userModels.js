@@ -87,11 +87,20 @@ userSchema.path('dob').validate(function (dob){
     return dobRegex.test(dob);
 }, 'Enter DoB in MM/DD/YYYY')
 
-userSchema.path('password').validate(function (password){
-    ///^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/=password, that i want to include later
-    var passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}/g;
+userSchema.path('password').validate(function (password) {
+    var passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/;
+    
+    if (password.length < 8) {
+        throw new Error("Enter a password more than 8 characters.");
+    } else if (!/[a-z]/.test(password) || !/[A-Z]/.test(password)) {
+        throw new Error("Enter at least one lowercase and one uppercase letter.");
+    }
+    
     return passwordRegex.test(password);
-}, 'Enter passsword more than 8')
+},);
+
+
+
 
 
 //Instance method is available in all document of certain collection while login
