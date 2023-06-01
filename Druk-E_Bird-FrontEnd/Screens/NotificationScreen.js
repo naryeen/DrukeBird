@@ -1,6 +1,6 @@
 import React, { useState, useContext, useEffect } from "react";
-import {View,StyleSheet,Text,TouchableOpacity,Modal,FlatList,} from "react-native";
-import { Avatar } from "react-native-paper";
+import { View, StyleSheet, Text, TouchableOpacity, Modal, FlatList } from "react-native";
+import { Avatar, ActivityIndicator, MD2Colors } from "react-native-paper"
 import { AuthContext } from "../Context/AuthContext";
 import axios from "axios";
 
@@ -26,12 +26,21 @@ const NotificationScreen = () => {
       .get(`https://drukebird.onrender.com/api/v1/notifications/${userId}`)
       .then((res) => {
         setNotifications(res.data.data);
-        console.log(res.data.data)
+        console.log(res.data.data);
       })
       .catch((error) => {
         console.error("Error fetching notifications:", error);
-      });
+      })
+      .finally(() => setLoading(false));
   }, []);
+
+  if (loading) {
+    return (
+      <View>
+        <ActivityIndicator style={{marginTop:250}} animating={true} color={MD2Colors.green800} size="large" />
+      </View>
+    );
+  }
 
   const renderItem = ({ item }) => (
     <View style={styles.content}>
@@ -110,6 +119,11 @@ const styles = StyleSheet.create({
   },
   closeButtonText: {
     color: "blue",
+  },
+  loadingContainer: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
   },
 });
 
