@@ -17,7 +17,7 @@ const NavigationHeader = ({ title }) => {
 };
 
 const { width } = Dimensions.get('window');
-const paddingHorizontal = width * 0.05;
+const paddingHorizontal = width * 0.08;
 
 const styles = StyleSheet.create({
   headerContainer: {

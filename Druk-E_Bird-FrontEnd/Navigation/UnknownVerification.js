@@ -1,5 +1,5 @@
 import React, { useState, useContext, useEffect } from "react";
-import { View, StyleSheet, Text, TouchableOpacity, Modal, FlatList } from "react-native";
+import { View, StyleSheet, Text, TouchableOpacity, Modal, FlatList, StatusBar } from "react-native";
 import { Avatar, ActivityIndicator, MD2Colors } from "react-native-paper";
 import { AuthContext } from "../Context/AuthContext";
 import { Swipeable } from "react-native-gesture-handler";
@@ -103,6 +103,7 @@ const UnknownVerification = () => {
           </View>
         </View>
       </Modal>
+      <StatusBar />
     </View>
   );
 };

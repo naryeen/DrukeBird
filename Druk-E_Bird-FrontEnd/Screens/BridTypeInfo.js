@@ -1,10 +1,9 @@
 import React, { useState,useContext} from 'react';
 import {StyleSheet,View,Text,TouchableOpacity,Image, ToastAndroid, Dimensions} from 'react-native';
-import { TextInput } from 'react-native-paper';
+import { ActivityIndicator, MD2Colors,TextInput,IconButton  } from "react-native-paper";
 import * as ImagePicker from 'expo-image-picker';
 import axios from "axios";
 import { Picker } from '@react-native-picker/picker';
-import { IconButton, MD2Colors } from 'react-native-paper';
 import BhutanDzongkhags from "../Components/BhutanDzongkha"
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scrollview';
 import Button from "../Components/Button";
@@ -23,6 +22,7 @@ const BirdTypeInfo = ({route}) => {
   const [selectedVillage, setSelectedVillage] = useState('');
   const [gewogOptions, setGewogOptions] = useState([]);
   const [villageOptions, setVillageOptions] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
   const { StartbirdingData, birdName} = route.params
   const { userInfo } = useContext(AuthContext);
   const name = userInfo.user.name;
@@ -84,12 +84,12 @@ const BirdTypeInfo = ({route}) => {
        };
      var dataSubmitted = false;
      var temp = [{
-         "Totalcount": {
+         "JAcount": {
              "Adult": adultCount.toString(),
              "Juvenile": juvenileCount.toString(),
-             "Remarks": Remarks
          },
-         "count":count,
+         "Remarks": Remarks,
+         "Totalcount":count,
          "currentLocation": StartbirdingData.currentLocation,
          "selectedDate": StartbirdingData.selectedDate,
          "selectedTime": StartbirdingData.selectedTime,
@@ -155,7 +155,6 @@ const BirdTypeInfo = ({route}) => {
         name: `birdImage.${capturedImage.uri.split(".")[1]}`,
       };
       handleUpload(newFile);
-      console.log(newFile);
 
     } else {
       alert("You did not select any image.");
@@ -179,7 +178,13 @@ const BirdTypeInfo = ({route}) => {
         setIsLoading(false);
       });
   };
-
+  if (isLoading) {
+    return (
+      <View style={styles.loading}>
+        <ActivityIndicator animating={true} color={MD2Colors.green800} size="large" />
+      </View>
+    );
+  }
   return (
     <KeyboardAwareScrollView>
       <View style={styles.container1}>

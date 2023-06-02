@@ -1,5 +1,5 @@
 import React, { useState, useContext } from "react";
-import { View, Text, TextInput, StyleSheet, ToastAndroid } from "react-native";
+import { View, Text, TextInput, StyleSheet, ToastAndroid, StatusBar} from "react-native";
 import axios from "axios";
 import { AuthContext } from "../Context/AuthContext";
 import NavigationHeader from "../Components/NavigationHeader";
@@ -90,6 +90,8 @@ const UpdatePassword = () => {
       </View>
       <Button styling={styles.buttonstyle} onPress={handleUpdatePassword}>Update Password</Button>
       {error ? <Text style={styles.error}>{error}</Text> : null}
+      <StatusBar />
+
     </View>
   );
 };

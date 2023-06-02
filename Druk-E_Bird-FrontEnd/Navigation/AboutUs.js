@@ -1,4 +1,4 @@
-import { View, Text, Image, StyleSheet, Dimensions } from 'react-native';
+import { View, Text, Image, StyleSheet, Dimensions, StatusBar } from 'react-native';
 import NavigationHeader from '../Components/NavigationHeader';
 
 const { width, height } = Dimensions.get('window');
@@ -30,6 +30,7 @@ function About() {
         providing a platform for users and contributing to our understanding of
         birds and their conservation.
       </Text>
+      <StatusBar />
     </View>
   );
 }
@@ -51,7 +52,6 @@ const styles = StyleSheet.create({
     width: width * 0.9,
     marginLeft: width * 0.05,
     marginTop: height * 0.06,
-    fontSize: width * 0.04,
-    // justifyContent: "space-between"  
+    fontSize: width * 0.04, 
   },
 });

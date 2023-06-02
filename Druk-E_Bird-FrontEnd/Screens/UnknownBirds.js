@@ -1,5 +1,5 @@
 import React, { useState,useContext} from "react";
-import {View,Text,TouchableOpacity,Image,StyleSheet,Modal, ToastAndroid, Dimensions} from "react-native";
+import {View,Text,TouchableOpacity,Image,StyleSheet,Modal, ToastAndroid, Dimensions, StatusBar} from "react-native";
 import { ActivityIndicator, MD2Colors } from "react-native-paper";
 import * as ImagePicker from "expo-image-picker";
 import axios from 'axios'; // Import axios for making HTTP requests
@@ -296,6 +296,8 @@ const UnknownBird = ({ route }) => {
         </View>
       </Modal>
       </View>
+      <StatusBar />
+
     </View>
   );
 };

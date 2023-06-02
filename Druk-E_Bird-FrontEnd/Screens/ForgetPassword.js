@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { TextInput } from 'react-native-paper';
-import { StyleSheet, View, ToastAndroid, Dimensions } from 'react-native';
+import { StyleSheet, View, ToastAndroid, Dimensions, StatusBar } from 'react-native';
 import Button from "../Components/Button";
 import axios from "axios";
 const windowDimensions = Dimensions.get('window');
@@ -48,6 +48,7 @@ const ForgetPassword = () => {
         />
       <Button styling={styles.buttonStyle} onPress={() => forgetPassword()}>Send</Button>
     </View>
+    <StatusBar />
     </View>
   );
 };

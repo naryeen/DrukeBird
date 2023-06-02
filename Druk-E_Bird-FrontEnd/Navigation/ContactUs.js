@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { TextInput } from 'react-native-paper';
-import { StyleSheet, View, Text, ScrollView, Dimensions, ToastAndroid } from 'react-native';
+import { StyleSheet, View, Text, ScrollView, Dimensions, ToastAndroid, StatusBar } from 'react-native';
 import Button from '../Components/Button';
 import NavigationHeader from '../Components/NavigationHeader';
 import * as MailComposer from 'expo-mail-composer';
@@ -83,6 +83,7 @@ const ContactUs = () => {
           </Button>
         </ScrollView>
       </View>
+      <StatusBar />
     </View>
   );
 };

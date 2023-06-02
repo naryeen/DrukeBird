@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Text, View, Dimensions, Animated, StyleSheet} from 'react-native';
+import { Text, View, Dimensions, Animated, StyleSheet, StatusBar } from 'react-native';
 import { ActivityIndicator, MD2Colors } from 'react-native-paper';
 import { BarChart } from 'react-native-chart-kit';
 import axios from 'axios';
@@ -109,22 +109,24 @@ function ExploreBirdInfo({ route }) {
         <View key={dzongkhag} style={styles.container}>
           <Text>Dzongkhag: {dzongkhag}</Text>
           <Text>Total Count: {count}</Text>
-          <View style={styles.horizontalLine}/>
+          <View style={styles.horizontalLine} />
         </View>
       ))}
+      <StatusBar />
+
     </View>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
-    marginHorizontal:20,
-    marginBottom:15,
+    marginHorizontal: 20,
+    marginBottom: 15,
 
   },
   horizontalLine: {
     borderBottomWidth: 0.5,
-    borderBottomColor: 'gray', 
+    borderBottomColor: 'gray',
   }
 });
 

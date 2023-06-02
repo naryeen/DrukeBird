@@ -1,5 +1,5 @@
 import React, { useState, useContext } from "react";
-import {View,Text,TextInput,StyleSheet,ToastAndroid,TouchableOpacity,} from "react-native";
+import {View,Text,TextInput,StyleSheet,ToastAndroid,TouchableOpacity, StatusBar} from "react-native";
 import * as ImagePicker from "expo-image-picker";
 import { Avatar, IconButton,ActivityIndicator, MD2Colors } from "react-native-paper";
 import axios from "axios";
@@ -128,6 +128,9 @@ const EditInfo = () => {
         </View>
         <Button styling={styles.buttonstyle} onPress={handleUpdateProfile}>Update Profile</Button>
         {error ? <Text style={styles.error}>{error}</Text> : null}
+
+        <StatusBar />
+
       
     </View>
   );

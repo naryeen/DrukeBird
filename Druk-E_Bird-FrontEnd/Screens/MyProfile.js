@@ -155,7 +155,7 @@
 // });
 
 import React, { useState, useContext, useEffect } from "react";
-import { View, Text, TouchableOpacity, StyleSheet, Dimensions, FlatList } from "react-native";
+import { View, Text, TouchableOpacity, StyleSheet, Dimensions, FlatList, StatusBar } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import { Avatar } from "react-native-paper";
 import axios from "axios";
@@ -285,6 +285,8 @@ const MyProfile = () => {
           </View>
         </View>
       </View>
+      <StatusBar />
+
     </View>
   );
 };
