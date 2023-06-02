@@ -218,7 +218,6 @@ const StartBirdingone = ({ route }) => {
           )}
           <FlatList
             style={{ height: "70%", marginTop: 10, borderRadius: 10 }}
-            //data={data}
             data={searchQuery.length > 0 ? filteredData : data}
             keyExtractor={(item) => item._id}
             renderItem={renderItem}

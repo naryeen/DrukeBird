@@ -30,8 +30,6 @@ export const AuthProvider = ({ children }) => {
         setUserToken(userToken);
         AsyncStorage.setItem("userInfo", JSON.stringify(userInfo));
         AsyncStorage.setItem("userToken", userToken);
-        console.log(userInfo);
-        console.log(userToken);
       })
       .catch(err=>{
         let message = 
@@ -42,15 +40,12 @@ export const AuthProvider = ({ children }) => {
          ToastAndroid.show(message, 
             ToastAndroid.SHORT);
       });
-    // setUserToken("snjcjs");
     setIsLoading(false);
   };
-  // console.log(userToken);
 
   const updateUserInfo = (newUserInfo) => {
     setUserInfo(newUserInfo);
   };
-
   const logout = () => {
     setIsLoading(true);
     setUserToken(null);

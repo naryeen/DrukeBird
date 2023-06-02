@@ -175,23 +175,14 @@ const UnknownBird = ({ route }) => {
           "EndpointLocation": [endpointLocation],
           "status":"submittedchecklist"
         }];
-
         const randomNumber = Math.floor(Math.random() * 1000);
-
-
         const StartbirdingoneData = {
           "StartbirdingData": temp,
           "BirdName": UnknownBirdsdata.BirdName,
           "CheckListName":`${name}-${randomNumber}`,
           "userId":userId
         };
-        detailOfBirds.push(StartbirdingoneData)
-        // console.log(StartbirdingoneData)
-        console.log(detailOfBirds);
-
-      
-   
-    
+        detailOfBirds.push(StartbirdingoneData)    
     try {
       // Make an HTTP POST request to your backend API endpoint
       axios
@@ -314,7 +305,6 @@ const styles = StyleSheet.create({
   },
   button: {
     marginTop: "1%",
-    //marginBottom: 2,
     alignItems: 'center',
     justifyContent: 'center',
     width: width*0.5,
@@ -324,7 +314,6 @@ const styles = StyleSheet.create({
   },
   buttonText: {
     fontSize: 20,
-    //color: '#000',
   },
   image: {
     width: width*0.5,

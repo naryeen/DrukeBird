@@ -1,7 +1,7 @@
 import React, { useState, useContext } from "react";
 import { TextInput } from 'react-native-paper';
 import { StyleSheet, View, Text, Image, Dimensions } from 'react-native';
-import { ActivityIndicator, MD2Colors} from "react-native-paper";
+import { ActivityIndicator, useTheme } from "react-native-paper";
 import { useNavigation } from '@react-navigation/native';
 import Button from '../Components/Button';
 import { AuthContext } from "../Context/AuthContext";
@@ -16,6 +16,7 @@ const LogIn = () => {
   const [loading, setLoading] = useState(false); // Added loading state
   const { login } = useContext(AuthContext);
   const [passwordVisible, setPasswordVisible] = useState(false);
+  const theme = useTheme(); // Get the theme object
 
   const togglePasswordVisibility = () => {
     setPasswordVisible(!passwordVisible);
@@ -71,8 +72,8 @@ const LogIn = () => {
       {/* Loading animation */}
       {loading && (
         <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-        <ActivityIndicator animating={true} color={MD2Colors.green800} size="large" />
-      </View>
+          <ActivityIndicator animating={true} color={theme.colors.primary} size="large" />
+        </View>
       )}
     </View>
   );
