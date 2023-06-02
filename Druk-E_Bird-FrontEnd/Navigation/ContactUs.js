@@ -1,15 +1,52 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { TextInput } from 'react-native-paper';
-import { StyleSheet, View, Text, ScrollView, Dimensions } from 'react-native';
+import { StyleSheet, View, Text, ScrollView, Dimensions, ToastAndroid } from 'react-native';
 import Button from '../Components/Button';
 import NavigationHeader from '../Components/NavigationHeader';
+import * as MailComposer from 'expo-mail-composer';
 
 const { width, height } = Dimensions.get('window');
 
 const ContactUs = () => {
+  const [name, setName] = useState('');
+  const [email, setEmail] = useState('');
+  const [message, setMessage] = useState('');
+
   const sendMessage = () => {
-    alert('You have successfully send the message');
+    if (name.trim() === '') {
+      ToastAndroid.show('Please enter your name', ToastAndroid.SHORT);
+      return;
+    } else if (email.trim() === '') {
+      ToastAndroid.show('Please enter your email', ToastAndroid.SHORT);
+      return;
+    } else if (message.trim() === '') {
+      ToastAndroid.show('Write the message', ToastAndroid.SHORT);
+      return;
+    }
+
+    const emailSubject = `New message from ${name}`;
+    const emailBody = `Name: ${name}\nEmail: ${email}\nMessage: ${message}`;
+    const recipientEmail = '12190099.gcit@rub.edu.bt';
+
+    MailComposer.composeAsync({
+      recipients: [recipientEmail],
+      subject: emailSubject,
+      body: emailBody,
+    })
+      .then(result => {
+        console.log(result.status)
+        if (result.status !== 'sent') {
+          ToastAndroid.show('Email sending cancelled', ToastAndroid.SHORT);
+        } else if (result.status === 'sent') {
+          ToastAndroid.show('Email sent successfully', ToastAndroid.SHORT);
+        }
+      })
+      .catch(error => {
+        ToastAndroid.show('An error occurred', ToastAndroid.SHORT);
+        console.log(error);
+      });
   };
+
   return (
     <View>
       <NavigationHeader title={'Contact Us'} />
@@ -21,12 +58,16 @@ const ContactUs = () => {
             mode="outlined"
             label="Name"
             placeholder="Write Your Name"
+            value={name}
+            onChangeText={text => setName(text)}
           />
           <TextInput
             style={styles.email}
             mode="outlined"
             label="Email"
             placeholder="Write Your Email"
+            value={email}
+            onChangeText={text => setEmail(text)}
           />
           <TextInput
             style={styles.message}
@@ -34,8 +75,12 @@ const ContactUs = () => {
             label="Message"
             placeholder="Write Your Message"
             multiline
+            value={message}
+            onChangeText={text => setMessage(text)}
           />
-          <Button styling={styles.buttonStyle} onPress={sendMessage}>Send Message</Button>
+          <Button styling={styles.buttonStyle} onPress={sendMessage}>
+            Send Message
+          </Button>
         </ScrollView>
       </View>
     </View>
@@ -74,14 +119,13 @@ const styles = StyleSheet.create({
     marginTop: height * 0.02,
     borderColor: '#ccc',
     borderRadius: width * 0.02,
-    height: height*0.3,
+    height: height * 0.3,
   },
   buttonStyle: {
     backgroundColor: '#136D66',
     marginTop: height * 0.08,
     width: '100%',
   },
- 
 });
 
 export default ContactUs;

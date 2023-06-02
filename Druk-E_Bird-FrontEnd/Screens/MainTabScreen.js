@@ -7,7 +7,6 @@ import HomeScreen from './HomeScreen';
 import StartBirdingScreen from './StartBirdingScreen';
 import ExploreScreen from './ExploreScreen';
 import CheckListScreen from './CheckListScreen';
-import NotificationScreen from './NotificationScreen';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 
 const Tab = createBottomTabNavigator();
@@ -42,11 +41,6 @@ const MainTabScreen = () => (
             options={{tabBarLabel: 'CheckList',tabBarColor: '#136d66',
             tabBarIcon: () => (<FontAwesome name="list-alt" size={29} color="white" />),}}/>
 
-        <Tab.Screen
-            name="Notification"
-            component={NotificationScreen}
-            options={{tabBarLabel: 'Notification',tabBarColor: '#136d66',
-            tabBarIcon: () => (<Ionicons name="notifications" size={29} color="white" />),}}/>
     </Tab.Navigator>
 );
 

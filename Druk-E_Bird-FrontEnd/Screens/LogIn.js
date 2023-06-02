@@ -54,7 +54,7 @@ const LogIn = () => {
       <Button styling={styles.buttonstyle} onPress={() => { login(email, password) }}>Login</Button>
       <Text style={styles.createtext}>
         Don't have an account?
-        <Text style={styles.createaccountText} onPress={() => navigation.replace('Verifying')}>Resigter</Text>
+        <Text style={styles.createaccountText} onPress={() => navigation.replace('Verifying')}>  Resigter</Text>
       </Text>
     </View>
   );

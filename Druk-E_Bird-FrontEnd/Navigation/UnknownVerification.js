@@ -4,8 +4,10 @@ import { Avatar, ActivityIndicator, MD2Colors } from "react-native-paper";
 import { AuthContext } from "../Context/AuthContext";
 import { Swipeable } from "react-native-gesture-handler";
 import axios from "axios";
+import NavigationHeader from '../Components/NavigationHeader';
 
-const NotificationScreen = () => {
+
+const UnknownVerification = () => {
   const { userInfo } = useContext(AuthContext);
   const userId = userInfo.user._id;
   const [notifications, setNotifications] = useState([]);
@@ -78,12 +80,12 @@ const NotificationScreen = () => {
 
   return (
     <View style={styles.container}>
+      <NavigationHeader title={'UnknownBirds'} />
       <FlatList
         data={notifications}
         renderItem={renderItem}
         keyExtractor={(item) => item._id.toString()}
       />
-
       <Modal
         animationType="slide"
         transparent
@@ -159,4 +161,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default NotificationScreen;
+export default UnknownVerification;

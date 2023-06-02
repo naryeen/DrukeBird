@@ -53,6 +53,17 @@ export function DrawerContent(props) {
           <Drawer.Section style={styles.drawerSection}>
             <DrawerItem
               icon={({ color, size }) => (
+                <MaterialCommunityIcons name="bird" size={size} color="white" />
+              )}
+              label="Unknown Verification"
+              labelStyle={styles.drawerItemLabel}
+              onPress={() => navigation.navigate('UnknownVerification')}
+            />
+          </Drawer.Section>
+
+          <Drawer.Section style={styles.drawerSection}>
+            <DrawerItem
+              icon={({ color, size }) => (
                 <MaterialIcons name="quick-contacts-dialer" size={size} color="white" />
               )}
               label="Contact US"

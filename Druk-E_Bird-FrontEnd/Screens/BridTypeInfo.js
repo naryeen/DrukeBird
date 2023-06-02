@@ -1,21 +1,23 @@
 import React, { useState,useContext} from 'react';
-import {StyleSheet,View,Text,TouchableOpacity,Image, ToastAndroid} from 'react-native';
+import {StyleSheet,View,Text,TouchableOpacity,Image, ToastAndroid, Dimensions} from 'react-native';
 import { TextInput } from 'react-native-paper';
 import * as ImagePicker from 'expo-image-picker';
 import axios from "axios";
 import { Picker } from '@react-native-picker/picker';
+import { IconButton, MD2Colors } from 'react-native-paper';
 import BhutanDzongkhags from "../Components/BhutanDzongkha"
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scrollview';
 import Button from "../Components/Button";
 import { AuthContext } from '../Context/AuthContext';
-import { IconButton,ActivityIndicator, MD2Colors } from "react-native-paper";
+import NavigationHeader from '../Components/NavigationHeader';
+
+const { width, height } = Dimensions.get('window');
 
 const BirdTypeInfo = ({route}) => {
   const [image, setImage] = useState(null);
   const [Adult, setAdult] = useState('');
   const [Juvenile, setJuvenile] = useState('');
   const [Remarks, setRemarks] = useState('');
-  const [isLoading, setIsLoading] = useState(false);
   const [selectedDzongkhag, setSelectedDzongkhag] = useState('');
   const [selectedGewog, setSelectedGewog] = useState('');
   const [selectedVillage, setSelectedVillage] = useState('');
@@ -25,7 +27,6 @@ const BirdTypeInfo = ({route}) => {
   const { userInfo } = useContext(AuthContext);
   const name = userInfo.user.name;
   const userId = userInfo.user._id;
-  const [randomNumber, setRandomNumber] = useState(Math.floor(Math.random() * 1000));
 
   const handleDzongkhagChange = (value) => {
     setSelectedDzongkhag(value);
@@ -83,12 +84,12 @@ const BirdTypeInfo = ({route}) => {
        };
      var dataSubmitted = false;
      var temp = [{
-         "JAcount": {
+         "Totalcount": {
              "Adult": adultCount.toString(),
              "Juvenile": juvenileCount.toString(),
+             "Remarks": Remarks
          },
-         "Remarks": Remarks,
-         "Totalcount":count,
+         "count":count,
          "currentLocation": StartbirdingData.currentLocation,
          "selectedDate": StartbirdingData.selectedDate,
          "selectedTime": StartbirdingData.selectedTime,
@@ -97,6 +98,8 @@ const BirdTypeInfo = ({route}) => {
          "EndpointLocation": [endpointLocation],
          "status":"submittedchecklist"
      }];
+     const randomNumber = Math.floor(Math.random() * 1000);
+ 
      const StartbirdingoneData = {
          "StartbirdingData": temp,
          "BirdName": birdName,
@@ -111,6 +114,7 @@ const BirdTypeInfo = ({route}) => {
          Alert.alert("No Data Submitted", "Please select at least one bird count before stopping.", [{ text: "OK" }]);
          return;
      }
+     
      try {
          // Make an HTTP POST request to your backend API endpoint
          axios
@@ -175,22 +179,17 @@ const BirdTypeInfo = ({route}) => {
         setIsLoading(false);
       });
   };
-  if (isLoading) {
-    return (
-      <View style={styles.loading}>
-        <ActivityIndicator animating={true} color={MD2Colors.green800} size="large" />
-      </View>
-    );
-  }
 
   return (
     <KeyboardAwareScrollView>
+      <View style={styles.container1}>
+        <NavigationHeader title={'hell'}/>
         <View style={styles.container}>
       <TouchableOpacity
         style={styles.button}
         onPress={() => handleImageUpload()}
       >
-        {image ? (
+        {image ? ( 
           <Image source={{ uri: image }} style={styles.image} />
         ) : (
           <IconButton icon="camera" color={MD2Colors.grey500} size={50} />
@@ -257,54 +256,59 @@ const BirdTypeInfo = ({route}) => {
     </Picker>
     <Button styling={styles.submitbutton} onPress={StartbirdingonedataSave}>Submit</Button>
     </View>
+    </View>
     </KeyboardAwareScrollView>
     
   );
 };
 
 const styles = StyleSheet.create({
+  container1:{
+    flex: 1
+  },
   container: {
-    marginTop: 30,
-    padding: 20,
+    marginTop: height*0.0001,
+    padding: width * 0.031,
     alignItems: 'center',
     justifyContent: 'center',
     position: 'relative',
   },
   button: {
-    marginBottom: 20,
+    marginBottom: width*0.03,
     alignItems: 'center',
     justifyContent: 'center',
-    width: 200,
-    height: 200,
+    width: width*0.5,
+    height: width*0.5,
     backgroundColor: '#e1e1e1',
     borderRadius: 100,
   },
   buttonText: {
     fontSize: 20,
-    color: '#000',
+    //color: '#000',
   },
   image: {
-    width: 200,
-    height: 200,
+    width: width*0.5,
+    height: width*0.5,
     borderRadius: 100,
   },
   textInput: {
-    marginBottom: 10,
+    marginTop: width*0.001,
+    marginBottom: width*0.02,
     width: '100%',
   },
   locationText: {
-    marginTop: 10,
+    marginTop: width*0.02,
     fontSize: 16,
     fontWeight: 'bold',
   },
   picker: {
     width: '100%',
-    marginBottom: 10,
+    marginBottom: width*0.001,
   },
-  buttonstyle: {
+  submitbutton: {
     backgroundColor: '#136D66',
-    marginTop: 30,
-    width: "100%",
+    marginTop: width*0.02,
+    width: width*0.95,
 },
 });
 

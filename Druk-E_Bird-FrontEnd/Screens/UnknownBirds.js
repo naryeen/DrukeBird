@@ -1,5 +1,5 @@
 import React, { useState,useContext} from "react";
-import {View,Text,TouchableOpacity,Image,StyleSheet,Modal, ToastAndroid} from "react-native";
+import {View,Text,TouchableOpacity,Image,StyleSheet,Modal, ToastAndroid, Dimensions} from "react-native";
 import { ActivityIndicator, MD2Colors } from "react-native-paper";
 import * as ImagePicker from "expo-image-picker";
 import axios from 'axios'; // Import axios for making HTTP requests
@@ -7,9 +7,11 @@ import { IconButton } from "react-native-paper";
 import { Picker } from '@react-native-picker/picker';
 import { Button } from "react-native-paper";
 import SubmitButton from "../Components/Button";
-import NavigationHeader from '../Components/NavigationHeader';
 import { AuthContext } from "../Context/AuthContext";
-import BhutanDzongkhags from "../Components/BhutanDzongkha"
+import UnknownHeader from "../Components/UnknownHeader";
+import BhutanDzongkhags from "../Components/BhutanDzongkha";
+
+const { width, height } = Dimensions.get('window');
 
 const UnknownBird = ({ route }) => {
   const {UnknownBirdsdata} = route.params
@@ -25,7 +27,7 @@ const UnknownBird = ({ route }) => {
   const [gewogOptions, setGewogOptions] = useState([]);
   const [villageOptions, setVillageOptions] = useState([]);
   const userId = userInfo.user._id;
-  const [randomNumber, setRandomNumber] = useState(Math.floor(Math.random() * 1000));
+
 
   const handleDzongkhagChange = (value) => {
     setSelectedDzongkhag(value);
@@ -105,7 +107,6 @@ const UnknownBird = ({ route }) => {
     data.append("upload_preset", "DrukEBird");
     data.append("cloud_name", "cheki");
     data.append("folder", "DrukEBird/BirdPhoto");
-    setIsLoading(true);
     fetch("https://api.cloudinary.com/v1_1/cheki/image/upload", {
       method: "post",
       body: data,
@@ -165,7 +166,7 @@ const UnknownBird = ({ route }) => {
       "village": selectedVillage
     };
       var temp = [{
-          "Totalcount":count,
+          "count":count,
           "currentLocation": UnknownBirdsdata.StartbirdingData.currentLocation,
           "selectedDate": UnknownBirdsdata.StartbirdingData.selectedDate,
           "selectedTime": UnknownBirdsdata.StartbirdingData.selectedTime,
@@ -174,6 +175,9 @@ const UnknownBird = ({ route }) => {
           "EndpointLocation": [endpointLocation],
           "status":"submittedchecklist"
         }];
+
+        const randomNumber = Math.floor(Math.random() * 1000);
+
 
         const StartbirdingoneData = {
           "StartbirdingData": temp,
@@ -206,9 +210,28 @@ const UnknownBird = ({ route }) => {
   };
   return (
     <View style={styles.container}>
-      <NavigationHeader title="Unknown Birds"/>
+      <UnknownHeader title={'Unknown Bird'}/>
       <View style={styles.subcontainer}>
-      <Text style={styles.label}>Select Dzongkhag:</Text>
+    
+      <TouchableOpacity
+       style={styles.button}
+        onPress={() => setModalVisible(true)}
+      >
+        {!image ? (
+          <IconButton icon="camera" color={MD2Colors.grey500} size={50} />
+        ) : (
+            <Image source={{ uri: image }} style={styles.image} />
+        )}
+      </TouchableOpacity>
+      <View style={styles.countBtn}>
+        <Button icon="plus-box-outline" onPress={() => handleButtonPress("increase")} />
+        <Text style={styles.countText}>{count}</Text>
+        <Text style={styles.speciesText}>{UnknownBirdsdata.BirdName}</Text>
+        <Button icon="minus-box-outline" onPress={() => handleButtonPress("decrease")} />
+      </View>
+      <Text style={styles.locationText}>Choose Location</Text>
+
+
       <Picker
         selectedValue={selectedDzongkhag}
         onValueChange={handleDzongkhagChange}
@@ -220,7 +243,6 @@ const UnknownBird = ({ route }) => {
         ))}
       </Picker>
 
-      <Text style={styles.label}>Select Gewog:</Text>
       <Picker
         selectedValue={selectedGewog}
         onValueChange={handleGewogChange}
@@ -233,7 +255,6 @@ const UnknownBird = ({ route }) => {
         ))}
       </Picker>
 
-      <Text style={styles.label}>Select Village:</Text>
       <Picker
         selectedValue={selectedVillage}
         onValueChange={setSelectedVillage}
@@ -245,29 +266,6 @@ const UnknownBird = ({ route }) => {
           <Picker.Item key={village.value} label={village.label} value={village.value} />
         ))}
       </Picker>
-      <TouchableOpacity
-        style={styles.iconContainer}
-        onPress={() => setModalVisible(true)}
-      >
-        {!image ? (
-          <IconButton
-            icon="image"
-            size={200}
-            color="#007AFF"
-            style={styles.icon}
-          />
-        ) : (
-          <View style={styles.selectedImageContainer}>
-            <Image source={{ uri: image }} style={styles.image} />
-          </View>
-        )}
-      </TouchableOpacity>
-      <View style={styles.countBtn}>
-        <Button icon="plus-box-outline" onPress={() => handleButtonPress("increase")} />
-        <Text style={styles.countText}>{count}</Text>
-        <Text style={styles.speciesText}>{UnknownBirdsdata.BirdName}</Text>
-        <Button icon="minus-box-outline" onPress={() => handleButtonPress("decrease")} />
-      </View>
       <SubmitButton styling={styles.submitBtn} onPress={UnknownBirdsdataSave}>Submit</SubmitButton>
       <Modal animationType="slide" transparent={true} visible={modalVisible}>
         <View style={styles.modalContainer}>
@@ -304,31 +302,34 @@ const UnknownBird = ({ route }) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    marginTop:30,
-    padding:10
   },
   subcontainer:{
-    alignItems:'center'
+    marginTop: height*0.1,
+    padding: width * 0.031,
+    alignItems: 'center',
+    justifyContent: 'center',
+    position: 'relative',
   },
-  iconContainer: {
-    borderBottomWidth: 1,
-    borderBottomColor: "#136D66",
-    width: "80%",
-    justifyContent: "center",
-    alignItems: "center",
+  button: {
+    marginTop: "1%",
+    //marginBottom: 2,
+    alignItems: 'center',
+    justifyContent: 'center',
+    width: width*0.5,
+    height: width*0.5,
+    backgroundColor: '#e1e1e1',
+    borderRadius: 100,
   },
-  icon: {
-    width: 200,
-    height: 200,
-  },
-  selectedImageContainer: {
-    paddingBottom: 30, // Adjust this value to set the desired spacing
+  buttonText: {
+    fontSize: 20,
+    //color: '#000',
   },
   image: {
-    width: 200,
-    height: 200,
-    marginTop: 10, // Adjust this value to set the desired spacing
+    width: width*0.5,
+    height: width*0.5,
+    borderRadius: 100,
   },
+
   modalContainer: {
     flex: 1,
     justifyContent: "flex-end",
@@ -338,10 +339,10 @@ const styles = StyleSheet.create({
     backgroundColor: "white",
     borderTopLeftRadius: 10,
     borderTopRightRadius: 10,
-    padding: 20,
+    padding: width*0.03,
   },
   optionButton: {
-    paddingVertical: 15,
+    paddingVertical: width*0.022,
     borderBottomWidth: 1,
     borderBottomColor: "#CCCCCC",
   },
@@ -349,8 +350,8 @@ const styles = StyleSheet.create({
     fontSize: 16,
   },
   cancelButton: {
-    marginTop: 10,
-    paddingVertical: 15,
+    marginTop: width*0.01,
+    paddingVertical: width *0.022,
     alignItems: "center",
   },
   cancelButtonText: {
@@ -361,36 +362,42 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-between",
     borderWidth: 1,
-    marginTop: 50,
+    marginTop: width*0.08,
+    width: width*0.95,
   },
   countText: {
-    marginTop: 10,
+    marginTop: width *0.01,
+    marginLeft: width *0.001,
     fontWeight: "bold",
   },
   speciesText: {
-    marginTop: 7,
-    marginLeft: 20,
+    marginTop: width*0.01,
+    marginLeft: width *0.001,
     fontSize: 16,
   },
   submitBtn: {
     alignItems: "center",
-    width: 290,
-    marginTop:20
+    width: width*0.95,
+    marginTop:width*0.05
   },
   loading: {
-    marginTop: 400,
+    marginTop: "100%",
     alignItems: "center",
     justifyContent: "center",
   },
   label: {
     fontSize: 16,
-    marginBottom: 8,
+    marginBottom: width *0.01,
+  },
+  locationText: {
+    marginTop: width*0.1,
+    fontSize: 16,
+    fontWeight: 'bold',
   },
   picker: {
-    width: 200,
-    height: 10,
-    marginBottom: 16,
-    backgroundColor: '#FFFFFF',
+    width: "100%",
+    height: width*0.01,
+    marginBottom: width*0.016,
     borderRadius: 4,
   },
 });

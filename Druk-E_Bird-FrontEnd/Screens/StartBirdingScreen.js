@@ -1,18 +1,19 @@
 import { useNavigation } from '@react-navigation/native';
-import { StyleSheet, View, Text } from 'react-native';
+import { StyleSheet, View, Text, Dimensions } from 'react-native';
 import Button from '../Components/Button';
 import TimePicker from '../Components/TimePicker';
 import DatePicker from '../Components/DatePicker';
-import React, { useState, useEffect,useContext} from "react";
+import React, { useState, useEffect, useContext } from "react";
 import RecordTrack from '../Components/RecordTrack';
 import moment from 'moment';
 import { AuthContext } from "../Context/AuthContext";
+
+const { width } = Dimensions.get('window');
 
 function StartbirdingScreen() {
   const navigation = useNavigation();
   const { userInfo } = useContext(AuthContext);
   const name = userInfo.user.name
-
 
   const navigateHandler = (StartbirdingData) => {
     if (isLocationEnabled) {
@@ -29,9 +30,7 @@ function StartbirdingScreen() {
   };
 
   const [selectedDate, setSelectedDate] = useState(new Date());
-
   const [isLocationEnabled, setIsLocationEnabled] = useState(false);
-
   const [currentLocation, setCurrentLocation] = useState(null);
 
   useEffect(() => {
@@ -48,12 +47,13 @@ function StartbirdingScreen() {
     var StartbirdingData = {
       selectedTime: moment(selectedTime).format('HH:mm:ss'),
       selectedDate: moment(selectedDate).format('YYYY-MM-DD'),
-      currentLocation:currentLocation,
-      userName:name
+      currentLocation: currentLocation,
+      userName: name
     };
     navigateHandler(StartbirdingData);
     console.log(StartbirdingData)
   };
+
   return (
     <View style={styles.container}>
       <View style={styles.Tcontainer}>
@@ -78,12 +78,17 @@ function StartbirdingScreen() {
         </View>
       </View>
 
-      <RecordTrack isLocationEnabled={isLocationEnabled} setIsLocationEnabled={setIsLocationEnabled} currentLocation={currentLocation} setCurrentLocation={setCurrentLocation} 
-      style={{marginTop:50}}/>
-      <Button onPress={StartbirdingdataSave} styling={styles.buttonview}>
-        Start CheckList
-      </Button>
+      <RecordTrack
+        isLocationEnabled={isLocationEnabled}
+        setIsLocationEnabled={setIsLocationEnabled}
+        currentLocation={currentLocation}
+        setCurrentLocation={setCurrentLocation}
+        style={styles.recordTrack}
+      />
 
+      <Button onPress={StartbirdingdataSave} styling={styles.buttonview}>
+        Start Checklist
+      </Button>
     </View>
   );
 }
@@ -91,46 +96,50 @@ function StartbirdingScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    padding:15,
-    marginTop:50
+    padding: 0.05 * width,
+    marginTop: 0.07 * width
   },
   Tcontainer: {
     backgroundColor: '#fff',
     borderRadius: 8,
-    padding: 16,
+    padding: 0.03 * width,
     elevation: 5,
     flexDirection: "row",
-    marginLeft: 15,
+    marginLeft: "-3%",
+    marginTop: 0.01 * width,
     alignItems: 'center',
-    paddingLeft:55,
-    height:137, 
-    width:324
+    paddingLeft: 0.13 * width,
+    height: 0.4 * width,
+    width: 0.95 * width,
   },
   Ttext: {
-    fontSize: 16,
+    fontSize: 0.045 * width,
     color: '#333',
   },
   Dcontainer: {
     backgroundColor: '#fff',
     borderRadius: 8,
-    padding: 16,
+    padding: 0.03 * width,
     elevation: 5,
     flexDirection: "row",
-    marginLeft: 15,
-    marginTop: 50,
+    marginLeft: "-3%",
+    marginTop: 0.05 * width,
     alignItems: 'center',
-    paddingLeft:40,
-    height:137, 
-    width:324
+    paddingLeft: 0.13 * width,
+    height: 0.4 * width,
+    width: 0.95 * width
   },
   Dtext: {
-    fontSize: 16,
+    fontSize: 0.045 * width,
     color: '#333',
   },
+  recordTrack: {
+    marginTop: 0.1 * width,
+  },
   buttonview: {
-    width:350,
-    marginLeft:5,
-    marginTop:50
+    width: width * 0.95,
+    marginTop: 0.16 * width,
+    marginLeft: "-3%"
   }
 });
 

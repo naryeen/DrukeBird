@@ -7,6 +7,7 @@ import axios from "axios";
 import { Ionicons } from '@expo/vector-icons';
 import StartBirdingCounter from "../Components/StartBirdingCounter";
 import { AuthContext } from "../Context/AuthContext";
+import HeaderDateTimePicker from "../Components/HeaderDateTimePicker"
 
 const formatTime = (time) => {
   const hours = Math.floor(time / 3600);
@@ -31,7 +32,7 @@ const StartBirdingone = ({ route }) => {
   const { userInfo } = useContext(AuthContext);
   const userId = userInfo.user._id;
   const name = userInfo.user.name
-  const { StartbirdingData } = route.params;
+  const { StartbirdingData, isRecordTrackOn } = route.params;
   const [randomNumber, setRandomNumber] = useState(Math.floor(Math.random() * 1000));
 
   useEffect(() => {

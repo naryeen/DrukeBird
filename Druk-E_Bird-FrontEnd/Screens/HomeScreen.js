@@ -99,7 +99,6 @@ const styles = StyleSheet.create({
   buttonStyle: {
     marginTop: height * 0.08,
     width: width * 0.95,
-    marginLeft: width * 0.02,
   },
 });
 

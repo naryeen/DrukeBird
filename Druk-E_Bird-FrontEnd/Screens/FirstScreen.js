@@ -33,6 +33,9 @@ function FirstScreen() {
     },
     buttonview: {
       marginTop: height * 0.2,
+      width: "100%",
+      alignContent: "center",
+      marginLeft: "4%"
     },
   });
 
@@ -41,7 +44,7 @@ function FirstScreen() {
       <Image style={styles.image} source={require('../assets/Image/Logo.png')} />
 
       <Text style={styles.text1}>
-        Welcome to <Text style={{ color: '#136D66', fontWeight: 'bold' }}>Druk eBird</Text>, your gateway
+        Welcome to <Text style={{ color: '#136D66', fontWeight: 'bold' }}>DrukeBird</Text>, your gateway
       </Text>
       <Text style={styles.text2}>to the fascinating world of birds and</Text>
       <Text style={styles.text2}>birding!</Text>

@@ -173,7 +173,7 @@ function BirdingSites() {
       <TouchableOpacity onPress={() => handleItemClick(dzongkhag)} key={index}>
         <View>
           <View style={{ marginLeft: 30 }}>
-            <Text>{dzongkhag}</Text>
+            <Text style={{fontWeight:'bold'}}>{dzongkhag}</Text>
           </View>
           <View style={{ borderBottomWidth: 0.5, borderBottomColor: 'gray', marginVertical: 10 }} />
         </View>
