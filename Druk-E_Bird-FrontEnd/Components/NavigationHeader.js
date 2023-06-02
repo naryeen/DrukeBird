@@ -16,14 +16,14 @@ const NavigationHeader = ({ title }) => {
   );
 };
 
-const { width, height } = Dimensions.get('window');
+const { width } = Dimensions.get('window');
 const paddingHorizontal = width * 0.05;
-const marginTop = height * 0.05;
+
 const styles = StyleSheet.create({
   headerContainer: {
     flexDirection: "row",
     alignItems: "center",
-    height: height * 0.08,
+    height: 60,
     paddingHorizontal: paddingHorizontal,
     borderRadius: 1,
     elevation: 1,
@@ -32,11 +32,11 @@ const styles = StyleSheet.create({
     shadowRadius: 2,
   },
   title: {
-    // flex: 1,
+    flex: 1,
     color: "#136D66",
     fontWeight: "bold",
     fontSize: 20,
-    paddingHorizontal: width * 0.31,
+    paddingHorizontal: 100,
   },
 });
 

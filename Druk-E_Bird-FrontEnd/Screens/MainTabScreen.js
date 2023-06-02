@@ -1,49 +1,75 @@
-import { FontAwesome5 } from '@expo/vector-icons';
-import { AntDesign } from '@expo/vector-icons';
-import { MaterialIcons } from '@expo/vector-icons';
-import { FontAwesome } from '@expo/vector-icons';
-import { Ionicons } from '@expo/vector-icons';
-import HomeScreen from './HomeScreen';
-import StartBirdingScreen from './StartBirdingScreen';
-import ExploreScreen from './ExploreScreen';
-import CheckListScreen from './CheckListScreen';
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import HomeScreen from "./HomeScreen";
+import StartBirdingScreen from "./StartBirdingScreen";
+import ExploreScreen from "./ExploreScreen";
+import CheckListScreen from "./CheckListScreen";
+import { MaterialCommunityIcons } from "@expo/vector-icons";
+import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 
 const Tab = createBottomTabNavigator();
 const MainTabScreen = () => (
-    <Tab.Navigator
-        initialRouteName='Home'
-        screenOptions={{headerShown:false, 
-        tabBarActiveTintColor:"#FFCED7",
-        tabBarInactiveTintColor:"white",  
-        tabBarStyle: {backgroundColor:"#136D66"}}}>   
-        <Tab.Screen
-            name="Home"
-            component={HomeScreen}
-            options={{tabBarLabel: 'Home',
-            activeColor:'green',
-            tabBarColor:'green',
-            tabBarIcon: () => (<FontAwesome5 name="home" 
-            size={29} color="white" />),}}/>
-        <Tab.Screen
-            name="StartBirding"
-            component={StartBirdingScreen}
-            options={{tabBarLabel: 'StartBirding',tabBarColor: 'red',
-            tabBarIcon: () => (<MaterialIcons name="filter-9-plus" size={29} color="white" />),}}/>
-        <Tab.Screen
-            name="Explore"
-            component={ExploreScreen}
-            options={{tabBarLabel: 'Explore',tabBarColor: '#136d66',
-                tabBarIcon: () => (<AntDesign name="pluscircleo" size={29} color="white" />),}}/>
-        <Tab.Screen
-            name="CheckList"
-            component={CheckListScreen}
-            options={{tabBarLabel: 'CheckList',tabBarColor: '#136d66',
-            tabBarIcon: () => (<FontAwesome name="list-alt" size={29} color="white" />),}}/>
-
-    </Tab.Navigator>
+  <Tab.Navigator
+    initialRouteName="Home"
+    screenOptions={{
+      headerShown: false,
+      tabBarActiveTintColor: "#D3D3D3",
+      tabBarInactiveTintColor: "white",
+      tabBarStyle: { backgroundColor: "#136D66" },
+    }}
+  >
+    <Tab.Screen
+      name="Home"
+      component={HomeScreen}
+      options={{
+        tabBarLabel: "Home",
+        tabBarIcon: ({ color, focused }) => (
+          //   <FontAwesome5 name='home' size={29} color={focused ? color : 'white'} />
+          <MaterialCommunityIcons name="home-outline" size={30} color="white" />
+        ),
+      }}
+    />
+    <Tab.Screen
+      name="StartBirding"
+      component={StartBirdingScreen}
+      options={{
+        tabBarLabel: "Birding",
+        tabBarIcon: ({ color, focused }) => (
+          <MaterialCommunityIcons
+            name="sticker-plus-outline"
+            size={29}
+            color={focused ? color : "white"}
+          />
+        ),
+      }}
+    />
+    <Tab.Screen
+      name="Explore"
+      component={ExploreScreen}
+      options={{
+        tabBarLabel: "Explore",
+        tabBarIcon: ({ color, focused }) => (
+          <MaterialCommunityIcons
+            name="file-eye-outline"
+            size={29}
+            color={focused ? color : "white"}
+          />
+        ),
+      }}
+    />
+    <Tab.Screen
+      name="CheckList"
+      component={CheckListScreen}
+      options={{
+        tabBarLabel: "CheckList",
+        tabBarIcon: ({ color, focused }) => (
+          <MaterialCommunityIcons
+            name="clipboard-text-outline"
+            size={29}
+            color={focused ? color : "white"}
+          />
+        ),
+      }}
+    />
+  </Tab.Navigator>
 );
 
 export default MainTabScreen;
-
-

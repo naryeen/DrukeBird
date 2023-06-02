@@ -48,7 +48,7 @@ const ContactUs = () => {
   };
 
   return (
-    <View>
+    <View style={styles.con}>
       <NavigationHeader title={'Contact Us'} />
       <Text style={styles.messages}>Leave a message</Text>
       <View style={styles.container}>
@@ -88,6 +88,9 @@ const ContactUs = () => {
 };
 
 const styles = StyleSheet.create({
+  con:{
+    flex:1,
+  },
   container: {
     padding: width * 0.03,
     backgroundColor: '#FFFFFF',

@@ -186,7 +186,7 @@ const showDatepicker = () => {
           left={<TextInput.Icon icon="lock" />}
           right={
             <TextInput.Icon
-              name={passwordVisible ? 'eye' : 'eye-slash'}
+              icon={passwordVisible ? 'eye' : 'eye'}
               onPress={togglePasswordVisibility}
             />
           }
@@ -202,7 +202,7 @@ const showDatepicker = () => {
           left={<TextInput.Icon icon="key-variant" />}
           right={
             <TextInput.Icon
-              name={passwordVisible ? 'eye' : 'eye-slash'}
+              icon={passwordVisible ? 'eye' : 'eye'}
               onPress={togglePasswordVisibility}
             />
           }

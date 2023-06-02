@@ -1,5 +1,7 @@
-import { View, Text, StyleSheet } from "react-native";
+import { View, Text, StyleSheet, Dimensions } from "react-native";
 import { Button } from "react-native-paper";
+
+const { width, height } = Dimensions.get('window');
 
 const StartBirdingCounter = ({ Name, data, setData, item, setStartbirding1data}) => {
 
@@ -25,10 +27,10 @@ const StartBirdingCounter = ({ Name, data, setData, item, setStartbirding1data})
   
   return (
     <View style={styles.container}>
-      <Button icon="plus-box-outline" onPress={() => handleButtonPress("increase")}/>
+      <Button style={styles.plus} icon="plus-box-outline" onPress={() => handleButtonPress("increase")}/>
       <Text style={styles.countText}>{item.count}</Text>
       <Text style={styles.speciesText}>{Name}</Text>
-      <Button icon="minus-box-outline" onPress={() => handleButtonPress("decrease")}  />
+      <Button style={styles.plus} icon="minus-box-outline" onPress={() => handleButtonPress("decrease")}  />
     </View>
   );
 };
@@ -38,18 +40,24 @@ const styles = StyleSheet.create({
     flex: 1,
     flexDirection: "row",
     justifyContent: "space-between",
-    borderWidth: 1,
-    marginTop: 10,
+    borderRadius: 1,
+    borderColor: "gray",
+    elevation: 2,
+    height: width*0.13,
+    marginTop: width *0.02,
   },
   countText: {
-    marginTop: 10,
+    marginTop: width *0.032,
     fontWeight: "bold",
   },
   speciesText: {
-    marginTop: 7,
-    marginLeft: 20,
+    marginTop: width *0.032,
+    marginLeft: width *0.02,
     fontSize: 16,
   },
+  plus:{
+    marginTop: width *0.03
+  }
 });
 
 export default StartBirdingCounter;

@@ -29,7 +29,7 @@ const HomeScreen = () => {
           dotStyle={{ height: 10, width: 10, borderRadius: 50 }}
           imageLoadingColor="black"
           autoplay
-          autoplayTimeout={9000}
+          autoplayTimeout={10000}
           loop
           autoplayInterval={9000}
           CircleLoop={true}
@@ -41,7 +41,7 @@ const HomeScreen = () => {
           <Text style={styles.highlight}>Discover, learn & connect</Text>
           <Text style={styles.baseText}>
             with
-            <Text style={styles.innerText}> Druk eBird</Text>
+            <Text style={styles.innerText}> DrukeBird</Text>
           </Text>
           <Text style={styles.innerText1}> The ultimate tool for anyone who</Text>
           <Text style={styles.baseText}> loves birds and nature</Text>

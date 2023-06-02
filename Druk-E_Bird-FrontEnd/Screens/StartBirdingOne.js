@@ -7,7 +7,6 @@ import axios from "axios";
 import { Ionicons } from '@expo/vector-icons';
 import StartBirdingCounter from "../Components/StartBirdingCounter";
 import { AuthContext } from "../Context/AuthContext";
-import HeaderDateTimePicker from "../Components/HeaderDateTimePicker"
 
 const formatTime = (time) => {
   const hours = Math.floor(time / 3600);
@@ -32,21 +31,12 @@ const StartBirdingone = ({ route }) => {
   const { userInfo } = useContext(AuthContext);
   const userId = userInfo.user._id;
   const name = userInfo.user.name
-  const { StartbirdingData, isRecordTrackOn } = route.params;
+  const { StartbirdingData} = route.params;
   const [randomNumber, setRandomNumber] = useState(Math.floor(Math.random() * 1000));
-
-  useEffect(() => {
-    //console.log(seconds);
-  }, [seconds]);
 
   useEffect(() => {
     handleSearch(query);
   }, [data, startbirding1data]);
-
-  useEffect(() => {
-    StartbirdingData;
-    //console.log(StartbirdingData);
-  }, [StartbirdingData]);
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -100,20 +90,20 @@ const StartBirdingone = ({ route }) => {
         setFilteredData(speciesData);
       })
       .catch((error) => {
-        console.log(error);
+        ToastAndroid.show(error, ToastAndroid.LONG);
       })
       .finally(() => setLoading(false));
   }, []);
 
   const handleSearch = (query) => {
-    setSearchQuery(query);
-  
-    const filtered = data.filter((item) =>
-      item.englishName.toLowerCase().includes(query.toLowerCase())
-    );
-  
-    setFilteredData(filtered);
-    setSearchFound(filtered.length > 0);
+    if (query !== searchQuery) {
+      setSearchQuery(query);
+      const filtered = data.filter((item) =>
+        item.englishName.toLowerCase().includes(query.toLowerCase())
+      );
+      setFilteredData(filtered);
+      setSearchFound(filtered.length > 0);
+    }
   };
 
   const handleItemClick = (itemId, birdName, StartbirdingData) => {
@@ -153,7 +143,6 @@ const StartBirdingone = ({ route }) => {
       startbirding1data:startbirding1data
     };
     navigation.navigate('SubmittingBirding', { SubmittedBirdsdata: SubmittedBirdsdata });
-    // console.log(SubmittedBirdsdata);
   };
   const StartbirdingonedataSave = () => {
 
@@ -191,16 +180,14 @@ const StartBirdingone = ({ route }) => {
       axios
         .post("https://druk-ebirds.onrender.com/api/v1/checkList", detailOfBirds)
         .then((response) => {
-          console.log(detailOfBirds);
           // Data successfully posted to the database
           ToastAndroid.show('Data successfully posted', ToastAndroid.LONG);
-          console.log("Data post:", response.data);
         })
         .catch((error) => {
-          console.error("Error post data:", error);
+          ToastAndroid.show(error, ToastAndroid.LONG);
         });
     } catch (error) {
-      console.error("Error:", error);
+      ToastAndroid.show(error, ToastAndroid.LONG);
     }
   };
   return (

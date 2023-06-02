@@ -1,23 +1,34 @@
 import React, { useState, useContext } from "react";
 import { TextInput } from 'react-native-paper';
 import { StyleSheet, View, Text, Image, Dimensions } from 'react-native';
+import { ActivityIndicator, MD2Colors} from "react-native-paper";
 import { useNavigation } from '@react-navigation/native';
 import Button from '../Components/Button';
 import { AuthContext } from "../Context/AuthContext";
 
 const windowDimensions = Dimensions.get('window');
 const marginTopDistance = windowDimensions.height < 380 ? 30 : 50;
+
 const LogIn = () => {
   const navigation = useNavigation();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [loading, setLoading] = useState(false); // Added loading state
   const { login } = useContext(AuthContext);
   const [passwordVisible, setPasswordVisible] = useState(false);
 
   const togglePasswordVisibility = () => {
     setPasswordVisible(!passwordVisible);
   };
-  
+
+  const handleLogin = async () => {
+    setLoading(true); // Start the loading animation
+
+    // Perform login operation
+    await login(email, password);
+
+    setLoading(false); // Stop the loading animation
+  };
 
   return (
     <View style={styles.container}>
@@ -40,7 +51,7 @@ const LogIn = () => {
         left={<TextInput.Icon icon="lock" />}
         right={
           <TextInput.Icon
-            name="eye"
+            icon="eye"
             onPress={togglePasswordVisibility}
           />
         }
@@ -51,14 +62,22 @@ const LogIn = () => {
       <Text style={styles.forgetpasswordtext} onPress={() => navigation.replace('ForgetPassword')}>
         Forgot Password?
       </Text>
-      <Button styling={styles.buttonstyle} onPress={() => { login(email, password) }}>Login</Button>
+      <Button styling={styles.buttonstyle} onPress={handleLogin}>Login</Button>
       <Text style={styles.createtext}>
         Don't have an account?
-        <Text style={styles.createaccountText} onPress={() => navigation.replace('Verifying')}>  Resigter</Text>
+        <Text style={styles.createaccountText} onPress={() => navigation.replace('Verifying')}>  Register</Text>
       </Text>
+
+      {/* Loading animation */}
+      {loading && (
+        <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+        <ActivityIndicator animating={true} color={MD2Colors.green800} size="large" />
+      </View>
+      )}
     </View>
   );
 };
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -102,7 +121,7 @@ const styles = StyleSheet.create({
   backimage: {
     backgroundColor: 'transparent',
     opacity: 0.2,
-  },
+  }
 });
 
 export default LogIn;

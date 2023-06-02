@@ -18,12 +18,12 @@ const UnknownHeader = ({ title}) => {
 
 const { width, height } = Dimensions.get('window');
 const paddingHorizontal = width * 0.05;
-const marginTop = height * 0.05;
+
 const styles = StyleSheet.create({
   headerContainer: {
     flexDirection: "row",
     alignItems: "center",
-    height: height * 0.08,
+    height: 60,
     paddingHorizontal: paddingHorizontal,
     borderRadius: 1,
     elevation: 1,
