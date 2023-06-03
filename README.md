@@ -6,9 +6,9 @@
 - [About the Project](#About the Project - DrukeBird)
 - [About the App](#About the app)
 - [The Project Team](#Project Team Members)
+- [Links](#Click the links below)
 
 ## About FYP
-
 The aim of this module is to allow students to apply their knowledge and practical skills culminated throughout their studies in the course. Students will demonstrate the knowledge, technical skillsets and critical thinking that they have learned to develop, depending on their specialisation, Full-Slack, Blockchain or AI solution for authentic industry problem. This will include the full development cycle start from requirement analysis, to conceptualisation, to system design, to prototyping, to testing and finally to 'live' deployment.
 
 ## About the Project - DrukeBird
@@ -76,12 +76,12 @@ Project Guide - Mrs. Jigme Wangmo
 
 Member 1 - Mrs. Cheki Lhamo (12190043)
 <br>
-<img src="Images/cheki.JPG" width="200" height="300" />
+<img src="Images/cheki.JPG" width="200" height="250" />
 <br>
 
 Member 2 - Mrs. Dema Lhamo (12190047)
 <br>
-<img src="Images/dema.jpeg" width="200" height="300" />
+<img src="Images/dema.jpeg" width="200" height="250" />
 <br>
 
 Member 3 - Mr. Karma Choda (12190055)
@@ -113,6 +113,10 @@ Click Here to watch promotional Video:
 <br>
 <br>
 Click Here for Poster:
+(https://youtu.be/CDIeRgd_5)
+<br>
+<br>
+Click Here to view prototype:
 (https://youtu.be/CDIeRgd_5)
 <br>
 <br>
