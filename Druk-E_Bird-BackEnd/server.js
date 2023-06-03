@@ -8,7 +8,7 @@ const cors = require("cors");
 
 app.use(
   cors({
-    origin: ["https://druk-ebird.onrender.com", "http://localhost:8080"],
+    origin: ["https://druk-ebird.onrender.com", "http://localhost:3000", "https://druk-ebird.vercel.app"],
     methods: "GET, POST, DELETE, PATCH",
     credentials: true,
   })
@@ -73,6 +73,8 @@ changeStream.on("change", async (change) => {
     console.error(error);
   }
 });
+
+
 
 
 const port = 4001;
