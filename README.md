@@ -25,4 +25,67 @@ Even though the country is rich in bird diversity, there is a need for a proper 
 Druk eBird aims to address the lack of comprehensive and up-to-date information on the bird species, abundance and distribution in and around Bhutan. The researchers are finding it difficult to fetch accurate data on populations, abundance, location and distribution of the birds. It will provide a centralized platform on bird sighting and observation for collecting and sharing bird observation data in a standardized format, making it easier to compare and analyze data from different sources. 
 
 ## About the app
+The DrukEBird app is a mobile application developed using React Native, MongoDB, Express.js, and Node.js. It is designed to cater to birding enthusiasts and encourage Bhutanese people to engage in birding activities.
 
+### Features
+Login and Registration: Users can create an account or log in to access the app's features and personalized functionality. Registration requires providing basic information such as name, email, password, country, Profession and Date of Birth.
+
+Start Birding: Users can initiate their birding sessions through this feature. It provides options to record the date, time, and location of the birding activity. Users can also add notes or observations and add photos during their birding session.
+
+Your Birding Details: This feature allows users to view and manage their recorded birding sessions. They can access a log of their past birding activities, including the date, time, location, and any notes added during the session.
+
+Search Features: Users can search for specific bird species or explore birding sites using search functionality. The app provides filters and sorting options to make the search process more convenient and efficient.
+
+Logout: Users can securely log out of their accounts to ensure the privacy and security of their data.
+
+Profile Updates: Users have the ability to update their profile information, including name, email address, profile picture, and other relevant details.
+
+Forgot Password: In case users forget their password, the app provides a password recovery feature. Users can initiate the password reset process by providing their registered email address.
+
+### Installation
+To install the DrukEBird app, follow the steps below:
+
+Ensure that you have the latest version of Node.js and npm installed on your machine.
+
+Clone the GitHub repository for the DrukEBird app by running the following command in your terminal:
+
+git clone [repository-url]
+
+Navigate to the project directory:
+cd DrukEBird
+
+Install the necessary dependencies by running the following command:
+npm install
+
+Launch the app on an Android or iOS device using the appropriate commands:
+
+For Android:
+npx react-native run-android
+
+For iOS:
+npx react-native run-ios
+
+Ensure that you have the necessary Android or iOS development environment set up beforehand.
+
+## Project Team Members
+
+Project Guide - Mr. Ji Piengxang
+<br>
+<img src="Images/sir.png" width="200" height="200" />
+<br>
+Project Leader - Mrs. Cheki Lhamo (12190043)
+<br>
+<img src="Images/cheki.png" width="200" height="200" />
+<br>
+Programmer - Mr. Kezang Dorji (12190059)
+<br>
+<img src="Images/kezang.png" width="200" height="200" />
+<br>
+UI/UX Designer - Mrs. Thinley Wangmo (12190089)
+<br>
+<img src="Images/tley.png" width="200" height="200" />
+<br>
+Lead Programmer - Mr. Tshering Wangchuk (12190099)
+<br>
+<img src="Images/tshering.png" width="200" height="200" />
+<br>
