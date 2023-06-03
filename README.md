@@ -67,8 +67,8 @@ npx react-native run-ios
 
 Ensure that you have the necessary Android or iOS development environment set up beforehand.
 
-## Project Team Members
 
+## Project Team Members
 Project Guide - Mrs. Jigme Wangmo
 <br>
 <img src="Images/team_jigme_wangmo.jpg" width="200" height="200" />
