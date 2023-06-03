@@ -9,7 +9,7 @@ const cors = require("cors");
 app.use(
   cors({
     origin:  "https://druk-ebird.vercel.app",
-    methods: "GET, POST, DELETE, PATCH",
+    // methods: "GET, POST, DELETE, PATCH",
     // credentials: true,
   })
 );
