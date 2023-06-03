@@ -69,23 +69,27 @@ Ensure that you have the necessary Android or iOS development environment set up
 
 ## Project Team Members
 
-Project Guide - Mr. Ji Piengxang
+Project Guide - Mrs. Jigme Wangmo
 <br>
-<img src="Images/sir.png" width="200" height="200" />
+<img src="Images/team_jigme_wangmo.jpg" width="200" height="200" />
 <br>
-Project Leader - Mrs. Cheki Lhamo (12190043)
+Member 1 - Mrs. Cheki Lhamo (12190043)
 <br>
-<img src="Images/cheki.png" width="200" height="200" />
+<img src="Images/cheki.jpg" width="200" height="200" />
 <br>
-Programmer - Mr. Kezang Dorji (12190059)
+Member 2 - Mrs. Dema Lhamo (12190047)
 <br>
-<img src="Images/kezang.png" width="200" height="200" />
+<img src="Images/dema.jpeg" width="200" height="200" />
 <br>
-UI/UX Designer - Mrs. Thinley Wangmo (12190089)
+Member 3 - Mr. Karma Choda (12190055)
 <br>
-<img src="Images/tley.png" width="200" height="200" />
+<img src="Images/kc.jpg" width="200" height="200" />
 <br>
-Lead Programmer - Mr. Tshering Wangchuk (12190099)
+Member 4 - Mr. Nar Bdr Kharka (12190067)
 <br>
-<img src="Images/tshering.png" width="200" height="200" />
+<img src="Images/nar.jpg" width="200" height="200" />
+<br>
+Member 4 - Mr. Tshering Wangchuk (12190099)
+<br>
+<img src="Images/humble.jpg" width="200" height="200" />
 <br>
