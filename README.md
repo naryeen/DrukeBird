@@ -2,11 +2,10 @@
 
 ## Table of Contents
 
-- [Features](#features)
-- [Installation](#installation)
-- [Usage](#usage)
-- [Contributing](#contributing)
-- [License](#license)
+- [About FYP](#About FYP)
+- [About the Project](#About the Project - DrukeBird)
+- [About the App](#About the app)
+- [The Project Team](#Project Team Members)
 
 ## About FYP
 
@@ -25,5 +24,5 @@ Even though the country is rich in bird diversity, there is a need for a proper 
 
 Druk eBird aims to address the lack of comprehensive and up-to-date information on the bird species, abundance and distribution in and around Bhutan. The researchers are finding it difficult to fetch accurate data on populations, abundance, location and distribution of the birds. It will provide a centralized platform on bird sighting and observation for collecting and sharing bird observation data in a standardized format, making it easier to compare and analyze data from different sources. 
 
-##About the app
+## About the app
 
