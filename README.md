@@ -1,6 +1,12 @@
 # Final Year Project
 
+## Table of Contents
 
+- [Features](#features)
+- [Installation](#installation)
+- [Usage](#usage)
+- [Contributing](#contributing)
+- [License](#license)
 
 ## About FYP
 
@@ -18,3 +24,6 @@ Bhutan today boasts of harboring 5,369 plant species and 5,114 species of animal
 Even though the country is rich in bird diversity, there is a need for a proper platform to store and share more accurate and up-to-date information on bird populations and distributions because the birdwatchers currently record their sightings in personal notebooks, making it difficult for researchers to access and analyze this valuable data.
 
 Druk eBird aims to address the lack of comprehensive and up-to-date information on the bird species, abundance and distribution in and around Bhutan. The researchers are finding it difficult to fetch accurate data on populations, abundance, location and distribution of the birds. It will provide a centralized platform on bird sighting and observation for collecting and sharing bird observation data in a standardized format, making it easier to compare and analyze data from different sources. 
+
+##About the app
+
