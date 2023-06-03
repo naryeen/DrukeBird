@@ -78,18 +78,22 @@ Member 1 - Mrs. Cheki Lhamo (12190043)
 <br>
 <img src="Images/cheki.JPG" width="200" height="200" />
 <br>
+
 Member 2 - Mrs. Dema Lhamo (12190047)
 <br>
 <img src="Images/dema.jpeg" width="200" height="200" />
 <br>
+
 Member 3 - Mr. Karma Choda (12190055)
 <br>
 <img src="Images/kc.JPG" width="200" height="200" />
 <br>
+
 Member 4 - Mr. Nar Bdr Kharka (12190067)
 <br>
 <img src="Images/nar.JPG" width="200" height="200" />
 <br>
+
 Member 4 - Mr. Tshering Wangchuk (12190099)
 <br>
 <img src="Images/humble.JPG" width="200" height="200" />
