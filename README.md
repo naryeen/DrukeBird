@@ -98,3 +98,21 @@ Member 4 - Mr. Tshering Wangchuk (12190099)
 <br>
 <img src="Images/humble.JPG" width="200" height="200" />
 <br>
+
+## Click the links given below:
+To Front-End folder :
+(https://gitlab.com/)
+<br>
+<br>
+To view Backend Folder:
+(https://gitlab.com)
+<br>
+<br>
+Click Here to watch promotional Video:
+(https://youtu.be/CDIeRgd_c)
+<br>
+<br>
+Click Here for Poster:
+(https://youtu.be/CDIeRgd_5)
+<br>
+<br>
