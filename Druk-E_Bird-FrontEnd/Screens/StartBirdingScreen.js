@@ -51,7 +51,6 @@ function StartbirdingScreen() {
       userName: name
     };
     navigateHandler(StartbirdingData);
-    console.log(StartbirdingData)
   };
 
   return (

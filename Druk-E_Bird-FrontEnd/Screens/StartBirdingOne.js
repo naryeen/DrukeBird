@@ -33,6 +33,7 @@ const StartBirdingone = ({ route }) => {
   const name = userInfo.user.name
   const { StartbirdingData} = route.params;
   const [randomNumber, setRandomNumber] = useState(Math.floor(Math.random() * 1000));
+  const [Isloading, setIsLoading] = useState(false);
 
   useEffect(() => {
     handleSearch(query);
@@ -174,7 +175,7 @@ const StartBirdingone = ({ route }) => {
       Alert.alert("No Data Submitted", "Please select at least one bird count before stopping.", [{ text: "OK" }]);
       return;
     }
-    
+    setIsLoading(true);
     try {
       // Make an HTTP POST request to your backend API endpoint
       axios
@@ -185,7 +186,8 @@ const StartBirdingone = ({ route }) => {
         })
         .catch((error) => {
           ToastAndroid.show(error, ToastAndroid.LONG);
-        });
+        })
+        .finally(() => {setIsLoading(false);});
     } catch (error) {
       ToastAndroid.show(error, ToastAndroid.LONG);
     }
@@ -235,6 +237,11 @@ const StartBirdingone = ({ route }) => {
           <Button styling={styles.submitbutton} onPress={SubmittedBirdsdataSave}>Submit</Button>
           <Button styling={styles.stopbutton} onPress={StartbirdingonedataSave}>Stop</Button>
         </View>
+        {Isloading && (
+          <View style={styles.loadingContainer}>
+           <ActivityIndicator animating={true} color={MD2Colors.green800} size="large" />
+        </View>
+      )}
       </SafeAreaView>
     </View>
   );
@@ -285,7 +292,17 @@ const styles = StyleSheet.create({
     textAlign:'center',
     fontWeight:'bold',
     marginTop:30
-  }
+  },
+  loadingContainer: {
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: 'rgba(0, 0, 0, 0.5)',
+  },
 });
 
 export default StartBirdingone;

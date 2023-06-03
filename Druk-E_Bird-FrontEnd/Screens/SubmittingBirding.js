@@ -1,6 +1,7 @@
 import React, { useState, useContext } from 'react';
-import { View, StyleSheet, Text, ToastAndroid,Alert } from 'react-native';
+import { View, StyleSheet, Text, ToastAndroid, Alert } from 'react-native';
 import { Picker } from '@react-native-picker/picker';
+import { ActivityIndicator,MD2Colors} from 'react-native-paper';
 import Button from '../Components/Button';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import axios from 'axios';
@@ -18,6 +19,7 @@ const SubmittingBirding = ({ route }) => {
   const [gewogOptions, setGewogOptions] = useState([]);
   const [villageOptions, setVillageOptions] = useState([]);
   const [randomNumber, setRandomNumber] = useState(Math.floor(Math.random() * 1000));
+  const [loading, setLoading] = useState(false);
 
   const handleDzongkhagChange = (value) => {
     setSelectedDzongkhag(value);
@@ -39,20 +41,16 @@ const SubmittingBirding = ({ route }) => {
     setVillageOptions(villageOptions);
   };
 
-  // Filter the birds with count greater than 0
   const birdsWithCount = SubmittedBirdsdata.startbirding1data.filter((bird) => bird.count > 0);
 
   const StartbirdingonedataSave = () => {
     if (!selectedDzongkhag) {
       ToastAndroid.show('Please select Dzongkha', ToastAndroid.LONG);
       return;
-    }
-    else if(!selectedGewog)
-    {
+    } else if (!selectedGewog) {
       ToastAndroid.show('Please select Gewong', ToastAndroid.LONG);
       return;
-    }
-    else if(!selectedVillage){
+    } else if (!selectedVillage) {
       ToastAndroid.show('Please select Village', ToastAndroid.LONG);
       return;
     }
@@ -74,51 +72,46 @@ const SubmittingBirding = ({ route }) => {
             selectedTime: SubmittedBirdsdata.StartbirdingData.selectedTime,
             observer: SubmittedBirdsdata.StartbirdingData.userName,
             EndpointLocation: [endpointLocation],
-            "status":"submittedchecklist"
+            status: 'submittedchecklist',
           },
         ];
-        
+
         const StartbirdingoneData = {
           StartbirdingData: temp,
           BirdName: bird.englishname,
           CheckListName: `${name}-${randomNumber}`,
-          "userId":userId
+          userId: userId,
         };
         detailOfBirds.push(StartbirdingoneData);
         dataSubmitted = true;
       }
     });
     if (!dataSubmitted) {
-      // Show the message that no data is submitted
-      Alert.alert("No Data Submitted", "Please select at least one bird count before submitting", [{ text: "OK" }]);
+      Alert.alert('No Data Submitted', 'Please select at least one bird count before submitting', [{ text: 'OK' }]);
       return;
     }
 
+    setLoading(true);
     try {
       console.log('detailOfBirds', detailOfBirds);
       axios
         .post('https://druk-ebirds.onrender.com/api/v1/checkList', detailOfBirds)
         .then((response) => {
-          // Data successfully posted to the database
           ToastAndroid.show('Data successfully posted', ToastAndroid.LONG);
-          console.log('Data post:', response.data);
         })
         .catch((error) => {
-          console.error('Error post data:', error);
-        });
+          ToastAndroid.show(error, ToastAndroid.LONG);
+        })
+        .finally(() => {setLoading(false);});
     } catch (error) {
-      console.error('Error:', error);
+      ToastAndroid.show(error, ToastAndroid.LONG);
     }
   };
 
   return (
     <View style={styles.container}>
       <Text style={styles.label}>Select Dzongkhag:</Text>
-      <Picker
-        selectedValue={selectedDzongkhag}
-        onValueChange={handleDzongkhagChange}
-        style={styles.picker}
-      >
+      <Picker selectedValue={selectedDzongkhag} onValueChange={handleDzongkhagChange} style={styles.picker}>
         <Picker.Item label="Select Dzongkhag" value="" />
         {Object.keys(BhutanDzongkhags).map((dzongkhag) => (
           <Picker.Item key={dzongkhag} label={dzongkhag} value={dzongkhag} />
@@ -166,6 +159,11 @@ const SubmittingBirding = ({ route }) => {
       <Button styling={styles.buttonstyle} onPress={StartbirdingonedataSave}>
         Continue
       </Button>
+      {loading && (
+        <View style={styles.loadingContainer}>
+           <ActivityIndicator animating={true} color={MD2Colors.green800} size="large" />
+        </View>
+      )}
     </View>
   );
 };
@@ -197,8 +195,16 @@ const styles = StyleSheet.create({
     backgroundColor: '#FFFFFF',
     borderRadius: 4,
   },
+  loadingContainer: {
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: 'rgba(0, 0, 0, 0.5)',
+  }
 });
 
 export default SubmittingBirding;
-
-

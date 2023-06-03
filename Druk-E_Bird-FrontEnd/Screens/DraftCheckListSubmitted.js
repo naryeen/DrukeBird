@@ -3,6 +3,7 @@ import { View, StyleSheet, Text, ToastAndroid,Alert } from 'react-native';
 import { Picker } from '@react-native-picker/picker';
 import Button from '../Components/Button';
 import Icon from 'react-native-vector-icons/FontAwesome';
+import { ActivityIndicator,MD2Colors} from 'react-native-paper';
 import BhutanDzongkhags from '../Components/BhutanDzongkha';
 import axios from 'axios';
 import { AuthContext } from '../Context/AuthContext';
@@ -18,6 +19,7 @@ const DraftCheckListSubmitted = ({ route }) => {
   const [gewogOptions, setGewogOptions] = useState([]);
   const [villageOptions, setVillageOptions] = useState([]);
   const [randomNumber, setRandomNumber] = useState(Math.floor(Math.random() * 1000));
+  const [loading, setLoading] = useState(false);
 
   const handleDzongkhagChange = (value) => {
     setSelectedDzongkhag(value);
@@ -85,7 +87,7 @@ const DraftCheckListSubmitted = ({ route }) => {
       Alert.alert("No Data Submitted", "Please select at least one bird count before submitting", [{ text: "OK" }]);
       return;
     }
-
+    setLoading(true);
     try {
       console.log('detailOfBirds', detailOfBirds);
       axios
@@ -97,7 +99,8 @@ const DraftCheckListSubmitted = ({ route }) => {
         })
         .catch((error) => {
           console.error('Error post data:', error);
-        });
+        })
+        .finally(() => {setLoading(false);});
     } catch (error) {
       console.error('Error:', error);
     }
@@ -157,6 +160,11 @@ const DraftCheckListSubmitted = ({ route }) => {
   </Text>
 ))}
     <Button styling={styles.buttonstyle} onPress={StartbirdingonedataSave}>Continue</Button>
+    {loading && (
+        <View style={styles.loadingContainer}>
+           <ActivityIndicator animating={true} color={MD2Colors.green800} size="large" />
+        </View>
+      )}
     </View>
   );
 };
@@ -188,6 +196,16 @@ const styles = StyleSheet.create({
     backgroundColor: '#FFFFFF',
     borderRadius: 4,
   },
+  loadingContainer: {
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: 'rgba(0, 0, 0, 0.5)',
+  }
 });
 
 export default DraftCheckListSubmitted;

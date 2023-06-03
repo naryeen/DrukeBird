@@ -55,8 +55,8 @@ const UnknownVerification = () => {
 
   if (loading) {
     return (
-      <View>
-        <ActivityIndicator style={{ marginTop: 250 }} animating={true} color={MD2Colors.green800} size="large" />
+      <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+        <ActivityIndicator animating={true} color={MD2Colors.green800} size="large" />
       </View>
     );
   }

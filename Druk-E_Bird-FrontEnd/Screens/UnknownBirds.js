@@ -26,6 +26,7 @@ const UnknownBird = ({ route }) => {
   const [selectedVillage, setSelectedVillage] = useState('');
   const [gewogOptions, setGewogOptions] = useState([]);
   const [villageOptions, setVillageOptions] = useState([]);
+  const [loading, setLoading] = useState(false);
   const userId = userInfo.user._id;
 
 
@@ -93,8 +94,6 @@ const UnknownBird = ({ route }) => {
         name: `profile.${capturedImage.uri.split(".")[1]}`,
       };
       handleUpload(newFile);
-      console.log(newFile);
-
     } else {
       alert("You did not select any image.");
     }
@@ -125,8 +124,6 @@ const UnknownBird = ({ route }) => {
       </View>
     );
   }
-
-
   const handleButtonPress = (operation) => {
     if (operation === "increase") {
       setCount(count + 1); // Increase count by 1
@@ -182,8 +179,10 @@ const UnknownBird = ({ route }) => {
           "CheckListName":`${name}-${randomNumber}`,
           "userId":userId
         };
-        detailOfBirds.push(StartbirdingoneData)    
-    try {
+        detailOfBirds.push(StartbirdingoneData)   
+
+      setLoading(true);
+      try {
       // Make an HTTP POST request to your backend API endpoint
       axios
         .post("https://druk-ebirds.onrender.com/api/v1/checkList", detailOfBirds)
@@ -194,7 +193,8 @@ const UnknownBird = ({ route }) => {
         })
         .catch((error) => {
           console.error("Error post data:", error);
-        });
+        })
+        .finally(() => {setLoading(false);});
     } catch (error) {
       console.error("Error:", error);
     }
@@ -258,6 +258,11 @@ const UnknownBird = ({ route }) => {
         ))}
       </Picker>
       <SubmitButton styling={styles.submitBtn} onPress={UnknownBirdsdataSave}>Submit</SubmitButton>
+      {loading && (
+        <View style={styles.loadingContainer}>
+           <ActivityIndicator animating={true} color={MD2Colors.green800} size="large" />
+        </View>
+      )}
       <Modal animationType="slide" transparent={true} visible={modalVisible}>
         <View style={styles.modalContainer}>
           <View style={styles.modalContent}>
@@ -271,16 +276,12 @@ const UnknownBird = ({ route }) => {
             </TouchableOpacity>
             <TouchableOpacity
               style={styles.optionButton}
-              onPress={takePictureFromCamera}
-            >
-              <Text style={styles.optionButtonText}>
-                Take picture from camera
-              </Text>
+              onPress={takePictureFromCamera}>
+            <Text style={styles.optionButtonText}>Take picture from camera</Text>
             </TouchableOpacity>
             <TouchableOpacity
               style={styles.cancelButton}
-              onPress={() => setModalVisible(false)}
-            >
+              onPress={() => setModalVisible(false)}>
               <Text style={styles.cancelButtonText}>Cancel</Text>
             </TouchableOpacity>
           </View>
@@ -391,6 +392,16 @@ const styles = StyleSheet.create({
     marginBottom: width*0.016,
     borderRadius: 4,
   },
+  loadingContainer: {
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: 'rgba(0, 0, 0, 0.5)',
+  }
 });
 
 export default UnknownBird;

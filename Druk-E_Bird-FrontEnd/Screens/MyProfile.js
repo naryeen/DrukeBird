@@ -10,7 +10,6 @@ import { ActivityIndicator, MD2Colors } from "react-native-paper";
 const getCheckList = "https://druk-ebirds.onrender.com/api/v1/checkList";
 
 const MyProfile = () => {
-  const { logout } = useContext(AuthContext);
   const { userInfo } = useContext(AuthContext);
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
