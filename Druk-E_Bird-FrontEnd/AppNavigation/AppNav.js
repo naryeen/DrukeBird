@@ -2,6 +2,7 @@ import React, { useContext } from "react";
 import { View, ActivityIndicator } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
 import { AuthContext } from "../Context/AuthContext";
+import { RootSiblingParent } from 'react-native-root-siblings';
 import AppStack from "./AppStack";
 import AuthStack from "./AuthStack";
 
@@ -16,7 +17,9 @@ const AppNav = () => {
   }
   return (
     <NavigationContainer>
+       <RootSiblingParent>
       {userToken !== null ? <AppStack /> : <AuthStack />}
+      </RootSiblingParent>
     </NavigationContainer>
   );
   

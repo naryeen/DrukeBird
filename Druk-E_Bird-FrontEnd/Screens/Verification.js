@@ -1,7 +1,8 @@
 import React, { useState } from "react";
-import { TextInput, Modal } from 'react-native-paper';
-import { StyleSheet, View, Text, ScrollView, Dimensions, ToastAndroid } from 'react-native';
+import { ActivityIndicator, MD2Colors,TextInput, Modal} from "react-native-paper";
+import { StyleSheet, View, Text, Dimensions} from 'react-native';
 import { useNavigation } from '@react-navigation/native';
+import Toast from 'react-native-root-toast';
 import Button from "../Components/Button";
 import axios from "axios";
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scrollview';
@@ -16,29 +17,34 @@ const Verifying = () => {
   const [email, setEmail] = useState("");
   const [showOTP, setShowOTP] = useState(false); // New state for OTP modal visibility
   const [OTPValue, setOTPValue] = useState(""); // New state for OTP value
-
+  const [Isloading, setIsLoading] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   const Verify = () => {
     if (name.trim() === "") {
-      ToastAndroid.show('Please enter your name', ToastAndroid.SHORT);
+      Toast.show("Please enter your name", {
+        duration: Toast.durations.SHORT,
+      });
       return;
     }
-
     else if (email.trim() === "") {
-      ToastAndroid.show('Please enter your email', ToastAndroid.SHORT);
+      Toast.show("Please enter your email", {
+        duration: Toast.durations.SHORT,
+      });
       return;
     }
-
     let verifydata = {
       name: name,
       email: email,
     };
-
+    setIsLoading(true);
     axios
       .post('https://druk-ebirds.onrender.com/api/v1/users/verification', verifydata)
       .then(res => {
         if (res.data.status === "success") {
-          ToastAndroid.show('Please check your mail', ToastAndroid.LONG);
+          Toast.show("Please check your mail", {
+            duration: Toast.durations.SHORT,
+          });
           setShowOTP(true); // Show OTP modal
         }
       })
@@ -48,30 +54,31 @@ const Verifying = () => {
           typeof err.response !== 'undefined'
             ? err.response.data.message
             : err.message;
-
-        ToastAndroid.show(message, ToastAndroid.SHORT);
-      });
+        Toast.show(message, {duration: Toast.durations.SHORT,});
+      })
+      .finally(() => setIsLoading(false));
   };
 
   const verifyOTP = () => {
     if (OTPValue.trim() === "") {
-      ToastAndroid.show('Please enter your OTP', ToastAndroid.SHORT);
+      Toast.show("Please enter your OTP", {duration: Toast.durations.SHORT});
       return;
     }
 
     let verifyOTPdata = {
       otp: OTPValue
     };
+    setLoading(true);
     axios
       .post('https://druk-ebirds.onrender.com/api/v1/users/OTP', verifyOTPdata)
       .then(res => {
         if (res.data.status === "success") {
-          ToastAndroid.show('OTP matched', ToastAndroid.LONG);
+          Toast.show("OTP matched", {duration: Toast.durations.SHORT});
           setShowOTP(false); // Hide OTP modal
           navigation.navigate('SignUp');
         }
         else {
-          ToastAndroid.show('OTP does not matched', ToastAndroid.LONG);
+          Toast.show("OTP does not matched", {duration: Toast.durations.SHORT});
         }
       })
       .catch(err => {
@@ -80,12 +87,12 @@ const Verifying = () => {
           typeof err.response !== 'undefined'
             ? err.response.data.message
             : err.message;
-
-        ToastAndroid.show(message, ToastAndroid.SHORT);
-      });
+          Toast.show(message, {duration: Toast.durations.SHORT});
+      })
+      .finally(() => setLoading(false));
   };
+
   return (
-    // <KeyboardAwareScrollView>
     <View style={styles.con}>
       <View style={styles.container}>
         <Text style={styles.text1}>Verify Email</Text>
@@ -111,7 +118,11 @@ const Verifying = () => {
         <Button styling={styles.buttonstyle} onPress={Verify}>
           Submit
         </Button>
-
+        {Isloading && (
+          <View style={styles.loadingContainer}>
+           <ActivityIndicator animating={true} color={MD2Colors.green800} size="large" />
+        </View>
+      )}
         <Text style={styles.createtext}>
           Already have an account?
           <Text style={styles.loginText} onPress={() => navigation.replace('Login')}>  Login</Text>
@@ -134,6 +145,11 @@ const Verifying = () => {
               <Button styling={styles.buttonstyle1} onPress={verifyOTP}>
                 Submit
               </Button>
+              {loading && (
+          <View style={styles.loadingContainer}>
+           <ActivityIndicator animating={true} color={MD2Colors.green800} size="large" />
+        </View>
+      )}
             </View>
           </KeyboardAwareScrollView>
         </Modal>
@@ -141,13 +157,13 @@ const Verifying = () => {
     </View>
   )
 };
+
 const styles = StyleSheet.create({
   con: {
-    flex:1,
+    flex: 1,
+    justifyContent: 'center', // vertically center the content
   },
   container: {
-    height:"100%",
-    marginTop:"50%",
     padding: 10,
   },
   container1: {
@@ -156,8 +172,6 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     marginLeft: 18,
     width: "90%",
-    // height: "100%",
-
   },
   text1: {
     marginTop: marginTopDistance,
@@ -201,5 +215,16 @@ const styles = StyleSheet.create({
     marginLeft: 45,
     width: "70%",
   },
+  loadingContainer: {
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: 'rgba(0, 0, 0, 0.5)',
+  }
 });
+
 export default Verifying;

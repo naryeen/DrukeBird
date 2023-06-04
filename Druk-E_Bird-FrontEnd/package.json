@@ -25,7 +25,6 @@
     "expo-location": "^15.1.1",
     "expo-mail-composer": "~12.1.1",
     "expo-status-bar": "~1.4.4",
-    "lodash": "^4.17.21",
     "moment": "^2.29.4",
     "react": "18.2.0",
     "react-native": "0.71.7",
@@ -36,9 +35,9 @@
     "react-native-paper": "^5.7.0",
     "react-native-permissions": "^3.8.0",
     "react-native-reanimated": "~2.14.4",
+    "react-native-root-toast": "^3.4.1",
     "react-native-simple-radio-button": "^2.7.4",
-    "react-native-svg": "13.4.0",
-    "react-native-toast-message": "^2.1.6"
+    "react-native-svg": "13.4.0"
   },
   "devDependencies": {
     "@babel/core": "^7.20.0",

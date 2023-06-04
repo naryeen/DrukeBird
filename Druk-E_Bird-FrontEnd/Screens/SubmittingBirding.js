@@ -1,10 +1,11 @@
 import React, { useState, useContext } from 'react';
-import { View, StyleSheet, Text, ToastAndroid, Alert } from 'react-native';
+import { View, StyleSheet, Text, Alert } from 'react-native';
 import { Picker } from '@react-native-picker/picker';
 import { ActivityIndicator,MD2Colors} from 'react-native-paper';
 import Button from '../Components/Button';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import axios from 'axios';
+import Toast from 'react-native-root-toast';
 import { AuthContext } from '../Context/AuthContext';
 import BhutanDzongkhags from '../Components/BhutanDzongkha';
 
@@ -45,13 +46,14 @@ const SubmittingBirding = ({ route }) => {
 
   const StartbirdingonedataSave = () => {
     if (!selectedDzongkhag) {
-      ToastAndroid.show('Please select Dzongkha', ToastAndroid.LONG);
+      Toast.show("Please select Dzongkha", {duration: Toast.durations.SHORT});
       return;
     } else if (!selectedGewog) {
-      ToastAndroid.show('Please select Gewong', ToastAndroid.LONG);
+      Toast.show("Please select Gewong", {duration: Toast.durations.SHORT});
+
       return;
     } else if (!selectedVillage) {
-      ToastAndroid.show('Please select Village', ToastAndroid.LONG);
+      Toast.show("Please select Village", {duration: Toast.durations.SHORT});
       return;
     }
 
@@ -97,14 +99,14 @@ const SubmittingBirding = ({ route }) => {
       axios
         .post('https://druk-ebirds.onrender.com/api/v1/checkList', detailOfBirds)
         .then((response) => {
-          ToastAndroid.show('Data successfully posted', ToastAndroid.LONG);
+            Toast.show("Data successfully posted", {duration: Toast.durations.SHORT});
         })
         .catch((error) => {
-          ToastAndroid.show(error, ToastAndroid.LONG);
+          Toast.show(error, {duration: Toast.durations.SHORT});
         })
         .finally(() => {setLoading(false);});
     } catch (error) {
-      ToastAndroid.show(error, ToastAndroid.LONG);
+      Toast.show(error, {duration: Toast.durations.SHORT});
     }
   };
 

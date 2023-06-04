@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useContext } from "react";
 import { FAB, ActivityIndicator, MD2Colors, Searchbar} from "react-native-paper";
-import { StyleSheet, View, FlatList, Alert, Text, SafeAreaView, TouchableOpacity, ToastAndroid } from "react-native";
+import { StyleSheet, View, FlatList, Alert, Text, SafeAreaView, TouchableOpacity} from "react-native";
+import Toast from 'react-native-root-toast'; 
 import Button from "../Components/Button";
 import { useNavigation } from "@react-navigation/native";
 import axios from "axios";
@@ -52,7 +53,7 @@ const StartBirdingone = ({ route }) => {
     navigation.setOptions({
       headerLeft: () => (
         <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-          <TouchableOpacity onPress={() => navigation.goBack()} style={{ marginLeft: 10 }}>
+          <TouchableOpacity onPress={() => navigation.replacw('StartBirding')} style={{ marginLeft: 10 }}>
             <Ionicons name="arrow-back" size={24} color="black" />
           </TouchableOpacity>
           <Text style={{ marginLeft: 10, fontSize: 18 }}>
@@ -82,7 +83,7 @@ const StartBirdingone = ({ route }) => {
 
   useEffect(() => {
     axios
-      .get("https://druk-ebird.onrender.com/api/v1/species?limit=20")
+      .get("https://druk-ebird.onrender.com/api/v1/species")
       .then((res) => {
         const speciesData = res.data.species.map((item) => {
           return {...item, count: 0}
@@ -91,7 +92,7 @@ const StartBirdingone = ({ route }) => {
         setFilteredData(speciesData);
       })
       .catch((error) => {
-        ToastAndroid.show(error, ToastAndroid.LONG);
+        Toast.show(err, {duration: Toast.durations.SHORT});
       })
       .finally(() => setLoading(false));
   }, []);
@@ -182,14 +183,15 @@ const StartBirdingone = ({ route }) => {
         .post("https://druk-ebirds.onrender.com/api/v1/checkList", detailOfBirds)
         .then((response) => {
           // Data successfully posted to the database
-          ToastAndroid.show('Data successfully posted', ToastAndroid.LONG);
+          Toast.show("Data successfully posted", {duration: Toast.durations.SHORT, position: Toast.positions.CENTER});
         })
         .catch((error) => {
-          ToastAndroid.show(error, ToastAndroid.LONG);
+          Toast.show(error, {duration: Toast.durations.SHORT});
+
         })
         .finally(() => {setIsLoading(false);});
     } catch (error) {
-      ToastAndroid.show(error, ToastAndroid.LONG);
+      Toast.show(error, {duration: Toast.durations.SHORT});
     }
   };
   return (

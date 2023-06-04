@@ -1,5 +1,5 @@
 import React, { useState, useContext, useEffect } from "react";
-import { View, Text, TouchableOpacity, StyleSheet, Dimensions, FlatList, StatusBar } from "react-native";
+import { View, Text, TouchableOpacity, StyleSheet, Dimensions, FlatList, StatusBar, BackHandler } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import { Avatar } from "react-native-paper";
 import axios from "axios";
@@ -27,6 +27,17 @@ const MyProfile = () => {
     navigation.navigate("updateMyPassword");
     setIsDrawerOpen(false);
   };
+
+  useEffect(() => {
+    const backAction = () => {
+      navigation.navigate("MainScreen");
+      return true;
+    };
+
+    const backHandler = BackHandler.addEventListener("hardwareBackPress", backAction);
+
+    return () => backHandler.remove();
+  }, []);
 
   useEffect(() => {
     axios
@@ -108,9 +119,14 @@ const MyProfile = () => {
           <Text style={styles.name}>{userInfo.user.name}</Text>
           <Text style={styles.role}>{userInfo.user.profession}</Text>
         </View>
-        {/* <View style={styles.checkListContainer}>
+
+        <View style={styles.checkListContainer}>
           <Text style={{ marginLeft: 10, fontWeight: "bold" }}>My Recent CheckList</Text>
-          {submittedChecklistItems.length === 0 ? (
+          {loading ? (
+            <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
+              <ActivityIndicator animating={true} color={MD2Colors.green800} size="large" />
+            </View>
+          ) : submittedChecklistItems.length === 0 ? (
             <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
               <Text>No submitted checklist items found.</Text>
             </View>
@@ -121,26 +137,11 @@ const MyProfile = () => {
               renderItem={renderItem}
             />
           )}
-        </View> */}
-
-    <View style={styles.checkListContainer}>
-      <Text style={{ marginLeft: 10, fontWeight: "bold" }}>My Recent CheckList</Text>
-      {loading ? (
-        <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
-          <ActivityIndicator animating={true} color={MD2Colors.green800} size="large" />
         </View>
-        ) : submittedChecklistItems.length === 0 ? (
-          <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
-          <Text>No submitted checklist items found.</Text>
-        </View>) : (
-        <FlatList
-          data={submittedChecklistItems}
-          keyExtractor={(item) => item._id.toString()}
-          renderItem={renderItem}/>)}
+      </View>
+      <StatusBar />
     </View>
-  </View>
-  <StatusBar />
-</View>);
+  );
 };
 
 const { width, height } = Dimensions.get("window");

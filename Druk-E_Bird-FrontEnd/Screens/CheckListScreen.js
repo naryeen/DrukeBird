@@ -1,10 +1,11 @@
-import { Text, View, FlatList, TouchableOpacity, ToastAndroid, RefreshControl } from 'react-native';
+import { Text, View, FlatList, TouchableOpacity, RefreshControl } from 'react-native';
 import React, { useEffect, useState, useContext } from "react";
 import axios from "axios";
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
 import { ActivityIndicator, MD2Colors } from "react-native-paper";
 import { Swipeable } from 'react-native-gesture-handler';
 import { useNavigation } from '@react-navigation/native';
+import Toast from 'react-native-root-toast'; // Add this import
 import { AuthContext } from '../Context/AuthContext';
 
 const getCheckList = "https://druk-ebirds.onrender.com/api/v1/checkList";
@@ -36,7 +37,7 @@ function NotSubmitted() {
     axios.delete(`https://druk-ebirds.onrender.com/api/v1/checkList/${itemId}`)
       .then(() => {
         setData(prevData => prevData.filter(item => item._id !== itemId));
-        ToastAndroid.show('Data successfully Deleted', ToastAndroid.LONG);
+        Toast.show("Data successfully Deleted", {duration: Toast.durations.SHORT});
       })
       .catch((error) => {
         console.error('Error deleting item:', error);

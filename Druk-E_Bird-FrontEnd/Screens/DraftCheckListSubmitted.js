@@ -1,7 +1,8 @@
 import React, { useState, useContext } from 'react';
-import { View, StyleSheet, Text, ToastAndroid,Alert } from 'react-native';
+import { View, StyleSheet, Text,Alert } from 'react-native';
 import { Picker } from '@react-native-picker/picker';
 import Button from '../Components/Button';
+import Toast from 'react-native-root-toast'; // Add this import
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { ActivityIndicator,MD2Colors} from 'react-native-paper';
 import BhutanDzongkhags from '../Components/BhutanDzongkha';
@@ -44,16 +45,16 @@ const DraftCheckListSubmitted = ({ route }) => {
   const birdsWithCount = checklistdata && checklistdata.StartbirdingData && checklistdata.StartbirdingData.Totalcount > 0 ? [checklistdata] : [];
   const StartbirdingonedataSave = () => {
     if (!selectedDzongkhag) {
-      ToastAndroid.show('Please select Dzongkha', ToastAndroid.LONG);
+      Toast.show("Please select Dzongkha", {duration: Toast.durations.SHORT});
       return;
     }
     else if(!selectedGewog)
     {
-      ToastAndroid.show('Please select Gewong', ToastAndroid.LONG);
+      Toast.show("Please select Gewong", {duration: Toast.durations.SHORT});
       return;
     }
     else if(!selectedVillage){
-      ToastAndroid.show('Please select Village', ToastAndroid.LONG);
+      Toast.show("Please select Village", {duration: Toast.durations.SHORT});
       return;
     }
 
@@ -94,15 +95,16 @@ const DraftCheckListSubmitted = ({ route }) => {
         .post('https://druk-ebirds.onrender.com/api/v1/checkList', detailOfBirds)
         .then((response) => {
           // Data successfully posted to the database
-          ToastAndroid.show('Data successfully posted', ToastAndroid.LONG);
+          Toast.show("Data successfully posted", {duration: Toast.durations.SHORT, position: Toast.positions.CENTER});
           console.log('Data post:', response.data);
         })
         .catch((error) => {
-          console.error('Error post data:', error);
+          Toast.show(error, {duration: Toast.durations.SHORT, position: Toast.positions.CENTER});
+
         })
         .finally(() => {setLoading(false);});
     } catch (error) {
-      console.error('Error:', error);
+        Toast.show(error, {duration: Toast.durations.SHORT, position: Toast.positions.CENTER});
     }
   };
 

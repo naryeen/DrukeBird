@@ -1,6 +1,7 @@
 import React, { useState, useContext } from "react";
-import {View,Text,TextInput,StyleSheet,ToastAndroid,TouchableOpacity, StatusBar} from "react-native";
+import {View,Text,TextInput,StyleSheet,TouchableOpacity, StatusBar} from "react-native";
 import * as ImagePicker from "expo-image-picker";
+import Toast from 'react-native-root-toast'; // Add this import
 import { Avatar, IconButton,ActivityIndicator, MD2Colors } from "react-native-paper";
 import axios from "axios";
 import { AuthContext } from "../Context/AuthContext";
@@ -49,7 +50,6 @@ const EditInfo = () => {
     })
       .then((res) => res.json())
       .then((data) => {
-        console.log(data);
         setProfilePicture(data.url);
         setIsLoading(false)
 
@@ -63,7 +63,6 @@ const EditInfo = () => {
       profession,
       photo
     }
-    console.log(`profileData: ${profileData}`)
     setIsLoading(true);
     axios
       .patch(`https://drukebird.onrender.com/api/v1/users/updateMe`, profileData, {
@@ -73,8 +72,7 @@ const EditInfo = () => {
       })
       .then((res) => {
         if (res.data.status === "success") {
-          ToastAndroid.show("Profile updated successfully", ToastAndroid.LONG);
-          console.log("Profile updated successfully!");
+        Toast.show("Profile updated successfully", {duration: Toast.durations.SHORT, position: Toast.positions.CENTER});
         }
         console.log(res.data)
         updateUserInfo(res.data.data);

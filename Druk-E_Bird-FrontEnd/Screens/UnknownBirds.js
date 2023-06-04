@@ -1,6 +1,7 @@
 import React, { useState,useContext} from "react";
-import {View,Text,TouchableOpacity,Image,StyleSheet,Modal, ToastAndroid, Dimensions, StatusBar} from "react-native";
+import {View,Text,TouchableOpacity,Image,StyleSheet,Modal, Dimensions, StatusBar} from "react-native";
 import { ActivityIndicator, MD2Colors } from "react-native-paper";
+import Toast from 'react-native-root-toast'; // Add this import
 import * as ImagePicker from "expo-image-picker";
 import axios from 'axios'; // Import axios for making HTTP requests
 import { IconButton } from "react-native-paper";
@@ -69,8 +70,6 @@ const UnknownBird = ({ route }) => {
         name: `profile.${selectedImage.uri.split(".")[1]}`,
       };
       handleUpload(newFile);
-      console.log(newFile);
-      // setImage(result.uri);
     }
 
     setModalVisible(false);
@@ -112,7 +111,6 @@ const UnknownBird = ({ route }) => {
     })
       .then((res) => res.json())
       .then((data) => {
-        console.log(data);
         setImage(data.url);
         setIsLoading(false);
       });
@@ -136,23 +134,23 @@ const UnknownBird = ({ route }) => {
 
   const UnknownBirdsdataSave = () => {
     if (!selectedDzongkhag) {
-      ToastAndroid.show('Please select Dzongkha', ToastAndroid.LONG);
+      Toast.show("Please select Dzongkha", {duration: Toast.durations.SHORT});
       return;
     }
     else if(!selectedGewog)
     {
-      ToastAndroid.show('Please select Gewong', ToastAndroid.LONG);
+      Toast.show("Please select Gewong", {duration: Toast.durations.SHORT});
       return;
     }
     else if(!selectedVillage){
-      ToastAndroid.show('Please select Village', ToastAndroid.LONG);
+      Toast.show("Please select Village", {duration: Toast.durations.SHORT});
       return;
     }
     else if (!image) {
-      ToastAndroid.show('Please select an image', ToastAndroid.LONG);
+      Toast.show("Please select an image", {duration: Toast.durations.SHORT});
       return;
     } else if (count === 0) {
-      ToastAndroid.show('Please set the count', ToastAndroid.LONG);
+      Toast.show("Please set the count", {duration: Toast.durations.SHORT});
       return;
     }
 
@@ -188,15 +186,16 @@ const UnknownBird = ({ route }) => {
         .post("https://druk-ebirds.onrender.com/api/v1/checkList", detailOfBirds)
         .then((response) => {
           // Data successfully posted to the database
-        ToastAndroid.show('Data successfully posted', ToastAndroid.LONG);
-          console.log("Data post:", response.data);
+          Toast.show("Data successfully posted", {duration: Toast.durations.SHORT, position: Toast.positions.CENTER});
         })
         .catch((error) => {
-          console.error("Error post data:", error);
+          Toast.show(error, {duration: Toast.durations.SHORT, position: Toast.positions.CENTER});
+
         })
         .finally(() => {setLoading(false);});
     } catch (error) {
-      console.error("Error:", error);
+      Toast.show(error, {duration: Toast.durations.SHORT, position: Toast.positions.CENTER});
+
     }
   };
   return (

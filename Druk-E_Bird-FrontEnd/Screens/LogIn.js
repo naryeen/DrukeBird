@@ -1,9 +1,9 @@
 import React, { useState, useContext } from "react";
-import { TextInput } from 'react-native-paper';
+import { TextInput} from 'react-native-paper';
 import { StyleSheet, View, Text, Image, Dimensions } from 'react-native';
-import { ActivityIndicator, useTheme } from "react-native-paper";
 import { useNavigation } from '@react-navigation/native';
 import Button from '../Components/Button';
+import Toast from 'react-native-root-toast'; // Add this import
 import { AuthContext } from "../Context/AuthContext";
 
 const windowDimensions = Dimensions.get('window');
@@ -13,22 +13,26 @@ const LogIn = () => {
   const navigation = useNavigation();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [loading, setLoading] = useState(false); // Added loading state
   const { login } = useContext(AuthContext);
   const [passwordVisible, setPasswordVisible] = useState(false);
-  const theme = useTheme(); // Get the theme object
 
   const togglePasswordVisibility = () => {
     setPasswordVisible(!passwordVisible);
   };
 
   const handleLogin = async () => {
-    setLoading(true); // Start the loading animation
+    if (email.trim() === "") {
+      Toast.show("Please enter your email", {duration: Toast.durations.SHORT});
+      return;
+    }
 
-    // Perform login operation
+    else if (password.trim() === "") {
+      Toast.show("Please enter your password", {
+        duration: Toast.durations.SHORT
+      });
+      return;
+    }
     await login(email, password);
-
-    setLoading(false); // Stop the loading animation
   };
 
   return (
@@ -68,13 +72,6 @@ const LogIn = () => {
         Don't have an account?
         <Text style={styles.createaccountText} onPress={() => navigation.replace('Verifying')}>  Register</Text>
       </Text>
-
-      {/* Loading animation */}
-      {loading && (
-        <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-          <ActivityIndicator animating={true} color={theme.colors.primary} size="large" />
-        </View>
-      )}
     </View>
   );
 };

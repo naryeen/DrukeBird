@@ -1,8 +1,9 @@
 import React, { useState,useContext} from 'react';
-import {StyleSheet,View,Text,TouchableOpacity,Image, ToastAndroid, Dimensions} from 'react-native';
+import {StyleSheet,View,Text,TouchableOpacity,Image, Dimensions} from 'react-native';
 import { ActivityIndicator, MD2Colors,TextInput,IconButton  } from "react-native-paper";
 import * as ImagePicker from 'expo-image-picker';
 import axios from "axios";
+import Toast from 'react-native-root-toast';
 import { Picker } from '@react-native-picker/picker';
 import BhutanDzongkhags from "../Components/BhutanDzongkha"
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scrollview';
@@ -52,24 +53,24 @@ const BirdTypeInfo = ({route}) => {
 
   const StartbirdingonedataSave = () => {
      if (Adult.trim() === "") {
-         ToastAndroid.show('Please enter your adult', ToastAndroid.SHORT);
+         Toast.show("Please enter your adult", {duration: Toast.durations.SHORT});
          return;
        }else if (Juvenile.trim() === "") {
-         ToastAndroid.show('Please enter your juvenile', ToastAndroid.SHORT);
-         return;
+          Toast.show("Please enter your juvenile", {duration: Toast.durations.SHORT});
+          return;
        }else if (Remarks.trim() === "") {
-         ToastAndroid.show('Please enter your remarks', ToastAndroid.SHORT);
-         return;
+          Toast.show("Please enter your email", {duration: Toast.durations.SHORT});
+          return;
        }
-       if (!selectedDzongkhag) {
-        ToastAndroid.show('Please select Dzongkha', ToastAndroid.LONG);
+       else if (!selectedDzongkhag) {
+        Toast.show("Please select Dzongkha", {duration: Toast.durations.SHORT});
         return;
       }else if(!selectedGewog)
       {
-        ToastAndroid.show('Please select Gewong', ToastAndroid.LONG);
+        Toast.show("Please select Gewong", {duration: Toast.durations.SHORT});
         return;
       }else if(!selectedVillage){
-        ToastAndroid.show('Please select Village', ToastAndroid.LONG);
+        Toast.show("Please select Village", {duration: Toast.durations.SHORT});
         return;
       }
       const adultCount = parseInt(Adult);
@@ -110,7 +111,6 @@ const BirdTypeInfo = ({route}) => {
      dataSubmitted = true;
        
      if (!dataSubmitted) {
-         // Show the message that no data is submitted
          Alert.alert("No Data Submitted", "Please select at least one bird count before stopping.", [{ text: "OK" }]);
          return;
      }
@@ -122,14 +122,18 @@ const BirdTypeInfo = ({route}) => {
              .then((response) => {
                  console.log(detailOfBirds);
                  // Data successfully posted to the database
-                 ToastAndroid.show('Data successfully posted', ToastAndroid.LONG);
-                 console.log("Data post:", response.data);
+                 Toast.show("Data successfully posted", {
+                  duration: Toast.durations.SHORT,
+                  position: Toast.positions.CENTER
+                });
              })
              .catch((error) => {
-                 console.error("Error post data:", error);
+                Toast.show(error, {duration: Toast.durations.SHORT});
+
              });
      } catch (error) {
-         console.error("Error:", error);
+        Toast.show(error, {duration: Toast.durations.SHORT});
+
      }
  };
 
@@ -173,7 +177,6 @@ const BirdTypeInfo = ({route}) => {
     })
       .then((res) => res.json())
       .then((data) => {
-        console.log(data);
         setImage(data.url);
         setIsLoading(false);
       });

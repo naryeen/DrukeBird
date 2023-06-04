@@ -1,11 +1,12 @@
 import React, { useState } from "react";
-import { TextInput } from 'react-native-paper';
-import { StyleSheet, View, Text, ScrollView, Dimensions, ToastAndroid } from 'react-native';
+import { ActivityIndicator, MD2Colors,TextInput,} from "react-native-paper";
+import { StyleSheet, View, Text, ScrollView, Dimensions} from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { Picker } from '@react-native-picker/picker';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import Button from "../Components/Button";
 import axios from "axios";
+import Toast from 'react-native-root-toast';
 import countryOptions from "../Components/Country";
 import DateTimePicker from '@react-native-community/datetimepicker';
 
@@ -18,6 +19,7 @@ const SignUp = () => {
   const [passwordConfirm, setPasswordConfirm] = useState("");
   const [passwordVisible, setPasswordVisible] = useState(false);
   const [showDatePicker, setShowDatePicker] = useState(false);
+  const [Isloading, setIsLoading] = useState(false);
   
   const windowDimensions = Dimensions.get('window');
   const marginTopDistance = windowDimensions.height < 380 ? 30 : 60;
@@ -30,13 +32,12 @@ const SignUp = () => {
       password: password,
       passwordConfirm: passwordConfirm
     };
+    setIsLoading(true);
     axios
       .post('https://druk-ebirds.onrender.com/api/v1/users/signup', user)
       .then(res => {
         if (res.data.status == "success") {
-          ToastAndroid.show('Successfully Created Your Account',
-            ToastAndroid.LONG);
-
+        Toast.show("Successfully Created Your Account", {duration: Toast.durations.SHORT,position: Toast.positions.CENTER});
           setTimeout(() => {
             navigation.navigate('Login');
           }, 200);
@@ -48,10 +49,10 @@ const SignUp = () => {
           typeof err.response !== 'undefined'
             ? err.response.data.message
             : err.message;
+            Toast.show(message, {duration: Toast.durations.SHORT});
 
-        ToastAndroid.show(message,
-          ToastAndroid.SHORT);
-      });
+      })
+      .finally(() => setIsLoading(false));
   };
 
 
@@ -119,6 +120,16 @@ const showDatepicker = () => {
       position: 'relative',
       flex: 1,
   },
+  loadingContainer: {
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: 'rgba(0, 0, 0, 0.5)',
+  }
   });
 
   return (
@@ -210,6 +221,11 @@ const showDatepicker = () => {
           value={passwordConfirm}
         />
         <Button styling={styles.buttonstyle} onPress={() => register()}>Create Account</Button>
+        {Isloading && (
+          <View style={styles.loadingContainer}>
+           <ActivityIndicator animating={true} color={MD2Colors.green800} size="large" />
+        </View>
+      )}
         <Text style={styles.createtext}>
           Already have an account?
           <Text style={styles.loginText} onPress={() => navigation.replace('Login')}>Login</Text>

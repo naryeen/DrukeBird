@@ -1,7 +1,9 @@
 import React, { useState, useContext } from "react";
-import { View, Text, TextInput, StyleSheet, ToastAndroid, StatusBar} from "react-native";
+import { View,TextInput, StyleSheet, StatusBar} from "react-native";
+import { ActivityIndicator, MD2Colors} from "react-native-paper";
 import axios from "axios";
 import { AuthContext } from "../Context/AuthContext";
+import Toast from 'react-native-root-toast';
 import NavigationHeader from "../Components/NavigationHeader";
 import Button from "../Components/Button";
 
@@ -10,7 +12,6 @@ const UpdatePassword = () => {
   const [currentPassword, setCurrentPassword] = useState("");
   const [newPassword, setNewPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
-  const [error, setError] = useState("");
   const [isLoading, setIsLoading] = useState(false);
 
   const handleUpdatePassword = () => {
@@ -20,16 +21,24 @@ const UpdatePassword = () => {
       passwordConfirm: confirmPassword,
     };
   
-    if (newPassword === "" || confirmPassword === "" || currentPassword === "") {
-      setError("All fields are required.");
-      return;
+    if (newPassword === "")
+    {
+      Toast.show("Please enter your new password", {duration: Toast.durations.SHORT});
+      
     }
-  
+    else if(confirmPassword === ""){
+      Toast.show("Please enter your new confirm password", {duration: Toast.durations.SHORT});
+      
+    }
+    else if(currentPassword === "")
+    {
+      Toast.show("Please enter your current password", {duration: Toast.durations.SHORT});
+    }
     if (newPassword !== confirmPassword) {
-      setError("New password and confirm password do not match.");
+      Toast.show("New password and confirm password do not match.", {duration: Toast.durations.SHORT});
       return;
     }
-    console.log(data);
+    setIsLoading(true);
     axios
       .patch(
         "https://drukebird.onrender.com/api/v1/users/updateMyPassword",
@@ -42,8 +51,7 @@ const UpdatePassword = () => {
       )
       .then((res) => {
         if (res.data.status === "success") {
-          ToastAndroid.show("Password updated successfully", ToastAndroid.LONG);
-          console.log("Password updated successfully!");
+          Toast.show("Password updated successfully", {duration: Toast.durations.SHORT, position: Toast.positions.CENTER});
           setCurrentPassword("");
           setNewPassword("");
           setConfirmPassword("");
@@ -51,11 +59,12 @@ const UpdatePassword = () => {
       })
       .catch((err) => {
         if (err.response && err.response.data) {
-          setError(err.response.data.message);
+          Toast.show(err.response.data.message, {duration: Toast.durations.SHORT, position: Toast.positions.CENTER});
         } else {
-          setError("An error occurred. Please try again.");
+          Toast.show("An error occurred. Please try again.", {duration: Toast.durations.SHORT, position: Toast.positions.CENTER});
         }
-      });
+      })
+      .finally(() => setIsLoading(false));
   }; 
 
   return (
@@ -89,7 +98,11 @@ const UpdatePassword = () => {
       />
       </View>
       <Button styling={styles.buttonstyle} onPress={handleUpdatePassword}>Update Password</Button>
-      {error ? <Text style={styles.error}>{error}</Text> : null}
+      {isLoading && (
+          <View style={styles.loadingContainer}>
+           <ActivityIndicator animating={true} color={MD2Colors.green800} size="large" />
+        </View>
+      )}
       <StatusBar />
 
     </View>
@@ -133,6 +146,16 @@ const styles = StyleSheet.create({
     backgroundColor:'#136D66',
     marginTop:30,
     width:"100%"
+  },
+  loadingContainer: {
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: 'rgba(0, 0, 0, 0.5)',
   }
 });
 
