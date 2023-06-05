@@ -86,9 +86,6 @@ exports.enter_OTP = async(req,res)=>{
 
 exports.getAllUsers = async (req, res, next) => {
     try {
-        res.setHeader('Access-Control-Allow-Origin', '*');
-        res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, PATCH');
-        res.setHeader('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
         const users = await User.find()
         console.log("users ", users);
         res.status(200).json({data:users, status: 'success'})
