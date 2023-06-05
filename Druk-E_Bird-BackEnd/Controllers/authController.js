@@ -129,7 +129,7 @@ exports.protect = async(req,res,next) =>{
         const user  = await User.findById(req.user._id).select('+password')
         if(!(await user.correctPassword(req.body.passwordCurrent, user.password))){
             //return next(new AppError('Your current password is wrong',401))
-            return res.status(401).json({message:"Your current password is wrong"})
+            return res.status(500).json({message:"Your current password is wrong"})
         }
         user.password = req.body.password
         user.passwordConfirm = req.body.passwordConfirm

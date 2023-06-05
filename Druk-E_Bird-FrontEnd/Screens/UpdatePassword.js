@@ -57,10 +57,12 @@ const UpdatePassword = () => {
         }
       })
       .catch((err) => {
-        JSON.stringify(err);
+        // JSON.stringify(err)
+        console.log(err)
+
         let message =
-          typeof err.response !== "undefined"
-            ? err.response.data.message
+          typeof err.res !== "undefined"
+            ? err.res.data.message
             : err.message;
         Toast.show(message, { duration: Toast.durations.SHORT });
       })

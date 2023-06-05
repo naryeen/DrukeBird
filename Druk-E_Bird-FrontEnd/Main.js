@@ -17,15 +17,16 @@ const MyDrawer = () => {
         headerTitleStyle: {
           fontSize: 25, // Increase the size of the header title
         },
+
         drawerIcon: ({ focused, color, size }) => (
           <MaterialCommunityIcons
             name="menu"
-            size={50} // Change the size of the hamburger icon
+            size={30} // Change the size of the hamburger icon
             color={color}
           />
         ),
         drawerIconStyle: {
-          width: 60, // Change the width of the drawer icon container
+          width: 80, // Change the width of the drawer icon container
           alignItems: 'center',
           justifyContent: 'center',
         },
@@ -36,11 +37,11 @@ const MyDrawer = () => {
         component={MainTabScreen}
         options={{
           headerStyle: {
-            height: 60, // Change the height of the header here
+            height: 75, // Change the height of the header here
             elevation: 10, // Apply shadow on Android
             shadowColor: '#000', // Set shadow color on iOS
             shadowOffset: { width: 0, height: 2 }, // Set shadow offset on iOS
-            shadowOpacity: 0.5, // Set shadow opacity on iOS
+            shadowOpacity: 0.9, // Set shadow opacity on iOS
             shadowRadius: 3, // Set shadow radius on iOS
           },
         }}
