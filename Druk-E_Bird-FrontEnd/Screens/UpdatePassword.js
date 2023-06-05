@@ -56,14 +56,14 @@ const UpdatePassword = () => {
           setConfirmPassword("");
         }
       })
-     .catch((err) => {
-      let message =
-        typeof err.response !== 'undefined'
-        ? err.response.data.message
-        : err.message
-        Toast.show(message, {duration: Toast.durations.LONG,position: Toast.positions.CENTER,});
+      .catch((err) => {
+        let message =
+          typeof err.response !== 'undefined'
+            ? err.response.data.message
+            : err.message;
+        Toast.show(message, { duration: Toast.durations.LONG, position: Toast.positions.CENTER });
       })
-      .finally(() => setIsLoading(false));
+    .finally(() => setIsLoading(false));
   };
 
   return (

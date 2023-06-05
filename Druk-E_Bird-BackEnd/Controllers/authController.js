@@ -147,23 +147,23 @@ exports.updatePassword = async (req, res, next) => {
         const user = await User.findById(req.user._id).select('+password');
 
         if (!(await user.correctPassword(req.body.passwordCurrent, user.password))) {
-            return res.status(500).json({ message: "Your current password is wrong" });
+            return res.status(401).json({ message: "Your current password is wrong" });
         }
 
         const { password, passwordConfirm } = req.body;
 
         if (password.length < 8) {
-            return res.status(500).json({ message: "Enter a password with more than 8 characters." });
+            return res.status(400).json({ message: "Enter a password with more than 8 characters." });
         } else if (!/[a-z]/.test(password)) {
-            return res.status(500).json({ message: "Enter at least one lowercase letter." });
+            return res.status(400).json({ message: "Enter at least one lowercase letter." });
         } else if (!/[A-Z]/.test(password)) {
-            return res.status(500).json({ message: "Enter at least one uppercase letter." });
+            return res.status(400).json({ message: "Enter at least one uppercase letter." });
         } else if (!/\d/.test(password)) {
-            return res.status(500).json({ message: "Enter at least one digit." });
+            return res.status(400).json({ message: "Enter at least one digit." });
         }
 
         if (password !== passwordConfirm) {
-            return res.status(500).json({ message: "Password and password confirmation do not match." });
+            return res.status(400).json({ message: "Password and password confirmation do not match." });
         }
 
         user.password = password;
@@ -174,5 +174,3 @@ exports.updatePassword = async (req, res, next) => {
         res.status(500).json({ error: err.message });
     }
 };
-
-    
