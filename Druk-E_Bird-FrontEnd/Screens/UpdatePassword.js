@@ -56,16 +56,21 @@ const UpdatePassword = () => {
           setConfirmPassword("");
         }
       })
-      .catch((err) => {
-        // JSON.stringify(err)
-        console.log(err)
-
-        let message =
-          typeof err.res !== "undefined"
-            ? err.res.data.message
-            : err.message;
+      .catch((error) => {
+        console.log(error);
+        let message = "An error occurred";
+      
+        if (error.response && error.response.status === 401) {
+          message = "Your current password is wrong";
+        } else if (error.response && error.response.data && error.response.data.message) {
+          message = error.response.data.message;
+        } else if (error.message) {
+          message = error.message;
+        }
+        
         Toast.show(message, { duration: Toast.durations.SHORT });
       })
+      
       .finally(() => setIsLoading(false));
   };
 
