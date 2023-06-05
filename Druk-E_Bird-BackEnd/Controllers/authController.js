@@ -84,11 +84,6 @@ exports.login = async(req, res, next)=>
         }
         //3) If everything ok, send token to client
         createSendToken(user, 200, res)
-        // const token = signToken(user._id)
-        // res.status(200).json({
-        //     status: 'success',
-        //     token,
-        // })
     }
     catch(err)
     {
@@ -98,7 +93,6 @@ exports.login = async(req, res, next)=>
 }
 
 exports.protect = async(req,res,next) =>{
-    // console.log(req.headers)
     try{
         // 1) Getting token and check of it's there
         let token
@@ -114,8 +108,7 @@ exports.protect = async(req,res,next) =>{
         }
         // 2) Verification token
         // const decoded = await promisify(jwt.verify)(token,process.env.JWT_SECRET)
-        const decoded =  jwt.verify(token,process.env.JWT_SECRET)
-        console.log(decoded) 
+        const decoded =  jwt.verify(token,process.env.JWT_SECRET) 
         // 3) Check if user still exists
         const freshUser = await User.findById(decoded.id)
         if(!freshUser){
@@ -136,7 +129,7 @@ exports.protect = async(req,res,next) =>{
         const user  = await User.findById(req.user._id).select('+password')
         if(!(await user.correctPassword(req.body.passwordCurrent, user.password))){
             //return next(new AppError('Your current password is wrong',401))
-            return res.status(400).json({message:"Your current password is wrong"})
+            return res.status(401).json({message:"Your current password is wrong"})
         }
         user.password = req.body.password
         user.passwordConfirm = req.body.passwordConfirm
