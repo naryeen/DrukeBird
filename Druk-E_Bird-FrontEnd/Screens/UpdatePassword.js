@@ -1,5 +1,5 @@
 import React, { useState, useContext } from "react";
-import { View,  StyleSheet, StatusBar } from "react-native";
+import { View, StyleSheet, StatusBar } from "react-native";
 import { ActivityIndicator, MD2Colors, TextInput } from "react-native-paper";
 import axios from "axios";
 import { AuthContext } from "../Context/AuthContext";
@@ -57,20 +57,20 @@ const UpdatePassword = () => {
         }
       })
       .catch((error) => {
-        console.log(error);
+        console.log(error); // Log the error object to inspect its structure
+
         let message = "An error occurred";
-      
-        if (error.response && error.response.status === 401) {
-          message = "Your current password is wrong";
-        } else if (error.response && error.response.data && error.response.data.message) {
+
+        if (error.response && error.response.data && error.response.data.message) {
           message = error.response.data.message;
         } else if (error.message) {
           message = error.message;
         }
-        
+
         Toast.show(message, { duration: Toast.durations.SHORT });
       })
-      
+
+
       .finally(() => setIsLoading(false));
   };
 
@@ -79,30 +79,30 @@ const UpdatePassword = () => {
       <UpdatePasswordHeader title={"Update Password"} />
       <View style={styles.container1}>
         <View style={styles.header}>
-        <TextInput
-          style={styles.inputStyle}
-          mode="outlined"
-          label="Current Password"
-          placeholder="Enter Your Current Password"
-          onChangeText={(text) => setCurrentPassword(text)}
-          value={currentPassword}
-        />
-        <TextInput
-          style={styles.inputStyle}
-          mode="outlined"
-          label="New Password"
-          placeholder="Enter Your New Password"
-          onChangeText={(text) => setNewPassword(text)}
-          value={newPassword}
-        />
-        <TextInput
-          style={styles.inputStyle}
-          mode="outlined"
-          label="Confirm New Password"
-          placeholder="Enter Your New Password Again"
-          onChangeText={(text) => setConfirmPassword(text)}
-          value={confirmPassword}
-        />
+          <TextInput
+            style={styles.inputStyle}
+            mode="outlined"
+            label="Current Password"
+            placeholder="Enter Your Current Password"
+            onChangeText={(text) => setCurrentPassword(text)}
+            value={currentPassword}
+          />
+          <TextInput
+            style={styles.inputStyle}
+            mode="outlined"
+            label="New Password"
+            placeholder="Enter Your New Password"
+            onChangeText={(text) => setNewPassword(text)}
+            value={newPassword}
+          />
+          <TextInput
+            style={styles.inputStyle}
+            mode="outlined"
+            label="Confirm New Password"
+            placeholder="Enter Your New Password Again"
+            onChangeText={(text) => setConfirmPassword(text)}
+            value={confirmPassword}
+          />
         </View>
         <Button styling={styles.buttonstyle} onPress={handleUpdatePassword}>Update Password</Button>
         {isLoading && (
@@ -167,7 +167,7 @@ const styles = StyleSheet.create({
     marginTop: 20,
     borderColor: "#ccc",
     borderRadius: 5,
-    width:"100%"
+    width: "100%"
   },
 });
 

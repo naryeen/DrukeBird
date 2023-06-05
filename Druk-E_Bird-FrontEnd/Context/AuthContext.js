@@ -38,6 +38,7 @@ export const AuthProvider = ({ children }) => {
         setIsLoading(false);
       })
       .catch((err) => {
+        console.log(err)
         let message =
           typeof err.response !== "undefined"
             ? err.response.data.message
