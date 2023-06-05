@@ -62,13 +62,9 @@ exports.setPassword = async (req, res, next) => {
 
         var passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/;
 
-        if (!passwordRegex.length < 8) {
-            throw new Error("Enter a password more than 8 characters.");
-        } else if (!/[a-z]/.test(password)) {
-            throw new Error("Enter at least one lowercase letter.");
-        }else if (!/[A-Z]/.test(password)) {
-            throw new Error("Enter at least one uppercase letter.");
-        }
+        if (!passwordRegex.test(password)) {
+            return res.status(500).json({ message: "Password must contain at least 8 characters, including at least one uppercase letter, one lowercase letter, and one digit." });
+          }
 
        
         const newPassword = await bcrypt.hash(password, 12);
