@@ -54,11 +54,22 @@ exports.setPassword = async (req, res, next) => {
             // return next(new AppError('User Not Exists!!', 400))
             return res.status(400).json({message:"User Not Exists"})
         }
-        var passwordRegex = /[0-9a-zA-Z]{8,}/g;
-        if(!passwordRegex.test(password)){
-            console.log("password is",passwordRegex.test(password))
-            return res.status(500).json({message: "Enter passsword more than 8"});
+        // var passwordRegex = /[0-9a-zA-Z]{8,}/g;
+        // if(!passwordRegex.test(password)){
+        //     console.log("password is",passwordRegex.test(password))
+        //     return res.status(500).json({message: "Enter passsword more than 8"});
+        // }
+
+        var passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/;
+
+        if (!passwordRegex.length < 8) {
+            throw new Error("Enter a password more than 8 characters.");
+        } else if (!/[a-z]/.test(password)) {
+            throw new Error("Enter at least one lowercase letter.");
+        }else if (!/[A-Z]/.test(password)) {
+            throw new Error("Enter at least one uppercase letter.");
         }
+
        
         const newPassword = await bcrypt.hash(password, 12);
 
