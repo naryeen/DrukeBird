@@ -8,7 +8,7 @@ const cors = require("cors");
 
 app.use(
   cors({
-    origin:  "https://druk-ebird.vercel.app",
+    origin:"*",
     // methods: "GET, POST, DELETE, PATCH",
     // credentials: true,
   })
@@ -73,10 +73,6 @@ changeStream.on("change", async (change) => {
     console.error(error);
   }
 });
-
-
-
-
 const port = 4001;
 server.listen(port, () => {
   console.log(`App running on port ${port}..`);

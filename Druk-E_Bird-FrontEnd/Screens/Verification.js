@@ -49,7 +49,6 @@ const Verifying = () => {
         }
       })
       .catch(err => {
-        JSON.stringify(err);
         let message =
           typeof err.response !== 'undefined'
             ? err.response.data.message
@@ -82,12 +81,11 @@ const Verifying = () => {
         }
       })
       .catch(err => {
-        JSON.stringify(err);
         let message =
           typeof err.response !== 'undefined'
             ? err.response.data.message
             : err.message;
-          Toast.show(message, {duration: Toast.durations.SHORT});
+            Toast.show(message, {duration: Toast.durations.SHORT});
       })
       .finally(() => setLoading(false));
   };

@@ -135,7 +135,6 @@ const StartBirdingone = ({ route }) => {
       BirdName:"Unknown Birds"
     };
     handleFabPress(UnknownBirdsdata);
-    console.log(UnknownBirdsdata)
   };
 
   //data pass to SubmittingBirding

@@ -1,14 +1,14 @@
 import React, { useState } from "react";
-import { ActivityIndicator, MD2Colors,TextInput,} from "react-native-paper";
-import { StyleSheet, View, Text, ScrollView, Dimensions} from 'react-native';
-import { useNavigation } from '@react-navigation/native';
-import { Picker } from '@react-native-picker/picker';
-import Icon from 'react-native-vector-icons/FontAwesome';
+import { ActivityIndicator, MD2Colors, TextInput } from "react-native-paper";
+import {StyleSheet,View,Text,ScrollView,Dimensions,SafeAreaView,} from "react-native";
+import { useNavigation } from "@react-navigation/native";
 import Button from "../Components/Button";
 import axios from "axios";
-import Toast from 'react-native-root-toast';
+import Toast from "react-native-root-toast";
 import countryOptions from "../Components/Country";
-import DateTimePicker from '@react-native-community/datetimepicker';
+import DateTimePicker from "@react-native-community/datetimepicker";
+import SelectDropdown from "react-native-select-dropdown";
+import FontAwesome from "react-native-vector-icons/FontAwesome";
 
 const SignUp = () => {
   const navigation = useNavigation();
@@ -20,8 +20,8 @@ const SignUp = () => {
   const [passwordVisible, setPasswordVisible] = useState(false);
   const [showDatePicker, setShowDatePicker] = useState(false);
   const [Isloading, setIsLoading] = useState(false);
-  
-  const windowDimensions = Dimensions.get('window');
+
+  const windowDimensions = Dimensions.get("window");
   const marginTopDistance = windowDimensions.height < 380 ? 30 : 60;
 
   const register = () => {
@@ -30,31 +30,32 @@ const SignUp = () => {
       country: country,
       profession: profession,
       password: password,
-      passwordConfirm: passwordConfirm
+      passwordConfirm: passwordConfirm,
     };
     setIsLoading(true);
     axios
-      .post('https://druk-ebirds.onrender.com/api/v1/users/signup', user)
-      .then(res => {
+      .post("https://druk-ebirds.onrender.com/api/v1/users/signup", user)
+      .then((res) => {
         if (res.data.status == "success") {
-        Toast.show("Successfully Created Your Account", {duration: Toast.durations.SHORT,position: Toast.positions.CENTER});
+          Toast.show("Successfully Created Your Account", {
+            duration: Toast.durations.SHORT,
+            position: Toast.positions.CENTER,
+          });
           setTimeout(() => {
-            navigation.navigate('Login');
+            navigation.navigate("Login");
           }, 200);
         }
       })
-      .catch(err => {
+      .catch((err) => {
         JSON.stringify(err);
         let message =
-          typeof err.response !== 'undefined'
+          typeof err.response !== "undefined"
             ? err.response.data.message
             : err.message;
-            Toast.show(message, {duration: Toast.durations.SHORT});
-
+        Toast.show(message, { duration: Toast.durations.SHORT });
       })
       .finally(() => setIsLoading(false));
   };
-
 
   const togglePasswordVisibility = () => {
     setPasswordVisible(!passwordVisible);
@@ -64,16 +65,17 @@ const SignUp = () => {
     setShowDatePicker(false);
 
     if (date !== undefined) {
-        setDoB(date);
+      setDoB(date);
     }
-};
+  };
 
-const showDatepicker = () => {
+  const showDatepicker = () => {
     setShowDatePicker(true);
-};
+  };
 
   const styles = StyleSheet.create({
     container: {
+      flex: 1,
       padding: 10,
     },
     text1: {
@@ -84,101 +86,116 @@ const showDatepicker = () => {
     },
     inputStyle: {
       marginTop: 20,
-      borderColor: '#ccc',
+      borderColor: "#ccc",
       borderRadius: 5,
-    },
-    countryContainer: {
-      marginTop: 20,
-      borderColor: '#ccc',
-      borderRadius: 5,
-      borderWidth: 1,
-      flexDirection: 'row',
-      alignItems: 'center',
-      paddingLeft: 10,
-      backgroundColor:'white'
-    },
-    countryPicker: {
-      flex: 1,
-    },
-    flagIcon: {
-      marginRight: 10,
-    },
-    createtext: {
-      marginTop: 20,
-      textAlign: 'center',
-      fontSize: 14,
     },
     loginText: {
-      color: '#2437E4',
+      color: "#2437E4",
     },
     buttonstyle: {
-      backgroundColor: '#136D66',
+      backgroundColor: "#136D66",
       marginTop: 30,
       width: "100%",
     },
     datePickerContainer: {
-      position: 'relative',
-      flex: 1,
-  },
-  loadingContainer: {
-    position: 'absolute',
-    top: 0,
-    left: 0,
-    right: 0,
-    bottom: 0,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: 'rgba(0, 0, 0, 0.5)',
-  }
+      position: "relative",
+    },
+    loadingContainer: {
+      position: "absolute",
+      top: 0,
+      left: 0,
+      right: 0,
+      bottom: 0,
+      justifyContent: "center",
+      alignItems: "center",
+      backgroundColor: "rgba(0, 0, 0, 0.5)",
+    },
+    scrollViewContainer: {
+      marginTop: 20,
+    },
+
+    dropdown1BtnStyle: {
+      width: "100%",
+      backgroundColor: "#FFF",
+      borderRadius: 5,
+      borderWidth: 1,
+      borderColor: "#ccc",
+    },
+    dropdown1BtnTxtStyle: { textAlign: "left" },
+    dropdown1DropdownStyle: { backgroundColor: "#EFEFEF" },
   });
 
   return (
     <View style={styles.container}>
-
-      <Text style={styles.text1}>
-        Create Account
-      </Text>
+      <Text style={styles.text1}>Create Account</Text>
       <ScrollView>
-      <View style={styles.datePickerContainer}>
-                    <TextInput
-                        style={styles.inputStyle}
-                        mode="outlined"
-                        label="DoB"
-                        placeholder="MM/DD/YYYY"
-                        left={
-                            <TextInput.Icon
-                                icon="calendar"
-                                onPress={showDatepicker}
-                                forceTextInputFocus={false}
-                            />
-                        }
-                        onTouchStart={showDatepicker}
-                        value={DoB ? DoB.toLocaleDateString('en-GB', { day: 'numeric', month: 'numeric', year: 'numeric' }) : ''}
-                        editable={false} // Allow manual entry of date
-                    />
-                    {showDatePicker && (
-                        <DateTimePicker
-                            mode="date"
-                            display="default"
-                            value={DoB ? new Date(DoB) : new Date()}
-                            onChange={handleDateChange}
-                        />
-                    )}
-                </View>
-        <View style={styles.countryContainer}>
-          <Icon name="flag" size={20} color="#000" style={styles.flagIcon} />
-          <View style={styles.countryPicker}>
-            <Picker
-              selectedValue={country}
-              onValueChange={(itemValue) => setCountry(itemValue)}
-            >
-              <Picker.Item label="Select Country" value="" />
-              {countryOptions.map((option, index) => (
-                <Picker.Item key={index} label={option} value={option} />
-              ))}
-            </Picker>
-          </View>
+        <View style={styles.datePickerContainer}>
+          <TextInput
+            style={styles.inputStyle}
+            mode="outlined"
+            label="DoB"
+            placeholder="MM/DD/YYYY"
+            left={
+              <TextInput.Icon
+                icon="calendar"
+                onPress={showDatepicker}
+                forceTextInputFocus={false}
+              />
+            }
+            onTouchStart={showDatepicker}
+            value={
+              DoB
+                ? DoB.toLocaleDateString("en-GB", {
+                    day: "numeric",
+                    month: "numeric",
+                    year: "numeric",
+                  })
+                : ""
+            }
+            editable={false} // Allow manual entry of date
+          />
+          {showDatePicker && (
+            <DateTimePicker
+              mode="date"
+              display="default"
+              value={DoB ? new Date(DoB) : new Date()}
+              onChange={handleDateChange}
+            />
+          )}
         </View>
+
+        <SafeAreaView>
+          <View>
+            <ScrollView contentContainerStyle={styles.scrollViewContainer}>
+              <SelectDropdown
+                data={countryOptions}
+                onSelect={(selectedItem) => {
+                  setCountry(selectedItem);
+                }}
+                defaultButtonText={"Select country"}
+                buttonTextAfterSelection={(selectedItem, index) => {
+                  return selectedItem;
+                }}
+                rowTextForSelection={(item, index) => {
+                  return item;
+                }}
+                buttonStyle={styles.dropdown1BtnStyle}
+                buttonTextStyle={styles.dropdown1BtnTxtStyle}
+                renderDropdownIcon={(isOpened) => {
+                  return (
+                    <FontAwesome
+                      name={isOpened ? "chevron-up" : "chevron-down"}
+                      color={"#444"}
+                      size={18}
+                    />
+                  );
+                }}
+                dropdownIconPosition={"right"}
+                dropdownStyle={styles.dropdown1DropdownStyle}
+              />
+            </ScrollView>
+          </View>
+        </SafeAreaView>
         <TextInput
           style={styles.inputStyle}
           mode="outlined"
@@ -197,7 +214,7 @@ const showDatepicker = () => {
           left={<TextInput.Icon icon="lock" />}
           right={
             <TextInput.Icon
-              icon={passwordVisible ? 'eye' : 'eye'}
+              icon={passwordVisible ? "eye" : "eye"}
               onPress={togglePasswordVisibility}
             />
           }
@@ -209,31 +226,27 @@ const showDatepicker = () => {
           mode="outlined"
           secureTextEntry={!passwordVisible}
           label="Confirm Password"
-          placeholder="Enter the Your Password Again"
-          left={<TextInput.Icon icon="key-variant" />}
+          placeholder="Write Your Password Again"
+          left={<TextInput.Icon icon="lock" />}
           right={
             <TextInput.Icon
-              icon={passwordVisible ? 'eye' : 'eye'}
+              icon={passwordVisible ? "eye" : "eye"}
               onPress={togglePasswordVisibility}
             />
           }
           onChangeText={(text) => setPasswordConfirm(text)}
           value={passwordConfirm}
         />
-        <Button styling={styles.buttonstyle} onPress={() => register()}>Create Account</Button>
+        <Button styling={styles.buttonstyle} onPress={() => register()}>
+          Create Account
+        </Button>
         {Isloading && (
           <View style={styles.loadingContainer}>
            <ActivityIndicator animating={true} color={MD2Colors.green800} size="large" />
         </View>
       )}
-        <Text style={styles.createtext}>
-          Already have an account?
-          <Text style={styles.loginText} onPress={() => navigation.replace('Login')}>Login</Text>
-        </Text>
       </ScrollView>
     </View>
   );
 };
-
-
 export default SignUp;
