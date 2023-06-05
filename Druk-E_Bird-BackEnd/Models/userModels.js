@@ -89,6 +89,7 @@ userSchema.pre('save',async function (next){
 
 userSchema.path('password').validate(function (password) {
     var passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/;
+    
     if (password.length < 8) {
         throw new Error("Enter a password more than 8 characters.");
     } else if (!/[a-z]/.test(password)) {

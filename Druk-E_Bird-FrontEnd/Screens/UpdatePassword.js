@@ -56,22 +56,18 @@ const UpdatePassword = () => {
           setConfirmPassword("");
         }
       })
-      .catch((error) => {
-        console.log(error); // Log the error object to inspect its structure
-
-        let message = "An error occurred";
-
-        if (error.response && error.response.data && error.response.data.message) {
-          message = error.response.data.message;
-        } else if (error.message) {
-          message = error.message;
-        }
-
-        Toast.show(message, { duration: Toast.durations.SHORT });
-      })
-
-
-      .finally(() => setIsLoading(false));
+      .catch((err) => {
+        console.log(err)
+        let message =
+          typeof err.response !== "undefined"
+            ? err.response.data.message
+            : err.message;
+        Toast.show(message, {
+          duration: Toast.durations.LONG,
+          position: Toast.positions.CENTER,
+        });
+        setIsLoading(false);
+      });
   };
 
   return (
