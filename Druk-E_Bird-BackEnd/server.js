@@ -9,7 +9,7 @@ const cors = require("cors");
 app.use(cors({
   origin: '*',
   methods: 'GET, POST, PUT, DELETE, PATCH',
-  allowedHeaders: "*",
+  allowedHeaders: 'Origin, X-Requested-With, Content-Type, Accept',
 }));
 
 const DB = process.env.DATABASE.replace(
