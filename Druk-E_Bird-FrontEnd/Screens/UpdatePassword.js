@@ -33,10 +33,10 @@ const UpdatePassword = () => {
     else if (currentPassword === "") {
       Toast.show("Please enter your current password", { duration: Toast.durations.SHORT });
     }
-    if (newPassword !== confirmPassword) {
-      Toast.show("New password and confirm password do not match.", { duration: Toast.durations.SHORT });
-      return;
-    }
+    // if (newPassword !== confirmPassword) {
+    //   Toast.show("New password and confirm password do not match.", { duration: Toast.durations.SHORT });
+    //   return;
+    // }
     setIsLoading(true);
     axios
       .patch(
@@ -57,17 +57,14 @@ const UpdatePassword = () => {
         }
       })
      .catch((err) => {
-        console.log(err)
-        let message =
-          typeof err.response !== "undefined"
-            ? err.response.data.message
-            : err.message;
-        Toast.show(message, {
-          duration: Toast.durations.LONG,
-          position: Toast.positions.CENTER,
-        });
-        setIsLoading(false);
-      });
+      let message =
+        typeof err.response !== 'undefined'
+        ? err.response.data.message
+        : err.message
+        showAlert('error', message )
+        Toast.show(message, {duration: Toast.durations.LONG,position: Toast.positions.CENTER,});
+      })
+      .finally(() => setIsLoading(false));
   };
 
   return (
