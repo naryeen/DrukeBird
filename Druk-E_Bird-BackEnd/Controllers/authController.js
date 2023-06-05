@@ -127,9 +127,15 @@ exports.protect = async(req,res,next) =>{
   exports.updatePassword = async(req,res,next)=>{
     try{
         const user  = await User.findById(req.user._id).select('+password')
+        
         if(!(await user.correctPassword(req.body.passwordCurrent, user.password))){
-            return next(new AppError('Your current password is wrong',401))
-            // return res.status(401).json({message:"Your current password is wrong"})
+            //return next(new AppError('Your current password is wrong',401))
+            return res.status(401).json({message:"Your current password is wrong"})
+        }
+        var passwordRegex = /[0-9a-zA-Z]{8,}/g;
+        if(!passwordRegex.test(password)){
+            console.log("password is",passwordRegex.test(password))
+            return res.status(500).json({message: "Enter passsword more than 8"});
         }
         user.password = req.body.password
         user.passwordConfirm = req.body.passwordConfirm

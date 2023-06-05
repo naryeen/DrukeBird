@@ -6,6 +6,7 @@ import {
   TouchableOpacity,
   Text,
   Dimensions,
+  StatusBar,
 } from "react-native";
 import {
   widthPercentageToDP as wp,
@@ -130,6 +131,7 @@ export function DrawerContent(props) {
             </TouchableOpacity>
           </Drawer.Section>
         </View>
+        <StatusBar/>
       </DrawerContentScrollView>
     </View>
   );
@@ -164,7 +166,7 @@ const styles = StyleSheet.create({
     textDecorationLine: "underline",
   },
   drawerSection: {
-    marginTop: width * 0.13,
+    marginTop: width * 0.08,
     width: wp('80%'),
   },
   drawerItemLabel: {

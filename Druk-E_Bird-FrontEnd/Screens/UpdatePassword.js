@@ -56,7 +56,7 @@ const UpdatePassword = () => {
           setConfirmPassword("");
         }
       })
-      .catch((err) => {
+     .catch((err) => {
         console.log(err)
         let message =
           typeof err.response !== "undefined"

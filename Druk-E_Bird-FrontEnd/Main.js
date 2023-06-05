@@ -17,19 +17,6 @@ const MyDrawer = () => {
         headerTitleStyle: {
           fontSize: 25, // Increase the size of the header title
         },
-
-        drawerIcon: ({ focused, color, size }) => (
-          <MaterialCommunityIcons
-            name="menu"
-            size={30} // Change the size of the hamburger icon
-            color={color}
-          />
-        ),
-        drawerIconStyle: {
-          width: 80, // Change the width of the drawer icon container
-          alignItems: 'center',
-          justifyContent: 'center',
-        },
       }}
     >
       <Drawer.Screen
@@ -37,7 +24,7 @@ const MyDrawer = () => {
         component={MainTabScreen}
         options={{
           headerStyle: {
-            height: 75, // Change the height of the header here
+            height: 65, // Change the height of the header here
             elevation: 10, // Apply shadow on Android
             shadowColor: '#000', // Set shadow color on iOS
             shadowOffset: { width: 0, height: 2 }, // Set shadow offset on iOS

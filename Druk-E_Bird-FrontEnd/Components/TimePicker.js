@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import { View, StyleSheet, TouchableOpacity } from 'react-native';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import Icon from 'react-native-vector-icons/FontAwesome';
+import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
+
 
 const TimePicker = ({ onTimeSelected }) => {
   const [showPicker, setShowPicker] = useState(false);
@@ -36,20 +38,18 @@ const TimePicker = ({ onTimeSelected }) => {
   );
 };
 
-import { widthPercentageToDP, heightPercentageToDP } from 'react-native-responsive-screen';
-
 const styles = StyleSheet.create({
   pickerContainer: {
     alignItems: 'center',
-    marginVertical: heightPercentageToDP(2),
-    flexDirection: 'row',
+    marginVertical: hp('2%'),
   },
   pickerText: {
-    fontSize: widthPercentageToDP(4),
+    fontSize: wp('4%'),
     color: '#2196F3',
   },
   timeicon: {
-    marginRight: widthPercentageToDP(4),
-  },
+    padding: wp('5.56%'), // Adjust the percentage value as needed
+    marginRight: wp('5.56%'), // Adjust the percentage value as needed
+    },
 });
 export default TimePicker
