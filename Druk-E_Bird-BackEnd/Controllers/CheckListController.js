@@ -5,7 +5,6 @@ const { db } = require('./../Models/CheckListModel')
 
 exports.getAllCheckList = async (req, res) => {
     try {
-
     const birdName = req.query.bird_name || "";
     const checklists1 = await checklists.find({
       BirdName: {$regex: `^${birdName}`, $options: "i"}
