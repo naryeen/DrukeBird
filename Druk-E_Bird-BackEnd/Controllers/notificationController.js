@@ -1,6 +1,5 @@
 const notifications = require("../Models/NotificationModel");
 const jwt = require("jsonwebtoken");
-//const promisify = require('util.promisify')
 
 exports.createNotification = async (req, res) => {
     try{

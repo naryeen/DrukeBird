@@ -6,12 +6,22 @@ const http = require("http");
 const { Server } = require("socket.io");
 const cors = require("cors");
 
-app.use(
-  cors({
-    origin:"*",
-    credentials: true,
-  })
-);
+app.use(cors());
+
+// Handle the '/api/v1/users' endpoint
+app.get('/api/v1/users', (req, res) => {
+  // Your logic to retrieve and process user data
+
+  // Set the necessary CORS headers in the response
+  res.setHeader('Access-Control-Allow-Origin', '*');
+  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, PATCH');
+  res.setHeader('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
+
+  // Send the response
+  res.send(/* Your response data */);
+});
+
+
 
 const DB = process.env.DATABASE.replace(
   "PASSWORD",
