@@ -57,10 +57,8 @@ const UpdatePassword = () => {
         }
       })
       .catch((err) => {
-        let message =
-          typeof err.response !== 'undefined'
-            ? err.response.data.message
-            : err.message;
+        let message = err.response?.data?.message || err.message;
+        console.log(message);
         Toast.show(message, { duration: Toast.durations.LONG, position: Toast.positions.CENTER });
       })
     .finally(() => setIsLoading(false));

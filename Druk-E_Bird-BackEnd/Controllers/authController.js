@@ -153,13 +153,13 @@ exports.updatePassword = async (req, res, next) => {
         const { password, passwordConfirm } = req.body;
 
         if (password.length < 8) {
-            return res.status(400).json({ message: "Enter a password with more than 8 characters." });
+            return res.status(500).json({ message: "Enter a password with more than 8 characters." });
         } else if (!/[a-z]/.test(password)) {
-            return res.status(400).json({ message: "Enter at least one lowercase letter." });
+            return res.status(500).json({ message: "Enter at least one lowercase letter." });
         } else if (!/[A-Z]/.test(password)) {
-            return res.status(400).json({ message: "Enter at least one uppercase letter." });
+            return res.status(500).json({ message: "Enter at least one uppercase letter." });
         } else if (!/\d/.test(password)) {
-            return res.status(400).json({ message: "Enter at least one digit." });
+            return res.status(500).json({ message: "Enter at least one digit." });
         }
 
         if (password !== passwordConfirm) {
