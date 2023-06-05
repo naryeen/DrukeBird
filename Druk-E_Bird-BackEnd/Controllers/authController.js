@@ -124,31 +124,58 @@ exports.protect = async(req,res,next) =>{
         res.status(500).json({error:err.message});
     }
   }
-  exports.updatePassword = async(req,res,next)=>{
-    try{
-        const user  = await User.findById(req.user._id).select('+password')
+//   exports.updatePassword = async(req,res,next)=>{
+//     try{
+//         const user  = await User.findById(req.user._id).select('+password')
         
-        if(!(await user.correctPassword(req.body.passwordCurrent, user.password))){
-            //return next(new AppError('Your current password is wrong',401))
-            return res.status(401).json({message:"Your current password is wrong"})
-        }
+//         if(!(await user.correctPassword(req.body.passwordCurrent, user.password))){
+//             //return next(new AppError('Your current password is wrong',401))
+//             return res.status(401).json({message:"Your current password is wrong"})
+//         }
 
-         var passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/;
+//          var passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/;
 
-        if (!passwordRegex.length < 8) {
-            throw new Error("Enter a password more than 8 characters.");
-        } else if (!/[a-z]/.test(password)) {
-            throw new Error("Enter at least one lowercase letter.");
-        }else if (!/[A-Z]/.test(password)) {
-            throw new Error("Enter at least one uppercase letter.");
-        }
-        user.password = req.body.password
-        user.passwordConfirm = req.body.passwordConfirm
-        await user.save()
-        createSendToken(user,200,res)
+//         if (!passwordRegex.length < 8) {
+//             throw new Error("Enter a password more than 8 characters.");
+//         } else if (!/[a-z]/.test(password)) {
+//             throw new Error("Enter at least one lowercase letter.");
+//         }else if (!/[A-Z]/.test(password)) {
+//             throw new Error("Enter at least one uppercase letter.");
+//         }
+//         user.password = req.body.password
+//         user.passwordConfirm = req.body.passwordConfirm
+//         await user.save()
+//         createSendToken(user,200,res)
+//     }
+//     catch(err){
+//         res.status(500).json({error:err.message});
+//     }
+//   }
+
+exports.updatePassword = async (req, res, next) => {
+    try {
+      const user = await User.findById(req.user._id).select('+password');
+  
+      if (!(await user.correctPassword(req.body.passwordCurrent, user.password))) {
+        return res.status(401).json({ message: "Your current password is wrong" });
+      }
+  
+      const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/;
+  
+      if (!passwordRegex.test(req.body.password)) {
+        return res.status(400).json({ message: "Enter a password more than 8 characters." });
+      } else if (!/[a-z]/.test(req.body.password)) {
+        return res.status(400).json({ message: "Enter at least one lowercase letter." });
+      } else if (!/[A-Z]/.test(req.body.password)) {
+        return res.status(400).json({ message: "Enter at least one uppercase letter." });
+      }
+  
+      user.password = req.body.password;
+      user.passwordConfirm = req.body.passwordConfirm;
+      await user.save();
+      createSendToken(user, 200, res);
+    } catch (err) {
+      res.status(500).json({ error: err.message });
     }
-    catch(err){
-        res.status(500).json({error:err.message});
-    }
-  }
-    
+  };
+  
