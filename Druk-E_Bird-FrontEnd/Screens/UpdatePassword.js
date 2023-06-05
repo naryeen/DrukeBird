@@ -1,11 +1,12 @@
 import React, { useState, useContext } from "react";
-import { View,TextInput, StyleSheet, StatusBar} from "react-native";
-import { ActivityIndicator, MD2Colors} from "react-native-paper";
+import { View,  StyleSheet, StatusBar } from "react-native";
+import { ActivityIndicator, MD2Colors, TextInput } from "react-native-paper";
 import axios from "axios";
 import { AuthContext } from "../Context/AuthContext";
 import Toast from 'react-native-root-toast';
-import NavigationHeader from "../Components/NavigationHeader";
 import Button from "../Components/Button";
+import UpdatePasswordHeader from "../Components/UpdatePasswordHeader"
+
 
 const UpdatePassword = () => {
   const { userToken } = useContext(AuthContext);
@@ -20,22 +21,20 @@ const UpdatePassword = () => {
       password: newPassword,
       passwordConfirm: confirmPassword,
     };
-  
-    if (newPassword === "")
-    {
-      Toast.show("Please enter your new password", {duration: Toast.durations.SHORT});
-      
+
+    if (newPassword === "") {
+      Toast.show("Please enter your new password", { duration: Toast.durations.SHORT });
+
     }
-    else if(confirmPassword === ""){
-      Toast.show("Please enter your new confirm password", {duration: Toast.durations.SHORT});
-      
+    else if (confirmPassword === "") {
+      Toast.show("Please enter confirm new password", { duration: Toast.durations.SHORT });
+
     }
-    else if(currentPassword === "")
-    {
-      Toast.show("Please enter your current password", {duration: Toast.durations.SHORT});
+    else if (currentPassword === "") {
+      Toast.show("Please enter your current password", { duration: Toast.durations.SHORT });
     }
     if (newPassword !== confirmPassword) {
-      Toast.show("New password and confirm password do not match.", {duration: Toast.durations.SHORT});
+      Toast.show("New password and confirm password do not match.", { duration: Toast.durations.SHORT });
       return;
     }
     setIsLoading(true);
@@ -51,59 +50,61 @@ const UpdatePassword = () => {
       )
       .then((res) => {
         if (res.data.status === "success") {
-          Toast.show("Password updated successfully", {duration: Toast.durations.SHORT, position: Toast.positions.CENTER});
+          Toast.show("Password updated successfully", { duration: Toast.durations.SHORT, position: Toast.positions.CENTER });
           setCurrentPassword("");
           setNewPassword("");
           setConfirmPassword("");
         }
       })
       .catch((err) => {
-        if (err.response && err.response.data) {
-          Toast.show(err.response.data.message, {duration: Toast.durations.SHORT, position: Toast.positions.CENTER});
-        } else {
-          Toast.show("An error occurred. Please try again.", {duration: Toast.durations.SHORT, position: Toast.positions.CENTER});
-        }
+        JSON.stringify(err);
+        let message =
+          typeof err.response !== "undefined"
+            ? err.response.data.message
+            : err.message;
+        Toast.show(message, { duration: Toast.durations.SHORT });
       })
       .finally(() => setIsLoading(false));
-  }; 
+  };
 
   return (
     <View style={styles.container}>
-      <NavigationHeader title="Update Password"/>
-      <View style={styles.header}>
-      <TextInput
-        style={styles.input}
-        placeholder="Current Password"
-        secureTextEntry={true}
-        value={currentPassword}
-        onChangeText={(text) => setCurrentPassword(text)}
-        required={true}
-      />
-      <TextInput
-        style={styles.input}
-        placeholder="New Password"
-        secureTextEntry={true}
-        value={newPassword}
-        onChangeText={(text) => setNewPassword(text)}
-        required={true}
-      />
-      <TextInput
-        style={styles.input}
-        placeholder="Confirm Password"
-        secureTextEntry={true}
-        value={confirmPassword}
-        onChangeText={(text) => setConfirmPassword(text)
-        }
-        required={true}
-      />
-      </View>
-      <Button styling={styles.buttonstyle} onPress={handleUpdatePassword}>Update Password</Button>
-      {isLoading && (
-          <View style={styles.loadingContainer}>
-           <ActivityIndicator animating={true} color={MD2Colors.green800} size="large" />
+      <UpdatePasswordHeader title={"Update Password"} />
+      <View style={styles.container1}>
+        <View style={styles.header}>
+        <TextInput
+          style={styles.inputStyle}
+          mode="outlined"
+          label="Current Password"
+          placeholder="Enter Your Current Password"
+          onChangeText={(text) => setCurrentPassword(text)}
+          value={currentPassword}
+        />
+        <TextInput
+          style={styles.inputStyle}
+          mode="outlined"
+          label="New Password"
+          placeholder="Enter Your New Password"
+          onChangeText={(text) => setNewPassword(text)}
+          value={newPassword}
+        />
+        <TextInput
+          style={styles.inputStyle}
+          mode="outlined"
+          label="Confirm New Password"
+          placeholder="Enter Your New Password Again"
+          onChangeText={(text) => setConfirmPassword(text)}
+          value={confirmPassword}
+        />
         </View>
-      )}
-      <StatusBar />
+        <Button styling={styles.buttonstyle} onPress={handleUpdatePassword}>Update Password</Button>
+        {isLoading && (
+          <View style={styles.loadingContainer}>
+            <ActivityIndicator animating={true} color={MD2Colors.green800} size="large" />
+          </View>
+        )}
+        <StatusBar />
+      </View>
 
     </View>
   );
@@ -112,40 +113,38 @@ const UpdatePassword = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    padding:20,
-    backgroundColor: "#f2f2f2",
-    marginTop:20
-   
+
+
+  },
+  container1: {
+    marginTop: 20
+
   },
   header: {
     alignItems: "center",
-    paddingVertical: 20,
-    borderBottomColor: "#136D66",
-    borderBottomWidth: 1,
     marginHorizontal: 20,
-  },
-  heading: {
-    fontSize: 24,
-    fontWeight: "bold",
-    marginBottom: 20,
   },
   input: {
     width: "100%",
-    height: 40,
+    height: 50,
     borderWidth: 1,
     borderColor: "#ccc",
     borderRadius: 5,
     paddingHorizontal: 10,
     marginBottom: 10,
+    marginTop: 20,
+    borderColor: "#ccc",
+    borderRadius: 5,
   },
   error: {
     color: "red",
     marginTop: 10,
   },
-  buttonstyle:{
-    backgroundColor:'#136D66',
-    marginTop:30,
-    width:"100%"
+  buttonstyle: {
+    backgroundColor: '#136D66',
+    marginTop: 30,
+    width: "90%",
+    alignSelf: "center"
   },
   loadingContainer: {
     position: 'absolute',
@@ -156,7 +155,13 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: 'rgba(0, 0, 0, 0.5)',
-  }
+  },
+  inputStyle: {
+    marginTop: 20,
+    borderColor: "#ccc",
+    borderRadius: 5,
+    width:"100%"
+  },
 });
 
 export default UpdatePassword;

@@ -1,33 +1,34 @@
-import React, { useState, useContext } from 'react';
-import { View, StyleSheet, Text, Alert } from 'react-native';
-import { Picker } from '@react-native-picker/picker';
-import { ActivityIndicator,MD2Colors} from 'react-native-paper';
-import Button from '../Components/Button';
-import Icon from 'react-native-vector-icons/FontAwesome';
-import axios from 'axios';
-import Toast from 'react-native-root-toast';
-import { AuthContext } from '../Context/AuthContext';
-import BhutanDzongkhags from '../Components/BhutanDzongkha';
+import React, { useState, useContext } from "react";
+import { View, StyleSheet, Text, Alert, StatusBar } from "react-native";
+import { ActivityIndicator, MD2Colors } from "react-native-paper";
+import SelectDropdown from "react-native-select-dropdown";
+import Button from "../Components/Button";
+import Icon from "react-native-vector-icons/FontAwesome";
+import axios from "axios";
+import { AuthContext } from "../Context/AuthContext";
+import BhutanDzongkhags from "../Components/BhutanDzongkha";
+import NavigationHeader from "../Components/NavigationHeader";
+import Toast from 'react-native-root-toast'; 
 
 const SubmittingBirding = ({ route }) => {
   const { SubmittedBirdsdata } = route.params;
   const { userInfo } = useContext(AuthContext);
   const name = userInfo.user.name;
   const userId = userInfo.user._id;
-  const [selectedDzongkhag, setSelectedDzongkhag] = useState('');
-  const [selectedGewog, setSelectedGewog] = useState('');
-  const [selectedVillage, setSelectedVillage] = useState('');
+  const [selectedDzongkhag, setSelectedDzongkhag] = useState("");
+  const [selectedGewog, setSelectedGewog] = useState("");
+  const [selectedVillage, setSelectedVillage] = useState("");
   const [gewogOptions, setGewogOptions] = useState([]);
   const [villageOptions, setVillageOptions] = useState([]);
-  const [randomNumber, setRandomNumber] = useState(Math.floor(Math.random() * 1000));
+  const [randomNumber, setRandomNumber] = useState(
+    Math.floor(Math.random() * 1000)
+  );
   const [loading, setLoading] = useState(false);
-
   const handleDzongkhagChange = (value) => {
     setSelectedDzongkhag(value);
     setSelectedGewog('');
     setSelectedVillage('');
     setVillageOptions([]);
-
     const gewogs = BhutanDzongkhags[value];
     const gewogOptions = Object.keys(gewogs);
     setGewogOptions(gewogOptions);
@@ -38,19 +39,23 @@ const SubmittingBirding = ({ route }) => {
     setSelectedVillage('');
 
     const villages = BhutanDzongkhags[selectedDzongkhag][value];
-    const villageOptions = villages.map((village) => ({ label: village, value: village }));
+    const villageOptions = villages.map((village) => ({
+      label: village,
+      value: village,
+    }));
     setVillageOptions(villageOptions);
   };
 
-  const birdsWithCount = SubmittedBirdsdata.startbirding1data.filter((bird) => bird.count > 0);
+  const birdsWithCount = SubmittedBirdsdata.startbirding1data.filter(
+    (bird) => bird.count > 0
+  );
 
   const StartbirdingonedataSave = () => {
     if (!selectedDzongkhag) {
-      Toast.show("Please select Dzongkha", {duration: Toast.durations.SHORT});
+      Toast.show("Please select Dzongkhag", {duration: Toast.durations.SHORT});
       return;
     } else if (!selectedGewog) {
       Toast.show("Please select Gewong", {duration: Toast.durations.SHORT});
-
       return;
     } else if (!selectedVillage) {
       Toast.show("Please select Village", {duration: Toast.durations.SHORT});
@@ -74,7 +79,7 @@ const SubmittingBirding = ({ route }) => {
             selectedTime: SubmittedBirdsdata.StartbirdingData.selectedTime,
             observer: SubmittedBirdsdata.StartbirdingData.userName,
             EndpointLocation: [endpointLocation],
-            status: 'submittedchecklist',
+            status: "submittedchecklist",
           },
         ];
 
@@ -89,124 +94,165 @@ const SubmittingBirding = ({ route }) => {
       }
     });
     if (!dataSubmitted) {
-      Alert.alert('No Data Submitted', 'Please select at least one bird count before submitting', [{ text: 'OK' }]);
+      Alert.alert(
+        "No Data Submitted",
+        "Please select at least one bird count before submitting",
+        [{ text: "OK" }]
+      );
       return;
     }
 
     setLoading(true);
     try {
-      console.log('detailOfBirds', detailOfBirds);
+      console.log("detailOfBirds", detailOfBirds);
       axios
-        .post('https://druk-ebirds.onrender.com/api/v1/checkList', detailOfBirds)
+        .post(
+          "https://druk-ebirds.onrender.com/api/v1/checkList",
+          detailOfBirds
+        )
         .then((response) => {
-            Toast.show("Data successfully posted", {duration: Toast.durations.SHORT});
+            Toast.show('Data successfully posted', {duration: Toast.durations.SHORT});
         })
         .catch((error) => {
-          Toast.show(error, {duration: Toast.durations.SHORT});
+            Toast.show(error, {duration: Toast.durations.SHORT});
         })
-        .finally(() => {setLoading(false);});
+        .finally(() => {
+          setLoading(false);
+        });
     } catch (error) {
-      Toast.show(error, {duration: Toast.durations.SHORT});
+        Toast.show(error, {duration: Toast.durations.SHORT});
     }
   };
-
   return (
-    <View style={styles.container}>
-      <Text style={styles.label}>Select Dzongkhag:</Text>
-      <Picker selectedValue={selectedDzongkhag} onValueChange={handleDzongkhagChange} style={styles.picker}>
-        <Picker.Item label="Select Dzongkhag" value="" />
-        {Object.keys(BhutanDzongkhags).map((dzongkhag) => (
-          <Picker.Item key={dzongkhag} label={dzongkhag} value={dzongkhag} />
-        ))}
-      </Picker>
-
-      <Text style={styles.label}>Select Gewog:</Text>
-      <Picker
-        selectedValue={selectedGewog}
-        onValueChange={handleGewogChange}
-        enabled={selectedDzongkhag !== ''}
-        style={styles.picker}
-      >
-        <Picker.Item label="Select Gewog" value="" />
-        {gewogOptions.map((gewog) => (
-          <Picker.Item key={gewog} label={gewog} value={gewog} />
-        ))}
-      </Picker>
-
-      <Text style={styles.label}>Select Village:</Text>
-      <Picker
-        selectedValue={selectedVillage}
-        onValueChange={setSelectedVillage}
-        enabled={selectedDzongkhag !== '' && selectedGewog !== ''}
-        style={styles.picker}
-      >
-        <Picker.Item label="Select Village" value="" />
-        {villageOptions.map((village) => (
-          <Picker.Item key={village.value} label={village.label} value={village.value} />
-        ))}
-      </Picker>
-
-      {birdsWithCount.length > 0 ? (
-        <Text style={{ fontWeight: 'bold', fontSize: 20, marginTop: 10 }}>
-          Number of observed <Icon name="twitter" size={30} color="#000" />: {birdsWithCount.length}
-        </Text>
-      ) : (
-        <Text>No birds with count greater than 0.</Text>
-      )}
-      {birdsWithCount.map((bird) => (
-        <Text key={bird.englishname}>
-          {bird.englishname} : {bird.count}
-        </Text>
-      ))}
-      <Button styling={styles.buttonstyle} onPress={StartbirdingonedataSave}>
-        Continue
-      </Button>
-      {loading && (
-        <View style={styles.loadingContainer}>
-           <ActivityIndicator animating={true} color={MD2Colors.green800} size="large" />
+      <View style={styles.container}>
+        <NavigationHeader title={"Submit Checklist"} />
+        <View style={styles.container1}>
+          <Text style={styles.label}>Select Dzongkhag:</Text>
+          <SelectDropdown
+            data={Object.keys(BhutanDzongkhags)}
+            onSelect={(selectedDzongkhag) =>
+              handleDzongkhagChange(selectedDzongkhag)
+            }
+            defaultButtonText="Select Dzongkhag"
+            buttonTextAfterSelection={(selectedItem) => selectedItem}
+            rowTextForSelection={(item) => item}
+            buttonStyle={styles.dropdown1BtnStyle}
+            buttonTextStyle={styles.dropdown1BtnTxtStyle}
+            renderDropdownIcon={() => (
+              <Icon name="chevron-down" size={20} color="#000" />
+            )}
+            dropdownStyle={styles.dropdown}
+            dropdownTextStyle={styles.dropdownText}
+            rowStyle={styles.dropdownRow}
+          />
+          <Text style={styles.label}>Select Gewog:</Text>
+          <SelectDropdown
+            data={gewogOptions}
+            onSelect={(selectedGewog) => handleGewogChange(selectedGewog)}
+            defaultButtonText="Select Gewog"
+            buttonTextAfterSelection={(selectedItem) => selectedItem}
+            rowTextForSelection={(item) => item}
+            buttonStyle={styles.dropdown1BtnStyle}
+            buttonTextStyle={styles.dropdown1BtnTxtStyle}
+            renderDropdownIcon={() => (
+              <Icon name="chevron-down" size={20} color="#000" />
+            )}
+            dropdownStyle={styles.dropdown}
+            dropdownTextStyle={styles.dropdownText}
+            rowStyle={styles.dropdownRow}
+            disabled={selectedDzongkhag === ""}
+          />
+          <Text style={styles.label}>Select Village:</Text>
+          <SelectDropdown
+            data={villageOptions.map((village) => village.value)}
+            onSelect={(selectedVillage) => setSelectedVillage(selectedVillage)}
+            defaultButtonText="Select Village"
+            buttonTextAfterSelection={(selectedItem) => selectedItem}
+            rowTextForSelection={(item) => item}
+            buttonStyle={styles.dropdown1BtnStyle}
+            buttonTextStyle={styles.dropdown1BtnTxtStyle}
+            renderDropdownIcon={() => (
+              <Icon name="chevron-down" size={20} color="#000" />
+            )}
+            dropdownStyle={styles.dropdown}
+            dropdownTextStyle={styles.dropdownText}
+            rowStyle={styles.dropdownRow}
+            disabled={selectedDzongkhag === "" || selectedGewog === ""}
+          />
+          {birdsWithCount.length > 0 ? (
+            <Text style={{fontSize:18, marginTop: 10 }}>
+              Number of observed Birds: {birdsWithCount.length}
+            </Text>
+          ) : (
+            <Text style={{marginTop: 10 }}>No birds with count greater than 0.</Text>
+          )}
+          {birdsWithCount.map((bird) => (
+            <Text style={{marginTop: 10 }} key={bird.englishname}>
+              {bird.englishname} : {bird.count}
+            </Text>
+          ))}
+          <Button
+            styling={styles.buttonstyle}
+            onPress={StartbirdingonedataSave}
+          >
+            Continue
+          </Button>
+          {loading && (
+            <View style={styles.loadingContainer}>
+              <ActivityIndicator
+                animating={true}
+                color={MD2Colors.green800}
+                size="large"
+              />
+            </View>
+          )}
         </View>
-      )}
-    </View>
+        <StatusBar />
+      </View>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
-    marginTop: 50,
-    flex: 1,
-    alignItems: 'center',
+    flex:1
+  
+  },
+  container1: {
+    marginHorizontal: 20,
   },
   inputStyle: {
     marginTop: 20,
-    borderColor: '#ccc',
+    borderColor: "#ccc",
     borderRadius: 5,
     width: 321,
   },
   buttonstyle: {
-    marginTop: 150,
+    marginTop: 20,
     width: 321,
+    alignSelf: "center",
   },
   label: {
     fontSize: 16,
-    marginBottom: 8,
-  },
-  picker: {
-    width: 200,
-    height: 10,
-    marginBottom: 16,
-    backgroundColor: '#FFFFFF',
-    borderRadius: 4,
+    marginTop:20,
   },
   loadingContainer: {
-    position: 'absolute',
+    position: "absolute",
     top: 0,
     left: 0,
     right: 0,
     bottom: 0,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: 'rgba(0, 0, 0, 0.5)',
-  }
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: "rgba(0, 0, 0, 0.5)",
+  },
+  dropdown1BtnStyle: {
+    width: "100%",
+    backgroundColor: "#FFF",
+    borderRadius: 5,
+    borderWidth: 1,
+    borderColor: "#ccc",
+  },
+  dropdown1BtnTxtStyle: { textAlign: "left" },
 });
 
 export default SubmittingBirding;

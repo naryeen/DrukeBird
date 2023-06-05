@@ -3,7 +3,7 @@ import { View, Text, TouchableOpacity, StyleSheet, Platform} from "react-native"
 import { Ionicons } from "@expo/vector-icons";
 import { useNavigation } from '@react-navigation/native';
 
-const UpdatePasswordHeader = ({ title}) => {
+const UnknownVerificationHeader = ({ title}) => {
   const navigation = useNavigation();
 
   return (
@@ -39,10 +39,12 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
   },
   title: {
+    flex: 1,
     color: '#136D66',
     fontWeight: 'bold',
     fontSize: widthPercentageToDP('5%'),
-    marginLeft: widthPercentageToDP('20%'),
+    paddingHorizontal: widthPercentageToDP('2%'),
+    marginLeft: widthPercentageToDP('13%'),
   },
 });
-export default UpdatePasswordHeader;
+export default UnknownVerificationHeader;

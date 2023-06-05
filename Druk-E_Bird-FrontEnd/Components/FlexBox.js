@@ -1,11 +1,6 @@
-import React from 'react';
-import { StyleSheet, Text, View, Dimensions } from 'react-native';
-import { FontAwesome5 } from '@expo/vector-icons';
-import { Ionicons } from '@expo/vector-icons';  
-import { MaterialCommunityIcons } from '@expo/vector-icons';
-import { MaterialIcons } from '@expo/vector-icons';
+import React from "react";
+import { StyleSheet, Text, View} from "react-native";
 
-const { width } = Dimensions.get('window');
 
 export default function FlexTrail() {
   return (
@@ -14,55 +9,74 @@ export default function FlexTrail() {
         <Text style={styles.header}>Start Checklist</Text>
         <View style={styles.itemContainer}>
           <Text style={styles.textbody}>
-            Before selecting the birds, you need to select date and time. If you are about to begin birding, use the current date and time or you can adjust these values to previous time period.
+            Before selecting the birds, you need to select date and time. If you
+            are about to begin birding, use the current date and time or you can
+            adjust these values to previous time period.
+            {"\n\n"}
+            Once the date, time, and tracks are set, tap "Start Checklist". Now
+            we're at the fun part—reporting your bird sightings! Enter every
+            bird that you see and the numbers of each species. Tap on a bird's
+            name to enter and add some details including the bird photo of a
+            particular species.
+            {"\n\n"}
+            You also have the option to pause birding, and your checklist
+            summary will be saved as a draft, allowing you to submit it at a
+            later time.
           </Text>
-          <View style={styles.icon}>
-            <FontAwesome5 name="list-alt" size={24} color="#4A2C2C" />
-          </View>
         </View>
       </View>
-
       <View>
         <Text style={styles.header}>Record Tracks</Text>
         <View style={styles.itemContainer}>
           <Text style={styles.textbody}>
-            Record track is selected by default. Tracks will keep an automated GPS path of your route and record your distance traveled and time spent in this application so you can focus on birding.
+            Record track is selected by default. This will record the Latitude
+            and Longitude of the current location.
           </Text>
-          <View style={styles.icon}>
-            <MaterialCommunityIcons name="ray-start" size={24} color="black" />
-          </View>
         </View>
       </View>
-
       <View>
         <Text style={styles.header}>Select a Location</Text>
         <View style={styles.itemContainer}>
           <Text style={styles.textbody}>
-            At any time during the checklist, you can select an exact location for a more precise list of birds in your area. You must select a location before you submit your checklist.
+            You must select a location before you submit your checklist. You
+            will be provided with options to choose Dzongkhag, Gewog and
+            Village.
           </Text>
-          <View style={styles.icon}>
-            <Ionicons name="ios-location-sharp" size={24} color="#4E4D4D" />
-          </View>
         </View>
       </View>
 
       <View>
-        <Text style={styles.header}>Start Birding</Text>
+        <Text style={styles.header}>Unknown Birds</Text>
         <View style={styles.itemContainer}>
           <Text style={styles.textbody}>
-            Once the date, time, and tracks are set, tap "Start New Checklist". Now we're at the fun part—reporting your bird sightings! Enter every bird that you see or hear and the numbers of each species. Tap on a bird's name to enter and add some details on a particular species.
+            Even if you are unfamiliar with the name of the bird, you have the
+            option to select "UnknownBird" and submit the checklist. The
+            administrators will verify the unidentified bird, and you will be
+            able to view its name from the "Unknown Verification" section.
           </Text>
-          <View style={styles.icon}>
-            <MaterialIcons name="filter-9-plus" size={24} color="#472F34" />
-          </View>
+        </View>
+      </View>
+      <View>
+        <Text style={styles.header}>Explore</Text>
+        <View style={styles.itemContainer}>
+          <Text style={styles.textbody}>
+            The Explore feature allows you to search for specific birds or
+            birding sites based on the checklists submitted by all users.
+            Additionally, it provides a graph displaying the top three bird
+            species and birding sites, as determined by the checklists
+            submitted.
+          </Text>
         </View>
       </View>
 
       <View>
-        <Text style={styles.header}>Review & Submit</Text>
+        <Text style={styles.header}>Checklist</Text>
         <View style={styles.itemContainer}>
           <Text style={styles.textbody}>
-            When you are done birding, tap "Submit" to generate a summary of your checklist.
+            Once you have submitted a checklist, you will be able to access and
+            view all the checklists you have submitted in the "Checklist"
+            section. This section will also include any draft checklists that
+            you can choose to submit at a later time.
           </Text>
         </View>
       </View>
@@ -70,29 +84,27 @@ export default function FlexTrail() {
   );
 }
 
+import { heightPercentageToDP, widthPercentageToDP } from 'react-native-responsive-screen';
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    paddingHorizontal: '5%',
-    paddingVertical: '5%',
+    paddingHorizontal: widthPercentageToDP('5%'),
     justifyContent: 'space-between',
   },
   header: {
-    fontSize: 18,
+    fontSize: widthPercentageToDP('4%'),
     fontWeight: 'bold',
-    marginBottom: 10,
   },
   itemContainer: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    marginBottom: 20,
+    marginBottom: heightPercentageToDP('2%'),
   },
   textbody: {
     flex: 1,
-    marginRight: 10,
+    marginRight: widthPercentageToDP('2%'),
+    textAlign: 'justify',
   },
   icon: {
-    marginLeft: 10,
+    marginLeft: widthPercentageToDP('2%'),
   },
 });

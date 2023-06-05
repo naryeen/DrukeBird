@@ -4,7 +4,7 @@ import { Avatar, ActivityIndicator, MD2Colors } from "react-native-paper";
 import { AuthContext } from "../Context/AuthContext";
 import { Swipeable } from "react-native-gesture-handler";
 import axios from "axios";
-import NavigationHeader from '../Components/NavigationHeader';
+import UnknownVerificationHeader from "../Components/UnknownVerificationHeader";
 
 
 const UnknownVerification = () => {
@@ -80,7 +80,8 @@ const UnknownVerification = () => {
 
   return (
     <View style={styles.container}>
-      <NavigationHeader title={'UnknownBirds'} />
+      <UnknownVerificationHeader title={"Unknown Verification"}/>
+      
       <FlatList
         data={notifications}
         renderItem={renderItem}

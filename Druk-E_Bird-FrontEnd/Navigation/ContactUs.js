@@ -1,11 +1,13 @@
 import React, { useState } from 'react';
 import { TextInput } from 'react-native-paper';
-import { StyleSheet, View, Text, ScrollView, Dimensions, ToastAndroid, StatusBar } from 'react-native';
+import { StyleSheet, View, Text, ScrollView, ToastAndroid, StatusBar, SafeAreaView } from 'react-native';
 import Button from '../Components/Button';
-import NavigationHeader from '../Components/NavigationHeader';
+import UnknownHeader from '../Components/UnknownHeader';
 import * as MailComposer from 'expo-mail-composer';
+import Toast from 'react-native-root-toast'; // Add this import
 
-const { width, height } = Dimensions.get('window');
+
+import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 
 const ContactUs = () => {
   const [name, setName] = useState('');
@@ -14,13 +16,13 @@ const ContactUs = () => {
 
   const sendMessage = () => {
     if (name.trim() === '') {
-      ToastAndroid.show('Please enter your name', ToastAndroid.SHORT);
+      Toast.show('Please enter your name', { duration: Toast.durations.SHORT });
       return;
     } else if (email.trim() === '') {
-      ToastAndroid.show('Please enter your email', ToastAndroid.SHORT);
+      Toast.show('Please enter your email', { duration: Toast.durations.SHORT });
       return;
     } else if (message.trim() === '') {
-      ToastAndroid.show('Write the message', ToastAndroid.SHORT);
+      Toast.show("Write the message", { duration: Toast.durations.SHORT });
       return;
     }
 
@@ -33,14 +35,6 @@ const ContactUs = () => {
       subject: emailSubject,
       body: emailBody,
     })
-      .then(result => {
-        console.log(result.status)
-        if (result.status !== 'sent') {
-          ToastAndroid.show('Email sending cancelled', ToastAndroid.SHORT);
-        } else if (result.status === 'sent') {
-          ToastAndroid.show('Email sent successfully', ToastAndroid.SHORT);
-        }
-      })
       .catch(error => {
         ToastAndroid.show('An error occurred', ToastAndroid.SHORT);
         console.log(error);
@@ -48,8 +42,9 @@ const ContactUs = () => {
   };
 
   return (
+    <SafeAreaView>
     <View style={styles.con}>
-      <NavigationHeader title={'Contact Us'} />
+      <UnknownHeader title={'Contact Us'} />
       <Text style={styles.messages}>Leave a message</Text>
       <View style={styles.container}>
         <ScrollView>
@@ -83,53 +78,56 @@ const ContactUs = () => {
           </Button>
         </ScrollView>
       </View>
+      
       <StatusBar />
     </View>
+    </SafeAreaView>
   );
 };
 
 const styles = StyleSheet.create({
-  con:{
-    flex:1,
+  con: {
+    flex: 1,
   },
   container: {
-    padding: width * 0.03,
+    padding: wp('3%'),
     backgroundColor: '#FFFFFF',
-    height: height * 0.7,
-    marginTop: height * 0.04,
-    width: width * 0.95,
-    marginLeft: width * 0.025,
-    borderRadius: width * 0.02,
+    height: hp('75%'),
+    marginTop: hp('3%'),
+    width: wp('95%'),
+    marginLeft: wp('2.5%'),
+    borderRadius: wp('2%'),
     elevation: 20,
     borderColor: 'black',
   },
   messages: {
     color: 'gray',
-    marginLeft: width * 0.07,
-    marginTop: height * 0.035,
-    fontSize: width * 0.05,
+    marginLeft: wp('7%'),
+    marginTop: hp('3.5%'),
+    fontSize: wp('5%'),
   },
   name: {
-    marginTop: height * 0.02,
+    marginTop: hp('2%'),
     borderColor: '#ccc',
-    borderRadius: width * 0.02,
+    borderRadius: wp('2%'),
   },
   email: {
-    marginTop: height * 0.02,
+    marginTop: hp('2%'),
     borderColor: '#ccc',
-    borderRadius: width * 0.02,
+    borderRadius: wp('2%'),
   },
   message: {
-    marginTop: height * 0.02,
+    marginTop: hp('2%'),
     borderColor: '#ccc',
-    borderRadius: width * 0.02,
-    height: height * 0.3,
+    borderRadius: wp('2%'),
+    height: hp('30%'),
   },
   buttonStyle: {
     backgroundColor: '#136D66',
-    marginTop: height * 0.08,
+    marginTop: hp('8%'),
     width: '100%',
   },
 });
+
 
 export default ContactUs;

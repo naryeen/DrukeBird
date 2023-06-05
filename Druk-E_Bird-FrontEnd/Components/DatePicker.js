@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
-import { View, StyleSheet, TouchableOpacity } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import Icon from 'react-native-vector-icons/FontAwesome';
+import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 
 const DatePicker = ({ onDateSelected }) => {
     const [showPicker, setShowPicker] = useState(false);
@@ -39,16 +40,17 @@ const DatePicker = ({ onDateSelected }) => {
 const styles = StyleSheet.create({
     pickerContainer: {
         alignItems: 'center',
-        marginVertical: 16,
+        marginVertical: hp('2%'), // Adjust the percentage value as needed
     },
     pickerText: {
-        fontSize: 16,
+        fontSize: wp('4.17%'), // Adjust the percentage value as needed
         color: '#2196F3',
     },
     dateicon: {
-        padding: 20,
-        marginRight: 20,
+        padding: wp('5.56%'), // Adjust the percentage value as needed
+        marginRight: wp('5.56%'), // Adjust the percentage value as needed
     },
 });
+
 
 export default DatePicker;

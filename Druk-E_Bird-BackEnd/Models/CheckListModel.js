@@ -79,7 +79,7 @@ const detailSchema = new mongoose.Schema({
   },
   Approvedstatus: {
     type: String,
-    default: "approvedpending",
+    default: "pending",
   },
 },
 );

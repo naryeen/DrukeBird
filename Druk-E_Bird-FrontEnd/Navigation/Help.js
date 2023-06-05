@@ -1,10 +1,12 @@
 import React from 'react';
-import { View, StyleSheet, StatusBar, ScrollView, Dimensions} from 'react-native';
+import { View, StyleSheet, StatusBar, ScrollView, SafeAreaView} from 'react-native';
 import { Video } from 'expo-av';
 import FlexTrail from '../Components/FlexBox';
 import NavigationHeader from '../Components/NavigationHeader';
+import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 
-const { width } = Dimensions.get('window');
+
+// const { width } = Dimensions.get('window');
 
 const Help = () => {
   const video = React.useRef(null);
@@ -12,6 +14,7 @@ const Help = () => {
 
   return (
     <View style={styles.container}>
+      <SafeAreaView>
       <NavigationHeader title="Help" />
       <View style={styles.videoContainer}>
         <Video
@@ -26,22 +29,23 @@ const Help = () => {
           defaultMute={true}
         />
       </View>
+      </SafeAreaView>
       <StatusBar />
       <ScrollView>
         <FlexTrail />
       </ScrollView>
+      
     </View>
   );
 };
-
 const styles = StyleSheet.create({
   container: {
     flex: 1,
   },
   video: {
     alignSelf: 'center',
-    width: width * 0.9,
-    height: width * 0.45,
+    width: wp('90%'),
+    height: wp('45%'),
   },
   buttons: {
     flexDirection: 'row',
@@ -56,9 +60,10 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.1,
     shadowRadius: 2,
     elevation: 2,
-    marginVertical: width * 0.05,
-    marginHorizontal: width * 0.05,
+    marginVertical: wp('5%'),
+    marginHorizontal: wp('5%'),
   },
 });
+
 
 export default Help;

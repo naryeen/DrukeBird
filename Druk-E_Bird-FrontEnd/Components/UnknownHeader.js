@@ -1,5 +1,5 @@
 import React from "react";
-import { View, Text, TouchableOpacity, StyleSheet, Dimensions } from "react-native";
+import { View, Text, TouchableOpacity, StyleSheet, Platform} from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import { useNavigation } from '@react-navigation/native';
 
@@ -15,29 +15,36 @@ const UnknownHeader = ({ title}) => {
     </View>
   );
 };
-
-const { width, height } = Dimensions.get('window');
-const paddingHorizontal = width * 0.05;
+import { heightPercentageToDP, widthPercentageToDP } from 'react-native-responsive-screen';
 
 const styles = StyleSheet.create({
   headerContainer: {
-    flexDirection: "row",
-    alignItems: "center",
-    height: 60,
-    paddingHorizontal: paddingHorizontal,
+    flexDirection: 'row',
+    alignItems: 'center',
+    height: heightPercentageToDP('8%'),
+    paddingHorizontal: widthPercentageToDP('5%'),
     borderRadius: 1,
-    elevation: 1,
-    shadowOffset: { width: 1, height: 1 },
-    shadowOpacity: 0.2,
-    shadowRadius: 2,
+    ...Platform.select({
+      ios: {
+        shadowColor: '#000',
+        shadowOffset: { width: 0, height: 1 },
+        shadowOpacity: 0.2,
+        shadowRadius: 1,
+      },
+      android: {
+        elevation: 2,
+      },
+    }),
+    backgroundColor: '#fff',
   },
   title: {
     flex: 1,
-    color: "#136D66",
-    fontWeight: "bold",
-    fontSize: 20,
-    paddingHorizontal: 10,
-    marginLeft: "23%" // Adjust this value to your preference
+    color: '#136D66',
+    fontWeight: 'bold',
+    fontSize: widthPercentageToDP('5%'),
+    paddingHorizontal: widthPercentageToDP('2%'),
+    marginLeft: widthPercentageToDP('15%'),
   },
 });
+
 export default UnknownHeader;

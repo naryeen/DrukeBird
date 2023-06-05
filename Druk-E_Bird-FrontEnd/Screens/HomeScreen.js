@@ -1,22 +1,26 @@
-import React from 'react';
-import { StyleSheet, View, Text, SafeAreaView, Dimensions } from 'react-native';
-import image1 from '../assets/Image/image1.png';
-import image2 from '../assets/Image/image2.png';
-import image3 from '../assets/Image/image3.png';
-import { SliderBox } from 'react-native-image-slider-box';
-import Button from "../Components/Button";
-import { useNavigation } from '@react-navigation/native';
+import React from "react";
+import { StyleSheet, View, Text, SafeAreaView, Dimensions } from "react-native";
 
-const { width, height } = Dimensions.get('window');
+import {
+  widthPercentageToDP as wp,
+  heightPercentageToDP as hp,
+  listenOrientationChange as lor,
+  removeOrientationListener as rol,
+} from "react-native-responsive-screen";
+
+import image1 from "../assets/Image/image1.png";
+import image2 from "../assets/Image/image2.png";
+import image3 from "../assets/Image/image3.png";
+import { SliderBox } from "react-native-image-slider-box";
+import Button from "../Components/Button";
+import { useNavigation } from "@react-navigation/native";
+
+const { width, height } = Dimensions.get("window");
 
 const HomeScreen = () => {
   const navigation = useNavigation();
 
-  const images = [
-    image1,
-    image2,
-    image3,
-  ];
+  const images = [image1, image2, image3];
 
   return (
     <View style={styles.container}>
@@ -43,14 +47,17 @@ const HomeScreen = () => {
             with
             <Text style={styles.innerText}> DrukeBird</Text>
           </Text>
-          <Text style={styles.innerText1}> The ultimate tool for anyone who</Text>
+          <Text style={styles.innerText1}>
+            {" "}
+            The ultimate tool for anyone who
+          </Text>
           <Text style={styles.baseText}> loves birds and nature</Text>
         </View>
         <Button
           styling={styles.buttonStyle}
-          onPress={() => navigation.navigate('Help')}
+          onPress={() => navigation.navigate("Help")}
         >
-          How it works {'>>'}
+          How it works {">>"}
         </Button>
       </SafeAreaView>
     </View>
@@ -60,45 +67,43 @@ const HomeScreen = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    paddingTop: height * 0.009,
+    paddingTop: hp('0.9%'),
   },
   image: {
-    height: height * 0.35, // Adjust the height of the image
-    resizeMode: 'contain', // Adjust the resizeMode if needed
+    height: hp('35%'),
+    resizeMode: "contain",
   },
   contentContainer: {
-    paddingTop: height * 0.09,
-    alignItems: 'center',
-    justifyContent: 'center',
+    alignItems: "center",
+    justifyContent: "center",
+    marginTop: hp('9%'),
   },
   centeredContainer: {
-    alignItems: 'center',
-    justifyContent: 'center',
+    alignItems: "center",
+    justifyContent: "center",
   },
   highlight: {
-    color: '#136d66',
-    fontWeight: 'bold',
-    fontSize: width * 0.05,
-    marginBottom: height * 0.02,
+    color: "#136d66",
+    fontWeight: "bold",
+    fontSize: wp('5%'),
   },
   innerText: {
-    color: '#136d66',
-    fontWeight: 'bold',
-    fontSize: width * 0.05,
+    color: "#136d66",
+    fontWeight: "bold",
+    fontSize: wp('5%'),
   },
   innerText1: {
-    marginTop:30,
-    fontWeight: 'bold',
-    fontSize: width * 0.04,
-    paddingTop: height * 0.02,
+    fontWeight: "bold",
+    fontSize: wp('4.3%'),
+    paddingTop: hp('5%'),
   },
   baseText: {
-    fontWeight: 'bold',
-    fontSize: width * 0.04,
+    fontWeight: "bold",
+    fontSize: wp('4.3%'),
   },
   buttonStyle: {
-    marginTop: height * 0.08,
-    width: width * 0.95,
+    marginTop: hp('8%'),
+    width: wp('95%'),
   },
 });
 

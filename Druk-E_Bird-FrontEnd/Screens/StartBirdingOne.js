@@ -3,7 +3,7 @@ import { FAB, ActivityIndicator, MD2Colors, Searchbar} from "react-native-paper"
 import { StyleSheet, View, FlatList, Alert, Text, SafeAreaView, TouchableOpacity} from "react-native";
 import Toast from 'react-native-root-toast'; 
 import Button from "../Components/Button";
-import { useNavigation } from "@react-navigation/native";
+import { useNavigation, CommonActions } from "@react-navigation/native";
 import axios from "axios";
 import { Ionicons } from '@expo/vector-icons';
 import StartBirdingCounter from "../Components/StartBirdingCounter";
@@ -18,6 +18,7 @@ const formatTime = (time) => {
   const formattedSeconds = String(seconds).padStart(2, "0");
   return `${formattedHours}:${formattedMinutes}:${formattedSeconds}`;
 };
+
 
 const StartBirdingone = ({ route }) => {
   const navigation = useNavigation();
@@ -53,15 +54,20 @@ const StartBirdingone = ({ route }) => {
     navigation.setOptions({
       headerLeft: () => (
         <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-          <TouchableOpacity onPress={() => navigation.replacw('StartBirding')} style={{ marginLeft: 10 }}>
-            <Ionicons name="arrow-back" size={24} color="black" />
-          </TouchableOpacity>
+          <Ionicons
+            name="arrow-back"
+            size={24}
+            color="black"
+            onPress={() => navigation.dispatch(CommonActions.goBack())}
+          />
           <Text style={{ marginLeft: 10, fontSize: 18 }}>
             {formatTime(seconds)}
           </Text>
-        </View>),
+        </View>
+      ),
     });
   }, [navigation, seconds]);
+  
 
   const handleFabPress = (UnknownBirdsdata) => {
     Alert.alert(
@@ -83,16 +89,20 @@ const StartBirdingone = ({ route }) => {
 
   useEffect(() => {
     axios
-      .get("https://druk-ebird.onrender.com/api/v1/species")
+      .get("https://druk-ebird.onrender.com/api/v1/species?limit=20")
       .then((res) => {
         const speciesData = res.data.species.map((item) => {
-          return {...item, count: 0}
+          // return {...item, count: 0}
+          return {_id: item._id,
+            englishName: item.englishName,
+            count: 0}
         });
         setData(speciesData);
         setFilteredData(speciesData);
+        console.log(speciesData.length)
       })
       .catch((error) => {
-        Toast.show(err, {duration: Toast.durations.SHORT});
+        Toast.show(error, {duration: Toast.durations.SHORT});
       })
       .finally(() => setLoading(false));
   }, []);

@@ -36,19 +36,20 @@ const TimePicker = ({ onTimeSelected }) => {
   );
 };
 
+import { widthPercentageToDP, heightPercentageToDP } from 'react-native-responsive-screen';
+
 const styles = StyleSheet.create({
   pickerContainer: {
     alignItems: 'center',
-    marginVertical: 16,
-    flexDirection: "row",
+    marginVertical: heightPercentageToDP(2),
+    flexDirection: 'row',
   },
   pickerText: {
-    fontSize: 16,
+    fontSize: widthPercentageToDP(4),
     color: '#2196F3',
   },
   timeicon: {
-    marginRight: 20,
+    marginRight: widthPercentageToDP(4),
   },
 });
-
-export default TimePicker;
+export default TimePicker

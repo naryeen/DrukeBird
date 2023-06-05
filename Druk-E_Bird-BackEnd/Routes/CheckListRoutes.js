@@ -1,15 +1,12 @@
 const express = require('express')
 const checkListController = require('./../Controllers/CheckListController')
-const cors = require("cors");
 
 const router = express.Router()
 
 
 router
     .route('/')
-    .get(checkListController.getAllCheckList, cors({
-        origin: '*',
-      }))
+    .get(checkListController.getAllCheckList)
     .post(checkListController.createCheckList)
 
 router
