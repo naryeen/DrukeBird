@@ -147,7 +147,7 @@ exports.updatePassword = async (req, res, next) => {
         const user = await User.findById(req.user._id).select('+password');
 
         if (!(await user.correctPassword(req.body.passwordCurrent, user.password))) {
-            return res.status(401).json({ message: "Your current password is wrong" });
+            return res.status(500).json({ message: "Your current password is wrong" });
         }
 
         const { password, passwordConfirm } = req.body;

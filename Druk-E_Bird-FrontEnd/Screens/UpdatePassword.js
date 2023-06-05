@@ -61,7 +61,6 @@ const UpdatePassword = () => {
         typeof err.response !== 'undefined'
         ? err.response.data.message
         : err.message
-        showAlert('error', message )
         Toast.show(message, {duration: Toast.durations.LONG,position: Toast.positions.CENTER,});
       })
       .finally(() => setIsLoading(false));
