@@ -89,7 +89,7 @@ Member 3 - Mr. Karma Choda (12190055)
 <img src="Images/kc.JPG" width="200" height="300" />
 <br>
 
-Member 4 - Mr. Nar Bdr Kharka (12190067)
+Member 4 - Mr. Nar Bdr Kharka (12190065)
 <br>
 <img src="Images/nar.JPG" width="200" height="300" />
 <br>
