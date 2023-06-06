@@ -104,7 +104,6 @@ const SubmittingBirding = ({ route }) => {
 
     setLoading(true);
     try {
-      console.log("detailOfBirds", detailOfBirds);
       axios
         .post(
           "https://druk-ebirds.onrender.com/api/v1/checkList",

@@ -5,7 +5,7 @@ import { createMaterialTopTabNavigator } from '@react-navigation/material-top-ta
 import { ActivityIndicator, MD2Colors } from "react-native-paper";
 import { Swipeable } from 'react-native-gesture-handler';
 import { useNavigation } from '@react-navigation/native';
-import Toast from 'react-native-root-toast'; // Add this import
+import Toast from 'react-native-root-toast';
 import { AuthContext } from '../Context/AuthContext';
 
 const getCheckList = "https://druk-ebirds.onrender.com/api/v1/checkList";
@@ -56,7 +56,8 @@ function NotSubmitted() {
     </View>
   );
   const renderItem = ({ item }) => {
-    if (item.StartbirdingData[0].status === "draftchecklist" && item.userId === userId) {
+    console.log(item)
+    if (item.StartbirdingData[0].status === "draftchecklist" &&item.userId === userId) {
       const checklistdata = {
         itemId: item._id,
         birdName: item.BirdName,

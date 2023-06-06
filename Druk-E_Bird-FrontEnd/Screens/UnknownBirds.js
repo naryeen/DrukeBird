@@ -1,40 +1,54 @@
-import React, { useState,useContext} from "react";
-import {View,Text,TouchableOpacity,Image,StyleSheet,Modal, Dimensions, StatusBar} from "react-native";
+import React, { useState, useContext } from "react";
+import {
+  View,
+  Text,
+  TouchableOpacity,
+  Image,
+  StyleSheet,
+  Modal,
+  Dimensions,
+  StatusBar,
+} from "react-native";
+import {
+  widthPercentageToDP as wp,
+  heightPercentageToDP as hp,
+} from "react-native-responsive-screen";
+
 import { ActivityIndicator, MD2Colors } from "react-native-paper";
-import Toast from 'react-native-root-toast'; // Add this import
+import Toast from "react-native-root-toast"; // Add this import
 import * as ImagePicker from "expo-image-picker";
-import axios from 'axios'; // Import axios for making HTTP requests
+import axios from "axios"; // Import axios for making HTTP requests
 import { IconButton } from "react-native-paper";
-import { Picker } from '@react-native-picker/picker';
+import Icon from "react-native-vector-icons/FontAwesome";
 import { Button } from "react-native-paper";
 import SubmitButton from "../Components/Button";
 import { AuthContext } from "../Context/AuthContext";
 import UnknownHeader from "../Components/UnknownHeader";
 import BhutanDzongkhags from "../Components/BhutanDzongkha";
+import SelectDropdown from "react-native-select-dropdown";
 
-const { width, height } = Dimensions.get('window');
+const { width, height } = Dimensions.get("window");
 
 const UnknownBird = ({ route }) => {
-  const {UnknownBirdsdata} = route.params
+  const { UnknownBirdsdata } = route.params;
   const { userInfo } = useContext(AuthContext);
-  const name = userInfo.user.name
+  const name = userInfo.user.name;
   const [image, setImage] = useState(null);
   const [modalVisible, setModalVisible] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-  const [count, setCount] = useState(0)
-  const [selectedDzongkhag, setSelectedDzongkhag] = useState('');
-  const [selectedGewog, setSelectedGewog] = useState('');
-  const [selectedVillage, setSelectedVillage] = useState('');
+  const [count, setCount] = useState(0);
+  const [selectedDzongkhag, setSelectedDzongkhag] = useState("");
+  const [selectedGewog, setSelectedGewog] = useState("");
+  const [selectedVillage, setSelectedVillage] = useState("");
   const [gewogOptions, setGewogOptions] = useState([]);
   const [villageOptions, setVillageOptions] = useState([]);
   const [loading, setLoading] = useState(false);
   const userId = userInfo.user._id;
 
-
   const handleDzongkhagChange = (value) => {
     setSelectedDzongkhag(value);
-    setSelectedGewog('');
-    setSelectedVillage('');
+    setSelectedGewog("");
+    setSelectedVillage("");
     setVillageOptions([]);
 
     const gewogs = BhutanDzongkhags[value];
@@ -44,10 +58,13 @@ const UnknownBird = ({ route }) => {
 
   const handleGewogChange = (value) => {
     setSelectedGewog(value);
-    setSelectedVillage('');
+    setSelectedVillage("");
 
     const villages = BhutanDzongkhags[selectedDzongkhag][value];
-    const villageOptions = villages.map((village) => ({ label: village, value: village }));
+    const villageOptions = villages.map((village) => ({
+      label: village,
+      value: village,
+    }));
     setVillageOptions(villageOptions);
   };
 
@@ -118,7 +135,11 @@ const UnknownBird = ({ route }) => {
   if (isLoading) {
     return (
       <View style={styles.loading}>
-        <ActivityIndicator animating={true} color={MD2Colors.green800} size="large" />
+        <ActivityIndicator
+          animating={true}
+          color={MD2Colors.green800}
+          size="large"
+        />
       </View>
     );
   }
@@ -134,161 +155,206 @@ const UnknownBird = ({ route }) => {
 
   const UnknownBirdsdataSave = () => {
     if (!selectedDzongkhag) {
-      Toast.show("Please select Dzongkha", {duration: Toast.durations.SHORT});
+      Toast.show("Please select Dzongkha", { duration: Toast.durations.SHORT });
       return;
-    }
-    else if(!selectedGewog)
-    {
-      Toast.show("Please select Gewong", {duration: Toast.durations.SHORT});
+    } else if (!selectedGewog) {
+      Toast.show("Please select Gewong", { duration: Toast.durations.SHORT });
       return;
-    }
-    else if(!selectedVillage){
-      Toast.show("Please select Village", {duration: Toast.durations.SHORT});
+    } else if (!selectedVillage) {
+      Toast.show("Please select Village", { duration: Toast.durations.SHORT });
       return;
-    }
-    else if (!image) {
-      Toast.show("Please select an image", {duration: Toast.durations.SHORT});
+    } else if (!image) {
+      Toast.show("Please select an image", { duration: Toast.durations.SHORT });
       return;
     } else if (count === 0) {
-      Toast.show("Please set the count", {duration: Toast.durations.SHORT});
+      Toast.show("Please set the count", { duration: Toast.durations.SHORT });
       return;
     }
 
-    var detailOfBirds = []
+    var detailOfBirds = [];
     var endpointLocation = {
-      "dzongkhag": selectedDzongkhag,
-      "gewog": selectedGewog,
-      "village": selectedVillage
+      dzongkhag: selectedDzongkhag,
+      gewog: selectedGewog,
+      village: selectedVillage,
     };
-      var temp = [{
-          "count":count,
-          "currentLocation": UnknownBirdsdata.StartbirdingData.currentLocation,
-          "selectedDate": UnknownBirdsdata.StartbirdingData.selectedDate,
-          "selectedTime": UnknownBirdsdata.StartbirdingData.selectedTime,
-          "observer": UnknownBirdsdata.StartbirdingData.userName,
-          "photo":image,
-          "EndpointLocation": [endpointLocation],
-          "status":"submittedchecklist"
-        }];
-        const randomNumber = Math.floor(Math.random() * 1000);
-        const StartbirdingoneData = {
-          "StartbirdingData": temp,
-          "BirdName": UnknownBirdsdata.BirdName,
-          "CheckListName":`${name}-${randomNumber}`,
-          "userId":userId
-        };
-        detailOfBirds.push(StartbirdingoneData)   
+    var temp = [
+      {
+        count: count,
+        currentLocation: UnknownBirdsdata.StartbirdingData.currentLocation,
+        selectedDate: UnknownBirdsdata.StartbirdingData.selectedDate,
+        selectedTime: UnknownBirdsdata.StartbirdingData.selectedTime,
+        observer: UnknownBirdsdata.StartbirdingData.userName,
+        photo: image,
+        EndpointLocation: [endpointLocation],
+        status: "submittedchecklist",
+      },
+    ];
+    const randomNumber = Math.floor(Math.random() * 1000);
+    const StartbirdingoneData = {
+      StartbirdingData: temp,
+      BirdName: UnknownBirdsdata.BirdName,
+      CheckListName: `${name}-${randomNumber}`,
+      userId: userId,
+    };
+    detailOfBirds.push(StartbirdingoneData);
 
-      setLoading(true);
-      try {
+    setLoading(true);
+    try {
       // Make an HTTP POST request to your backend API endpoint
       axios
-        .post("https://druk-ebirds.onrender.com/api/v1/checkList", detailOfBirds)
+        .post(
+          "https://druk-ebirds.onrender.com/api/v1/checkList",
+          detailOfBirds
+        )
         .then((response) => {
           // Data successfully posted to the database
-          Toast.show("Data successfully posted", {duration: Toast.durations.SHORT, position: Toast.positions.CENTER});
+          Toast.show("Data successfully posted", {
+            duration: Toast.durations.SHORT,
+            position: Toast.positions.CENTER,
+          });
         })
         .catch((error) => {
-          Toast.show(error, {duration: Toast.durations.SHORT, position: Toast.positions.CENTER});
-
+          Toast.show(error, {
+            duration: Toast.durations.SHORT,
+            position: Toast.positions.CENTER,
+          });
         })
-        .finally(() => {setLoading(false);});
+        .finally(() => {
+          setLoading(false);
+        });
     } catch (error) {
-      Toast.show(error, {duration: Toast.durations.SHORT, position: Toast.positions.CENTER});
-
+      Toast.show(error, {
+        duration: Toast.durations.SHORT,
+        position: Toast.positions.CENTER,
+      });
     }
   };
   return (
     <View style={styles.container}>
-      <UnknownHeader title={'Unknown Bird'}/>
+      <UnknownHeader title={"Unknown Bird"} />
       <View style={styles.subcontainer}>
-    
-      <TouchableOpacity
-       style={styles.button}
-        onPress={() => setModalVisible(true)}
-      >
-        {!image ? (
-          <IconButton icon="camera" color={MD2Colors.grey500} size={50} />
-        ) : (
-            <Image source={{ uri: image }} style={styles.image} />
-        )}
-      </TouchableOpacity>
-      <View style={styles.countBtn}>
-        <Button icon="plus-box-outline" onPress={() => handleButtonPress("increase")} />
-        <Text style={styles.countText}>{count}</Text>
-        <Text style={styles.speciesText}>{UnknownBirdsdata.BirdName}</Text>
-        <Button icon="minus-box-outline" onPress={() => handleButtonPress("decrease")} />
-      </View>
-      <Text style={styles.locationText}>Choose Location</Text>
-
-
-      <Picker
-        selectedValue={selectedDzongkhag}
-        onValueChange={handleDzongkhagChange}
-        style={styles.picker}
-      >
-        <Picker.Item label="Select Dzongkhag" value="" />
-        {Object.keys(BhutanDzongkhags).map((dzongkhag) => (
-          <Picker.Item key={dzongkhag} label={dzongkhag} value={dzongkhag} />
-        ))}
-      </Picker>
-
-      <Picker
-        selectedValue={selectedGewog}
-        onValueChange={handleGewogChange}
-        enabled={selectedDzongkhag !== ''}
-        style={styles.picker}
-      >
-        <Picker.Item label="Select Gewog" value="" />
-        {gewogOptions.map((gewog) => (
-          <Picker.Item key={gewog} label={gewog} value={gewog} />
-        ))}
-      </Picker>
-
-      <Picker
-        selectedValue={selectedVillage}
-        onValueChange={setSelectedVillage}
-        enabled={selectedDzongkhag !== '' && selectedGewog !== ''}
-        style={styles.picker}
-      >
-        <Picker.Item label="Select Village" value="" />
-        {villageOptions.map((village) => (
-          <Picker.Item key={village.value} label={village.label} value={village.value} />
-        ))}
-      </Picker>
-      <SubmitButton styling={styles.submitBtn} onPress={UnknownBirdsdataSave}>Submit</SubmitButton>
-      {loading && (
-        <View style={styles.loadingContainer}>
-           <ActivityIndicator animating={true} color={MD2Colors.green800} size="large" />
+        <View style={styles.subcon}>
+          <TouchableOpacity
+            style={styles.button}
+            onPress={() => setModalVisible(true)}
+          >
+            {!image ? (
+              <IconButton icon="camera" color={MD2Colors.grey500} size={50} />
+            ) : (
+              <Image source={{ uri: image }} style={styles.image} />
+            )}
+          </TouchableOpacity>
         </View>
-      )}
-      <Modal animationType="slide" transparent={true} visible={modalVisible}>
-        <View style={styles.modalContainer}>
-          <View style={styles.modalContent}>
-            <TouchableOpacity
-              style={styles.optionButton}
-              onPress={pickImageFromGallery}
-            >
-              <Text style={styles.optionButtonText}>
-                Pick image from gallery
-              </Text>
-            </TouchableOpacity>
-            <TouchableOpacity
-              style={styles.optionButton}
-              onPress={takePictureFromCamera}>
-            <Text style={styles.optionButtonText}>Take picture from camera</Text>
-            </TouchableOpacity>
-            <TouchableOpacity
-              style={styles.cancelButton}
-              onPress={() => setModalVisible(false)}>
-              <Text style={styles.cancelButtonText}>Cancel</Text>
-            </TouchableOpacity>
+        <View style={styles.countBtn}>
+          <Button
+            icon="plus-box-outline"
+            onPress={() => handleButtonPress("increase")}
+          />
+          <Text style={styles.countText}>{count}</Text>
+          <Text style={styles.speciesText}>{UnknownBirdsdata.BirdName}</Text>
+          <Button
+            icon="minus-box-outline"
+            onPress={() => handleButtonPress("decrease")}
+          />
+        </View>
+        <View style={styles.cont}>
+          <Text style={styles.locationText}>Choose Your Location</Text>
+
+          <Text style={styles.label}>Select Dzongkhag:</Text>
+          <SelectDropdown
+            data={Object.keys(BhutanDzongkhags)}
+            onSelect={(selectedDzongkhag) =>
+              handleDzongkhagChange(selectedDzongkhag)
+            }
+            defaultButtonText="Select Dzongkhag"
+            buttonTextAfterSelection={(selectedItem) => selectedItem}
+            rowTextForSelection={(item) => item}
+            buttonStyle={styles.dropdown1BtnStyle}
+            buttonTextStyle={styles.dropdown1BtnTxtStyle}
+            renderDropdownIcon={() => (
+              <Icon name="chevron-down" size={15} color="gray" />
+            )}
+            dropdownStyle={styles.dropdown}
+            dropdownTextStyle={styles.dropdownText}
+            rowStyle={styles.dropdownRow}
+          />
+          <Text style={styles.label}>Select Gewog:</Text>
+          <SelectDropdown
+            data={gewogOptions}
+            onSelect={(selectedGewog) => handleGewogChange(selectedGewog)}
+            defaultButtonText="Select Gewog"
+            buttonTextAfterSelection={(selectedItem) => selectedItem}
+            rowTextForSelection={(item) => item}
+            buttonStyle={styles.dropdown1BtnStyle}
+            buttonTextStyle={styles.dropdown1BtnTxtStyle}
+            renderDropdownIcon={() => (
+              <Icon name="chevron-down" size={15} color="gray" />
+            )}
+            dropdownStyle={styles.dropdown}
+            dropdownTextStyle={styles.dropdownText}
+            rowStyle={styles.dropdownRow}
+            disabled={selectedDzongkhag === ""}
+          />
+          <Text style={styles.label}>Select Village:</Text>
+          <SelectDropdown
+            data={villageOptions.map((village) => village.value)}
+            onSelect={(selectedVillage) => setSelectedVillage(selectedVillage)}
+            defaultButtonText="Select Village"
+            buttonTextAfterSelection={(selectedItem) => selectedItem}
+            rowTextForSelection={(item) => item}
+            buttonStyle={styles.dropdown1BtnStyle}
+            buttonTextStyle={styles.dropdown1BtnTxtStyle}
+            renderDropdownIcon={() => (
+              <Icon name="chevron-down" size={15} color="gray" />
+            )}
+            dropdownStyle={styles.dropdown}
+            dropdownTextStyle={styles.dropdownText}
+            rowStyle={styles.dropdownRow}
+            disabled={selectedDzongkhag === "" || selectedGewog === ""}
+          />
+        </View>
+        <SubmitButton styling={styles.submitBtn} onPress={UnknownBirdsdataSave}>
+          Submit
+        </SubmitButton>
+        {loading && (
+          <View style={styles.loadingContainer}>
+            <ActivityIndicator
+              animating={true}
+              color={MD2Colors.green800}
+              size="large"
+            />
           </View>
-        </View>
-      </Modal>
+        )}
+        <Modal animationType="slide" transparent={true} visible={modalVisible}>
+          <View style={styles.modalContainer}>
+            <View style={styles.modalContent}>
+              <TouchableOpacity
+                style={styles.optionButton}
+                onPress={pickImageFromGallery}
+              >
+                <Text style={styles.optionButtonText}>
+                  Pick image from gallery
+                </Text>
+              </TouchableOpacity>
+              <TouchableOpacity
+                style={styles.optionButton}
+                onPress={takePictureFromCamera}
+              >
+                <Text style={styles.optionButtonText}>
+                  Take picture from camera
+                </Text>
+              </TouchableOpacity>
+              <TouchableOpacity
+                style={styles.cancelButton}
+                onPress={() => setModalVisible(false)}
+              >
+                <Text style={styles.cancelButtonText}>Cancel</Text>
+              </TouchableOpacity>
+            </View>
+          </View>
+        </Modal>
       </View>
       <StatusBar />
-
     </View>
   );
 };
@@ -296,31 +362,29 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
   },
-  subcontainer:{
-    marginTop: height*0.1,
-    padding: width * 0.031,
-    alignItems: 'center',
-    justifyContent: 'center',
-    position: 'relative',
+  subcontainer: {
+    marginVertical: 10,
+    position: "relative",
+  },
+  subcon: {
+    alignItems: "center",
+  },
+  cont: {
+    marginHorizontal: 20,
   },
   button: {
-    marginTop: "1%",
-    alignItems: 'center',
-    justifyContent: 'center',
-    width: width*0.5,
-    height: width*0.5,
-    backgroundColor: '#e1e1e1',
+    alignItems: "center",
+    justifyContent: "center",
+    width: wp("50%"),
+    height: wp("50%"),
+    backgroundColor: "#e1e1e1",
     borderRadius: 100,
-  },
-  buttonText: {
-    fontSize: 20,
   },
   image: {
-    width: width*0.5,
-    height: width*0.5,
+    width: wp("50%"),
+    height: wp("50%"),
     borderRadius: 100,
   },
-
   modalContainer: {
     flex: 1,
     justifyContent: "flex-end",
@@ -330,10 +394,11 @@ const styles = StyleSheet.create({
     backgroundColor: "white",
     borderTopLeftRadius: 10,
     borderTopRightRadius: 10,
-    padding: width*0.03,
+    padding: wp("5%"),
   },
   optionButton: {
-    paddingVertical: width*0.022,
+    marginVertical: wp("2%"),
+    paddingVertical: 10,
     borderBottomWidth: 1,
     borderBottomColor: "#CCCCCC",
   },
@@ -341,8 +406,8 @@ const styles = StyleSheet.create({
     fontSize: 16,
   },
   cancelButton: {
-    marginTop: width*0.01,
-    paddingVertical: width *0.022,
+    marginTop: width * 0.01,
+    paddingVertical: width * 0.022,
     alignItems: "center",
   },
   cancelButtonText: {
@@ -352,24 +417,24 @@ const styles = StyleSheet.create({
   countBtn: {
     flexDirection: "row",
     justifyContent: "space-between",
-    borderWidth: 1,
-    marginTop: width*0.08,
-    width: width*0.95,
+    borderWidth: 2,
+    borderColor: "#E2DFD2",
+    marginTop: width * 0.08,
+    marginHorizontal: 20,
   },
   countText: {
-    marginTop: width *0.01,
-    marginLeft: width *0.001,
+    marginTop: width * 0.02,
     fontWeight: "bold",
   },
   speciesText: {
-    marginTop: width*0.01,
-    marginLeft: width *0.001,
+    marginTop: width * 0.02,
+    marginLeft: width * 0.001,
     fontSize: 16,
   },
   submitBtn: {
-    alignItems: "center",
-    width: width*0.95,
-    marginTop:width*0.05
+    alignSelf: "center",
+    width: width * 0.89,
+    marginTop: width * 0.1,
   },
   loading: {
     marginTop: "100%",
@@ -378,29 +443,33 @@ const styles = StyleSheet.create({
   },
   label: {
     fontSize: 16,
-    marginBottom: width *0.01,
+    marginVertical: width * 0.02,
   },
   locationText: {
-    marginTop: width*0.1,
     fontSize: 16,
-    fontWeight: 'bold',
+    fontWeight: "bold",
+    marginTop:20,
+    marginBottom:10
   },
-  picker: {
+  dropdown1BtnStyle: {
     width: "100%",
-    height: width*0.01,
-    marginBottom: width*0.016,
-    borderRadius: 4,
+    backgroundColor: "#FFF",
+    borderRadius: 5,
+    borderWidth: 1,
+    borderColor: "#ccc",
   },
+  dropdown1BtnTxtStyle: { textAlign: "left", fontSize: 16 },
   loadingContainer: {
-    position: 'absolute',
+    position: "absolute",
     top: 0,
     left: 0,
     right: 0,
     bottom: 0,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: 'rgba(0, 0, 0, 0.5)',
-  }
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: "rgba(0, 0, 0, 0.5)",
+  },
 });
+
 
 export default UnknownBird;

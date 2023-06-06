@@ -3,28 +3,17 @@ import { FAB, ActivityIndicator, MD2Colors, Searchbar} from "react-native-paper"
 import { StyleSheet, View, FlatList, Alert, Text, SafeAreaView, TouchableOpacity} from "react-native";
 import Toast from 'react-native-root-toast'; 
 import Button from "../Components/Button";
-import { useNavigation, CommonActions } from "@react-navigation/native";
+import { useNavigation } from "@react-navigation/native";
 import axios from "axios";
-import { Ionicons } from '@expo/vector-icons';
 import StartBirdingCounter from "../Components/StartBirdingCounter";
 import { AuthContext } from "../Context/AuthContext";
-
-const formatTime = (time) => {
-  const hours = Math.floor(time / 3600);
-  const minutes = Math.floor((time % 3600) / 60);
-  const seconds = Math.floor(time % 60);
-  const formattedHours = String(hours).padStart(2, "0");
-  const formattedMinutes = String(minutes).padStart(2, "0");
-  const formattedSeconds = String(seconds).padStart(2, "0");
-  return `${formattedHours}:${formattedMinutes}:${formattedSeconds}`;
-};
+import HeaderDateTimePicker from "../Components/HeaderDateTimePicker"
 
 
-const StartBirdingone = ({ route }) => {
+const StartBirdingTwo = ({ route }) => {
   const navigation = useNavigation();
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [seconds, setSeconds] = useState(0);
   const [startbirding1data, setStartbirding1data] = useState([]);
   const [searchQuery, setSearchQuery] = useState("");
   const [filteredData, setFilteredData] = useState([]);
@@ -40,34 +29,6 @@ const StartBirdingone = ({ route }) => {
   useEffect(() => {
     handleSearch(query);
   }, [data, startbirding1data]);
-
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setSeconds((seconds) => seconds + 1);
-    }, 1000);
-
-    // Clear the interval on component unmount
-    return () => clearInterval(interval);
-  }, []);
-
-  useEffect(() => {
-    navigation.setOptions({
-      headerLeft: () => (
-        <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-          <Ionicons
-            name="arrow-back"
-            size={24}
-            color="black"
-            onPress={() => navigation.dispatch(CommonActions.goBack())}
-          />
-          <Text style={{ marginLeft: 10, fontSize: 18 }}>
-            {formatTime(seconds)}
-          </Text>
-        </View>
-      ),
-    });
-  }, [navigation, seconds]);
-  
 
   const handleFabPress = (UnknownBirdsdata) => {
     Alert.alert(
@@ -207,7 +168,7 @@ const StartBirdingone = ({ route }) => {
   return (
     <View style={styles.container}>
       <SafeAreaView>
-
+        <HeaderDateTimePicker/>
       <Searchbar
         placeholder="Search any birds"
         onChangeText={(text) => {
@@ -317,4 +278,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default StartBirdingone;
+export default StartBirdingTwo;

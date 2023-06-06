@@ -9,7 +9,7 @@ const UnknownHeader = ({ title}) => {
   return (
     <View style={styles.headerContainer}>
       <TouchableOpacity onPress={() => navigation.goBack('MainScreen')}>
-        <Ionicons name="chevron-back" size={24} color="#136D66" />
+        <Ionicons name="chevron-back" size={28} color="#136D66" />
       </TouchableOpacity>
       <Text style={styles.title} numberOfLines={1}>{title}</Text>
     </View>
@@ -41,9 +41,8 @@ const styles = StyleSheet.create({
     flex: 1,
     color: '#136D66',
     fontWeight: 'bold',
-    fontSize: widthPercentageToDP('5%'),
-    paddingHorizontal: widthPercentageToDP('2%'),
-    marginLeft: widthPercentageToDP('15%'),
+    fontSize: 20,
+    marginLeft: widthPercentageToDP('20%'),
   },
 });
 

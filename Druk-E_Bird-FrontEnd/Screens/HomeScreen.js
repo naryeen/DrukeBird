@@ -1,5 +1,5 @@
 import React from "react";
-import { StyleSheet, View, Text, SafeAreaView, Dimensions } from "react-native";
+import { StyleSheet, View, Text, SafeAreaView, Dimensions, StatusBar } from "react-native";
 
 import {
   widthPercentageToDP as wp,
@@ -60,6 +60,7 @@ const HomeScreen = () => {
           How it works {">>"}
         </Button>
       </SafeAreaView>
+      <StatusBar/>
     </View>
   );
 };

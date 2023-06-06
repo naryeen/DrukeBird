@@ -1,11 +1,21 @@
-import React, { useEffect, useState } from 'react';
-import { Text, View, Dimensions, Animated, StyleSheet, StatusBar } from 'react-native';
-import { ActivityIndicator, MD2Colors } from 'react-native-paper';
-import { BarChart } from 'react-native-chart-kit';
-import axios from 'axios';
-import UnknownHeader from '../Components/UnknownHeader';
+import React, { useEffect, useState } from "react";
+import {
+  Text,
+  View,
+  Animated,
+  StyleSheet,
+  StatusBar,
+  SafeAreaView,
+  ScrollView,
+} from "react-native";
+import { ActivityIndicator, MD2Colors } from "react-native-paper";
+import { BarChart } from "react-native-chart-kit";
+import axios from "axios";
+import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 
-const getCheckList = 'https://druk-ebirds.onrender.com/api/v1/checkList';
+import UnknownHeader from "../Components/UnknownHeader";
+
+const getCheckList = "https://druk-ebirds.onrender.com/api/v1/checkList";
 
 function ExploreBirdInfo({ route }) {
   const { birdName } = route.params;
@@ -28,7 +38,7 @@ function ExploreBirdInfo({ route }) {
         const filteredData = res.data.data.filter(
           (item) =>
             item.BirdName === birdName &&
-            item.StartbirdingData[0]?.status === 'submittedchecklist'
+            item.StartbirdingData[0]?.status === "submittedchecklist"
         );
         setBirdData(filteredData);
 
@@ -45,7 +55,7 @@ function ExploreBirdInfo({ route }) {
         setIsLoading(false); // Data fetching complete
       })
       .catch((error) => {
-        console.error('Error fetching data:', error);
+        console.error("Error fetching data:", error);
         setIsLoading(false); // Data fetching failed
       });
   }, [birdName]);
@@ -61,13 +71,15 @@ function ExploreBirdInfo({ route }) {
 
   if (isLoading) {
     return (
-      <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-        <ActivityIndicator animating={true} color={MD2Colors.green800} size="large" />
+      <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
+        <ActivityIndicator
+          animating={true}
+          color={MD2Colors.green800}
+          size="large"
+        />
       </View>
     );
   }
-
-  const screenWidth = Dimensions.get('window').width;
 
   const topThreeCounts = Object.entries(dzongkhagCounts)
     .sort((a, b) => b[1] - a[1])
@@ -76,59 +88,76 @@ function ExploreBirdInfo({ route }) {
   const filteredDzongkhagCounts = Object.fromEntries(topThreeCounts);
 
   return (
-    <View>
-      <UnknownHeader title={'Bird Information'} />
-      <Text style={{ fontWeight: 'bold' }}>Bird Name: {birdName}</Text>
-      <Animated.View style={{ opacity: fadeAnim }}>
-        <BarChart
-          data={{
-            labels: Object.keys(filteredDzongkhagCounts),
-            datasets: [
-              {
-                data: Object.values(filteredDzongkhagCounts),
-              },
-            ],
-          }}
-          width={screenWidth}
-          height={200}
-          yAxisLabel=""
-          chartConfig={{
-            backgroundColor: '#136D66',
-            backgroundGradientFrom: '#136D66',
-            backgroundGradientTo: '#136D66',
-            decimalPlaces: 0,
-            color: (opacity) => (opacity === 2 ? '#FFFFFF' : '#FFFFFF'),
-            style: {
-              borderRadius: 16,
-            },
-          }}
-          style={{ marginVertical: 8 }}
-        />
-      </Animated.View>
-      {Object.entries(dzongkhagCounts).map(([dzongkhag, count]) => (
-        <View key={dzongkhag} style={styles.container}>
-          <Text>Dzongkhag: {dzongkhag}</Text>
-          <Text>Total Count: {count}</Text>
-          <View style={styles.horizontalLine} />
-        </View>
-      ))}
+    <View style={styles.container1}>
+      <SafeAreaView>
+        <UnknownHeader title={"Bird Information"} />
+        <Text style={styles.text}>Bird Name: {birdName}</Text>
+        <Animated.View>
+          <BarChart
+            data={{
+              labels: Object.keys(filteredDzongkhagCounts),
+              datasets: [
+                {
+                  data: Object.values(filteredDzongkhagCounts),
+                },
+              ],
+            }}
+            width= {wp('90%')}
+            height={wp('70%')}
+            yAxisLabel=""
+            chartConfig={{
+              backgroundGradientFrom: "#074643",
+              backgroundGradientTo: "#136D66",
+              decimalPlaces: 0,
+              color: (opacity) => (opacity === 2 ? "#074643" : "#FFFFFF"),
+            }}
+            style={{
+              marginVertical:  hp('1%'),
+              borderRadius: 8,
+              alignItems:"center"
+            }}
+          />
+          <Text style={{ alignSelf: 'center', marginTop: hp("1%"), fontWeight: 'bold' }}>Dzongkhags vs Bird Counts</Text>
+        </Animated.View>
+        <ScrollView>
+          {Object.entries(dzongkhagCounts).map(([dzongkhag, count]) => (
+            <View key={dzongkhag} style={styles.container}>
+              <Text style={styles.text1}>Dzongkhag: {dzongkhag}</Text>
+              <Text style={styles.text1}>Total Count: {count}</Text>
+              <View style={styles.horizontalLine} />
+            </View>
+          ))}
+        </ScrollView>
+      </SafeAreaView>
       <StatusBar />
-
     </View>
   );
 }
 
 const styles = StyleSheet.create({
+  container1: {
+    flex: 1,
+  },
+  text: {
+    marginTop: hp('2%'),
+    marginLeft: wp('6%'),
+    fontWeight: "bold",
+    marginBottom: wp('1%'),
+  },
   container: {
-    marginHorizontal: 20,
-    marginBottom: 15,
-
+    marginHorizontal: wp('6%'),
+    marginBottom: hp('2%'),
+    marginTop: hp('2%'),
+    
+  },
+  text1: {
+    marginTop: hp("1%"),
   },
   horizontalLine: {
-    borderBottomWidth: 0.5,
-    borderBottomColor: 'gray',
-  }
+    borderBottomWidth: 0.2,
+    borderBottomColor: "gray",
+    elevation: 2,
+  },
 });
-
 
 export default ExploreBirdInfo;

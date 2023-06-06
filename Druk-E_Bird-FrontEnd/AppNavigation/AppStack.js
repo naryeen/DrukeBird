@@ -9,6 +9,7 @@ import ContactUs from "../Navigation/ContactUs"
 import Help from "../Navigation/Help"
 import StartbirdingScreen from "../Screens/StartBirdingScreen";
 import StartBirdingone from "../Screens/StartBirdingOne"
+import StartBirdingTwo from "../Screens/StartBirdingTwo"
 import UnknownBird from "../Screens/UnknownBirds"
 import SubmittingBirding from "../Screens/SubmittingBirding";
 import ExploreDzongkhagInfo from "../Screens/ExploreDzongkhagInfo";
@@ -30,6 +31,7 @@ const AppStack = () => {
       <Stack.Screen name="About" component={About} options={{ headerShown: false }} />
       <Stack.Screen name="ContactUs" component={ContactUs} options={{ headerShown: false }} />
       <Stack.Screen name="StartBirdingone" component={StartBirdingone} />
+      <Stack.Screen name="StartBirdingTwo" component={StartBirdingTwo} />
       <Stack.Screen name="StartBirding" component={StartbirdingScreen} options={{ headerShown: false }} />
       <Stack.Screen name="UnknownBirds" component={UnknownBird} options={{ headerShown: false }} />
       <Stack.Screen name="SubmittingBirding" component={SubmittingBirding} options={{ headerShown: false }} />
