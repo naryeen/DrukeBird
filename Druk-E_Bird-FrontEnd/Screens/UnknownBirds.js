@@ -9,10 +9,6 @@ import {
   Dimensions,
   StatusBar,
 } from "react-native";
-import {
-  widthPercentageToDP as wp,
-  heightPercentageToDP as hp,
-} from "react-native-responsive-screen";
 
 import { ActivityIndicator, MD2Colors } from "react-native-paper";
 import Toast from "react-native-root-toast"; // Add this import
@@ -275,8 +271,6 @@ const UnknownBird = ({ route }) => {
               <Icon name="chevron-down" size={15} color="gray" />
             )}
             dropdownStyle={styles.dropdown}
-            dropdownTextStyle={styles.dropdownText}
-            rowStyle={styles.dropdownRow}
           />
           <Text style={styles.label}>Select Gewog:</Text>
           <SelectDropdown
@@ -290,9 +284,7 @@ const UnknownBird = ({ route }) => {
             renderDropdownIcon={() => (
               <Icon name="chevron-down" size={15} color="gray" />
             )}
-            dropdownStyle={styles.dropdown}
-            dropdownTextStyle={styles.dropdownText}
-            rowStyle={styles.dropdownRow}
+            dropdownStyle={styles.dropdown1}
             disabled={selectedDzongkhag === ""}
           />
           <Text style={styles.label}>Select Village:</Text>
@@ -307,9 +299,9 @@ const UnknownBird = ({ route }) => {
             renderDropdownIcon={() => (
               <Icon name="chevron-down" size={15} color="gray" />
             )}
-            dropdownStyle={styles.dropdown}
-            dropdownTextStyle={styles.dropdownText}
-            rowStyle={styles.dropdownRow}
+            dropdownStyle={styles.dropdown2}
+            // dropdownTextStyle={styles.dropdownText}
+            // rowStyle={styles.dropdownRow}
             disabled={selectedDzongkhag === "" || selectedGewog === ""}
           />
         </View>
@@ -358,32 +350,34 @@ const UnknownBird = ({ route }) => {
     </View>
   );
 };
+import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,
   },
   subcontainer: {
-    marginVertical: 10,
+    marginVertical: hp('1.5%'),
     position: "relative",
   },
   subcon: {
     alignItems: "center",
   },
   cont: {
-    marginHorizontal: 20,
+    marginHorizontal: wp('5%'),
   },
   button: {
     alignItems: "center",
     justifyContent: "center",
-    width: wp("50%"),
-    height: wp("50%"),
+    width: wp('50%'),
+    height: wp('50%'),
     backgroundColor: "#e1e1e1",
-    borderRadius: 100,
+    borderRadius: wp('50%'),
   },
   image: {
-    width: wp("50%"),
-    height: wp("50%"),
-    borderRadius: 100,
+    width: wp('50%'),
+    height: wp('50%'),
+    borderRadius: wp('50%'),
   },
   modalContainer: {
     flex: 1,
@@ -392,49 +386,49 @@ const styles = StyleSheet.create({
   },
   modalContent: {
     backgroundColor: "white",
-    borderTopLeftRadius: 10,
-    borderTopRightRadius: 10,
-    padding: wp("5%"),
+    borderTopLeftRadius: wp('1.5%'),
+    borderTopRightRadius: wp('1.5%'),
+    padding: wp('5%'),
   },
   optionButton: {
-    marginVertical: wp("2%"),
-    paddingVertical: 10,
-    borderBottomWidth: 1,
+    marginVertical: wp('1%'),
+    paddingVertical: hp('1.5%'),
+    borderBottomWidth: StyleSheet.hairlineWidth,
     borderBottomColor: "#CCCCCC",
   },
   optionButtonText: {
-    fontSize: 16,
+    fontSize: wp('4%'),
   },
   cancelButton: {
-    marginTop: width * 0.01,
-    paddingVertical: width * 0.022,
+    marginTop: wp('0.2%'),
+    paddingVertical: wp('2.2%'),
     alignItems: "center",
   },
   cancelButtonText: {
-    fontSize: 16,
+    fontSize: wp('4%'),
     color: "red",
   },
   countBtn: {
     flexDirection: "row",
     justifyContent: "space-between",
-    borderWidth: 2,
+    borderWidth: wp('0.4%'),
     borderColor: "#E2DFD2",
-    marginTop: width * 0.08,
-    marginHorizontal: 20,
+    marginTop: wp('8%'),
+    marginHorizontal: wp('5%'),
+    borderRadius:5
   },
   countText: {
-    marginTop: width * 0.02,
+    marginTop: wp('2%'),
     fontWeight: "bold",
   },
   speciesText: {
-    marginTop: width * 0.02,
-    marginLeft: width * 0.001,
-    fontSize: 16,
+    marginTop: wp('2%'),
+    fontSize: wp('4%'),
   },
   submitBtn: {
     alignSelf: "center",
-    width: width * 0.89,
-    marginTop: width * 0.1,
+    width: wp('89%'),
+    marginTop: wp('10%'),
   },
   loading: {
     marginTop: "100%",
@@ -442,23 +436,35 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
   label: {
-    fontSize: 16,
-    marginVertical: width * 0.02,
+    fontSize: wp('4%'),
+    marginVertical: wp('2%'),
   },
   locationText: {
-    fontSize: 16,
+    fontSize: wp('4%'),
     fontWeight: "bold",
-    marginTop:20,
-    marginBottom:10
+    marginTop: hp('2.5%'),
+    marginBottom: hp('1.25%'),
+  },
+  dropdown:{
+    height: hp('80%'),
+    marginTop: wp('80%')
+  },
+  dropdown1:{
+    height: hp('80%'),
+    marginTop: wp('55%')
+  },
+  dropdown2:{
+    height: hp('80%'),
+    marginTop: wp('25%')
   },
   dropdown1BtnStyle: {
     width: "100%",
     backgroundColor: "#FFF",
-    borderRadius: 5,
+    borderRadius: wp('1%'),
     borderWidth: 1,
     borderColor: "#ccc",
   },
-  dropdown1BtnTxtStyle: { textAlign: "left", fontSize: 16 },
+  dropdown1BtnTxtStyle: { textAlign: "left", fontSize: wp('4%') },
   loadingContainer: {
     position: "absolute",
     top: 0,
@@ -470,6 +476,5 @@ const styles = StyleSheet.create({
     backgroundColor: "rgba(0, 0, 0, 0.5)",
   },
 });
-
 
 export default UnknownBird;

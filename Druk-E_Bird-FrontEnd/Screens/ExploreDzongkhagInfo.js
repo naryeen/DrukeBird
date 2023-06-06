@@ -161,7 +161,17 @@ const styles = StyleSheet.create({
   horizontalLine: {
     borderBottomWidth: 0.2,
     borderBottomColor: "gray",
-    elevation: 2,
+    ...Platform.select({
+      ios: {
+        shadowColor: '#000',
+        shadowOffset: { width: 0, height: 2 },
+        shadowOpacity: 0.2,
+        shadowRadius: 1,
+      },
+      android: {
+        elevation: 2,
+      },
+    }),
   },
 });
 

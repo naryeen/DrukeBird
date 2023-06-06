@@ -8,7 +8,7 @@ import RecordTrack from '../Components/RecordTrack';
 import moment from 'moment';
 import { AuthContext } from "../Context/AuthContext";
 
-const { width } = Dimensions.get('window');
+
 
 function StartbirdingScreen() {
   const navigation = useNavigation();
@@ -92,54 +92,76 @@ function StartbirdingScreen() {
   );
 }
 
+import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    padding: 0.05 * width,
-    marginTop: 0.07 * width
+    padding: wp('5%'),
+    marginTop: wp('8%'),
   },
   Tcontainer: {
     backgroundColor: '#fff',
     borderRadius: 8,
-    padding: 0.03 * width,
-    elevation: 5,
-    flexDirection: "row",
-    marginLeft: "-3%",
-    marginTop: 0.01 * width,
+    padding: wp('3%'),
+    flexDirection: 'row',
+    marginLeft: '-3%',
+    marginTop: hp('2%'),
     alignItems: 'center',
-    paddingLeft: 0.13 * width,
-    height: 0.4 * width,
-    width: 0.95 * width,
+    paddingLeft: wp('13%'),
+    height: wp('40%'),
+    width: wp('95%'),
+    ...Platform.select({
+      ios: {
+        shadowColor: "#000",
+        shadowOffset: { width: 0, height: hp('0.13%') }, 
+        shadowOpacity: 0.2,
+        shadowRadius: wp('0.278%'), 
+      },
+      android: {
+        elevation: 5,
+      },
+    }),
   },
   Ttext: {
-    fontSize: 0.045 * width,
+    fontSize: wp('4.5%'),
     color: '#333',
   },
   Dcontainer: {
     backgroundColor: '#fff',
     borderRadius: 8,
-    padding: 0.03 * width,
-    elevation: 5,
-    flexDirection: "row",
-    marginLeft: "-3%",
-    marginTop: 0.05 * width,
+    padding: wp('3%'),
+    flexDirection: 'row',
+    marginLeft: '-3%',
+    marginTop: hp('3%'),
     alignItems: 'center',
-    paddingLeft: 0.13 * width,
-    height: 0.4 * width,
-    width: 0.95 * width
+    paddingLeft: wp('13%'),
+    height: wp('40%'),
+    width: wp('95%'),
+    ...Platform.select({
+      ios: {
+        shadowColor: "#000",
+        shadowOffset: { width: 0, height: hp('0.13%') }, 
+        shadowOpacity: 0.2,
+        shadowRadius: wp('0.278%'), 
+      },
+      android: {
+        elevation: 5,
+      },
+    }),
   },
   Dtext: {
-    fontSize: 0.045 * width,
+    fontSize: wp('4.5%'),
     color: '#333',
   },
   recordTrack: {
-    marginTop: 0.1 * width,
+    marginTop: hp('10%'),
   },
   buttonview: {
-    width: width * 0.95,
-    marginTop: 0.16 * width,
-    marginLeft: "-3%"
-  }
+    width: wp('95%'),
+    marginTop: hp('8%'),
+    marginLeft: '-3%',
+  },
 });
 
 export default StartbirdingScreen;

@@ -1,5 +1,5 @@
 import React, { useState, useContext } from 'react';
-import { StyleSheet, View, Text, TouchableOpacity, Image, Dimensions, StatusBar } from 'react-native';
+import { StyleSheet, View, Text, TouchableOpacity, Image, StatusBar } from 'react-native';
 import { ActivityIndicator, MD2Colors, TextInput, IconButton } from "react-native-paper";
 import * as ImagePicker from 'expo-image-picker';
 import axios from "axios";
@@ -10,8 +10,9 @@ import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scrollview'
 import Button from "../Components/Button";
 import { AuthContext } from '../Context/AuthContext';
 import SelectDropdown from "react-native-select-dropdown";
+import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 
-const { width, height } = Dimensions.get('window');
+
 
 const BirdTypeInfo = ({ route }) => {
   const [image, setImage] = useState(null);
@@ -239,11 +240,9 @@ const BirdTypeInfo = ({ route }) => {
               buttonStyle={styles.dropdown1BtnStyle}
               buttonTextStyle={styles.dropdown1BtnTxtStyle}
               renderDropdownIcon={() => (
-                <Icon name="chevron-down" size={15} color="#000" />
+                <Icon name="chevron-down" size={15} color="gray" />
               )}
               dropdownStyle={styles.dropdown}
-              dropdownTextStyle={styles.dropdownText}
-              rowStyle={styles.dropdownRow}
             />
             <Text style={styles.label}>Select Gewog:</Text>
             <SelectDropdown
@@ -255,11 +254,9 @@ const BirdTypeInfo = ({ route }) => {
               buttonStyle={styles.dropdown1BtnStyle}
               buttonTextStyle={styles.dropdown1BtnTxtStyle}
               renderDropdownIcon={() => (
-                <Icon name="chevron-down" size={15} color="#000" />
+                <Icon name="chevron-down" size={15} color="gray" />
               )}
-              dropdownStyle={styles.dropdown}
-              dropdownTextStyle={styles.dropdownText}
-              rowStyle={styles.dropdownRow}
+              dropdownStyle={styles.dropdown1}
               disabled={selectedDzongkhag === ""}
             />
             <Text style={styles.label}>Select Village:</Text>
@@ -272,11 +269,9 @@ const BirdTypeInfo = ({ route }) => {
               buttonStyle={styles.dropdown1BtnStyle}
               buttonTextStyle={styles.dropdown1BtnTxtStyle}
               renderDropdownIcon={() => (
-                <Icon name="chevron-down" size={15} color="#000" />
+                <Icon name="chevron-down" size={15} color="gray" />
               )}
-              dropdownStyle={styles.dropdown}
-              dropdownTextStyle={styles.dropdownText}
-              rowStyle={styles.dropdownRow}
+              dropdownStyle={styles.dropdown2}
               disabled={selectedDzongkhag === "" || selectedGewog === ""}
             />
             <Button styling={styles.submitbutton} onPress={StartbirdingonedataSave}>Submit</Button>
@@ -300,65 +295,81 @@ const BirdTypeInfo = ({ route }) => {
 
 const styles = StyleSheet.create({
   container1: {
-    flex: 1
+    flex: 1,
   },
   container: {
-    marginTop: height * 0.02,
-    marginHorizontal: 20,
+    marginTop: hp('1%'),
+    padding: wp('5%'),
     alignItems: 'center',
     justifyContent: 'center',
     position: 'relative',
   },
   button: {
-    marginBottom: width * 0.03,
+    marginBottom: wp('3%'),
     alignItems: 'center',
     justifyContent: 'center',
-    width: width * 0.5,
-    height: width * 0.5,
+    width: wp('50%'),
+    height: wp('50%'),
     backgroundColor: '#e1e1e1',
-    borderRadius: 100,
+    borderRadius: wp('50%'),
   },
   buttonText: {
-    fontSize: 20,
+    fontSize: wp('4%'),
   },
   image: {
-    width: width * 0.5,
-    height: width * 0.5,
-    borderRadius: 100,
+    width: wp('50%'),
+    height: wp('50%'),
+    borderRadius: wp('50%'),
   },
   textInput: {
-    marginTop: width * 0.001,
-    marginBottom: width * 0.02,
-    backgroundColor: "white",
-
+    marginTop: wp('0.1%'),
+    marginBottom: wp('2%'),
+    backgroundColor: 'white',
     width: '100%',
+    fontSize:wp('4%')
   },
   submitbutton: {
-    marginTop: width * 0.09,
-    width: width * 0.88,
+    marginTop: wp('9%'),
+    width: wp('90%'),
+  },
+  dropdown:{
+    height: hp('80%'),
+    marginTop: wp('70%')
+  },
+  dropdown1:{
+    height: hp('80%'),
+    marginTop: wp('50%')
+  },
+  dropdown2:{
+    height: hp('80%'),
+    marginTop: wp('20%')
   },
   dropdown1BtnStyle: {
-    width: "100%",
-    backgroundColor: "#FFF",
-    borderRadius: 5,
+    width: '100%',
+    backgroundColor: '#FFF',
+    borderRadius: wp('1%'),
     borderWidth: 1,
-    borderColor: "#ccc",
+    borderColor: '#ccc',
   },
   label: {
-    fontSize: 16,
-    marginTop: 10,
+    fontSize: wp('4%'),
+    marginTop: hp('1%'),
   },
-  dropdown1BtnTxtStyle: { textAlign: "left", fontSize: 16 },
+  dropdown1BtnTxtStyle: {
+    textAlign: 'left',
+    fontSize: wp('4%'),
+  },
   loadingContainer: {
-    position: "absolute",
+    position: 'absolute',
     top: 0,
     left: 0,
     right: 0,
     bottom: 0,
-    justifyContent: "center",
-    alignItems: "center",
-    backgroundColor: "rgba(0, 0, 0, 0.5)",
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: 'rgba(0, 0, 0, 0.5)',
   },
 });
+
 
 export default BirdTypeInfo;

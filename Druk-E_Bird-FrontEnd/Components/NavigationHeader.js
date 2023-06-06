@@ -11,7 +11,7 @@ const NavigationHeader = ({ title }) => {
   return (
     <View style={styles.headerContainer}>
       <TouchableOpacity onPress={() => navigation.goBack('MainScreen')}>
-        <Ionicons name="chevron-back" size={24} color="#136D66" />
+        <Ionicons name="chevron-back" size={26} color="#136D66" />
       </TouchableOpacity>
       <Text style={styles.title} numberOfLines={1}>{title}</Text>
     </View>
@@ -41,9 +41,10 @@ const styles = StyleSheet.create({
   title: {
     flex: 1,
     color: "#136D66",
-    fontWeight: "bold",
-    fontSize: wp('6.11%'), 
-    paddingHorizontal: wp('27.78%'), 
+    fontWeight: "600",
+    fontSize: wp('6%'), 
+    alignSelf: 'center',
+    marginLeft: wp('31%'), 
   },
 });
 

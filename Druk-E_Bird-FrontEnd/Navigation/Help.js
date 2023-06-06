@@ -6,8 +6,6 @@ import NavigationHeader from '../Components/NavigationHeader';
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 
 
-// const { width } = Dimensions.get('window');
-
 const Help = () => {
   const video = React.useRef(null);
   const [status, setStatus] = React.useState({});

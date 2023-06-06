@@ -10,6 +10,8 @@ import React, { useState, useEffect } from "react";
 import { ActivityIndicator, MD2Colors, Searchbar } from "react-native-paper";
 import axios from "axios";
 import { useNavigation } from "@react-navigation/native";
+import { heightPercentageToDP as hp, widthPercentageToDP as wp } from 'react-native-responsive-screen';
+
 
 const getCheckList = "https://druk-ebirds.onrender.com/api/v1/checkList";
 
@@ -71,7 +73,7 @@ function ObservedSpecies() {
             style={{
               borderBottomWidth: 1,
               borderBottomColor: "#E2DFD2",
-              marginVertical: 10,
+              marginVertical: wp('3%'),
             }}
           />
         </View>
@@ -100,23 +102,27 @@ function ObservedSpecies() {
   }
 
   return (
-    <View style={{ flex: 1, marginHorizontal: 20 }}>
+    <View style={{ flex: 1  }}>
       <Searchbar
         placeholder="Search any birds"
         onChangeText={handleSearch}
         value={searchQuery}
-        inputStyle={{ paddingBottom: 19 }}
+        inputStyle={{ paddingBottom: wp('1%') }}
         style={styles.searchbar}
       />
       {!searchFound && searchQuery.length > 0 && (
         <Text style={styles.searchNotFoundText}>Can't find your bird name</Text>
       )}
+      <View style={{marginHorizontal:wp('5%')}}>
       <FlatList
-        style={{ height: "70%", marginTop: 20, borderRadius: 10 }}
+        style={{ height: "70%", marginTop: wp('4%'), borderRadius: 10 }}
         data={searchQuery ? filteredData : uniqueBirdNames}
         keyExtractor={(item, index) => index.toString()}
         renderItem={({ item }) => renderBirdName(item, navigation)}
       />
+
+      </View>
+
     </View>
   );
 }
@@ -200,7 +206,7 @@ function BirdingSites() {
             style={{
               borderBottomWidth: 1,
               borderBottomColor: "#E2DFD2",
-              marginVertical: 10,
+              marginVertical: wp('3%'),
             }}
           />
         </View>
@@ -209,22 +215,26 @@ function BirdingSites() {
   };
 
   return (
-    <View style={{ flex: 1, marginHorizontal: 20 }}>
+    <View style={{ flex: 1}}>
       <Searchbar
         placeholder="Search dzongkhags"
         onChangeText={handleSearch}
-        inputStyle={{ paddingBottom: 19 }}
+        inputStyle={{ paddingBottom: wp('1%') }}
         style={styles.searchbar}
       />
       {!searchFound && searchQuery.length > 0 && (
         <Text style={styles.searchNotFoundText}>Can't find your dzongkhag</Text>
       )}
+      <View style={{marginHorizontal: wp('5%') }}>
       <FlatList
-        style={{ height: "70%", marginTop: 20, borderRadius: 10 }}
+        style={{ height: "70%", marginTop: wp('4%'), borderRadius: 10 }}
         data={searchQuery ? filteredData : uniqueDzongkhags}
         keyExtractor={(item, index) => index.toString()}
         renderItem={({ item, index }) => renderDzongkhag(item, index)}
       />
+
+      </View>
+
     </View>
   );
 }
@@ -238,7 +248,7 @@ function ExploreScreen() {
       screenOptions={{
         tabBarActiveTintColor: "white",
         tabBarInactiveTintColor: "#E2DFD2",
-        tabBarLabelStyle: { fontSize: 15 },
+        tabBarLabelStyle: { fontSize: wp('4.3%') },
         tabBarStyle: { backgroundColor: "#136D66" },
       }}
     >
@@ -256,20 +266,20 @@ function ExploreScreen() {
   );
 }
 
+
 const styles = StyleSheet.create({
   searchbar: {
-    marginTop: 5,
-    height: 40,
+    marginTop: hp("1%"),
     borderRadius: 10,
+    borderWidth: 2,
     backgroundColor: "white",
     borderColor: "#E2DFD2",
-    borderWidth: 1.5,
+    marginHorizontal: wp("4%"),
   },
   searchNotFoundText: {
-    fontSize: 16,
+    fontSize: wp('4%'),
     textAlign: "center",
-    fontWeight: "bold",
-    marginTop: 30,
+    marginTop: hp('3.75%'),
   },
 });
 

@@ -1,13 +1,10 @@
 import React, { useState, useContext } from "react";
 import { TextInput} from 'react-native-paper';
-import { StyleSheet, View, Text, Image, Dimensions } from 'react-native';
+import { StyleSheet, View, Text, Image} from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import Button from '../Components/Button';
 import Toast from 'react-native-root-toast'; // Add this import
 import { AuthContext } from "../Context/AuthContext";
-
-const windowDimensions = Dimensions.get('window');
-const marginTopDistance = windowDimensions.height < 380 ? 30 : 50;
 
 const LogIn = () => {
   const navigation = useNavigation();
@@ -75,44 +72,40 @@ const LogIn = () => {
     </View>
   );
 };
+import { heightPercentageToDP as hp, widthPercentageToDP as wp } from 'react-native-responsive-screen';
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    padding: 10,
-  },
-  text1: {
-    marginTop: marginTopDistance,
-    fontSize: 24,
-    fontWeight: "bold",
-    textAlign: "center",
+    marginHorizontal: wp('4%'), 
   },
   inputStyle: {
-    marginTop: 20,
+    marginTop: hp('2%'), 
     borderColor: '#ccc',
     borderRadius: 5,
   },
   buttonstyle: {
-    marginTop: 50,
-    width: "100%",
+    marginTop: hp('5%'), 
+    width: wp('92%'), 
+    alignSelf: 'center'
   },
   createtext: {
-    marginTop: 20,
+    marginTop: hp('2%'), 
     textAlign: 'center',
-    fontSize: 14,
+    fontSize: hp('1.8%'), 
   },
   createaccountText: {
     color: '#2437E4',
   },
   image: {
-    maxWidth: windowDimensions.width * 0.7,
-    maxHeight: windowDimensions.height * 0.3,
+    maxWidth: wp('70%'), 
+    maxHeight: hp('30%'), 
     alignSelf: 'center',
-    marginTop: windowDimensions.height * 0.14,
+    marginTop: hp('14%'), 
   },
   forgetpasswordtext: {
-    fontSize: 14,
-    marginTop: 5,
+    fontSize: hp('1.8%'), 
+    marginTop: hp('1%'), 
     textAlign: 'right',
     color: '#2437E4',
   },

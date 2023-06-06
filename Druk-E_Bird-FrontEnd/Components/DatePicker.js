@@ -40,15 +40,11 @@ const DatePicker = ({ onDateSelected }) => {
 const styles = StyleSheet.create({
     pickerContainer: {
         alignItems: 'center',
-        marginVertical: hp('2%'), // Adjust the percentage value as needed
-    },
-    pickerText: {
-        fontSize: wp('4.17%'), // Adjust the percentage value as needed
-        color: '#2196F3',
+        marginVertical: hp('2%'), 
     },
     dateicon: {
-        padding: wp('5.56%'), // Adjust the percentage value as needed
-        marginRight: wp('5.56%'), // Adjust the percentage value as needed
+        padding: wp('5.56%'), 
+        marginRight: wp('5.56%'),
     },
 });
 

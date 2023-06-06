@@ -16,32 +16,32 @@ function About() {
   return (
     <View style={styles.container}>
       <SafeAreaView>
-      <NavigationHeader title={"About"} />
-      <ScrollView contentContainerStyle={styles.scrollContentContainer}>
-        <Image
-          source={require("../assets/Image/Logo.png")}
-          style={styles.logoImage}
-        />
-        <Text style={styles.descriptionText}>
-          Welcome to DrukeBird, an extraordinary app designed to connect bird enthusiasts and contribute to the world of avian research. Managed by the Royal Society for Protection of Nature (RSPN), DrukeBird is Bhutan's premier platform for recording and sharing bird sightings, supporting research, and fostering a community of passionate birdwatchers.
+        <NavigationHeader title={"About"} />
+        <ScrollView contentContainerStyle={styles.scrollContentContainer}>
+          <Image
+            source={require("../assets/Image/Logo.png")}
+            style={styles.logoImage}
+          />
+          <Text style={styles.descriptionText}>
+            Welcome to DrukeBird, an extraordinary app designed to connect bird enthusiasts and contribute to the world of avian research. Managed by the Royal Society for Protection of Nature (RSPN), DrukeBird is Bhutan's premier platform for recording and sharing bird sightings, supporting research, and fostering a community of passionate birdwatchers.
 
-          {"\n\n"}
+            {"\n\n"}
 
-          DrukeBird is inspired by the global eBird initiative and its success in engaging birders worldwide. Our aim is to bring that same level of enthusiasm and scientific collaboration to the beautiful landscapes of Bhutan.
+            DrukeBird is inspired by the global eBird initiative and its success in engaging birders worldwide. Our aim is to bring that same level of enthusiasm and scientific collaboration to the beautiful landscapes of Bhutan.
 
-          {"\n\n"}
+            {"\n\n"}
 
-          By using DrukeBird, you become an invaluable contributor to our understanding of the country's avifauna. Our app empowers birdwatchers of all levels to effortlessly submit checklists of their bird sightings. Documenting the species, location, date, and additional observations allows us to create a comprehensive and ever-growing database of Bhutan's avian biodiversity.
+            By using DrukeBird, you become an invaluable contributor to our understanding of the country's avifauna. Our app empowers birdwatchers of all levels to effortlessly submit checklists of their bird sightings. Documenting the species, location, date, and additional observations allows us to create a comprehensive and ever-growing database of Bhutan's avian biodiversity.
 
-          {"\n\n"}
+            {"\n\n"}
 
-          As part of the RSPN, DrukeBird is dedicated to the conservation and protection of Bhutan's natural heritage. By using this app, you contribute directly to the conservation efforts and scientific research that play a pivotal role in safeguarding our avifauna for future generations. Join us on this incredible journey of discovery, conservation, and community. Together, let's celebrate the diversity of Bhutan's birds, deepen our understanding, and contribute to the global knowledge base of avian science.
+            As part of the RSPN, DrukeBird is dedicated to the conservation and protection of Bhutan's natural heritage. By using this app, you contribute directly to the conservation efforts and scientific research that play a pivotal role in safeguarding our avifauna for future generations. Join us on this incredible journey of discovery, conservation, and community. Together, let's celebrate the diversity of Bhutan's birds, deepen our understanding, and contribute to the global knowledge base of avian science.
 
-          {"\n\n"}
+            {"\n\n"}
 
-          Thank you for being a part of DrukeBird.
-        </Text>
-      </ScrollView>
+            Thank you for being a part of DrukeBird.
+          </Text>
+        </ScrollView>
       </SafeAreaView>
       <StatusBar />
     </View>

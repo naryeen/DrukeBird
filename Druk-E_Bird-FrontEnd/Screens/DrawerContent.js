@@ -1,13 +1,5 @@
 import React, { useContext } from "react";
-import {
-  View,
-  StyleSheet,
-  Alert,
-  TouchableOpacity,
-  Text,
-  Dimensions,
-  StatusBar,
-} from "react-native";
+import {View,StyleSheet,Alert,TouchableOpacity,Text,Dimensions,StatusBar} from "react-native";
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
@@ -49,8 +41,7 @@ export function DrawerContent(props) {
               <Title style={styles.title}>{userInfo.user.name}</Title>
               <Caption
                 style={styles.caption}
-                onPress={() => navigation.replace("MyProfile")}
-              >
+                onPress={() => navigation.replace("MyProfile")}>
                 View Profile
               </Caption>
             </View>

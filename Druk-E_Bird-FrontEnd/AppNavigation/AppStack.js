@@ -30,7 +30,7 @@ const AppStack = () => {
       <Stack.Screen name="Help" component={Help} options={{ headerShown: false }} />
       <Stack.Screen name="About" component={About} options={{ headerShown: false }} />
       <Stack.Screen name="ContactUs" component={ContactUs} options={{ headerShown: false }} />
-      <Stack.Screen name="StartBirdingone" component={StartBirdingone} />
+      <Stack.Screen name="StartBirdingone" component={StartBirdingone} options={{headerTitle: ''}}/>
       <Stack.Screen name="StartBirdingTwo" component={StartBirdingTwo} />
       <Stack.Screen name="StartBirding" component={StartbirdingScreen} options={{ headerShown: false }} />
       <Stack.Screen name="UnknownBirds" component={UnknownBird} options={{ headerShown: false }} />

@@ -1,9 +1,11 @@
 import { View, Text, StyleSheet, Dimensions } from "react-native";
 import { Button } from "react-native-paper";
+import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
+
 
 const { width, height } = Dimensions.get('window');
 
-const StartBirdingCounter = ({ Name, data, setData, item, setStartbirding1data}) => {
+const StartBirdingCounter = ({ Name, data, setData, item, setStartbirding1data }) => {
 
   const handleButtonPress = (action) => {
     const updatedData = data.map((dataItem) => {
@@ -16,7 +18,7 @@ const StartBirdingCounter = ({ Name, data, setData, item, setStartbirding1data})
       }
       return dataItem;
     });
-  
+
     setData(updatedData);
     const tempData = updatedData.map((item) => ({
       englishname: item.englishName,
@@ -24,13 +26,13 @@ const StartBirdingCounter = ({ Name, data, setData, item, setStartbirding1data})
     }));
     setStartbirding1data(tempData);
   };
-  
+
   return (
     <View style={styles.container}>
-      <Button style={styles.plus} icon="plus-box-outline" onPress={() => handleButtonPress("increase")}/>
+      <Button style={styles.plus} icon="plus-box-outline" onPress={() => handleButtonPress("increase")} />
       <Text style={styles.countText}>{item.count}</Text>
       <Text style={styles.speciesText}>{Name}</Text>
-      <Button style={styles.plus} icon="minus-box-outline" onPress={() => handleButtonPress("decrease")}  />
+      <Button style={styles.plus} icon="minus-box-outline" onPress={() => handleButtonPress("decrease")} />
     </View>
   );
 };
@@ -43,20 +45,20 @@ const styles = StyleSheet.create({
     borderRadius: 1,
     borderColor: "gray",
     elevation: 2,
-    height: width*0.13,
-    marginTop: width *0.02,
+    height: hp('7%'),
+    marginTop: hp('1%'),
   },
   countText: {
-    marginTop: width *0.032,
+    marginTop: hp('2.5%'),
     fontWeight: "bold",
   },
   speciesText: {
-    marginTop: width *0.032,
-    marginLeft: width *0.02,
-    fontSize: 16,
+    marginTop: hp('2.5%'),
+    marginLeft: wp('2%'),
+    fontSize: wp('4%'),
   },
-  plus:{
-    marginTop: width *0.03
+  plus: {
+    marginTop: hp('1.5%'),
   }
 });
 

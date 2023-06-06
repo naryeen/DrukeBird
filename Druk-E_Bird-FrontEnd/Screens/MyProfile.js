@@ -6,6 +6,12 @@ import axios from "axios";
 import { useNavigation } from "@react-navigation/native";
 import { AuthContext } from "../Context/AuthContext";
 import { ActivityIndicator, MD2Colors } from "react-native-paper";
+import {
+  widthPercentageToDP as wp,
+  heightPercentageToDP as hp,
+  listenOrientationChange as lor,
+  removeOrientationListener as rol,
+} from "react-native-responsive-screen";
 
 const getCheckList = "https://druk-ebirds.onrender.com/api/v1/checkList";
 
@@ -60,8 +66,8 @@ const MyProfile = () => {
       const { dzongkhag, gewog, village } = item.StartbirdingData[0].EndpointLocation[0];
       return (
         <View>
-          <View style={{ marginLeft: 30 }}>
-            <Text style={{ fontWeight: "bold" }}>{item.BirdName}</Text>
+          <View style={{ marginLeft: wp('3%') }}>
+            <Text style={{ fontWeight: "600", marginTop:10 }}>{item.BirdName}</Text>
             <Text>
               {dzongkhag} {gewog} {village}
             </Text>
@@ -70,7 +76,7 @@ const MyProfile = () => {
             </Text>
             <Text>{item.StartbirdingData[0].count} species report</Text>
           </View>
-          <View style={{ borderBottomWidth: 0.5, borderBottomColor: "gray", marginVertical: 10 }} />
+          <View style={{ borderBottomWidth: 0.2, borderBottomColor: "gray", marginVertical: 10, marginHorizontal:10 }} />
         </View>
       );
     }
@@ -93,11 +99,11 @@ const MyProfile = () => {
     <View style={styles.container}>
       <View style={styles.headerContainer}>
         <TouchableOpacity onPress={() => navigation.navigate("MainScreen")}>
-          <Ionicons name="chevron-back" size={24} color="#136D66" />
+          <Ionicons name="chevron-back" size={26} color="#136D66" />
         </TouchableOpacity>
         <Text style={styles.title}>My Profile</Text>
         <TouchableOpacity onPress={() => setIsDrawerOpen(!isDrawerOpen)}>
-          <Ionicons name="ellipsis-vertical" size={24} color="#136D66" />
+          <Ionicons name="ellipsis-vertical" size={26} color="#136D66" />
         </TouchableOpacity>
       </View>
 
@@ -183,6 +189,7 @@ const styles = StyleSheet.create({
     paddingVertical: height * 0.03,
     borderBottomColor: "#136D66",
     borderBottomWidth: 1,
+    marginHorizontal:20
   },
   name: {
     fontSize: 20,
@@ -199,8 +206,9 @@ const styles = StyleSheet.create({
     paddingHorizontal: paddingHorizontal,
   },
   title: {
-    fontSize: 18,
+    fontSize: wp('6%'),
     fontWeight: "bold",
+    color:"#136D66"
   },
   checklistContentContainer: {
     borderBottomWidth: 1,

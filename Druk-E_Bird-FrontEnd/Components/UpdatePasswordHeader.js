@@ -1,29 +1,30 @@
 import React from "react";
-import { View, Text, TouchableOpacity, StyleSheet, Platform} from "react-native";
+import { View, Text, TouchableOpacity, StyleSheet, Platform } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import { useNavigation } from '@react-navigation/native';
+import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 
-const UpdatePasswordHeader = ({ title}) => {
+
+const UpdatePasswordHeader = ({ title }) => {
   const navigation = useNavigation();
 
   return (
     <View style={styles.headerContainer}>
       <TouchableOpacity onPress={() => navigation.goBack('MainScreen')}>
-        <Ionicons name="chevron-back" size={24} color="#136D66" />
+        <Ionicons name="chevron-back" size={26} color="#136D66" />
       </TouchableOpacity>
       <Text style={styles.title} numberOfLines={1}>{title}</Text>
     </View>
   );
 };
 
-import { heightPercentageToDP, widthPercentageToDP } from 'react-native-responsive-screen';
 
 const styles = StyleSheet.create({
   headerContainer: {
     flexDirection: 'row',
     alignItems: 'center',
-    height: heightPercentageToDP('8%'),
-    paddingHorizontal: widthPercentageToDP('5%'),
+    height: hp('8%'),
+    paddingHorizontal: wp('5%'),
     borderRadius: 1,
     ...Platform.select({
       ios: {
@@ -40,9 +41,9 @@ const styles = StyleSheet.create({
   },
   title: {
     color: '#136D66',
-    fontWeight: 'bold',
-    fontSize: widthPercentageToDP('5%'),
-    marginLeft: widthPercentageToDP('20%'),
+    fontWeight: '600', 
+    fontSize: wp('6%'),
+    marginLeft: wp('18%'),
   },
 });
 export default UpdatePasswordHeader;

@@ -4,6 +4,8 @@ import { Avatar, ActivityIndicator, MD2Colors } from "react-native-paper";
 import { AuthContext } from "../Context/AuthContext";
 import { Swipeable } from "react-native-gesture-handler";
 import axios from "axios";
+import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
+
 import UnknownVerificationHeader from "../Components/UnknownVerificationHeader";
 
 
@@ -39,11 +41,9 @@ const UnknownVerification = () => {
   }, []);
 
   const deleteNotification = (notificationId) => {
-    // Send a request to delete the notification from the database
     axios
       .delete(`https://druk-ebirds.onrender.com/api/v1/notifications/${notificationId}`)
       .then(() => {
-        // Remove the deleted notification from the state
         setNotifications((prevNotifications) =>
           prevNotifications.filter((notification) => notification._id !== notificationId)
         );
@@ -80,8 +80,8 @@ const UnknownVerification = () => {
 
   return (
     <View style={styles.container}>
-      <UnknownVerificationHeader title={"Unknown Verification"}/>
-      
+      <UnknownVerificationHeader title={"Unknown Verification"} />
+
       <FlatList
         data={notifications}
         renderItem={renderItem}
@@ -114,22 +114,23 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   content: {
-    marginTop: 5,
-    height: 100,
-    width: "100%",
+    marginTop: hp('2%'),
+    height: hp('12%'),
+    width: wp('92%'),
     borderRadius: 1,
+    alignSelf:"center",
     elevation: 1,
     shadowOffset: { width: 1, height: 1 },
     shadowOpacity: 0.2,
     shadowRadius: 2,
   },
   image: {
-    marginTop: 18,
-    marginLeft: 15,
+    marginTop: hp('2%'),
+    marginLeft: wp('3%'),
   },
   text: {
-    marginTop: -50,
-    marginLeft: 90,
+    marginTop: hp('-6%'),
+    marginLeft: wp('25%'),
   },
   modalContainer: {
     flex: 1,
@@ -139,11 +140,11 @@ const styles = StyleSheet.create({
   },
   modalContent: {
     backgroundColor: "white",
-    padding: 10,
+    padding: wp('6%'),
     borderRadius: 5,
   },
   closeButton: {
-    marginTop: 20,
+    marginTop: hp('3%'),
     alignItems: "center",
   },
   closeButtonText: {
@@ -153,8 +154,8 @@ const styles = StyleSheet.create({
     backgroundColor: "red",
     justifyContent: "center",
     alignItems: "center",
-    marginTop:5,
-    width: 80,
+    marginTop: hp('2%'),
+    width: wp('50%'),
     height: "100%",
   },
   deleteButtonText: {

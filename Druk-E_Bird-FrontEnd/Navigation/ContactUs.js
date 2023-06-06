@@ -13,7 +13,6 @@ const ContactUs = () => {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [message, setMessage] = useState('');
-
   const sendMessage = () => {
     if (name.trim() === '') {
       Toast.show('Please enter your name', { duration: Toast.durations.SHORT });
@@ -43,44 +42,43 @@ const ContactUs = () => {
 
   return (
     <SafeAreaView>
-    <View style={styles.con}>
-      <UnknownHeader title={'Contact Us'} />
-      <Text style={styles.messages}>Leave a message</Text>
-      <View style={styles.container}>
-        <ScrollView>
-          <TextInput
-            style={styles.name}
-            mode="outlined"
-            label="Name"
-            placeholder="Write Your Name"
-            value={name}
-            onChangeText={text => setName(text)}
-          />
-          <TextInput
-            style={styles.email}
-            mode="outlined"
-            label="Email"
-            placeholder="Write Your Email"
-            value={email}
-            onChangeText={text => setEmail(text)}
-          />
-          <TextInput
-            style={styles.message}
-            mode="outlined"
-            label="Message"
-            placeholder="Write Your Message"
-            multiline
-            value={message}
-            onChangeText={text => setMessage(text)}
-          />
-          <Button styling={styles.buttonStyle} onPress={sendMessage}>
-            Send Message
-          </Button>
-        </ScrollView>
+      <View style={styles.con}>
+        <UnknownHeader title={'Contact Us'} />
+        <View style={styles.container}>
+          <ScrollView>
+            <TextInput
+              style={styles.name}
+              mode="outlined"
+              label="Name"
+              placeholder="Enter Your Name"
+              value={name}
+              onChangeText={text => setName(text)}
+            />
+            <TextInput
+              style={styles.email}
+              mode="outlined"
+              label="Email"
+              placeholder="Enter Your Email"
+              value={email}
+              onChangeText={text => setEmail(text)}
+            />
+            <TextInput
+              style={styles.message}
+              mode="outlined"
+              label="Message"
+              placeholder="Write Your Message"
+              multiline
+              value={message}
+              onChangeText={text => setMessage(text)}
+            />
+            <Button styling={styles.buttonStyle} onPress={sendMessage}>
+              Send Message
+            </Button>
+          </ScrollView>
+        </View>
+
+        <StatusBar />
       </View>
-      
-      <StatusBar />
-    </View>
     </SafeAreaView>
   );
 };
@@ -92,39 +90,29 @@ const styles = StyleSheet.create({
   container: {
     padding: wp('3%'),
     backgroundColor: '#FFFFFF',
-    height: hp('75%'),
-    marginTop: hp('3%'),
+    height: hp('80%'),
+    marginTop: hp('4%'),
     width: wp('95%'),
     marginLeft: wp('2.5%'),
     borderRadius: wp('2%'),
     elevation: 20,
-    borderColor: 'black',
-  },
-  messages: {
-    color: 'gray',
-    marginLeft: wp('7%'),
-    marginTop: hp('3.5%'),
-    fontSize: wp('5%'),
   },
   name: {
     marginTop: hp('2%'),
-    borderColor: '#ccc',
     borderRadius: wp('2%'),
   },
   email: {
     marginTop: hp('2%'),
-    borderColor: '#ccc',
     borderRadius: wp('2%'),
   },
   message: {
     marginTop: hp('2%'),
-    borderColor: '#ccc',
     borderRadius: wp('2%'),
-    height: hp('30%'),
+    height: hp('40%'),
   },
   buttonStyle: {
     backgroundColor: '#136D66',
-    marginTop: hp('8%'),
+    marginTop: hp('5%'),
     width: '100%',
   },
 });

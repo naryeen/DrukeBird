@@ -24,7 +24,7 @@ const TimePicker = ({ onTimeSelected }) => {
   return (
     <View style={styles.pickerContainer}>
       <TouchableOpacity onPress={handleShowPicker}>
-        <Icon name="clock-o" size={20} color="black" style={styles.timeicon} />
+        <Icon name="clock-o" size={26} color="black" style={styles.timeicon} />
       </TouchableOpacity>
       {showPicker && (
         <DateTimePicker
@@ -48,8 +48,8 @@ const styles = StyleSheet.create({
     color: '#2196F3',
   },
   timeicon: {
-    padding: wp('5.56%'), // Adjust the percentage value as needed
-    marginRight: wp('5.56%'), // Adjust the percentage value as needed
+    padding: wp('5.56%'), 
+    marginRight: wp('5.56%'),
     },
 });
 export default TimePicker

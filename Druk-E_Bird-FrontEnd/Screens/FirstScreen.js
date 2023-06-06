@@ -10,35 +10,6 @@ function FirstScreen() {
     navigation.navigate('Login');
   };
 
-  const marginTopDistance = height < 300 ? 30 : 50;
-
-  const styles = StyleSheet.create({
-    container: {
-      flex: 1,
-      backgroundColor: '#fff',
-      alignItems: 'center',
-      justifyContent: 'center',
-    },
-    text1: {
-      marginTop: marginTopDistance,
-      fontSize: 18,
-    },
-    text2: {
-      fontSize: 18,
-    },
-    image: {
-      maxWidth: width * 0.7,
-      maxHeight: height * 0.3,
-      justifyContent: 'center',
-    },
-    buttonview: {
-      marginTop: height * 0.2,
-      width: "100%",
-      alignContent: "center",
-      marginLeft: "4%"
-    },
-  });
-
   return (
     <View style={styles.container}>
       <Image style={styles.image} source={require('../assets/Image/Logo.png')} />
@@ -54,5 +25,32 @@ function FirstScreen() {
     </View>
   );
 }
+import { heightPercentageToDP as hp, widthPercentageToDP as wp } from 'react-native-responsive-screen';
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: '#fff',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  text1: {
+    marginTop: hp('10%'), 
+    fontSize: hp('2.5%'), 
+  },
+  text2: {
+    fontSize: hp('2.5%'), 
+  },
+  image: {
+    maxWidth: wp('70%'), 
+    maxHeight: hp('30%'), 
+    justifyContent: 'center',
+  },
+  buttonview: {
+    marginTop: hp('20%'), 
+    width: wp('100%'), 
+    alignItems: 'center', 
+  },
+});
 
 export default FirstScreen;

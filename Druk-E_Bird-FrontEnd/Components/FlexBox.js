@@ -104,7 +104,4 @@ const styles = StyleSheet.create({
     marginRight: widthPercentageToDP('2%'),
     textAlign: 'justify',
   },
-  icon: {
-    marginLeft: widthPercentageToDP('2%'),
-  },
 });

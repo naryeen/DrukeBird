@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { Text, View, TouchableOpacity, Platform } from 'react-native';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import { useNavigation } from '@react-navigation/native';
+import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
+
 
 const HeaderDateTimePicker = () => {
   const [showDatePicker, setShowDatePicker] = useState(false);
@@ -70,10 +72,10 @@ const HeaderDateTimePicker = () => {
       headerTitle: () => (
         <View style={{ flexDirection: 'row' }}>
           <TouchableOpacity onPress={handleDatePress}>
-            <Text style={{ fontSize: 16 }}>{date}</Text>
+            <Text style={{ fontSize:wp('4%') }}>{date}</Text>
           </TouchableOpacity>
           <TouchableOpacity onPress={handleTimePress}>
-            <Text style={{ fontSize: 16, marginLeft: 10 }}>{time}</Text>
+            <Text style={{ fontSize:wp('4%'), marginLeft: wp("10%") }}>{time}</Text>
           </TouchableOpacity>
         </View>
       ),

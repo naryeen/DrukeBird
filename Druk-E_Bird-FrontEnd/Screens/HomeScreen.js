@@ -1,5 +1,5 @@
 import React from "react";
-import { StyleSheet, View, Text, SafeAreaView, Dimensions, StatusBar } from "react-native";
+import { StyleSheet, View, Text, SafeAreaView, StatusBar } from "react-native";
 
 import {
   widthPercentageToDP as wp,
@@ -15,7 +15,6 @@ import { SliderBox } from "react-native-image-slider-box";
 import Button from "../Components/Button";
 import { useNavigation } from "@react-navigation/native";
 
-const { width, height } = Dimensions.get("window");
 
 const HomeScreen = () => {
   const navigation = useNavigation();
