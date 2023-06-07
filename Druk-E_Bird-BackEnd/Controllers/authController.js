@@ -138,68 +138,32 @@ exports.protect = async(req,res,next) =>{
 //     }
 //     catch(err){
 //         res.status(500).json({error:err.message});
-//     }
+//     }s
 //   }
 
 
-// exports.updatePassword = async (req, res, next) => {
-//     try {
-//         const user = await User.findById(req.user._id).select('+password');
-
-//         if (!(await user.correctPassword(req.body.passwordCurrent, user.password))) {
-//             return res.status(400).json({ message: "Your current password is wrong" });
-//         }
-
-//         const { password, passwordConfirm } = req.body;
-
-//         if (password.length < 8) {
-//             return res.status(400).json({ message: "Enter a password with more than 8 characters." });
-//         } else if (!/[a-z]/.test(password)) {
-//             return res.status(400).json({ message: "Enter at least one lowercase letter." });
-//         } else if (!/[A-Z]/.test(password)) {
-//             return res.status(400).json({ message: "Enter at least one uppercase letter." });
-//         } else if (!/\d/.test(password)) {
-//             return res.status(500).json({ message: "Enter at least one digit." });
-//         }
-
-//         if (password !== passwordConfirm) {
-//             return res.status(400).json({ message: "Password and password confirmation do not match." });
-//         }
-
-//         user.password = password;
-//         user.passwordConfirm = passwordConfirm;
-//         await user.save();
-//         createSendToken(user, 200, res);
-//     } catch (err) {
-//         res.status(500).json({ error: err.message });
-//     }
-// };
-
 exports.updatePassword = async (req, res, next) => {
     try {
-      const user = await User.findById(req.user._id).select('+password');
-  
-      if (!(await user.correctPassword(req.body.passwordCurrent, user.password))) {
-        return res.status(401).json({ message: "Your current password is wrong" });
-      }
-  
-      // Check if the new password and password confirmation match
-      if (req.body.password !== req.body.passwordConfirm) {
-        return res.status(400).json({ message: "Passwords do not match" });
-      }
-  
-      // Check if the new password meets the required criteria
-      if (req.body.password.length < 8) {
-        return res.status(400).json({ message: "Password should be at least 8 characters long" });
-      }
-  
-      // Update the user's password
-      user.password = req.body.password;
-      user.passwordConfirm = req.body.passwordConfirm;
-      await user.save();
-      createSendToken(user, 200, res);
+        const user = await User.findById(req.user._id).select('+password');
+
+        if (!(await user.correctPassword(req.body.passwordCurrent, user.password))) {
+            return res.status(400).json({ message: "Your current password is wrong" });
+        }
+
+        const { password, passwordConfirm } = req.body;
+
+        if (password.length < 8 || !/[a-z]/.test(password) || !/[A-Z]/.test(password) || !/\d/.test(password) )  {
+            return res.status(400).json({ message: "Enter a password with more than 8 characters." });
+        }
+        
+        user.password = password;
+        user.passwordConfirm = passwordConfirm;
+        await user.save();
+        createSendToken(user, 200, res);
     } catch (err) {
-      res.status(500).json({ error: err.message });
+        res.status(500).json({ error: err.message });
     }
-  };
+};
+
+
   
