@@ -76,14 +76,6 @@ const UpdatePassword = () => {
         }
         
       })
-      // .catch((err) => {
-      //   let message = err.response?.data?.message || err.message;
-      //   console.log(err.response.status);
-      //   Toast.show(message, {
-      //     duration: Toast.durations.LONG,
-      //     position: Toast.positions.CENTER,
-      //   });
-      // })
       .catch((err) => {
         JSON.stringify(err);
         let message =
@@ -92,6 +84,7 @@ const UpdatePassword = () => {
             : err.message;
         Toast.show(message, { duration: Toast.durations.SHORT });
       })
+      
       .finally(() => setIsLoading(false));
   };
   return (
