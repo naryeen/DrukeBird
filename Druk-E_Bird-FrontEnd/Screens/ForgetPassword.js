@@ -1,10 +1,11 @@
 import React, { useState } from "react";
 import { TextInput } from 'react-native-paper';
-import { StyleSheet, View,StatusBar } from 'react-native';
+import { StyleSheet, View,StatusBar, Text } from 'react-native';
 import Button from "../Components/Button";
 import axios from "axios";
 import ForgotPasswordHeader from "../Components/ForgotPasswordHeader";
 import Toast from 'react-native-root-toast';
+import { MaterialCommunityIcons } from "@expo/vector-icons";
 
 const ForgetPassword = () => {
   const [email, setEmail] = useState("");
@@ -41,7 +42,17 @@ const ForgetPassword = () => {
   return (
     <View style={styles.container}>
       <ForgotPasswordHeader title={"Forget Password"}/>
-      <View>
+      <View style={styles.lock}>
+      <MaterialCommunityIcons style={styles.logo}
+                  name="lock-open-outline"
+                  size={125}
+                  color="gray"
+                  alignContent="center"
+                />
+      </View>
+      <Text style={styles.txt}>Forgot your Password?</Text>
+      <Text style={styles.txt1}>Enter your email below to reset your password</Text>
+      <View style={styles.con}>
       <TextInput
           style={styles.inputStyle}
           mode="outlined"
@@ -57,23 +68,54 @@ const ForgetPassword = () => {
     </View>
   );
 };
+import { heightPercentageToDP as hp, widthPercentageToDP as wp } from 'react-native-responsive-screen';
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
   },
+  con:{
+    marginHorizontal: wp('4%')
 
+  },
   inputStyle: {
-    marginTop: 20,
+    marginTop: hp('7%'),
     borderColor: '#ccc',
     borderRadius: 5,
-    width: 380,
-    marginLeft: 5,
+    width: wp('92%'),
   },
   buttonStyle: {
-    marginTop: 20,
-    marginLeft:5
+    width: wp('92%'),
+    marginTop: wp('7%'),
 },
+lock:{
+  marginHorizontal: wp('30%'),
+  alignContent: 'center',
+  alignItems: 'center',
+  marginTop: wp('25%'),
+  width: wp('43%'),
+  height:hp('23%'),
+  backgroundColor: 'white',
+  borderWidth: wp('1%'),
+  borderColor: 'gray',
+  borderRadius: 10,
+},
+logo:{
+  marginTop: wp('5%')
+},
+txt:{
+  marginTop: wp('9%'),
+  marginLeft: wp('27%'),
+  fontSize:wp('5%'),
+  fontWeight: 'bold'
+
+},
+txt1:{
+  marginTop: wp('7%'),
+  marginLeft: wp('9%'),
+  fontSize:wp('4%'),
+
+}
 });
 
 export default ForgetPassword;

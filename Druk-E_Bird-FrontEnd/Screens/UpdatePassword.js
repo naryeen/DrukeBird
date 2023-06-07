@@ -1,18 +1,15 @@
 import React, { useState, useContext } from "react";
 import { View, StyleSheet, StatusBar } from "react-native";
-import { ActivityIndicator, MD2Colors, TextInput } from "react-native-paper";
+import { ActivityIndicator, TextInput } from "react-native-paper";
 import axios from "axios";
-import { AuthContext } from "../Context/AuthContext";
 import Toast from "react-native-root-toast";
 import Button from "../Components/Button";
-import UpdatePasswordHeader from "../Components/UpdatePasswordHeader";
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from "react-native-responsive-screen";
 
 const UpdatePassword = () => {
-  const { userToken } = useContext(AuthContext);
   const [currentPassword, setCurrentPassword] = useState("");
   const [newPassword, setNewPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
@@ -53,16 +50,34 @@ const UpdatePassword = () => {
       return;
     }
 
+    // Password validation
+    if (newPassword.length < 8) {
+      Toast.show("Enter a password with more than 8 characters.", {
+        duration: Toast.durations.SHORT,
+      });
+      return;
+    } else if (!/[a-z]/.test(newPassword)) {
+      Toast.show("Enter at least one lowercase letter.", {
+        duration: Toast.durations.SHORT,
+      });
+      return;
+    } else if (!/[A-Z]/.test(newPassword)) {
+      Toast.show("Enter at least one uppercase letter.", {
+        duration: Toast.durations.SHORT,
+      });
+      return;
+    } else if (!/\d/.test(newPassword)) {
+      Toast.show("Enter at least one digit.", {
+        duration: Toast.durations.SHORT,
+      });
+      return;
+    }
+
     setIsLoading(true);
     axios
       .patch(
         "https://drukebird.onrender.com/api/v1/users/updateMyPassword",
-        data,
-        {
-          headers: {
-            Authorization: `Bearer ${userToken}`,
-          },
-        }
+        data
       )
       .then((res) => {
         if (res.data.status === "success") {
@@ -74,7 +89,6 @@ const UpdatePassword = () => {
           setNewPassword("");
           setConfirmPassword("");
         }
-
       })
       .catch((err) => {
         console.log(err.response.status);
@@ -83,25 +97,23 @@ const UpdatePassword = () => {
             duration: Toast.durations.LONG,
             position: Toast.positions.CENTER,
           });
-        }
-        else if (err.response.status === 500) {
-          Toast.show("Your password should contain atleast one capital letter, one small letter and one number", {
-            duration: Toast.durations.LONG,
-            position: Toast.positions.CENTER,
-          });
-
+        } else if (err.response.status === 500) {
+          Toast.show(
+            "Your password should contain at least one capital letter, one small letter, and one number",
+            {
+              duration: Toast.durations.LONG,
+              position: Toast.positions.CENTER,
+            }
+          );
         }
 
         // let message = err.response?.data?.message || err.message;
-
-
       })
-
       .finally(() => setIsLoading(false));
   };
+
   return (
     <View style={styles.container}>
-      <UpdatePasswordHeader title={"Update Password"} />
       <View style={styles.container1}>
         <View style={styles.header}>
           <TextInput
@@ -136,7 +148,7 @@ const UpdatePassword = () => {
           <View style={styles.loadingContainer}>
             <ActivityIndicator
               animating={true}
-              color={'#136D66'}
+              color={"#136D66"}
               size="large"
             />
           </View>
@@ -152,16 +164,16 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   container1: {
-    marginTop: hp('5%'),
+    marginTop: hp("5%"),
   },
   header: {
     alignItems: "center",
-    marginHorizontal: wp('5%'),
+    marginHorizontal: wp("5%"),
   },
   buttonstyle: {
     backgroundColor: "#136D66",
-    marginTop: hp('8%'),
-    width: wp('90%'),
+    marginTop: hp("8%"),
+    width: wp("90%"),
     alignSelf: "center",
   },
   loadingContainer: {
@@ -175,10 +187,10 @@ const styles = StyleSheet.create({
     backgroundColor: "rgba(0, 0, 0, 0.5)",
   },
   inputStyle: {
-    marginTop: hp('2%'),
+    marginTop: hp("2%"),
     borderColor: "#ccc",
     borderRadius: 5,
-    width: wp('90%'),
+    width: wp("90%"),
   },
 });
 

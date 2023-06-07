@@ -97,7 +97,7 @@ userSchema.path('password').validate(function (password) {
     }else if (!/[A-Z]/.test(password)) {
         throw new Error("Enter at least one uppercase letter.");
     }
-    
+
     return passwordRegex.test(password);
 },);
 
@@ -115,8 +115,6 @@ userSchema.pre('findOneAndUpdate', async function (next) {
     update.password !== undefined &&
     update.password == update.passwordConfirm) {
         this.getUpdate().password = await bcrypt.hash(update.password, 12)
-
-        //Delete passwordConfirm Field
         update.passwordConfirm = undefined
         next()
     } else
