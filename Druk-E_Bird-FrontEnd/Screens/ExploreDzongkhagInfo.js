@@ -16,6 +16,7 @@ import {
 } from "react-native-responsive-screen";
 
 import UnknownHeader from "../Components/UnknownHeader";
+import Toast from "react-native-root-toast";
 
 const getCheckList = "https://druk-ebirds.onrender.com/api/v1/checkList";
 
@@ -48,7 +49,8 @@ function ExploreDzongkhagInfo({ route }) {
         setIsLoading(false); // Data fetching complete
       })
       .catch((error) => {
-        Toast.show(error, {duration: Toast.durations.SHORT, position: Toast.positions.CENTER});})
+        Toast.show(error, {duration: Toast.durations.SHORT, position: Toast.positions.CENTER});
+})
       .finally(() => {setIsLoading(false);});
   }, [dzongkhag]);
 

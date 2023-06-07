@@ -1,83 +1,105 @@
 import React, { useState, useContext } from "react";
 import { View, StyleSheet, StatusBar } from "react-native";
-import { ActivityIndicator, TextInput } from "react-native-paper";
+import { ActivityIndicator, MD2Colors, TextInput } from "react-native-paper";
 import axios from "axios";
+import { AuthContext } from "../Context/AuthContext";
 import Toast from "react-native-root-toast";
 import Button from "../Components/Button";
+import UpdatePasswordHeader from "../Components/UpdatePasswordHeader";
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from "react-native-responsive-screen";
 
+function validatePassword(newPassword, confirmPassword) {
+  if (confirmPassword === "") {
+    Toast.show("Please confirm your new password", {
+      duration: Toast.durations.SHORT,
+    });
+    return false;
+  }
+
+  if (newPassword.length < 8) {
+    Toast.show("Enter a password with more than 8 characters.", {
+      duration: Toast.durations.SHORT,
+    });
+    return false;
+  } else if (!/[a-z]/.test(newPassword)) {
+    Toast.show("Enter at least one lowercase letter.", {
+      duration: Toast.durations.SHORT,
+    });
+    return false;
+  } else if (!/[A-Z]/.test(newPassword)) {
+    Toast.show("Enter at least one uppercase letter.", {
+      duration: Toast.durations.SHORT,
+    });
+    return false;
+  } else if (!/\d/.test(newPassword)) {
+    Toast.show("Enter at least one digit.", {
+      duration: Toast.durations.SHORT,
+    });
+    return false;
+  }
+
+  return true;
+}
+
+
 const UpdatePassword = () => {
+  const { userToken } = useContext(AuthContext);
   const [currentPassword, setCurrentPassword] = useState("");
   const [newPassword, setNewPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [isLoading, setIsLoading] = useState(false);
 
   const handleUpdatePassword = () => {
-    const data = {
-      passwordCurrent: currentPassword,
-      password: newPassword,
-      passwordConfirm: confirmPassword,
-    };
-
     if (currentPassword === "") {
       Toast.show("Please enter your current password", {
         duration: Toast.durations.SHORT,
       });
       return;
     }
-
+  
     if (newPassword === "") {
       Toast.show("Please enter your new password", {
         duration: Toast.durations.SHORT,
       });
       return;
     }
-
+  
     if (confirmPassword === "") {
       Toast.show("Please confirm your new password", {
         duration: Toast.durations.SHORT,
       });
       return;
     }
-
+  
     if (newPassword !== confirmPassword) {
       Toast.show("New password and confirm password do not match.", {
-        duration: Toast.durations.SHORT,
+        duration: Toast.durations.SHORT
       });
       return;
     }
-
-    // Password validation
-    if (newPassword.length < 8) {
-      Toast.show("Enter a password with more than 8 characters.", {
-        duration: Toast.durations.SHORT,
-      });
-      return;
-    } else if (!/[a-z]/.test(newPassword)) {
-      Toast.show("Enter at least one lowercase letter.", {
-        duration: Toast.durations.SHORT,
-      });
-      return;
-    } else if (!/[A-Z]/.test(newPassword)) {
-      Toast.show("Enter at least one uppercase letter.", {
-        duration: Toast.durations.SHORT,
-      });
-      return;
-    } else if (!/\d/.test(newPassword)) {
-      Toast.show("Enter at least one digit.", {
-        duration: Toast.durations.SHORT,
-      });
+  
+    if (!validatePassword(newPassword, confirmPassword)) {
       return;
     }
-
+    const data = {
+      passwordCurrent: currentPassword,
+      password: newPassword,
+      passwordConfirm: confirmPassword,
+    };
+  
     setIsLoading(true);
     axios
       .patch(
         "https://drukebird.onrender.com/api/v1/users/updateMyPassword",
-        data
+        data,
+        {
+          headers: {
+            Authorization: `Bearer ${userToken}`,
+          },
+        }
       )
       .then((res) => {
         if (res.data.status === "success") {
@@ -91,7 +113,6 @@ const UpdatePassword = () => {
         }
       })
       .catch((err) => {
-        console.log(err.response.status);
         if (err.response.status === 401) {
           Toast.show("Your current password is incorrect", {
             duration: Toast.durations.LONG,
@@ -99,21 +120,19 @@ const UpdatePassword = () => {
           });
         } else if (err.response.status === 500) {
           Toast.show(
-            "Your password should contain at least one capital letter, one small letter, and one number",
+            "Your password should contain at least 1 capital letter, 1 small letter, and one number",
             {
               duration: Toast.durations.LONG,
               position: Toast.positions.CENTER,
             }
           );
         }
-
-        // let message = err.response?.data?.message || err.message;
       })
       .finally(() => setIsLoading(false));
   };
-
   return (
     <View style={styles.container}>
+      <UpdatePasswordHeader title={"Update Password"} />
       <View style={styles.container1}>
         <View style={styles.header}>
           <TextInput
@@ -148,7 +167,7 @@ const UpdatePassword = () => {
           <View style={styles.loadingContainer}>
             <ActivityIndicator
               animating={true}
-              color={"#136D66"}
+              color={'#136D66'}
               size="large"
             />
           </View>
@@ -164,16 +183,16 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   container1: {
-    marginTop: hp("5%"),
+    marginTop: hp('5%'),
   },
   header: {
     alignItems: "center",
-    marginHorizontal: wp("5%"),
+    marginHorizontal: wp('5%'),
   },
   buttonstyle: {
     backgroundColor: "#136D66",
-    marginTop: hp("8%"),
-    width: wp("90%"),
+    marginTop: hp('8%'),
+    width: wp('90%'),
     alignSelf: "center",
   },
   loadingContainer: {
@@ -187,11 +206,13 @@ const styles = StyleSheet.create({
     backgroundColor: "rgba(0, 0, 0, 0.5)",
   },
   inputStyle: {
-    marginTop: hp("2%"),
+    marginTop: hp('2%'),
     borderColor: "#ccc",
     borderRadius: 5,
-    width: wp("90%"),
+    width: wp('90%'),
   },
 });
-
 export default UpdatePassword;
+
+
+

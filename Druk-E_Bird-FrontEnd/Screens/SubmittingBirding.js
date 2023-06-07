@@ -1,5 +1,12 @@
 import React, { useState, useContext } from "react";
-import { View, StyleSheet, Text, Alert, StatusBar } from "react-native";
+import {
+  View,
+  StyleSheet,
+  Text,
+  Alert,
+  StatusBar,
+  ScrollView,
+} from "react-native";
 import { ActivityIndicator, MD2Colors } from "react-native-paper";
 import SelectDropdown from "react-native-select-dropdown";
 import Button from "../Components/Button";
@@ -7,8 +14,8 @@ import Icon from "react-native-vector-icons/FontAwesome";
 import axios from "axios";
 import { AuthContext } from "../Context/AuthContext";
 import BhutanDzongkhags from "../Components/BhutanDzongkha";
-import NavigationHeader from "../Components/NavigationHeader";
-import Toast from 'react-native-root-toast'; 
+import UnknownHeader from "../Components/UnknownHeader";
+import Toast from "react-native-root-toast";
 
 const SubmittingBirding = ({ route }) => {
   const { SubmittedBirdsdata } = route.params;
@@ -24,10 +31,11 @@ const SubmittingBirding = ({ route }) => {
     Math.floor(Math.random() * 1000)
   );
   const [loading, setLoading] = useState(false);
+
   const handleDzongkhagChange = (value) => {
     setSelectedDzongkhag(value);
-    setSelectedGewog('');
-    setSelectedVillage('');
+    setSelectedGewog("");
+    setSelectedVillage("");
     setVillageOptions([]);
     const gewogs = BhutanDzongkhags[value];
     const gewogOptions = Object.keys(gewogs);
@@ -36,7 +44,7 @@ const SubmittingBirding = ({ route }) => {
 
   const handleGewogChange = (value) => {
     setSelectedGewog(value);
-    setSelectedVillage('');
+    setSelectedVillage("");
 
     const villages = BhutanDzongkhags[selectedDzongkhag][value];
     const villageOptions = villages.map((village) => ({
@@ -52,13 +60,15 @@ const SubmittingBirding = ({ route }) => {
 
   const StartbirdingonedataSave = () => {
     if (!selectedDzongkhag) {
-      Toast.show("Please select Dzongkhag", {duration: Toast.durations.SHORT});
+      Toast.show("Please select Dzongkhag", {
+        duration: Toast.durations.SHORT,
+      });
       return;
     } else if (!selectedGewog) {
-      Toast.show("Please select Gewong", {duration: Toast.durations.SHORT});
+      Toast.show("Please select Gewong", { duration: Toast.durations.SHORT });
       return;
     } else if (!selectedVillage) {
-      Toast.show("Please select Village", {duration: Toast.durations.SHORT});
+      Toast.show("Please select Village", { duration: Toast.durations.SHORT });
       return;
     }
 
@@ -110,129 +120,136 @@ const SubmittingBirding = ({ route }) => {
           detailOfBirds
         )
         .then((response) => {
-            Toast.show('Data successfully posted', {duration: Toast.durations.SHORT});
+          Toast.show("Data successfully posted", {
+            duration: Toast.durations.SHORT,
+          });
         })
         .catch((error) => {
-            Toast.show(error, {duration: Toast.durations.SHORT});
+          Toast.show(error, { duration: Toast.durations.SHORT });
         })
         .finally(() => {
           setLoading(false);
         });
     } catch (error) {
-        Toast.show(error, {duration: Toast.durations.SHORT});
+      Toast.show(error, { duration: Toast.durations.SHORT });
     }
   };
   return (
-      <View style={styles.container}>
-        <NavigationHeader title={"Submit Checklist"} />
-        <View style={styles.container1}>
-          <Text style={styles.label}>Select Dzongkhag:</Text>
-          <SelectDropdown
-            data={Object.keys(BhutanDzongkhags)}
-            onSelect={(selectedDzongkhag) =>
-              handleDzongkhagChange(selectedDzongkhag)
-            }
-            defaultButtonText="Select Dzongkhag"
-            buttonTextAfterSelection={(selectedItem) => selectedItem}
-            rowTextForSelection={(item) => item}
-            buttonStyle={styles.dropdown1BtnStyle}
-            buttonTextStyle={styles.dropdown1BtnTxtStyle}
-            renderDropdownIcon={() => (
-              <Icon name="chevron-down" size={20} color="#000" />
-            )}
-            dropdownStyle={styles.dropdown}
-            dropdownTextStyle={styles.dropdownText}
-            rowStyle={styles.dropdownRow}
-          />
-          <Text style={styles.label}>Select Gewog:</Text>
-          <SelectDropdown
-            data={gewogOptions}
-            onSelect={(selectedGewog) => handleGewogChange(selectedGewog)}
-            defaultButtonText="Select Gewog"
-            buttonTextAfterSelection={(selectedItem) => selectedItem}
-            rowTextForSelection={(item) => item}
-            buttonStyle={styles.dropdown1BtnStyle}
-            buttonTextStyle={styles.dropdown1BtnTxtStyle}
-            renderDropdownIcon={() => (
-              <Icon name="chevron-down" size={20} color="#000" />
-            )}
-            dropdownStyle={styles.dropdown}
-            dropdownTextStyle={styles.dropdownText}
-            rowStyle={styles.dropdownRow}
-            disabled={selectedDzongkhag === ""}
-          />
-          <Text style={styles.label}>Select Village:</Text>
-          <SelectDropdown
-            data={villageOptions.map((village) => village.value)}
-            onSelect={(selectedVillage) => setSelectedVillage(selectedVillage)}
-            defaultButtonText="Select Village"
-            buttonTextAfterSelection={(selectedItem) => selectedItem}
-            rowTextForSelection={(item) => item}
-            buttonStyle={styles.dropdown1BtnStyle}
-            buttonTextStyle={styles.dropdown1BtnTxtStyle}
-            renderDropdownIcon={() => (
-              <Icon name="chevron-down" size={20} color="#000" />
-            )}
-            dropdownStyle={styles.dropdown}
-            dropdownTextStyle={styles.dropdownText}
-            rowStyle={styles.dropdownRow}
-            disabled={selectedDzongkhag === "" || selectedGewog === ""}
-          />
-          {birdsWithCount.length > 0 ? (
-            <Text style={{fontSize:18, marginTop: 10 }}>
-              Number of observed Birds: {birdsWithCount.length}
-            </Text>
-          ) : (
-            <Text style={{marginTop: 10 }}>No birds with count greater than 0.</Text>
+    <View style={styles.container}>
+      <UnknownHeader title={"Submit Checklist"} />
+      <View style={styles.container1}>
+        <Text style={styles.label}>Select Dzongkhag:</Text>
+        <SelectDropdown
+          data={Object.keys(BhutanDzongkhags)}
+          onSelect={(selectedDzongkhag) =>
+            handleDzongkhagChange(selectedDzongkhag)
+          }
+          defaultButtonText="Select Dzongkhag"
+          buttonTextAfterSelection={(selectedItem) => selectedItem}
+          rowTextForSelection={(item) => item}
+          buttonStyle={styles.dropdown1BtnStyle}
+          buttonTextStyle={styles.dropdown1BtnTxtStyle}
+          renderDropdownIcon={() => (
+            <Icon name="chevron-down" size={18} color="gray" />
           )}
-          {birdsWithCount.map((bird) => (
-            <Text style={{marginTop: 10 }} key={bird.englishname}>
-              {bird.englishname} : {bird.count}
-            </Text>
-          ))}
-          <Button
-            styling={styles.buttonstyle}
-            onPress={StartbirdingonedataSave}
-          >
-            Continue
-          </Button>
-          {loading && (
-            <View style={styles.loadingContainer}>
-              <ActivityIndicator
-                animating={true}
-                color={MD2Colors.green800}
-                size="large"
-              />
-            </View>
+        />
+        <Text style={styles.label}>Select Gewog:</Text>
+        <SelectDropdown
+          data={gewogOptions}
+          onSelect={(selectedGewog) => handleGewogChange(selectedGewog)}
+          defaultButtonText="Select Gewog"
+          buttonTextAfterSelection={(selectedItem) => selectedItem}
+          rowTextForSelection={(item) => item}
+          buttonStyle={styles.dropdown1BtnStyle}
+          buttonTextStyle={styles.dropdown1BtnTxtStyle}
+          renderDropdownIcon={() => (
+            <Icon name="chevron-down" size={18} color="gray" />
           )}
-        </View>
-        <StatusBar />
+          disabled={selectedDzongkhag === ""}
+        />
+        <Text style={styles.label}>Select Village:</Text>
+        <SelectDropdown
+          data={villageOptions.map((village) => village.value)}
+          onSelect={(selectedVillage) => setSelectedVillage(selectedVillage)}
+          defaultButtonText="Select Village"
+          buttonTextAfterSelection={(selectedItem) => selectedItem}
+          rowTextForSelection={(item) => item}
+          buttonStyle={styles.dropdown1BtnStyle}
+          buttonTextStyle={styles.dropdown1BtnTxtStyle}
+          renderDropdownIcon={() => (
+            <Icon name="chevron-down" size={18} color="gray" />
+          )}
+         
+          disabled={selectedDzongkhag === "" || selectedGewog === ""}
+        />
+        <ScrollView>
+          <View style={styles.birdname}>
+            {birdsWithCount.length > 0 ? (
+              <Text style={{ fontWeight: "bold" }}>
+                Number of observed Birds: {birdsWithCount.length}
+              </Text>
+            ) : (
+              <Text>No birds with count greater than 0</Text>
+            )}
+            {birdsWithCount.map((bird) => (
+              <Text key={bird.englishname}>
+                {bird.englishname} : {bird.count}
+              </Text>
+            ))}
+          </View>
+        </ScrollView>
+        {loading && (
+          <View style={styles.loadingContainer}>
+            <ActivityIndicator
+              animating={true}
+              color={MD2Colors.green800}
+              size="large"
+            />
+          </View>
+        )}
       </View>
+      <View style={styles.buttonContainer}>
+        <Button styling={styles.buttonstyle} onPress={StartbirdingonedataSave}>
+          Continue
+        </Button>
+      </View>
+      <StatusBar />
+    </View>
   );
 };
 
+import {
+  widthPercentageToDP as wp,
+  heightPercentageToDP as hp,
+} from "react-native-responsive-screen";
+
 const styles = StyleSheet.create({
   container: {
-    flex:1
-  
+    flex: 1,
   },
   container1: {
-    marginHorizontal: 20,
+    flex:1,
+    marginHorizontal: wp("5%"),
   },
   inputStyle: {
-    marginTop: 20,
+    marginTop: hp("2.5%"),
     borderColor: "#ccc",
     borderRadius: 5,
-    width: 321,
+    width: wp("82.5%"),
+  },
+  buttonContainer: {
+    marginHorizontal: wp("5%"),
+    marginBottom: hp("2.5%"),
   },
   buttonstyle: {
-    marginTop: 20,
-    width: 321,
+    width: wp("90%"),
     alignSelf: "center",
+    position: "absolute",
+    bottom: 0,
   },
   label: {
-    fontSize: 16,
-    marginTop:20,
+    fontSize: wp("4%"),
+    marginTop: hp("2.5%"),
   },
   loadingContainer: {
     position: "absolute",
@@ -243,6 +260,11 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     backgroundColor: "rgba(0, 0, 0, 0.5)",
+  },
+  birdname: {
+    marginTop: wp("4%"),
+    fontSize: wp("4%"),
+    padding: 10,
   },
   dropdown1BtnStyle: {
     width: "100%",

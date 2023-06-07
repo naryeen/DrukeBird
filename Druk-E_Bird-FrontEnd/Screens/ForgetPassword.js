@@ -74,48 +74,45 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
   },
-  con:{
-    marginHorizontal: wp('4%')
-
+  con: {
+    marginHorizontal: wp('4%'),
   },
   inputStyle: {
-    marginTop: hp('7%'),
+    marginTop: hp('6%'),
     borderColor: '#ccc',
     borderRadius: 5,
     width: wp('92%'),
   },
   buttonStyle: {
     width: wp('92%'),
-    marginTop: wp('7%'),
-},
-lock:{
-  marginHorizontal: wp('30%'),
-  alignContent: 'center',
-  alignItems: 'center',
-  marginTop: wp('25%'),
-  width: wp('43%'),
-  height:hp('23%'),
-  backgroundColor: 'white',
-  borderWidth: wp('1%'),
-  borderColor: 'gray',
-  borderRadius: 10,
-},
-logo:{
-  marginTop: wp('5%')
-},
-txt:{
-  marginTop: wp('9%'),
-  marginLeft: wp('27%'),
-  fontSize:wp('5%'),
-  fontWeight: 'bold'
-
-},
-txt1:{
-  marginTop: wp('7%'),
-  marginLeft: wp('9%'),
-  fontSize:wp('4%'),
-
-}
+    marginTop: hp('3%'),
+  },
+  lock: {
+    marginHorizontal: wp('30%'),
+    alignItems: 'center',
+    marginTop: hp('7%'),
+    width: wp('40%'),
+    height: wp('40%'),
+    backgroundColor: 'white',
+    borderWidth: wp('1%'),
+    borderColor: 'gray',
+    borderRadius: 10,
+  },
+  logo: {
+    marginTop: hp('1%'),
+  },
+  txt: {
+    marginTop: hp('4%'),
+    marginLeft: 'auto',
+    marginRight: 'auto',
+    fontSize: wp('5%'),
+    fontWeight: 'bold',
+  },
+  txt1: {
+    marginTop: hp('2%'),
+    marginLeft: wp('8%'),
+    fontSize: wp('4%'),
+  },
 });
 
 export default ForgetPassword;

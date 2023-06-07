@@ -79,9 +79,7 @@ const StartBirdingone = ({ route }) => {
             color="#136D66"
             onPress={() => navigation.dispatch(CommonActions.goBack())}
           />
-          <Text
-            style={{ marginLeft: wp("26%"), fontSize: 20, color: "#136D66" }}
-          >
+          <Text style={{ marginLeft: wp("26%"), fontSize: 20, color: "#136D66" }}>
             {formatTime(seconds)}
           </Text>
         </View>

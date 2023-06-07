@@ -5,6 +5,7 @@ import { AuthContext } from "../Context/AuthContext";
 import { Swipeable } from "react-native-gesture-handler";
 import axios from "axios";
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
+import Toast from "react-native-root-toast";
 
 import UnknownVerificationHeader from "../Components/UnknownVerificationHeader";
 
@@ -16,6 +17,7 @@ const UnknownVerification = () => {
   const [modalVisible, setModalVisible] = useState(false);
   const [selectedNotification, setSelectedNotification] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [pollingInterval, setPollingInterval] = useState(null);
 
   const openModal = (item) => {
     setSelectedNotification(item);
@@ -26,19 +28,20 @@ const UnknownVerification = () => {
     setModalVisible(false);
   };
 
-  useEffect(() => {
+  const fetchData = () => {
     axios
       .get(`https://druk-ebirds.onrender.com/api/v1/notifications/${userId}`)
       .then((res) => {
         const reversedNotifications = res.data.data.reverse();
         setNotifications(reversedNotifications);
-        console.log(res.data.data);
       })
       .catch((error) => {
-        console.error("Error fetching notifications:", error);
+        Toast.show(error, {
+          duration: Toast.durations.SHORT,
+        });
       })
       .finally(() => setLoading(false));
-  }, []);
+  };
 
   const deleteNotification = (notificationId) => {
     axios
@@ -49,17 +52,29 @@ const UnknownVerification = () => {
         );
       })
       .catch((error) => {
-        console.error("Error deleting notification:", error);
+        Toast.show(error, {
+          duration: Toast.durations.SHORT,
+        });
       });
   };
 
-  if (loading) {
-    return (
-      <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-        <ActivityIndicator animating={true} color={MD2Colors.green800} size="large" />
-      </View>
-    );
-  }
+  const startPolling = () => {
+    const interval = setInterval(fetchData, 5000); // Fetch data every 5 seconds
+    setPollingInterval(interval);
+  };
+
+  const stopPolling = () => {
+    clearInterval(pollingInterval);
+    setPollingInterval(null);
+  };
+
+  useEffect(() => {
+    fetchData();
+    startPolling();
+    return () => {
+      stopPolling();
+    };
+  }, []); // Empty dependency array ensures this effect runs only once
 
   const renderItem = ({ item }) => (
     <Swipeable
@@ -77,6 +92,14 @@ const UnknownVerification = () => {
       </TouchableOpacity>
     </Swipeable>
   );
+
+  if (loading) {
+    return (
+      <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+        <ActivityIndicator animating={true} color={MD2Colors.green800} size="large" />
+      </View>
+    );
+  }
 
   return (
     <View style={styles.container}>

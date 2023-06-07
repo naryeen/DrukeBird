@@ -162,10 +162,7 @@ function NotSubmitted() {
         data={notsubmittedChecklistItems}
         keyExtractor={(item) => item._id.toString()}
         renderItem={renderItem}
-        refreshControl={
-          <RefreshControl refreshing={refreshing} onRefresh={handleRefresh} />
-        }
-      />
+        refreshControl={<RefreshControl refreshing={refreshing} onRefresh={handleRefresh} />}/>
     </View>
   );
 }
