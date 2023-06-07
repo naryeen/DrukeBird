@@ -46,12 +46,12 @@ const UpdatePassword = () => {
       return;
     }
 
-    if (newPassword !== confirmPassword) {
-      Toast.show("New password and confirm password do not match.", {
-        duration: Toast.durations.SHORT,
-      });
-      return;
-    }
+    // if (newPassword !== confirmPassword) {
+    //   Toast.show("New password and confirm password do not match.", {
+    //     duration: Toast.durations.SHORT,
+    //   });
+    //   return;
+    // }
 
     setIsLoading(true);
     axios
