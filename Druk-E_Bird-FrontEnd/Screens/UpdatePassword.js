@@ -46,12 +46,12 @@ const UpdatePassword = () => {
       return;
     }
 
-    // if (newPassword !== confirmPassword) {
-    //   Toast.show("New password and confirm password do not match.", {
-    //     duration: Toast.durations.SHORT,
-    //   });
-    //   return;
-    // }
+    if (newPassword !== confirmPassword) {
+      Toast.show("New password and confirm password do not match.", {
+        duration: Toast.durations.SHORT,
+      });
+      return;
+    }
 
     setIsLoading(true);
     axios
@@ -74,17 +74,29 @@ const UpdatePassword = () => {
           setNewPassword("");
           setConfirmPassword("");
         }
-        
+
       })
       .catch((err) => {
-        JSON.stringify(err);
-        let message =
-          typeof err.response !== "undefined"
-            ? err.response.data.message
-            : err.message;
-        Toast.show(message, { duration: Toast.durations.SHORT });
+        console.log(err.response.status);
+        if (err.response.status === 401) {
+          Toast.show("Your current password is incorrect", {
+            duration: Toast.durations.LONG,
+            position: Toast.positions.CENTER,
+          });
+        }
+        else if (err.response.status === 500) {
+          Toast.show("Your password should contain atleast one capital letter, one small letter and one number", {
+            duration: Toast.durations.LONG,
+            position: Toast.positions.CENTER,
+          });
+
+        }
+
+        // let message = err.response?.data?.message || err.message;
+
+
       })
-      
+
       .finally(() => setIsLoading(false));
   };
   return (

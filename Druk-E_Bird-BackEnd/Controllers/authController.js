@@ -146,16 +146,16 @@ exports.updatePassword = async (req, res, next) => {
     try {
         const user = await User.findById(req.user._id).select('+password');
 
-        if (!(await user.correctPassword(req.body.passwordCurrent, user.password))) {
-            return res.status(400).json({ message: "Your current password is wrong" });
-        }
+        // if (!(await user.correctPassword(req.body.passwordCurrent, user.password))) {
+        //     return res.status(400).json({ message: "Your current password is wrong" });
+        // }
 
-        const { password, passwordConfirm } = req.body;
+        // const { password, passwordConfirm } = req.body;
 
-        if (password.length < 8 || !/[a-z]/.test(password) || !/[A-Z]/.test(password) || !/\d/.test(password) )  {
-            return res.status(400).json({ message: "Enter a password with more than 8 characters." });
-        }
-        
+        // if (password.length < 8 || !/[a-z]/.test(password) || !/[A-Z]/.test(password) || !/\d/.test(password) )  {
+        //     return res.status(400).json({ message: "Enter a password with more than 8 characters." });
+        // }
+
         user.password = password;
         user.passwordConfirm = passwordConfirm;
         await user.save();
