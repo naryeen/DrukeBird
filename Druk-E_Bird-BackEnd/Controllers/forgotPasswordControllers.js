@@ -16,8 +16,6 @@ exports.forgotPassword = async (req, res, next) => {
 
         const link = `https://druk-ebirds.onrender.com/api/v1/resetPassword/${oldUser._id}`;
 
-        //const link = `http://localhost:4001/api/v1/resetPassword/${oldUser._id}`;
-
         var transporter = nodemailer.createTransport({
             service: "gmail",
             auth: {

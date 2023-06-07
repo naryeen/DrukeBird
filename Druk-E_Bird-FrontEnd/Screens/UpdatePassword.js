@@ -74,22 +74,23 @@ const UpdatePassword = () => {
           setNewPassword("");
           setConfirmPassword("");
         }
-        else{
-          let message = res.message
-        console.log(message);
-        Toast.show(message, {
-          duration: Toast.durations.LONG,
-          position: Toast.positions.CENTER,
-        });
-        }
+        
       })
+      // .catch((err) => {
+      //   let message = err.response?.data?.message || err.message;
+      //   console.log(err.response.status);
+      //   Toast.show(message, {
+      //     duration: Toast.durations.LONG,
+      //     position: Toast.positions.CENTER,
+      //   });
+      // })
       .catch((err) => {
-        let message = err.response?.data?.message || err.message;
-        console.log(err);
-        Toast.show(message, {
-          duration: Toast.durations.LONG,
-          position: Toast.positions.CENTER,
-        });
+        JSON.stringify(err);
+        let message =
+          typeof err.response !== "undefined"
+            ? err.response.data.message
+            : err.message;
+        Toast.show(message, { duration: Toast.durations.SHORT });
       })
       .finally(() => setIsLoading(false));
   };
