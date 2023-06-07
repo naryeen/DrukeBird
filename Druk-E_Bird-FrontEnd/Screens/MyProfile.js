@@ -52,7 +52,7 @@ const MyProfile = () => {
         setData(res.data.data);
       })
       .catch((error) => {
-        console.error("Error fetching data:", error);
+      Toast.show(error, {duration: Toast.durations.SHORT});
       })
       .finally(() => setLoading(false));
   }, []);
@@ -67,7 +67,7 @@ const MyProfile = () => {
       return (
         <View>
           <View style={{ marginLeft: wp('3%') }}>
-            <Text style={{ fontWeight: "600", marginTop:10 }}>{item.BirdName}</Text>
+            <Text style={{ fontWeight: "600", marginTop:hp('1%') }}>{item.BirdName}</Text>
             <Text>
               {dzongkhag} {gewog} {village}
             </Text>
@@ -76,7 +76,7 @@ const MyProfile = () => {
             </Text>
             <Text>{item.StartbirdingData[0].count} species report</Text>
           </View>
-          <View style={{ borderBottomWidth: 0.2, borderBottomColor: "gray", marginVertical: 10, marginHorizontal:10 }} />
+          <View style={{ borderBottomWidth: 0.2, borderBottomColor: "gray", marginVertical: hp('1%'), marginHorizontal:wp('2%') }} />
         </View>
       );
     }
@@ -113,7 +113,7 @@ const MyProfile = () => {
             <Text style={styles.drawerText}>Edit Profile</Text>
           </TouchableOpacity>
 
-          <TouchableOpacity onPress={handleUpdatePassword} style={styles.drawerItem}>
+          <TouchableOpacity onPress={handleUpdatePassword}>
             <Text style={styles.drawerText}>Update Password</Text>
           </TouchableOpacity>
         </View>
@@ -127,7 +127,7 @@ const MyProfile = () => {
         </View>
 
         <View style={styles.checkListContainer}>
-          <Text style={{ marginLeft: 10, fontWeight: "bold" }}>My Recent CheckList</Text>
+          <Text style={{ marginLeft: wp('2.5%'), fontWeight: "bold" }}>My Recent CheckList</Text>
           {loading ? (
             <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
               <ActivityIndicator animating={true} color={MD2Colors.green800} size="large" />
@@ -161,8 +161,8 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "space-between",
-    height: height * 0.08,
-    paddingHorizontal: paddingHorizontal,
+    height: hp('8%'),
+    paddingHorizontal: wp('4%'),
     borderRadius: 1,
     elevation: 1,
     shadowOffset: { width: 1, height: 1 },
@@ -171,51 +171,46 @@ const styles = StyleSheet.create({
   },
   drawerContainer: {
     position: "absolute",
-    right: paddingHorizontal,
+    right: wp('8%'),
     backgroundColor: "#136D66",
     borderRadius: 5,
-    padding: 10,
+    padding: wp('3%'),
     zIndex: 2,
   },
   drawerText: {
     color: "white",
-    margin: 6,
+    margin: wp('2%'),
   },
   profileContainer: {
     flex: 1,
   },
   header: {
     alignItems: "center",
-    paddingVertical: height * 0.03,
+    paddingVertical: hp('3%'),
     borderBottomColor: "#136D66",
     borderBottomWidth: 1,
-    marginHorizontal:20
+    marginHorizontal:wp('2%')
   },
   name: {
-    fontSize: 20,
+    fontSize: wp('4.5%'),
     fontWeight: "bold",
-    marginTop: height * 0.02,
+    marginTop: hp('2%'),
   },
   role: {
-    fontSize: 16,
-    marginTop: 4,
+    fontSize: wp('4.5%'),
+    marginTop: hp('1%'),
   },
   checkListContainer: {
     flex: 1,
-    paddingTop: height * 0.02,
-    paddingHorizontal: paddingHorizontal,
+    paddingTop: hp('2%'),
+    paddingHorizontal: wp('4%'),
   },
   title: {
     fontSize: wp('6%'),
     fontWeight: "bold",
     color:"#136D66"
   },
-  checklistContentContainer: {
-    borderBottomWidth: 1,
-    borderBottomColor: "#136D66",
-    paddingVertical: 10,
-    marginTop: 10,
-  },
+
 });
 
 export default MyProfile;

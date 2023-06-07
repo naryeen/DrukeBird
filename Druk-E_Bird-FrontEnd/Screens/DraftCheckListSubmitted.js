@@ -96,7 +96,6 @@ const DraftCheckListSubmitted = ({ route }) => {
         .then((response) => {
           // Data successfully posted to the database
           Toast.show("Data successfully posted", {duration: Toast.durations.SHORT, position: Toast.positions.CENTER});
-          console.log('Data post:', response.data);
         })
         .catch((error) => {
           Toast.show(error, {duration: Toast.durations.SHORT, position: Toast.positions.CENTER});

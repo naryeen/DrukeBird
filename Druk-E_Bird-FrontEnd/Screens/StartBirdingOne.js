@@ -119,7 +119,6 @@ const StartBirdingone = ({ route }) => {
         });
         setData(speciesData);
         setFilteredData(speciesData);
-        console.log(speciesData.length);
       })
       .catch((error) => {
         Toast.show(error, { duration: Toast.durations.SHORT });

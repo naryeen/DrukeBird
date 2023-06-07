@@ -1,17 +1,11 @@
-import {
-  Text,
-  View,
-  FlatList,
-  TouchableOpacity,
-  RefreshControl,
-} from "react-native";
+import {Text,View,FlatList,TouchableOpacity,RefreshControl,} from "react-native";
 import React, { useEffect, useState, useContext } from "react";
 import axios from "axios";
 import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
 import { ActivityIndicator, MD2Colors } from "react-native-paper";
 import { Swipeable } from "react-native-gesture-handler";
 import { useNavigation } from "@react-navigation/native";
-import Toast from "react-native-root-toast"; // Add this import
+import Toast from "react-native-root-toast";
 import { heightPercentageToDP as hp, widthPercentageToDP as wp } from 'react-native-responsive-screen';
 
 import { AuthContext } from "../Context/AuthContext";
@@ -22,13 +16,10 @@ function NotSubmitted() {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
   const [refreshing, setRefreshing] = useState(false);
+  const [pollingInterval, setPollingInterval] = useState(null);
   const navigation = useNavigation();
   const { userInfo } = useContext(AuthContext);
   const userId = userInfo.user._id;
-
-  useEffect(() => {
-    fetchData();
-  }, []);
 
   const fetchData = () => {
     axios
@@ -37,7 +28,7 @@ function NotSubmitted() {
         setData(res.data.data);
       })
       .catch((error) => {
-        console.error("Error fetching data:", error);
+        Toast.show(error, {duration: Toast.durations.SHORT});
       })
       .finally(() => setLoading(false));
   };
@@ -47,13 +38,9 @@ function NotSubmitted() {
       .delete(`https://druk-ebirds.onrender.com/api/v1/checkList/${itemId}`)
       .then(() => {
         setData((prevData) => prevData.filter((item) => item._id !== itemId));
-        Toast.show("Data successfully Deleted", {
-          duration: Toast.durations.SHORT,
-        });
-      })
+        Toast.show("Data successfully Deleted", {duration: Toast.durations.SHORT});})
       .catch((error) => {
-        console.error("Error deleting item:", error);
-      });
+        Toast.show(error, {duration: Toast.durations.SHORT});})
   };
 
   const handleItemClick = (checklistdata) => {
@@ -77,11 +64,10 @@ function NotSubmitted() {
       </TouchableOpacity>
     </View>
   );
+
   const renderItem = ({ item }) => {
-    if (
-      item.StartbirdingData[0].status === "draftchecklist" &&
-      item.userId === userId
-    ) {
+    if (item.StartbirdingData[0].status === "draftchecklist" && item.userId === userId) 
+    {
       const checklistdata = {
         itemId: item._id,
         birdName: item.BirdName,
@@ -105,15 +91,7 @@ function NotSubmitted() {
                 <Text>
                   {item.StartbirdingData[0].Totalcount} species report
                 </Text>
-                <Text
-                  style={{
-                    textAlign: "right",
-                    fontWeight: "bold",
-                    color: "green",
-                  }}
-                >
-                  Not Submit
-                </Text>
+                <Text style={{textAlign: "right",fontWeight: "bold",color: "green",}}>Not Submit</Text>
               </View>
               <View
                 style={{
@@ -135,14 +113,31 @@ function NotSubmitted() {
     setRefreshing(false);
   };
 
+  const startPolling = () => {
+    const interval = setInterval(fetchData, 5000);
+    setPollingInterval(interval);
+  };
+
+  const stopPolling = () => {
+    clearInterval(pollingInterval);
+    setPollingInterval(null);
+  };
+
+  useEffect(() => {
+    fetchData();
+    startPolling(); 
+    return () => {
+      stopPolling();
+    };
+  }, []);
+
   if (loading) {
     return (
       <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
         <ActivityIndicator
           animating={true}
           color={MD2Colors.green800}
-          size="large"
-        />
+          size="large"/>
       </View>
     );
   }
@@ -164,7 +159,7 @@ function NotSubmitted() {
   return (
     <View style={{ flex: 1 }}>
       <FlatList
-        data={data}
+        data={notsubmittedChecklistItems}
         keyExtractor={(item) => item._id.toString()}
         renderItem={renderItem}
         refreshControl={
@@ -180,6 +175,7 @@ function Submitted() {
   const [loading, setLoading] = useState(true);
   const [refreshing, setRefreshing] = useState(false);
   const { userInfo } = useContext(AuthContext);
+  const [pollingInterval, setPollingInterval] = useState(null);
   const userId = userInfo.user._id;
 
   useEffect(() => {
@@ -238,6 +234,23 @@ function Submitted() {
     fetchData();
     setRefreshing(false);
   };
+  const startPolling = () => {
+    const interval = setInterval(fetchData, 5000); // Poll every 5 seconds (adjust as needed)
+    setPollingInterval(interval);
+  };
+
+  const stopPolling = () => {
+    clearInterval(pollingInterval);
+    setPollingInterval(null);
+  };
+
+  useEffect(() => {
+    fetchData();
+    startPolling();
+    return () => {
+      stopPolling();
+    };
+  }, []);
 
   if (loading) {
     return (
@@ -251,11 +264,9 @@ function Submitted() {
     );
   }
 
-  const submittedChecklistItems = data.filter(
-    (item) =>
+  const submittedChecklistItems = data.filter((item) =>
       item.StartbirdingData[0].status === "submittedchecklist" &&
-      item.userId === userId
-  );
+      item.userId === userId);
 
   if (submittedChecklistItems.length === 0) {
     return (
@@ -268,7 +279,7 @@ function Submitted() {
   return (
     <View style={{ flex: 1 }}>
       <FlatList
-        data={data}
+        data={submittedChecklistItems}
         keyExtractor={(item) => item._id.toString()}
         renderItem={renderItem}
         refreshControl={

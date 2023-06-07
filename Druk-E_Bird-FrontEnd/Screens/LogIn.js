@@ -77,7 +77,7 @@ import { heightPercentageToDP as hp, widthPercentageToDP as wp } from 'react-nat
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    marginHorizontal: wp('4%'), 
+    padding: wp('4%'), 
   },
   inputStyle: {
     marginTop: hp('2%'), 
@@ -87,7 +87,7 @@ const styles = StyleSheet.create({
   buttonstyle: {
     marginTop: hp('5%'), 
     width: wp('92%'), 
-    alignSelf: 'center'
+    alignItems: 'center'
   },
   createtext: {
     marginTop: hp('2%'), 

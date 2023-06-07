@@ -81,7 +81,6 @@ const StartBirdingTwo = ({ route }) => {
         });
         setData(speciesData);
         setFilteredData(speciesData);
-        console.log(speciesData.length);
       })
       .catch((error) => {
         Toast.show(error, { duration: Toast.durations.SHORT });
@@ -187,8 +186,6 @@ const StartBirdingTwo = ({ route }) => {
     }
     setIsLoading(true);
     try {
-      // Make an HTTP POST request to your backend API endpoint
-      console.log(detailOfBirds);
       axios
         .post(
           "https://druk-ebirds.onrender.com/api/v1/checkList",

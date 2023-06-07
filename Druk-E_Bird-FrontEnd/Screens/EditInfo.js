@@ -1,12 +1,24 @@
 import React, { useState, useContext } from "react";
-import {View,Text,TextInput,StyleSheet,TouchableOpacity, StatusBar} from "react-native";
+import {
+  View,
+  Text,
+  TextInput,
+  StyleSheet,
+  TouchableOpacity,
+  StatusBar,
+  SafeAreaView,
+} from "react-native";
 import * as ImagePicker from "expo-image-picker";
-import Toast from 'react-native-root-toast'; // Add this import
-import { Avatar, IconButton,ActivityIndicator, MD2Colors } from "react-native-paper";
+import Toast from "react-native-root-toast";
+import { Avatar, IconButton, ActivityIndicator } from "react-native-paper";
 import axios from "axios";
+import {
+  widthPercentageToDP as wp,
+  heightPercentageToDP as hp,
+} from "react-native-responsive-screen";
 import { AuthContext } from "../Context/AuthContext";
-import NavigationHeader from "../Components/NavigationHeader";
 import Button from "../Components/Button";
+import EditInfoHeader from "../Components/EditInfoHeader";
 
 const EditInfo = () => {
   const { userInfo, userToken, updateUserInfo } = useContext(AuthContext);
@@ -16,6 +28,7 @@ const EditInfo = () => {
   const [profession, setProfession] = useState(userInfo.user.profession);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState("");
+  const [isProfileUpdated, setIsProfileUpdated] = useState(false);
 
   const handleEditPicture = async () => {
     const permissionResult =
@@ -43,7 +56,7 @@ const EditInfo = () => {
     data.append("upload_preset", "DrukEBird");
     data.append("cloud_name", "cheki");
     data.append("folder", "DrukEBird/UserProfile");
-    setIsLoading(true)
+    setIsLoading(true);
     fetch("https://api.cloudinary.com/v1_1/cheki/image/upload", {
       method: "post",
       body: data,
@@ -51,30 +64,43 @@ const EditInfo = () => {
       .then((res) => res.json())
       .then((data) => {
         setProfilePicture(data.url);
-        setIsLoading(false)
-
+        setIsLoading(false);
       });
   };
 
   const handleUpdateProfile = () => {
+    if (!isProfileUpdated) {
+      Toast.show("Your profile is upto date", {
+        duration: Toast.durations.SHORT,
+        position: Toast.positions.CENTER,
+      });      return;
+    }
+
     let profileData = {
       name,
       dob,
       profession,
-      photo
-    }
+      photo,
+    };
     setIsLoading(true);
     axios
-      .patch(`https://drukebird.onrender.com/api/v1/users/updateMe`, profileData, {
-        headers: {
-          Authorization: `Bearer ${userToken}`,
-        },
-      })
+      .patch(
+        `https://drukebird.onrender.com/api/v1/users/updateMe`,
+        profileData,
+        {
+          headers: {
+            Authorization: `Bearer ${userToken}`,
+          },
+        }
+      )
       .then((res) => {
         if (res.data.status === "success") {
-        Toast.show("Profile updated successfully", {duration: Toast.durations.SHORT, position: Toast.positions.CENTER});
+          Toast.show("Profile updated successfully", {
+            duration: Toast.durations.SHORT,
+            position: Toast.positions.CENTER,
+          });
         }
-        console.log(res.data)
+        console.log(res.data);
         updateUserInfo(res.data.data);
         setIsLoading(false);
       })
@@ -86,50 +112,66 @@ const EditInfo = () => {
   if (isLoading) {
     return (
       <View>
-        <ActivityIndicator style={{marginTop:400}} animating={true} color={MD2Colors.green800} size="large" />
+        <ActivityIndicator
+          style={{ marginTop: hp('45%') }}
+          animating={true}
+          color={'#136D66'}
+          size="large"
+        />
       </View>
     );
   }
+
   return (
     <View style={styles.container2}>
-      <NavigationHeader title="Edit Profile"/>
-      <View style={styles.header}>
-        <TouchableOpacity onPress={handleEditPicture}>
-          <Avatar.Image size={180} source={{uri: photo}} />
-          <IconButton
-            icon="camera"
-            size={20}
-            style={styles.editPictureButton}
-          />
-        </TouchableOpacity>
-      </View>
-      <View style={styles.container1}>
-        <TextInput
-          style={styles.input}
-          placeholder="Name"
-          value={name}
-          onChangeText={(text) => setName(text)}
-        />
-        <TextInput
-          style={styles.input}
-          placeholder="Date of Birth"
-          value={dob}
-          onChangeText={(text) => setDob(text)}
-        />
-
-        <TextInput
-          style={styles.input}
-          placeholder="Profession"
-          value={profession}
-          onChangeText={(text) => setProfession(text)}
-        />
+      <SafeAreaView>
+        <EditInfoHeader title="Edit Profile" />
+        <View style={styles.header}>
+          <TouchableOpacity onPress={handleEditPicture}>
+            <Avatar.Image size={180} source={{ uri: photo }} />
+            <IconButton
+              icon="camera"
+              size={20}
+              style={styles.editPictureButton}
+            />
+          </TouchableOpacity>
         </View>
-        <Button styling={styles.buttonstyle} onPress={handleUpdateProfile}>Update Profile</Button>
+        <View style={styles.container1}>
+          <TextInput
+            style={styles.input}
+            placeholder="Name"
+            value={name}
+            onChangeText={(text) => {
+              setName(text);
+              setIsProfileUpdated(true);
+            }}
+          />
+          <TextInput
+            style={styles.input}
+            placeholder="Date of Birth"
+            value={dob}
+            onChangeText={(text) => {
+              setDob(text);
+              setIsProfileUpdated(true); 
+            }}
+          />
+
+          <TextInput
+            style={styles.input}
+            placeholder="Profession"
+            value={profession}
+            onChangeText={(text) => {
+              setProfession(text);
+              setIsProfileUpdated(true); 
+            }}
+          />
+        </View>
+        <Button styling={styles.buttonstyle} onPress={handleUpdateProfile}>
+          Update Profile
+        </Button>
         {error ? <Text style={styles.error}>{error}</Text> : null}
-
         <StatusBar />
-
-      
+      </SafeAreaView>
     </View>
   );
 };
@@ -141,18 +183,12 @@ const styles = StyleSheet.create({
     flex: 1,
   },
 
-  container1: {
-    // marginTop:200,
-    alignItems: "center",
-    justifyContent: "center",
-  },
-
   header: {
     alignItems: "center",
-    paddingVertical: 50,
+    paddingVertical: hp('5%'),
     borderBottomColor: "#136D66",
     borderBottomWidth: 1,
-    marginHorizontal: 20,
+    marginHorizontal: wp('8%'),
   },
   editPictureButton: {
     position: "absolute",
@@ -162,27 +198,27 @@ const styles = StyleSheet.create({
     borderRadius: 20,
   },
   container1: {
-    alignItems: "center",
-    padding: 20,
-    marginTop: 20,
+    padding: wp('5%'),
+    marginTop: hp('3%'),
   },
   input: {
-    width: "100%",
-    height: 60,
+    width: wp('90%'),
+    height: hp('8%'),
     borderWidth: 1,
     borderColor: "#ccc",
     borderRadius: 5,
-    paddingHorizontal: 10,
-    marginBottom: 10,
+    paddingHorizontal: wp('5%'),
+    marginBottom: hp('2%'),
+    alignSelf:'center'
   },
   error: {
     color: "red",
-    marginTop: 10,
+    marginTop: hp('3%'),
   },
-  buttonstyle:{
-    backgroundColor:'#136D66',
-    marginTop:30,
-    width:"90%",
-    marginLeft:20
-  }
+  buttonstyle: {
+    backgroundColor: "#136D66",
+    marginTop: hp('2%'),
+    width:  wp('90%'),
+    alignSelf:"center"
+  },
 });

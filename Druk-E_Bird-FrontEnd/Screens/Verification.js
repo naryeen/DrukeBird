@@ -7,9 +7,6 @@ import Button from "../Components/Button";
 import axios from "axios";
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scrollview';
 
-const windowDimensions = Dimensions.get('window');
-
-const marginTopDistance = windowDimensions.height < 380 ? 30 : 60;
 
 const Verifying = () => {
   const navigation = useNavigation();
@@ -92,6 +89,7 @@ const Verifying = () => {
 
   return (
     <View style={styles.con}>
+      <KeyboardAwareScrollView>
       <View style={styles.container}>
         <Text style={styles.text1}>Verify Email</Text>
         <TextInput
@@ -128,7 +126,7 @@ const Verifying = () => {
 
         {/* OTP Modal */}
         <Modal visible={showOTP} onDismiss={() => setShowOTP(false)}>
-          <KeyboardAwareScrollView>
+          
             <View style={styles.container1}>
               <Text style={styles.text2}>Enter OTP</Text>
               <TextInput
@@ -149,69 +147,81 @@ const Verifying = () => {
         </View>
       )}
             </View>
-          </KeyboardAwareScrollView>
+          
         </Modal>
       </View>
+      </KeyboardAwareScrollView>
     </View>
   )
 };
 
+import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
+
 const styles = StyleSheet.create({
   con: {
     flex: 1,
-    justifyContent: 'center', // vertically center the content
+    justifyContent: 'center', 
   },
   container: {
-    padding: 10,
+    marginHorizontal: wp('4%'),
+    marginTop: hp('30%') 
   },
   container1: {
     backgroundColor: '#FFFFFF',
-    elevation: 2,
+    alignItems: 'center',
     borderRadius: 5,
-    marginLeft: 18,
-    width: "90%",
+    width: wp('92%'),
+    ...Platform.select({
+      ios: {
+        shadowColor: '#000',
+        shadowOffset: { width: 0, height: 2 },
+        shadowOpacity: 0.2,
+        shadowRadius: 1,
+      },
+      android: {
+        elevation: 2,
+      },
+    }),
   },
   text1: {
-    marginTop: marginTopDistance,
-    fontSize: 24,
+    marginTop: hp('2%'), 
+    fontSize: wp('6%'),
     fontWeight: "bold",
     textAlign: "center",
   },
   text2: {
-    marginTop: "6%",
-    fontSize: 22,
-    marginLeft: "30%",
+    marginTop: hp('6%'), 
+    fontSize: wp('6%'),
   },
   inputStyle: {
-    marginTop: 20,
+    marginTop: hp(2), 
     borderColor: '#ccc',
     borderRadius: 5,
   },
   inputStyle1: {
-    marginTop: 20,
-    marginLeft: 15,
+    marginTop: hp(2), 
     borderColor: '#ccc',
     borderRadius: 5,
-    width: "90%",
+    width: wp('85%'),
   },
   createtext: {
-    marginTop: 20,
+    marginTop: hp(2), 
     textAlign: 'center',
-    fontSize: 14,
+    fontSize: wp('3.5%'), 
   },
   loginText: {
     color: '#2437E4',
   },
   buttonstyle: {
     backgroundColor: '#136D66',
-    marginTop: 30,
+    marginTop: hp(3), 
     width: "100%",
   },
   buttonstyle1: {
     backgroundColor: '#136D66',
-    marginVertical: 20,
-    marginLeft: 45,
-    width: "70%",
+    marginVertical: hp(2), 
+    //marginLeft: wp("15%"), 
+    width: wp('85%'), 
   },
   loadingContainer: {
     position: 'absolute',

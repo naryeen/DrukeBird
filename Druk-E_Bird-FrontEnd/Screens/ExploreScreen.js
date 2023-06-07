@@ -31,7 +31,7 @@ function ObservedSpecies() {
         setData(res.data.data);
       })
       .catch((error) => {
-        console.error("Error fetching data:", error);
+        Toast.show(error, {duration: Toast.durations.SHORT, position: Toast.positions.CENTER});
       })
       .finally(() => setLoading(false));
   }, []);

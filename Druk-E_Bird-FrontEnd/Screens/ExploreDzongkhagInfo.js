@@ -48,9 +48,8 @@ function ExploreDzongkhagInfo({ route }) {
         setIsLoading(false); // Data fetching complete
       })
       .catch((error) => {
-        console.error("Error fetching data:", error);
-        setIsLoading(false); // Data fetching failed
-      });
+        Toast.show(error, {duration: Toast.durations.SHORT, position: Toast.positions.CENTER});})
+      .finally(() => {setIsLoading(false);});
   }, [dzongkhag]);
 
   const chartData = {

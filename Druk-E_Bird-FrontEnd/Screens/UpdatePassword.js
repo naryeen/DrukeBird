@@ -3,10 +3,13 @@ import { View, StyleSheet, StatusBar } from "react-native";
 import { ActivityIndicator, MD2Colors, TextInput } from "react-native-paper";
 import axios from "axios";
 import { AuthContext } from "../Context/AuthContext";
-import Toast from 'react-native-root-toast';
+import Toast from "react-native-root-toast";
 import Button from "../Components/Button";
-import UpdatePasswordHeader from "../Components/UpdatePasswordHeader"
-
+import UpdatePasswordHeader from "../Components/UpdatePasswordHeader";
+import {
+  widthPercentageToDP as wp,
+  heightPercentageToDP as hp,
+} from "react-native-responsive-screen";
 
 const UpdatePassword = () => {
   const { userToken } = useContext(AuthContext);
@@ -22,21 +25,34 @@ const UpdatePassword = () => {
       passwordConfirm: confirmPassword,
     };
 
+    if (currentPassword === "") {
+      Toast.show("Please enter your current password", {
+        duration: Toast.durations.SHORT,
+      });
+      return;
+    }
+
     if (newPassword === "") {
-      Toast.show("Please enter your new password", { duration: Toast.durations.SHORT });
+      Toast.show("Please enter your new password", {
+        duration: Toast.durations.SHORT,
+      });
+      return;
+    }
 
+    if (confirmPassword === "") {
+      Toast.show("Please confirm your new password", {
+        duration: Toast.durations.SHORT,
+      });
+      return;
     }
-    else if (confirmPassword === "") {
-      Toast.show("Please enter confirm new password", { duration: Toast.durations.SHORT });
 
+    if (newPassword !== confirmPassword) {
+      Toast.show("New password and confirm password do not match.", {
+        duration: Toast.durations.SHORT,
+      });
+      return;
     }
-    else if (currentPassword === "") {
-      Toast.show("Please enter your current password", { duration: Toast.durations.SHORT });
-    }
-    // if (newPassword !== confirmPassword) {
-    //   Toast.show("New password and confirm password do not match.", { duration: Toast.durations.SHORT });
-    //   return;
-    // }
+
     setIsLoading(true);
     axios
       .patch(
@@ -50,20 +66,33 @@ const UpdatePassword = () => {
       )
       .then((res) => {
         if (res.data.status === "success") {
-          Toast.show("Password updated successfully", { duration: Toast.durations.SHORT, position: Toast.positions.CENTER });
+          Toast.show("Password updated successfully", {
+            duration: Toast.durations.SHORT,
+            position: Toast.positions.CENTER,
+          });
           setCurrentPassword("");
           setNewPassword("");
           setConfirmPassword("");
         }
+        else{
+          let message = res.message
+        console.log(message);
+        Toast.show(message, {
+          duration: Toast.durations.LONG,
+          position: Toast.positions.CENTER,
+        });
+        }
       })
       .catch((err) => {
         let message = err.response?.data?.message || err.message;
-        console.log(message);
-        Toast.show(message, { duration: Toast.durations.LONG, position: Toast.positions.CENTER });
+        console.log(err);
+        Toast.show(message, {
+          duration: Toast.durations.LONG,
+          position: Toast.positions.CENTER,
+        });
       })
-    .finally(() => setIsLoading(false));
+      .finally(() => setIsLoading(false));
   };
-
   return (
     <View style={styles.container}>
       <UpdatePasswordHeader title={"Update Password"} />
@@ -94,15 +123,20 @@ const UpdatePassword = () => {
             value={confirmPassword}
           />
         </View>
-        <Button styling={styles.buttonstyle} onPress={handleUpdatePassword}>Update Password</Button>
+        <Button styling={styles.buttonstyle} onPress={handleUpdatePassword}>
+          Update Password
+        </Button>
         {isLoading && (
           <View style={styles.loadingContainer}>
-            <ActivityIndicator animating={true} color={MD2Colors.green800} size="large" />
+            <ActivityIndicator
+              animating={true}
+              color={'#136D66'}
+              size="large"
+            />
           </View>
         )}
         <StatusBar />
       </View>
-
     </View>
   );
 };
@@ -110,56 +144,36 @@ const UpdatePassword = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-
-
   },
   container1: {
-    marginTop: 20
-
+    marginTop: hp('5%'),
   },
   header: {
     alignItems: "center",
-    marginHorizontal: 20,
-  },
-  input: {
-    width: "100%",
-    height: 50,
-    borderWidth: 1,
-    borderColor: "#ccc",
-    borderRadius: 5,
-    paddingHorizontal: 10,
-    marginBottom: 10,
-    marginTop: 20,
-    borderColor: "#ccc",
-    borderRadius: 5,
-  },
-  error: {
-    color: "red",
-    marginTop: 10,
+    marginHorizontal: wp('5%'),
   },
   buttonstyle: {
-    backgroundColor: '#136D66',
-    marginTop: 30,
-    width: "90%",
-    alignSelf: "center"
+    backgroundColor: "#136D66",
+    marginTop: hp('8%'),
+    width: wp('90%'),
+    alignSelf: "center",
   },
   loadingContainer: {
-    position: 'absolute',
+    position: "absolute",
     top: 0,
     left: 0,
     right: 0,
     bottom: 0,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: 'rgba(0, 0, 0, 0.5)',
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: "rgba(0, 0, 0, 0.5)",
   },
   inputStyle: {
-    marginTop: 20,
+    marginTop: hp('2%'),
     borderColor: "#ccc",
     borderRadius: 5,
-    width: "100%"
+    width: wp('90%'),
   },
 });
 
 export default UpdatePassword;
-
