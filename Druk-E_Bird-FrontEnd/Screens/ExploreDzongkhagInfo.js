@@ -1,22 +1,10 @@
 import React, { useEffect, useState } from "react";
-import {
-  Text,
-  View,
-  StyleSheet,
-  StatusBar,
-  Animated,
-  ScrollView,
-} from "react-native";
+import { Text, View, StyleSheet, StatusBar, Animated, ScrollView, } from "react-native";
 import { ActivityIndicator, MD2Colors } from "react-native-paper";
 import { BarChart } from "react-native-chart-kit";
 import axios from "axios";
-import {
-  widthPercentageToDP as wp,
-  heightPercentageToDP as hp,
-} from "react-native-responsive-screen";
-
+import { widthPercentageToDP as wp, heightPercentageToDP as hp, } from "react-native-responsive-screen";
 import UnknownHeader from "../Components/UnknownHeader";
-import Toast from "react-native-root-toast";
 
 const getCheckList = "https://druk-ebirds.onrender.com/api/v1/checkList";
 
@@ -33,7 +21,7 @@ function ExploreDzongkhagInfo({ route }) {
         const filteredData = res.data.data.filter(
           (item) =>
             item.StartbirdingData[0]?.EndpointLocation[0]?.dzongkhag ===
-              dzongkhag &&
+            dzongkhag &&
             item.StartbirdingData[0]?.status === "submittedchecklist"
         );
         setBirdData(filteredData);
@@ -49,9 +37,9 @@ function ExploreDzongkhagInfo({ route }) {
         setIsLoading(false); // Data fetching complete
       })
       .catch((error) => {
-        Toast.show(error, {duration: Toast.durations.SHORT, position: Toast.positions.CENTER});
-})
-      .finally(() => {setIsLoading(false);});
+        console.error("Error fetching data:", error);
+        setIsLoading(false); // Data fetching failed
+      });
   }, [dzongkhag]);
 
   const chartData = {
@@ -80,6 +68,9 @@ function ExploreDzongkhagInfo({ route }) {
     .slice(0, 3);
 
   const filteredBirdNameCounts = Object.fromEntries(topThreeCounts);
+  const splitLabels = Object.keys(filteredBirdNameCounts)
+
+
 
   return (
     <View style={styles.container1}>
@@ -89,7 +80,7 @@ function ExploreDzongkhagInfo({ route }) {
       <Animated.View style={styles.graph}>
         <BarChart
           data={{
-            labels: Object.keys(filteredBirdNameCounts),
+            labels: splitLabels,
             datasets: [
               {
                 data: Object.values(filteredBirdNameCounts),
@@ -105,11 +96,17 @@ function ExploreDzongkhagInfo({ route }) {
             backgroundGradientTo: "#136D66",
             decimalPlaces: 0,
             color: (opacity) => (opacity === 1 ? "#FFFFFF" : "#FFFFFF"),
+            formatXLabel: (label) => {
+              const words = label.split('/n');
+              return words[0]
+            },
           }}
+          
           style={{
             marginVertical: hp("1%"),
             borderRadius: 8,
             alignItems: "center",
+            marginBottom:10
           }}
           fromZero={true}
           animation={{
@@ -117,13 +114,13 @@ function ExploreDzongkhagInfo({ route }) {
             easing: "easeOutQuad",
           }}
         />
+
         <Text
           style={{
             alignSelf: "center",
             marginTop: hp("1%"),
             fontWeight: "bold",
-          }}
-        >
+          }}>
           Birds vs Bird Counts
         </Text>
       </Animated.View>

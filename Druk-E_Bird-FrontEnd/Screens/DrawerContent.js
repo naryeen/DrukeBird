@@ -1,11 +1,5 @@
 import React, { useContext } from "react";
-import {View,StyleSheet,Alert,TouchableOpacity,Text,Dimensions,StatusBar} from "react-native";
-import {
-  widthPercentageToDP as wp,
-  heightPercentageToDP as hp,
-  listenOrientationChange as lor,
-  removeOrientationListener as rol,
-} from "react-native-responsive-screen";
+import {View,StyleSheet,Alert,TouchableOpacity,Text,StatusBar} from "react-native";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { MaterialIcons } from "@expo/vector-icons";
 import { DrawerContentScrollView, DrawerItem } from "@react-navigation/drawer";
@@ -13,8 +7,8 @@ import { Avatar, Title, Caption, Drawer } from "react-native-paper";
 import { useNavigation } from "@react-navigation/native";
 import { AuthContext } from "../Context/AuthContext";
 
-const { width, height } = Dimensions.get("window");
-const ICON_SIZE = 24; // Set the desired size for all icons
+
+const ICON_SIZE = 24; 
 
 export function DrawerContent(props) {
   const navigation = useNavigation();
@@ -35,7 +29,7 @@ export function DrawerContent(props) {
           <View style={styles.userInfoSection}>
             <Avatar.Image
               source={{ uri: userInfo.user.photo }}
-              size={width * 0.30}
+              size={wp('30%')}
             />
             <View style={styles.userInfo}>
               <Title style={styles.title}>{userInfo.user.name}</Title>
@@ -128,6 +122,9 @@ export function DrawerContent(props) {
   );
 }
 
+
+import { heightPercentageToDP as hp, widthPercentageToDP as wp } from 'react-native-responsive-screen';
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -135,7 +132,9 @@ const styles = StyleSheet.create({
   },
   userInfoSection: {
     flex: 1,
+    flexDirection: 'row',
     alignItems: "center",
+    marginLeft: hp('1%'),
     marginTop: hp('5%'),
   },
   userInfo: {
@@ -143,38 +142,38 @@ const styles = StyleSheet.create({
     marginTop: hp('1%')
   },
   title: {
-    fontSize: width * 0.04,
-    marginTop: width * 0.01,
+    fontSize: wp('4%'), 
     fontWeight: "bold",
+    marginLeft: hp('4%'),
     color: "white",
   },
   caption: {
-    marginTop: width * 0.01,
-    marginLeft: wp('7%'),
-    fontSize: width * 0.035,
-    lineHeight: width * 0.035,
+    marginTop: wp('1%'), 
+    marginLeft: wp('5%'),
+    fontSize: wp('3.5%'), 
+    lineHeight: wp('3.5%'), 
     color: "white",
     textDecorationLine: "underline",
   },
   drawerSection: {
-    marginTop: width * 0.08,
+    marginTop: wp('8%'), 
     width: wp('80%'),
   },
   drawerItemLabel: {
     color: "white",
-    fontSize: width * 0.04,
+    fontSize: wp('4%'), 
   },
   signOutContainer: {
     flexDirection: "row",
     alignItems: "center",
-    height: height * 0.08,
+    height: hp('8%'), 
   },
   signOutIcon: {
-    marginLeft: width * 0.05,
+    marginLeft: wp('5%'), 
   },
   signOutText: {
     color: "white",
-    marginLeft: width * 0.085,
-    fontSize: width * 0.04,
+    marginLeft: wp('8.5%'), 
+    fontSize: wp('4%'), 
   },
 });

@@ -12,9 +12,7 @@ import { ActivityIndicator, MD2Colors } from "react-native-paper";
 import { BarChart } from "react-native-chart-kit";
 import axios from "axios";
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
-
 import UnknownHeader from "../Components/UnknownHeader";
-
 const getCheckList = "https://druk-ebirds.onrender.com/api/v1/checkList";
 
 function ExploreBirdInfo({ route }) {
