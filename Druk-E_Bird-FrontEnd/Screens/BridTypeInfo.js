@@ -1,5 +1,5 @@
 import React, { useState, useContext } from 'react';
-import { StyleSheet, View, Text, TouchableOpacity, Image, StatusBar } from 'react-native';
+import { StyleSheet, View, Text, TouchableOpacity, Image, StatusBar, Modal } from 'react-native';
 import { ActivityIndicator, MD2Colors, TextInput, IconButton } from "react-native-paper";
 import * as ImagePicker from 'expo-image-picker';
 import axios from "axios";
@@ -13,6 +13,7 @@ import SelectDropdown from "react-native-select-dropdown";
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 import { postCheckList } from "../Api/Api";
 import { postPhoto } from "../Api/Api";
+import UnknownHeader from '../Components/UnknownHeader'
 
 
 const BirdTypeInfo = ({ route }) => {
@@ -25,6 +26,7 @@ const BirdTypeInfo = ({ route }) => {
   const [selectedVillage, setSelectedVillage] = useState('');
   const [gewogOptions, setGewogOptions] = useState([]);
   const [villageOptions, setVillageOptions] = useState([]);
+  const [modalVisible, setModalVisible] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const { StartbirdingData, birdName } = route.params
   const { userInfo } = useContext(AuthContext);
@@ -52,7 +54,6 @@ const BirdTypeInfo = ({ route }) => {
     }));
     setVillageOptions(villageOptions);
   };
-
   const StartbirdingonedataSave = () => {
     if (Adult.trim() === "") {
       Toast.show("Please enter your adult", { duration: Toast.durations.SHORT });
@@ -121,7 +122,6 @@ const BirdTypeInfo = ({ route }) => {
         .post(postCheckList, detailOfBirds)
         .then((response) => {
           console.log(detailOfBirds);
-          // Data successfully posted to the database
           Toast.show("Data successfully posted", {
             duration: Toast.durations.SHORT,
             position: Toast.positions.CENTER
@@ -136,38 +136,87 @@ const BirdTypeInfo = ({ route }) => {
         });
     } catch (error) {
       Toast.show(error, { duration: Toast.durations.SHORT });
-
     }
   };
 
-  const handleImageUpload = async () => {
-    const permissionResult = await ImagePicker.requestMediaLibraryPermissionsAsync();
 
-    if (permissionResult.granted === false) {
-      Alert.alert('Permission required', 'Please allow access to the device camera roll.');
+  const pickImageFromGallery = async () => {
+    const { status } = await ImagePicker.requestMediaLibraryPermissionsAsync();
+    if (status !== "granted") {
+      console.log("Permission not granted");
       return;
     }
-
-    const pickerResult = await ImagePicker.launchImageLibraryAsync({
-      mediaTypes: ImagePicker.MediaTypeOptions.Images,
+    const result = await ImagePicker.launchImageLibraryAsync({
       allowsEditing: true,
       quality: 1,
     });
 
+    if (!result.canceled) {
+      const selectedImage = result.assets[0];
+      let newFile = {
+        uri: selectedImage.uri,
+        type: `profile/${selectedImage.uri.split(".")[1]}`,
+        name: `profile.${selectedImage.uri.split(".")[1]}`,
+      };
+      handleUpload(newFile);
+    }
+
+    setModalVisible(false);
+  };
+
+  const takePictureFromCamera = async () => {
+    let permissionResult = await ImagePicker.requestCameraPermissionsAsync();
+    if (permissionResult.granted === false) {
+      Alert.alert("Please grant permission to access the camera roll.");
+      return;
+    }
+    let pickerResult = await ImagePicker.launchCameraAsync({
+      allowsEditing: true,
+      quality: 1,
+    });
     if (!pickerResult.canceled) {
       const capturedImage = pickerResult.assets[0];
       let newFile = {
         uri: capturedImage.uri,
-        type: `birdImage/${capturedImage.uri.split(".")[1]}`,
-        name: `birdImage.${capturedImage.uri.split(".")[1]}`,
+        type: `profile/${capturedImage.uri.split(".")[1]}`,
+        name: `profile.${capturedImage.uri.split(".")[1]}`,
       };
       handleUpload(newFile);
-
     } else {
       alert("You did not select any image.");
     }
-
+    setModalVisible(false);
   };
+
+
+  // const handleImageUpload = async () => {
+  //   const permissionResult = await ImagePicker.requestMediaLibraryPermissionsAsync();
+
+  //   if (permissionResult.granted === false) {
+  //     Alert.alert('Permission required', 'Please allow access to the device camera roll.');
+  //     return;
+  //   }
+
+  //   const pickerResult = await ImagePicker.launchImageLibraryAsync({
+  //     mediaTypes: ImagePicker.MediaTypeOptions.Images,
+  //     allowsEditing: true,
+  //     quality: 1,
+  //   });
+
+  //   if (!pickerResult.canceled) {
+  //     const capturedImage = pickerResult.assets[0];
+  //     let newFile = {
+  //       uri: capturedImage.uri,
+  //       type: `birdImage/${capturedImage.uri.split(".")[1]}`,
+  //       name: `birdImage.${capturedImage.uri.split(".")[1]}`,
+  //     };
+  //     handleUpload(newFile);
+
+  //   } else {
+  //     alert("You did not select any image.");
+  //   }
+
+  // };
   const handleUpload = (image) => {
     const data = new FormData();
     data.append("file", image);
@@ -194,10 +243,12 @@ const BirdTypeInfo = ({ route }) => {
   return (
     <KeyboardAwareScrollView>
       <View style={styles.container1}>
+        <UnknownHeader title={"Submit Birding"} />
+
         <View style={styles.container}>
           <TouchableOpacity
             style={styles.button}
-            onPress={() => handleImageUpload()}
+            onPress={() => setModalVisible(true)}
           >
             {image ? (
               <Image source={{ uri: image }} style={styles.image} />
@@ -228,8 +279,9 @@ const BirdTypeInfo = ({ route }) => {
             style={styles.textInput}
             multiline
           />
-          <View>
-            <Text style={styles.label}>Select Dzongkhag:</Text>
+
+          <View style={styles.cont}>
+            <Text style={styles.locationText}>Choose Your Location: </Text>
             <SelectDropdown
               data={Object.keys(BhutanDzongkhags)}
               onSelect={(selectedDzongkhag) =>
@@ -245,7 +297,6 @@ const BirdTypeInfo = ({ route }) => {
               )}
               dropdownStyle={styles.dropdown}
             />
-            <Text style={styles.label}>Select Gewog:</Text>
             <SelectDropdown
               data={gewogOptions}
               onSelect={(selectedGewog) => handleGewogChange(selectedGewog)}
@@ -260,7 +311,6 @@ const BirdTypeInfo = ({ route }) => {
               dropdownStyle={styles.dropdown1}
               disabled={selectedDzongkhag === ""}
             />
-            <Text style={styles.label}>Select Village:</Text>
             <SelectDropdown
               data={villageOptions.map((village) => village.value)}
               onSelect={(selectedVillage) => setSelectedVillage(selectedVillage)}
@@ -285,7 +335,36 @@ const BirdTypeInfo = ({ route }) => {
                 />
               </View>
             )}
+            <Modal animationType="slide" transparent={true} visible={modalVisible}>
+              <View style={styles.modalContainer}>
+                <View style={styles.modalContent}>
+                  <TouchableOpacity
+                    style={styles.optionButton}
+                    onPress={pickImageFromGallery}
+                  >
+                    <Text style={styles.optionButtonText}>
+                      Pick image from gallery
+                    </Text>
+                  </TouchableOpacity>
+                  <TouchableOpacity
+                    style={styles.optionButton}
+                    onPress={takePictureFromCamera}
+                  >
+                    <Text style={styles.optionButtonText}>
+                      Take picture from camera
+                    </Text>
+                  </TouchableOpacity>
+                  <TouchableOpacity
+                    style={styles.cancelButton}
+                    onPress={() => setModalVisible(false)}
+                  >
+                    <Text style={styles.cancelButtonText}>Cancel</Text>
+                  </TouchableOpacity>
+                </View>
+              </View>
+            </Modal>
           </View>
+
         </View>
       </View>
       <StatusBar />
@@ -299,7 +378,6 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   container: {
-    marginTop: hp('1%'),
     padding: wp('5%'),
     alignItems: 'center',
     justifyContent: 'center',
@@ -309,8 +387,8 @@ const styles = StyleSheet.create({
     marginBottom: wp('3%'),
     alignItems: 'center',
     justifyContent: 'center',
-    width: wp('50%'),
-    height: wp('50%'),
+    width: wp('45%'),
+    height: wp('45%'),
     backgroundColor: '#e1e1e1',
     borderRadius: wp('50%'),
   },
@@ -318,8 +396,8 @@ const styles = StyleSheet.create({
     fontSize: wp('4%'),
   },
   image: {
-    width: wp('50%'),
-    height: wp('50%'),
+    width: wp('40%'),
+    height: wp('40%'),
     borderRadius: wp('50%'),
   },
   textInput: {
@@ -327,21 +405,22 @@ const styles = StyleSheet.create({
     marginBottom: wp('2%'),
     backgroundColor: 'white',
     width: '100%',
-    fontSize:wp('4%')
+    fontSize: wp('4%')
   },
+
   submitbutton: {
     marginTop: wp('9%'),
     width: wp('90%'),
   },
-  dropdown:{
+  dropdown: {
     height: hp('80%'),
     marginTop: wp('70%')
   },
-  dropdown1:{
+  dropdown1: {
     height: hp('80%'),
     marginTop: wp('50%')
   },
-  dropdown2:{
+  dropdown2: {
     height: hp('80%'),
     marginTop: wp('20%')
   },
@@ -351,14 +430,49 @@ const styles = StyleSheet.create({
     borderRadius: wp('1%'),
     borderWidth: 1,
     borderColor: '#ccc',
+    marginTop: hp("1%"), // Add margin top
   },
   label: {
     fontSize: wp('4%'),
-    marginTop: hp('1%'),
+    marginVertical: wp('2%'),
   },
   dropdown1BtnTxtStyle: {
     textAlign: 'left',
     fontSize: wp('4%'),
+  },
+  locationText: {
+    fontSize: wp('4%'),
+    fontWeight: "bold",
+    marginTop: hp('1%')
+  },
+  modalContainer: {
+    flex: 1,
+    justifyContent: "flex-end",
+    backgroundColor: "rgba(0, 0, 0, 0.5)",
+  },
+  modalContent: {
+    backgroundColor: "white",
+    borderTopLeftRadius: wp('1.5%'),
+    borderTopRightRadius: wp('1.5%'),
+    padding: wp('5%'),
+  },
+  optionButton: {
+    marginVertical: wp('1%'),
+    paddingVertical: hp('1.5%'),
+    borderBottomWidth: StyleSheet.hairlineWidth,
+    borderBottomColor: "#CCCCCC",
+  },
+  optionButtonText: {
+    fontSize: wp('4%'),
+  },
+  cancelButton: {
+    marginTop: wp('0.2%'),
+    paddingVertical: wp('2.2%'),
+    alignItems: "center",
+  },
+  cancelButtonText: {
+    fontSize: wp('4%'),
+    color: "red",
   },
   loadingContainer: {
     position: 'absolute',
@@ -368,7 +482,6 @@ const styles = StyleSheet.create({
     bottom: 0,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: 'rgba(0, 0, 0, 0.5)',
   },
 });
 

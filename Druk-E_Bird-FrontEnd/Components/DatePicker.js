@@ -5,49 +5,52 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 
 const DatePicker = ({ onDateSelected }) => {
-    const [showPicker, setShowPicker] = useState(false);
-    const [selectedDate, setSelectedDate] = useState(new Date());
+  const [showPicker, setShowPicker] = useState(false);
+  const [selectedDate, setSelectedDate] = useState(new Date());
 
-    const handleDateChange = (event, date) => {
-        if (event.type === 'set') {
-            // setSelectedDate(date);
-            onDateSelected(date);
-        }
-        setShowPicker(false);
-    };
+  const handleDateChange = (event, date) => {
+    if (event.type === 'set') {
+      const currentDate = new Date();
+      if (date > currentDate) {
+        return; // Prevent selection of future dates
+      }
+      setSelectedDate(date);
+      onDateSelected(date);
+    }
+    setShowPicker(false);
+  };
 
-    const handleShowPicker = () => {
-        setShowPicker(true);
-    };
+  const handleShowPicker = () => {
+    setShowPicker((prevState) => !prevState);
+  };
 
-    return (
-        <View style={styles.pickerContainer}>
-            <TouchableOpacity onPress={handleShowPicker}>
-                <Icon name="calendar" size={20} color="black" style={styles.dateicon} />
-            </TouchableOpacity>
-            {showPicker && (
-                <DateTimePicker
-                    mode="date"
-                    display="default"
-                    value={selectedDate}
-                    onChange={handleDateChange}
-                    style={{ color: 'red' }}
-                />
-            )}
-        </View>
-    );
+  return (
+    <View style={styles.pickerContainer}>
+      <TouchableOpacity onPress={handleShowPicker}>
+        <Icon name="calendar" size={20} color="black" style={styles.dateicon} />
+      </TouchableOpacity>
+      {showPicker && (
+        <DateTimePicker
+          mode="date"
+          display="default"
+          value={selectedDate}
+          onChange={handleDateChange}
+          style={{ color: 'red' }}
+        />
+      )}
+    </View>
+  );
 };
 
 const styles = StyleSheet.create({
-    pickerContainer: {
-        alignItems: 'center',
-        marginVertical: hp('2%'), 
-    },
-    dateicon: {
-        padding: wp('5.56%'), 
-        marginRight: wp('5.56%'),
-    },
+  pickerContainer: {
+    alignItems: 'center',
+    marginVertical: hp('2%'),
+  },
+  dateicon: {
+    padding: wp('5.56%'),
+    marginRight: wp('5.56%'),
+  },
 });
-
 
 export default DatePicker;

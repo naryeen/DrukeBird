@@ -22,6 +22,8 @@ import { AuthContext } from "../Context/AuthContext";
 import UnknownHeader from "../Components/UnknownHeader";
 import BhutanDzongkhags from "../Components/BhutanDzongkha";
 import SelectDropdown from "react-native-select-dropdown";
+import { postCheckList, postPhoto } from "../Api/Api";
+
 
 const { width, height } = Dimensions.get("window");
 
@@ -118,7 +120,7 @@ const UnknownBird = ({ route }) => {
     data.append("upload_preset", "DrukeBird");
     data.append("cloud_name", "drukebird");
     data.append("folder", "DrukeBird/BirdPhoto");
-    fetch("https://api.cloudinary.com/v1_1/drukebird/image/upload", {
+    fetch(postPhoto, {
       method: "post",
       body: data,
     })
@@ -199,7 +201,7 @@ const UnknownBird = ({ route }) => {
       // Make an HTTP POST request to your backend API endpoint
       axios
         .post(
-          "https://druk-ebirds.onrender.com/api/v1/checkList",
+          postCheckList,
           detailOfBirds
         )
         .then((response) => {
@@ -255,8 +257,6 @@ const UnknownBird = ({ route }) => {
         </View>
         <View style={styles.cont}>
           <Text style={styles.locationText}>Choose Your Location</Text>
-
-          <Text style={styles.label}>Select Dzongkhag:</Text>
           <SelectDropdown
             data={Object.keys(BhutanDzongkhags)}
             onSelect={(selectedDzongkhag) =>
@@ -272,7 +272,6 @@ const UnknownBird = ({ route }) => {
             )}
             dropdownStyle={styles.dropdown}
           />
-          <Text style={styles.label}>Select Gewog:</Text>
           <SelectDropdown
             data={gewogOptions}
             onSelect={(selectedGewog) => handleGewogChange(selectedGewog)}
@@ -287,7 +286,6 @@ const UnknownBird = ({ route }) => {
             dropdownStyle={styles.dropdown1}
             disabled={selectedDzongkhag === ""}
           />
-          <Text style={styles.label}>Select Village:</Text>
           <SelectDropdown
             data={villageOptions.map((village) => village.value)}
             onSelect={(selectedVillage) => setSelectedVillage(selectedVillage)}
@@ -300,8 +298,7 @@ const UnknownBird = ({ route }) => {
               <Icon name="chevron-down" size={15} color="gray" />
             )}
             dropdownStyle={styles.dropdown2}
-            // dropdownTextStyle={styles.dropdownText}
-            // rowStyle={styles.dropdownRow}
+
             disabled={selectedDzongkhag === "" || selectedGewog === ""}
           />
         </View>
@@ -443,7 +440,6 @@ const styles = StyleSheet.create({
     fontSize: wp('4%'),
     fontWeight: "bold",
     marginTop: hp('2.5%'),
-    marginBottom: hp('1.25%'),
   },
   dropdown:{
     height: hp('80%'),
@@ -463,8 +459,11 @@ const styles = StyleSheet.create({
     borderRadius: wp('1%'),
     borderWidth: 1,
     borderColor: "#ccc",
+    marginTop: hp("2.5%"), // Add margin top
+
   },
   dropdown1BtnTxtStyle: { textAlign: "left", fontSize: wp('4%') },
+
   loadingContainer: {
     position: "absolute",
     top: 0,
@@ -473,7 +472,6 @@ const styles = StyleSheet.create({
     bottom: 0,
     justifyContent: "center",
     alignItems: "center",
-    backgroundColor: "rgba(0, 0, 0, 0.5)",
   },
 });
 

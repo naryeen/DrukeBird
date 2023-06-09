@@ -4,6 +4,7 @@ import { createDrawerNavigator } from '@react-navigation/drawer';
 import MainTabScreen from './Screens/MainTabScreen';
 import { DrawerContent } from './Screens/DrawerContent';
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
+import CheckList from './Screens/CheckListScreen';
 
 
 const Drawer = createDrawerNavigator();
@@ -32,12 +33,9 @@ const MyDrawer = () => {
           height: headerHeight !== null ? headerHeight : undefined,
           ...headerShadow,
         },
-      }}
-    >
-      <Drawer.Screen
-        name="DrukeBird"
-        component={MainTabScreen}
-      />
+      }}>
+
+      <Drawer.Screen name="DrukeBird" component={MainTabScreen}/>
     </Drawer.Navigator>
   );
 };

@@ -19,6 +19,7 @@ import {
 import { AuthContext } from "../Context/AuthContext";
 import Button from "../Components/Button";
 import EditInfoHeader from "../Components/EditInfoHeader";
+import {postPhoto, postUpdateMe } from "../Api/Api";
 
 const EditInfo = () => {
   const { userInfo, userToken, updateUserInfo } = useContext(AuthContext);
@@ -57,7 +58,7 @@ const EditInfo = () => {
     data.append("cloud_name", "drukebird");
     data.append("folder", "DrukeBird/UserProfile");
     setIsLoading(true);
-    fetch("https://api.cloudinary.com/v1_1/drukebird/image/upload", {
+    fetch(postPhoto, {
       method: "post",
       body: data,
     })
@@ -65,6 +66,8 @@ const EditInfo = () => {
       .then((data) => {
         setProfilePicture(data.url);
         setIsLoading(false);
+        setIsProfileUpdated(true)
+
       });
   };
 
@@ -85,7 +88,7 @@ const EditInfo = () => {
     setIsLoading(true);
     axios
       .patch(
-        `https://drukebird.onrender.com/api/v1/users/updateMe`,
+        postUpdateMe,
         profileData,
         {
           headers: {
@@ -100,7 +103,7 @@ const EditInfo = () => {
             position: Toast.positions.CENTER,
           });
         }
-        
+        console.log(res.data);
         updateUserInfo(res.data.data);
         setIsLoading(false);
       })

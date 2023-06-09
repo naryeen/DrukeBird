@@ -45,7 +45,7 @@ export function DrawerContent(props) {
               icon={({ color, size }) => (
                 <MaterialCommunityIcons
                   name="account-box-outline"
-                  size={ICON_SIZE}
+                  size={24}
                   color="white"
                 />
               )}
@@ -60,7 +60,7 @@ export function DrawerContent(props) {
               icon={({ color, size }) => (
                 <MaterialCommunityIcons
                   name="checkbox-marked-circle-outline"
-                  size={ICON_SIZE}
+                  size={24}
                   color="white"
                 />
               )}
@@ -75,7 +75,7 @@ export function DrawerContent(props) {
               icon={({ color, size }) => (
                 <MaterialCommunityIcons
                   name="email-plus-outline"
-                  size={ICON_SIZE}
+                  size={24}
                   color="white"
                 />
               )}
@@ -90,7 +90,7 @@ export function DrawerContent(props) {
               icon={({ color, size }) => (
                 <MaterialCommunityIcons
                   name="help-circle-outline"
-                  size={ICON_SIZE}
+                  size={24}
                   color="white"
                 />
               )}
@@ -107,7 +107,7 @@ export function DrawerContent(props) {
             >
               <MaterialIcons
                 name="logout"
-                size={ICON_SIZE}
+                size={24}
                 color="white"
                 style={styles.signOutIcon}
               />
@@ -131,24 +131,22 @@ const styles = StyleSheet.create({
   },
   userInfoSection: {
     flex: 1,
-    flexDirection: 'row',
     alignItems: "center",
-    marginLeft: hp('1%'),
     marginTop: hp('5%'),
   },
   userInfo: {
-    flexDirection: "column",
-    marginTop: hp('1%')
+    marginTop: hp('2%'),
+    alignSelf:'center'
   },
   title: {
     fontSize: wp('4%'), 
     fontWeight: "bold",
-    marginLeft: hp('4%'),
     color: "white",
+    alignSelf:'center'
+
   },
   caption: {
     marginTop: wp('1%'), 
-    marginLeft: wp('5%'),
     fontSize: wp('3.5%'), 
     lineHeight: wp('3.5%'), 
     color: "white",
@@ -156,7 +154,6 @@ const styles = StyleSheet.create({
   },
   drawerSection: {
     marginTop: wp('8%'), 
-    width: wp('80%'),
   },
   drawerItemLabel: {
     color: "white",

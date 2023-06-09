@@ -9,8 +9,6 @@ import Toast from "react-native-root-toast";
 import { heightPercentageToDP as hp, widthPercentageToDP as wp } from 'react-native-responsive-screen';
 import { postCheckList } from "../Api/Api";
 
-
-
 import { AuthContext } from "../Context/AuthContext";
 
 const getCheckList = postCheckList;
@@ -59,7 +57,7 @@ function NotSubmitted() {
 
   const handleDelete = (itemId) => {
     axios
-      .delete(`https://druk-ebirds.onrender.com/api/v1/checkList/${itemId}`)
+      .delete(`https://chekilhamo.serv00.net/api/v1/checkList/${itemId}`)
       .then(() => {
         setData((prevData) => prevData.filter((item) => item._id !== itemId));
         Toast.show("Data successfully deleted", { duration: Toast.durations.SHORT });

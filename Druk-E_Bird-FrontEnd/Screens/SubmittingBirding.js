@@ -1,12 +1,5 @@
 import React, { useState, useContext } from "react";
-import {
-  View,
-  StyleSheet,
-  Text,
-  Alert,
-  StatusBar,
-  ScrollView,
-} from "react-native";
+import {View,StyleSheet,Text,Alert,StatusBar,ScrollView,} from "react-native";
 import { ActivityIndicator, MD2Colors } from "react-native-paper";
 import SelectDropdown from "react-native-select-dropdown";
 import Button from "../Components/Button";
@@ -17,7 +10,7 @@ import BhutanDzongkhags from "../Components/BhutanDzongkha";
 import UnknownHeader from "../Components/UnknownHeader";
 import Toast from "react-native-root-toast";
 import { postCheckList } from "../Api/Api";
-
+import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 
 const SubmittingBirding = ({ route }) => {
   const { SubmittedBirdsdata } = route.params;
@@ -136,11 +129,11 @@ const SubmittingBirding = ({ route }) => {
       Toast.show(error, { duration: Toast.durations.SHORT });
     }
   };
+
   return (
     <View style={styles.container}>
       <UnknownHeader title={"Submit Checklist"} />
       <View style={styles.container1}>
-        <Text style={styles.label}>Select Dzongkhag:</Text>
         <SelectDropdown
           data={Object.keys(BhutanDzongkhags)}
           onSelect={(selectedDzongkhag) =>
@@ -155,7 +148,6 @@ const SubmittingBirding = ({ route }) => {
             <Icon name="chevron-down" size={18} color="gray" />
           )}
         />
-        <Text style={styles.label}>Select Gewog:</Text>
         <SelectDropdown
           data={gewogOptions}
           onSelect={(selectedGewog) => handleGewogChange(selectedGewog)}
@@ -169,7 +161,6 @@ const SubmittingBirding = ({ route }) => {
           )}
           disabled={selectedDzongkhag === ""}
         />
-        <Text style={styles.label}>Select Village:</Text>
         <SelectDropdown
           data={villageOptions.map((village) => village.value)}
           onSelect={(selectedVillage) => setSelectedVillage(selectedVillage)}
@@ -191,7 +182,11 @@ const SubmittingBirding = ({ route }) => {
                 Number of observed Birds: {birdsWithCount.length}
               </Text>
             ) : (
-              <Text>No birds with count greater than 0</Text>
+              <View style={styles.box}>
+                <Text style={styles.boxText}>
+                  No birds with count greater than 0
+                </Text>
+              </View>
             )}
             {birdsWithCount.map((bird) => (
               <Text key={bird.englishname}>
@@ -220,17 +215,12 @@ const SubmittingBirding = ({ route }) => {
   );
 };
 
-import {
-  widthPercentageToDP as wp,
-  heightPercentageToDP as hp,
-} from "react-native-responsive-screen";
-
 const styles = StyleSheet.create({
   container: {
     flex: 1,
   },
   container1: {
-    flex:1,
+    flex: 1,
     marginHorizontal: wp("5%"),
   },
   inputStyle: {
@@ -273,8 +263,22 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     borderWidth: 1,
     borderColor: "#ccc",
+    marginTop: hp("2.5%"),
   },
   dropdown1BtnTxtStyle: { textAlign: "left" },
+  box: {
+    marginTop: hp('10%'),
+    borderWidth: 1,
+    borderRadius: 4,
+    padding: wp('20%'),
+    alignItems: "center",
+    borderColor: "#ccc",
+
+
+  },
+  boxText: {
+    textAlign: "center",
+  },
 });
 
 export default SubmittingBirding;

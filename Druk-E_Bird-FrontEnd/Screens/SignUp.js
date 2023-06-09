@@ -64,9 +64,12 @@ const SignUp = () => {
 
   const handleDateChange = (event, date) => {
     setShowDatePicker(false);
-
+  
     if (date !== undefined) {
-      setDoB(date);
+      const currentDate = new Date(); // Get the current date
+      if (date <= currentDate) {
+        setDoB(date);
+      }
     }
   };
 

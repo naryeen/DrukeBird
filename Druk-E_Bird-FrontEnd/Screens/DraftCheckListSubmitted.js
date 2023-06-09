@@ -1,19 +1,24 @@
 import React, { useState, useContext } from 'react';
 import { View, StyleSheet, Text,Alert } from 'react-native';
-import { Picker } from '@react-native-picker/picker';
 import Button from '../Components/Button';
 import Toast from 'react-native-root-toast'; // Add this import
 import Icon from 'react-native-vector-icons/FontAwesome';
+import SelectDropdown from "react-native-select-dropdown";
 import { ActivityIndicator,MD2Colors} from 'react-native-paper';
 import BhutanDzongkhags from '../Components/BhutanDzongkha';
 import axios from 'axios';
 import { AuthContext } from '../Context/AuthContext';
 import { postCheckList } from "../Api/Api";
+import UnknownHeader from "../Components/UnknownHeader";
+import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
+import { useNavigation } from "@react-navigation/native";
+
 
 
 const DraftCheckListSubmitted = ({ route }) => {
   const { checklistdata } = route.params;
   const { userInfo } = useContext(AuthContext);
+  const navigation = useNavigation();
   const name = userInfo.user.name;
   const userId = userInfo.user._id;
   const [selectedDzongkhag, setSelectedDzongkhag] = useState('');
@@ -98,10 +103,12 @@ const DraftCheckListSubmitted = ({ route }) => {
         .then((response) => {
           // Data successfully posted to the database
           Toast.show("Data successfully posted", {duration: Toast.durations.SHORT, position: Toast.positions.CENTER});
+          setTimeout(() => {
+            navigation.navigate("Checklist");
+          }, 200);
         })
         .catch((error) => {
           Toast.show(error, {duration: Toast.durations.SHORT, position: Toast.positions.CENTER});
-
         })
         .finally(() => {setLoading(false);});
     } catch (error) {
@@ -111,43 +118,48 @@ const DraftCheckListSubmitted = ({ route }) => {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.label}>Select Dzongkhag:</Text>
-      <Picker
-        selectedValue={selectedDzongkhag}
-        onValueChange={handleDzongkhagChange}
-        style={styles.picker}
-      >
-        <Picker.Item label="Select Dzongkhag" value="" />
-        {Object.keys(BhutanDzongkhags).map((dzongkhag) => (
-          <Picker.Item key={dzongkhag} label={dzongkhag} value={dzongkhag} />
-        ))}
-      </Picker>
-
-      <Text style={styles.label}>Select Gewog:</Text>
-      <Picker
-        selectedValue={selectedGewog}
-        onValueChange={handleGewogChange}
-        enabled={selectedDzongkhag !== ''}
-        style={styles.picker}
-      >
-        <Picker.Item label="Select Gewog" value="" />
-        {gewogOptions.map((gewog) => (
-          <Picker.Item key={gewog} label={gewog} value={gewog} />
-        ))}
-      </Picker>
-
-      <Text style={styles.label}>Select Village:</Text>
-      <Picker
-        selectedValue={selectedVillage}
-        onValueChange={setSelectedVillage}
-        enabled={selectedDzongkhag !== '' && selectedGewog !== ''}
-        style={styles.picker}
-      >
-        <Picker.Item label="Select Village" value="" />
-        {villageOptions.map((village) => (
-          <Picker.Item key={village.value} label={village.label} value={village.value} />
-        ))}
-      </Picker>
+      <UnknownHeader title={"Submit Checklist"} />
+       <SelectDropdown
+          data={Object.keys(BhutanDzongkhags)}
+          onSelect={(selectedDzongkhag) =>
+            handleDzongkhagChange(selectedDzongkhag)
+          }
+          defaultButtonText="Select Dzongkhag"
+          buttonTextAfterSelection={(selectedItem) => selectedItem}
+          rowTextForSelection={(item) => item}
+          buttonStyle={styles.dropdown1BtnStyle}
+          buttonTextStyle={styles.dropdown1BtnTxtStyle}
+          renderDropdownIcon={() => (
+            <Icon name="chevron-down" size={18} color="gray" />
+          )}
+        />
+        <SelectDropdown
+          data={gewogOptions}
+          onSelect={(selectedGewog) => handleGewogChange(selectedGewog)}
+          defaultButtonText="Select Gewog"
+          buttonTextAfterSelection={(selectedItem) => selectedItem}
+          rowTextForSelection={(item) => item}
+          buttonStyle={styles.dropdown1BtnStyle}
+          buttonTextStyle={styles.dropdown1BtnTxtStyle}
+          renderDropdownIcon={() => (
+            <Icon name="chevron-down" size={18} color="gray" />
+          )}
+          disabled={selectedDzongkhag === ""}
+        />
+        <SelectDropdown
+          data={villageOptions.map((village) => village.value)}
+          onSelect={(selectedVillage) => setSelectedVillage(selectedVillage)}
+          defaultButtonText="Select Village"
+          buttonTextAfterSelection={(selectedItem) => selectedItem}
+          rowTextForSelection={(item) => item}
+          buttonStyle={styles.dropdown1BtnStyle}
+          buttonTextStyle={styles.dropdown1BtnTxtStyle}
+          renderDropdownIcon={() => (
+            <Icon name="chevron-down" size={18} color="gray" />
+          )}
+         
+          disabled={selectedDzongkhag === "" || selectedGewog === ""}
+        />
 
 {birdsWithCount.length > 0 ? (
   <Text style={{ fontWeight: 'bold', fontSize: 20, marginTop: 10 }}>
@@ -207,8 +219,16 @@ const styles = StyleSheet.create({
     bottom: 0,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: 'rgba(0, 0, 0, 0.5)',
-  }
+  },
+  dropdown1BtnStyle: {
+    width: "100%",
+    backgroundColor: "#FFF",
+    borderRadius: 5,
+    borderWidth: 1,
+    borderColor: "#ccc",
+    marginTop: hp("2.5%"),
+  },
+  dropdown1BtnTxtStyle: { textAlign: "left" },
 });
 
 export default DraftCheckListSubmitted;

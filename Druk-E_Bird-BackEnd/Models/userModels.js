@@ -25,7 +25,7 @@ const userSchema = new mongoose.Schema({
     dob: {
         type: String,
         required:[true, 'Enter Your date of birth'],
-        default: moment().format('YYYY-MM-DD'),
+        default: moment().format('YYYY-MM-DD')
     },
    
     country: {

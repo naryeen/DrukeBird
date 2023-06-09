@@ -51,7 +51,10 @@ export const AuthProvider = ({ children }) => {
   };
 
   const updateUserInfo = (newUserInfo) => {
-    setUserInfo(newUserInfo);
+    setUserInfo((prevUserInfo) => ({
+      ...prevUserInfo,
+      ...newUserInfo,
+    }));
   };
 
   const logout = () => {

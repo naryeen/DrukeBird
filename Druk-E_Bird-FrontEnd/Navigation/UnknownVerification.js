@@ -30,7 +30,7 @@ const UnknownVerification = () => {
 
   const fetchData = () => {
     axios
-      .get(`https://druk-ebirds.onrender.com/api/v1/notifications/${userId}`)
+      .get(`https://chekilhamo.serv00.net/api/v1/notifications/${userId}`)
       .then((res) => {
         const reversedNotifications = res.data.data.reverse();
         setNotifications(reversedNotifications);
@@ -45,7 +45,7 @@ const UnknownVerification = () => {
 
   const deleteNotification = (notificationId) => {
     axios
-      .delete(`https://druk-ebirds.onrender.com/api/v1/notifications/${notificationId}`)
+      .delete(`https://chekilhamo.serv00.net/api/v1/notifications/${notificationId}`)
       .then(() => {
         setNotifications((prevNotifications) =>
           prevNotifications.filter((notification) => notification._id !== notificationId)

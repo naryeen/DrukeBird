@@ -14,8 +14,7 @@ const MainTabScreen = () => (
       tabBarActiveTintColor: "#D3D3D3",
       tabBarInactiveTintColor: "white",
       tabBarStyle: { backgroundColor: "#136D66" },
-    }}
-  >
+    }}>
     <Tab.Screen
       name="Home"
       component={HomeScreen}
