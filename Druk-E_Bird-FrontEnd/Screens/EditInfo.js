@@ -100,7 +100,7 @@ const EditInfo = () => {
             position: Toast.positions.CENTER,
           });
         }
-        console.log(res.data);
+        
         updateUserInfo(res.data.data);
         setIsLoading(false);
       })

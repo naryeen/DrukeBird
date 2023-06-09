@@ -4,7 +4,7 @@ exports.postCheckList = "https://chekilhamo.serv00.net/api/v1/checkList";
 exports.postUpdateMe = `https://chekilhamo.serv00.net/api/v1/users/updateMe`;
 exports.postPhoto = "https://api.cloudinary.com/v1_1/cheki/image/upload";
 exports.postForgetpassword = 'https://chekilhamo.serv00.net/api/v1/forgotPassword';
-exports.getSpeciesdata = "https://druk-ebird.onrender.com/api/v1/species?limit=700";
+exports.getSpeciesdata = "https://druk-ebird.onrender.com/api/v1/species?limit=20";
 exports.postUpdatePassword = "https://chekilhamo.serv00.net/api/v1/users/updateMyPassword";
 exports.postVerification = 'https://chekilhamo.serv00.net/api/v1/users/verification';
 exports.postOTP = 'https://chekilhamo.serv00.net/api/v1/users/OTP';

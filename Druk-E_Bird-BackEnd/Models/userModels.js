@@ -2,6 +2,7 @@ const dotenv = require("dotenv")
 dotenv.config()
 const mongoose = require ('mongoose')
 const bcrypt = require("bcryptjs")
+const moment = require('moment');
 
 const userSchema = new mongoose.Schema({
     name: {
@@ -24,6 +25,7 @@ const userSchema = new mongoose.Schema({
     dob: {
         type: String,
         required:[true, 'Enter Your date of birth'],
+        default: moment().format('YYYY-MM-DD'),
     },
    
     country: {

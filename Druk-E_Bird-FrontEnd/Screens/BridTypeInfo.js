@@ -15,8 +15,6 @@ import { postCheckList } from "../Api/Api";
 import { postPhoto } from "../Api/Api";
 
 
-
-
 const BirdTypeInfo = ({ route }) => {
   const [image, setImage] = useState(null);
   const [Adult, setAdult] = useState('');
