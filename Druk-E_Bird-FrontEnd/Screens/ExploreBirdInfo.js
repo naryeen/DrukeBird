@@ -13,7 +13,11 @@ import { BarChart } from "react-native-chart-kit";
 import axios from "axios";
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 import UnknownHeader from "../Components/UnknownHeader";
-const getCheckList = "https://druk-ebirds.onrender.com/api/v1/checkList";
+import { postCheckList } from "../Api/Api";
+import Toast from 'react-native-root-toast';
+
+
+const getCheckList = postCheckList;
 
 function ExploreBirdInfo({ route }) {
   const { birdName } = route.params;
@@ -53,8 +57,11 @@ function ExploreBirdInfo({ route }) {
         setIsLoading(false); // Data fetching complete
       })
       .catch((error) => {
-        console.error("Error fetching data:", error);
-        setIsLoading(false); // Data fetching failed
+        Toast.show(error, { duration: Toast.durations.SHORT });
+        
+      })
+      .finally(() => {
+        setIsLoading(false);
       });
   }, [birdName]);
 
@@ -81,7 +88,7 @@ function ExploreBirdInfo({ route }) {
 
   const topThreeCounts = Object.entries(dzongkhagCounts)
     .sort((a, b) => b[1] - a[1])
-    .slice(0, 3);
+    .slice(0, 2);
 
   const filteredDzongkhagCounts = Object.fromEntries(topThreeCounts);
 

@@ -35,7 +35,6 @@ function StartbirdingScreen() {
 
   useEffect(() => {
     if (currentLocation !== null) {
-      console.log(currentLocation)
     }
   }, [currentLocation]);
 

@@ -25,8 +25,8 @@ import {
 import StartBirdingCounter from "../Components/StartBirdingCounter";
 import { AuthContext } from "../Context/AuthContext";
 import HeaderDateTimePicker from "../Components/HeaderDateTimePicker"
-
-
+import { postCheckList } from "../Api/Api";
+import { getSpeciesdata } from "../Api/Api";
 
 const StartBirdingTwo = ({ route }) => {
   const navigation = useNavigation();
@@ -48,7 +48,7 @@ const StartBirdingTwo = ({ route }) => {
 
   useEffect(() => {
     handleSearch(query);
-  }, [data, startbirding1data]);
+  }, [data, startbirding1data, query]);
 
   const handleFabPress = (UnknownBirdsdata) => {
     Alert.alert(
@@ -73,7 +73,7 @@ const StartBirdingTwo = ({ route }) => {
 
   useEffect(() => {
     axios
-      .get("https://druk-ebird.onrender.com/api/v1/species?limit=20")
+      .get(getSpeciesdata)
       .then((res) => {
         const speciesData = res.data.species.map((item) => {
           // return {...item, count: 0}
@@ -89,15 +89,14 @@ const StartBirdingTwo = ({ route }) => {
   }, []);
 
   const handleSearch = (query) => {
-    if (query !== searchQuery) {
-      setSearchQuery(query);
-      const filtered = data.filter((item) =>
-        item.englishName.toLowerCase().includes(query.toLowerCase())
-      );
-      setFilteredData(filtered);
-      setSearchFound(filtered.length > 0);
-    }
+    setSearchQuery(query);
+    const filtered = data.filter((item) =>
+      item.englishName.toLowerCase().includes(query.toLowerCase())
+    );
+    setFilteredData(filtered);
+    setSearchFound(filtered.length > 0);
   };
+  
 
   const handleItemClick = (itemId, birdName, StartbirdingData) => {
     navigation.navigate("BirdTypeInfo", {
@@ -188,7 +187,7 @@ const StartBirdingTwo = ({ route }) => {
     try {
       axios
         .post(
-          "https://druk-ebirds.onrender.com/api/v1/checkList",
+          postCheckList,
           detailOfBirds
         )
         .then((response) => {
@@ -336,8 +335,7 @@ const styles = StyleSheet.create({
     right: 0,
     bottom: 0,
     justifyContent: "center",
-    alignItems: "center",
-    backgroundColor: "rgba(0, 0, 0, 0.5)",
+    alignItems: "center"
   },
 });
 export default StartBirdingTwo;

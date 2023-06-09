@@ -10,6 +10,8 @@ import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from "react-native-responsive-screen";
+import { postUpdatePassword } from "../Api/Api";
+
 
 function validatePassword(newPassword, confirmPassword) {
   if (confirmPassword === "") {
@@ -93,7 +95,7 @@ const UpdatePassword = () => {
     setIsLoading(true);
     axios
       .patch(
-        "https://drukebird.onrender.com/api/v1/users/updateMyPassword",
+        postUpdatePassword,
         data,
         {
           headers: {

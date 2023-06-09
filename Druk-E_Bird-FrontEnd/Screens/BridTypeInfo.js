@@ -11,6 +11,9 @@ import Button from "../Components/Button";
 import { AuthContext } from '../Context/AuthContext';
 import SelectDropdown from "react-native-select-dropdown";
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
+import { postCheckList } from "../Api/Api";
+import { postPhoto } from "../Api/Api";
+
 
 
 
@@ -117,7 +120,7 @@ const BirdTypeInfo = ({ route }) => {
     setIsLoading(true)
     try {
       axios
-        .post("https://druk-ebirds.onrender.com/api/v1/checkList", detailOfBirds)
+        .post(postCheckList, detailOfBirds)
         .then((response) => {
           console.log(detailOfBirds);
           // Data successfully posted to the database
@@ -173,7 +176,7 @@ const BirdTypeInfo = ({ route }) => {
     data.append("upload_preset", "DrukEBird");
     data.append("cloud_name", "cheki");
     data.append("folder", "DrukEBird/BirdPhoto");
-    fetch("https://api.cloudinary.com/v1_1/cheki/image/upload", {
+    fetch(postPhoto, {
       method: "post",
       body: data,
     })

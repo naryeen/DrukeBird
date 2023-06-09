@@ -6,6 +6,7 @@ import axios from "axios";
 import ForgotPasswordHeader from "../Components/ForgotPasswordHeader";
 import Toast from 'react-native-root-toast';
 import { MaterialCommunityIcons } from "@expo/vector-icons";
+import { postForgetpassword } from "../Api/Api";
 
 const ForgetPassword = () => {
   const [email, setEmail] = useState("");
@@ -23,7 +24,7 @@ const ForgetPassword = () => {
       email: email,
     };
 
-    axios.post('https://druk-ebirds.onrender.com/api/v1/forgotPassword', user)
+    axios.post(postForgetpassword, user)
       .then(res => {
         if (res.status === 201) {
           Toast.show("Link is Successfully sent in Your Mail", {

@@ -9,6 +9,7 @@ import countryOptions from "../Components/Country";
 import DateTimePicker from "@react-native-community/datetimepicker";
 import SelectDropdown from "react-native-select-dropdown";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
+import { postSignup } from "../Api/Api";
 
 const SignUp = () => {
   const navigation = useNavigation();
@@ -34,7 +35,7 @@ const SignUp = () => {
     };
     setIsLoading(true);
     axios
-      .post("https://druk-ebirds.onrender.com/api/v1/users/signup", user)
+      .post(postSignup, user)
       .then((res) => {
         if (res.data.status == "success") {
           Toast.show("Successfully Created Your Account", {
@@ -107,8 +108,7 @@ const SignUp = () => {
       right: 0,
       bottom: 0,
       justifyContent: "center",
-      alignItems: "center",
-      backgroundColor: "rgba(0, 0, 0, 0.5)",
+      alignItems: "center"
     },
     scrollViewContainer: {
       marginTop: 20,

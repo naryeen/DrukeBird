@@ -16,6 +16,8 @@ import { AuthContext } from "../Context/AuthContext";
 import BhutanDzongkhags from "../Components/BhutanDzongkha";
 import UnknownHeader from "../Components/UnknownHeader";
 import Toast from "react-native-root-toast";
+import { postCheckList } from "../Api/Api";
+
 
 const SubmittingBirding = ({ route }) => {
   const { SubmittedBirdsdata } = route.params;
@@ -116,7 +118,7 @@ const SubmittingBirding = ({ route }) => {
     try {
       axios
         .post(
-          "https://druk-ebirds.onrender.com/api/v1/checkList",
+          postCheckList,
           detailOfBirds
         )
         .then((response) => {
@@ -259,7 +261,6 @@ const styles = StyleSheet.create({
     bottom: 0,
     justifyContent: "center",
     alignItems: "center",
-    backgroundColor: "rgba(0, 0, 0, 0.5)",
   },
   birdname: {
     marginTop: wp("4%"),

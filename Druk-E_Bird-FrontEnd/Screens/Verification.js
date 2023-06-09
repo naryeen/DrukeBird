@@ -6,7 +6,7 @@ import Toast from 'react-native-root-toast';
 import Button from "../Components/Button";
 import axios from "axios";
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scrollview';
-
+import { postVerification, postOTP } from "../Api/Api";
 
 const Verifying = () => {
   const navigation = useNavigation();
@@ -36,7 +36,7 @@ const Verifying = () => {
     };
     setIsLoading(true);
     axios
-      .post('https://druk-ebirds.onrender.com/api/v1/users/verification', verifydata)
+      .post(postVerification, verifydata)
       .then(res => {
         if (res.data.status === "success") {
           Toast.show("Please check your mail", {
@@ -66,7 +66,7 @@ const Verifying = () => {
     };
     setLoading(true);
     axios
-      .post('https://druk-ebirds.onrender.com/api/v1/users/OTP', verifyOTPdata)
+      .post(postOTP, verifyOTPdata)
       .then(res => {
         if (res.data.status === "success") {
           Toast.show("OTP matched", {duration: Toast.durations.SHORT});
@@ -231,7 +231,6 @@ const styles = StyleSheet.create({
     bottom: 0,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: 'rgba(0, 0, 0, 0.5)',
   }
 });
 

@@ -1,19 +1,6 @@
 import React, { useState, useEffect, useContext } from "react";
-import {
-  FAB,
-  ActivityIndicator,
-  MD2Colors,
-  Searchbar,
-} from "react-native-paper";
-import {
-  StyleSheet,
-  View,
-  FlatList,
-  Alert,
-  Text,
-  SafeAreaView,
-  TouchableOpacity,
-} from "react-native";
+import {FAB,ActivityIndicator,MD2Colors,Searchbar,} from "react-native-paper";
+import {StyleSheet,View,FlatList,Alert,Text,SafeAreaView,TouchableOpacity,} from "react-native";
 import Toast from "react-native-root-toast";
 import Button from "../Components/Button";
 import { useNavigation, CommonActions } from "@react-navigation/native";
@@ -25,6 +12,7 @@ import {
 } from "react-native-responsive-screen";
 import StartBirdingCounter from "../Components/StartBirdingCounter";
 import { AuthContext } from "../Context/AuthContext";
+import { getSpeciesdata, postCheckList} from "../Api/Api";
 
 const formatTime = (time) => {
   const hours = Math.floor(time / 3600);
@@ -55,9 +43,10 @@ const StartBirdingone = ({ route }) => {
   );
   const [Isloading, setIsLoading] = useState(false);
 
+  
   useEffect(() => {
     handleSearch(query);
-  }, [data, startbirding1data]);
+  }, [data,startbirding1data,query]);
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -112,14 +101,13 @@ const StartBirdingone = ({ route }) => {
 
   useEffect(() => {
     axios
-      .get("https://druk-ebird.onrender.com/api/v1/species?limit=20")
+      .get(getSpeciesdata)
       .then((res) => {
         const speciesData = res.data.species.map((item) => {
           return { _id: item._id, englishName: item.englishName, count: 0 };
         });
         setData(speciesData);
         setFilteredData(speciesData);
-        console.log(speciesData.length);
       })
       .catch((error) => {
         Toast.show(error, { duration: Toast.durations.SHORT });
@@ -128,14 +116,12 @@ const StartBirdingone = ({ route }) => {
   }, []);
 
   const handleSearch = (query) => {
-    if (query !== searchQuery) {
-      setSearchQuery(query);
-      const filtered = data.filter((item) =>
-        item.englishName.toLowerCase().includes(query.toLowerCase())
-      );
-      setFilteredData(filtered);
-      setSearchFound(filtered.length > 0);
-    }
+    setSearchQuery(query);
+    const filtered = data.filter((item) =>
+      item.englishName.toLowerCase().includes(query.toLowerCase())
+    );
+    setFilteredData(filtered);
+    setSearchFound(filtered.length > 0);
   };
 
   const handleItemClick = (itemId, birdName, StartbirdingData) => {
@@ -178,6 +164,7 @@ const StartBirdingone = ({ route }) => {
     };
     handleFabPress(UnknownBirdsdata);
   };
+  
 
   //data pass to SubmittingBirding
   const SubmittedBirdsdataSave = () => {
@@ -226,10 +213,9 @@ const StartBirdingone = ({ route }) => {
     setIsLoading(true);
     try {
       // Make an HTTP POST request to your backend API endpoint
-      console.log(detailOfBirds);
       axios
         .post(
-          "https://druk-ebirds.onrender.com/api/v1/checkList",
+          postCheckList,
           detailOfBirds
         )
         .then((response) => {
@@ -254,10 +240,7 @@ const StartBirdingone = ({ route }) => {
       <SafeAreaView>
         <Searchbar
           placeholder="Search any birds"
-          onChangeText={(text) => {
-            setQuery(text);
-            handleSearch(text);
-          }}
+          onChangeText={(text) => {setQuery(text);handleSearch(text);}}
           value={searchQuery}
           inputStyle={{ paddingBottom: hp("0.1%") }}
           style={styles.searchbar}
@@ -286,6 +269,9 @@ const StartBirdingone = ({ route }) => {
               data={searchQuery.length > 0 ? filteredData : data}
               keyExtractor={(item) => item._id}
               renderItem={renderItem}
+              initialNumToRender={5}
+              maxToRenderPerBatch={10}
+              windowSize={10}
             />
           </>
         )}
@@ -376,8 +362,7 @@ const styles = StyleSheet.create({
     right: 0,
     bottom: 0,
     justifyContent: "center",
-    alignItems: "center",
-    backgroundColor: "rgba(0, 0, 0, 0.5)",
+    alignItems: "center"
   },
 });
 export default StartBirdingone;

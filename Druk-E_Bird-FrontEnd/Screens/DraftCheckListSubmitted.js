@@ -8,6 +8,8 @@ import { ActivityIndicator,MD2Colors} from 'react-native-paper';
 import BhutanDzongkhags from '../Components/BhutanDzongkha';
 import axios from 'axios';
 import { AuthContext } from '../Context/AuthContext';
+import { postCheckList } from "../Api/Api";
+
 
 const DraftCheckListSubmitted = ({ route }) => {
   const { checklistdata } = route.params;
@@ -92,7 +94,7 @@ const DraftCheckListSubmitted = ({ route }) => {
     try {
       console.log('detailOfBirds', detailOfBirds);
       axios
-        .post('https://druk-ebirds.onrender.com/api/v1/checkList', detailOfBirds)
+        .post(postCheckList, detailOfBirds)
         .then((response) => {
           // Data successfully posted to the database
           Toast.show("Data successfully posted", {duration: Toast.durations.SHORT, position: Toast.positions.CENTER});

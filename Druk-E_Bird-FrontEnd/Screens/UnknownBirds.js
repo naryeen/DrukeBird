@@ -115,10 +115,10 @@ const UnknownBird = ({ route }) => {
   const handleUpload = (image) => {
     const data = new FormData();
     data.append("file", image);
-    data.append("upload_preset", "DrukEBird");
-    data.append("cloud_name", "cheki");
-    data.append("folder", "DrukEBird/BirdPhoto");
-    fetch("https://api.cloudinary.com/v1_1/cheki/image/upload", {
+    data.append("upload_preset", "DrukeBird");
+    data.append("cloud_name", "drukebird");
+    data.append("folder", "DrukeBird/BirdPhoto");
+    fetch("https://api.cloudinary.com/v1_1/drukebird/image/upload", {
       method: "post",
       body: data,
     })

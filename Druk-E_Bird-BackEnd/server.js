@@ -45,7 +45,6 @@ changeStream.on("change", async (change) => {
     console.log(checklist.userId)
 
     if (!checklist) {
-      console.log("Checklist not found");
       return;
     }
 

@@ -3,10 +3,13 @@ import { Text, View, StyleSheet, StatusBar, Animated, ScrollView, } from "react-
 import { ActivityIndicator, MD2Colors } from "react-native-paper";
 import { BarChart } from "react-native-chart-kit";
 import axios from "axios";
+import Toast from 'react-native-root-toast';
 import { widthPercentageToDP as wp, heightPercentageToDP as hp, } from "react-native-responsive-screen";
 import UnknownHeader from "../Components/UnknownHeader";
+import { postCheckList } from "../Api/Api";
 
-const getCheckList = "https://druk-ebirds.onrender.com/api/v1/checkList";
+
+const getCheckList = postCheckList;
 
 function ExploreDzongkhagInfo({ route }) {
   const { dzongkhag } = route.params;
@@ -37,8 +40,18 @@ function ExploreDzongkhagInfo({ route }) {
         setIsLoading(false); // Data fetching complete
       })
       .catch((error) => {
-        console.error("Error fetching data:", error);
-        setIsLoading(false); // Data fetching failed
+        Toast.show(error, {
+          duration: Toast.durations.SHORT,
+          position: Toast.positions.CENTER,
+        });
+      
+      })
+      .catch((err) => {
+        Toast.show(err, { duration: Toast.durations.SHORT });
+
+      })
+      .finally(() => {
+        setIsLoading(false);
       });
   }, [dzongkhag]);
 
@@ -65,12 +78,9 @@ function ExploreDzongkhagInfo({ route }) {
 
   const topThreeCounts = Object.entries(birdNameCounts)
     .sort((a, b) => b[1] - a[1])
-    .slice(0, 3);
+    .slice(0, 2);
 
   const filteredBirdNameCounts = Object.fromEntries(topThreeCounts);
-  const splitLabels = Object.keys(filteredBirdNameCounts)
-
-
 
   return (
     <View style={styles.container1}>
@@ -80,7 +90,7 @@ function ExploreDzongkhagInfo({ route }) {
       <Animated.View style={styles.graph}>
         <BarChart
           data={{
-            labels: splitLabels,
+            labels: Object.keys(filteredBirdNameCounts),
             datasets: [
               {
                 data: Object.values(filteredBirdNameCounts),
@@ -96,12 +106,8 @@ function ExploreDzongkhagInfo({ route }) {
             backgroundGradientTo: "#136D66",
             decimalPlaces: 0,
             color: (opacity) => (opacity === 1 ? "#FFFFFF" : "#FFFFFF"),
-            formatXLabel: (label) => {
-              const words = label.split('/n');
-              return words[0]
-            },
           }}
-          
+         
           style={{
             marginVertical: hp("1%"),
             borderRadius: 8,

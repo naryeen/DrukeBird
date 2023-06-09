@@ -7,10 +7,13 @@ import { Swipeable } from "react-native-gesture-handler";
 import { useNavigation } from "@react-navigation/native";
 import Toast from "react-native-root-toast";
 import { heightPercentageToDP as hp, widthPercentageToDP as wp } from 'react-native-responsive-screen';
+import { postCheckList } from "../Api/Api";
+
+
 
 import { AuthContext } from "../Context/AuthContext";
 
-const getCheckList = "https://druk-ebirds.onrender.com/api/v1/checkList";
+const getCheckList = postCheckList;
 
 function NotSubmitted() {
   const [data, setData] = useState([]);
@@ -25,10 +28,31 @@ function NotSubmitted() {
     axios
       .get(getCheckList)
       .then((res) => {
-        setData(res.data.data);
+        const sortedData = res.data.data.sort((a, b) => {
+          const timeA = a.StartbirdingData[0].selectedTime;
+          const timeB = b.StartbirdingData[0].selectedTime;
+          const dateA = new Date(a.StartbirdingData[0].selectedDate);
+          const dateB = new Date(b.StartbirdingData[0].selectedDate);
+
+          if (dateA > dateB) {
+            return -1;
+          } else if (dateA < dateB) {
+            return 1;
+          }
+
+          if (timeA > timeB) {
+            return -1;
+          } else if (timeA < timeB) {
+            return 1;
+          }
+
+          return 0;
+        });
+
+        setData(sortedData);
       })
       .catch((error) => {
-        Toast.show(error, {duration: Toast.durations.SHORT});
+        Toast.show(error, { duration: Toast.durations.SHORT });
       })
       .finally(() => setLoading(false));
   };
@@ -38,9 +62,11 @@ function NotSubmitted() {
       .delete(`https://druk-ebirds.onrender.com/api/v1/checkList/${itemId}`)
       .then(() => {
         setData((prevData) => prevData.filter((item) => item._id !== itemId));
-        Toast.show("Data successfully Deleted", {duration: Toast.durations.SHORT});})
+        Toast.show("Data successfully deleted", { duration: Toast.durations.SHORT });
+      })
       .catch((error) => {
-        Toast.show(error, {duration: Toast.durations.SHORT});})
+        Toast.show(error, { duration: Toast.durations.SHORT });
+      });
   };
 
   const handleItemClick = (checklistdata) => {
@@ -66,8 +92,7 @@ function NotSubmitted() {
   );
 
   const renderItem = ({ item }) => {
-    if (item.StartbirdingData[0].status === "draftchecklist" && item.userId === userId) 
-    {
+    if (item.StartbirdingData[0].status === "draftchecklist" && item.userId === userId) {
       const checklistdata = {
         itemId: item._id,
         birdName: item.BirdName,
@@ -88,10 +113,10 @@ function NotSubmitted() {
                   {item.StartbirdingData[0].selectedDate}{" "}
                   {item.StartbirdingData[0].selectedTime}
                 </Text>
-                <Text>
-                  {item.StartbirdingData[0].Totalcount} species report
+                <Text>{item.StartbirdingData[0].Totalcount} species report</Text>
+                <Text style={{ textAlign: "right", fontWeight: "bold", color: "green" }}>
+                  Not Submit
                 </Text>
-                <Text style={{textAlign: "right",fontWeight: "bold",color: "green",}}>Not Submit</Text>
               </View>
               <View
                 style={{
@@ -125,7 +150,7 @@ function NotSubmitted() {
 
   useEffect(() => {
     fetchData();
-    startPolling(); 
+    startPolling();
     return () => {
       stopPolling();
     };
@@ -134,10 +159,7 @@ function NotSubmitted() {
   if (loading) {
     return (
       <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
-        <ActivityIndicator
-          animating={true}
-          color={MD2Colors.green800}
-          size="large"/>
+        <ActivityIndicator animating={true} color={MD2Colors.green800} size="large" />
       </View>
     );
   }
@@ -162,10 +184,12 @@ function NotSubmitted() {
         data={notsubmittedChecklistItems}
         keyExtractor={(item) => item._id.toString()}
         renderItem={renderItem}
-        refreshControl={<RefreshControl refreshing={refreshing} onRefresh={handleRefresh} />}/>
+        refreshControl={<RefreshControl refreshing={refreshing} onRefresh={handleRefresh} />}
+      />
     </View>
   );
 }
+
 
 function Submitted() {
   const [data, setData] = useState([]);
@@ -175,15 +199,38 @@ function Submitted() {
   const [pollingInterval, setPollingInterval] = useState(null);
   const userId = userInfo.user._id;
 
-  useEffect(() => {
-    fetchData();
-  }, []);
-
   const fetchData = () => {
     axios
       .get(getCheckList)
       .then((res) => {
-        setData(res.data.data);
+        const sortedData = res.data.data
+          .filter(
+            (item) =>
+              item.StartbirdingData[0].status === "submittedchecklist" &&
+              item.userId === userId
+          )
+          .sort((a, b) => {
+            const timeA = a.StartbirdingData[0].selectedTime;
+            const timeB = b.StartbirdingData[0].selectedTime;
+            const dateA = new Date(a.StartbirdingData[0].selectedDate);
+            const dateB = new Date(b.StartbirdingData[0].selectedDate);
+
+            if (dateA > dateB) {
+              return -1;
+            } else if (dateA < dateB) {
+              return 1;
+            }
+
+            if (timeA > timeB) {
+              return -1;
+            } else if (timeA < timeB) {
+              return 1;
+            }
+
+            return 0;
+          });
+
+        setData(sortedData);
       })
       .catch((error) => {
         console.error("Error fetching data:", error);
@@ -201,7 +248,7 @@ function Submitted() {
         item.StartbirdingData[0].EndpointLocation[0];
       return (
         <View>
-          <View style={{ marginLeft: 20, marginTop:10 }}>
+          <View style={{ marginLeft: 20, marginTop: 10 }}>
             <Text style={{ fontWeight: "bold" }}>{item.BirdName}</Text>
             <Text>
               {dzongkhag} {gewog} {village}
@@ -217,7 +264,7 @@ function Submitted() {
               borderBottomWidth: 1,
               borderBottomColor: "#E2DFD2",
               marginVertical: 10,
-              marginHorizontal:20,
+              marginHorizontal: 20,
             }}
           />
         </View>
@@ -231,6 +278,7 @@ function Submitted() {
     fetchData();
     setRefreshing(false);
   };
+
   const startPolling = () => {
     const interval = setInterval(fetchData, 5000); // Poll every 5 seconds (adjust as needed)
     setPollingInterval(interval);
@@ -252,18 +300,16 @@ function Submitted() {
   if (loading) {
     return (
       <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
-        <ActivityIndicator
-          animating={true}
-          color={MD2Colors.green800}
-          size="large"
-        />
+        <ActivityIndicator animating={true} color={MD2Colors.green800} size="large" />
       </View>
     );
   }
 
-  const submittedChecklistItems = data.filter((item) =>
+  const submittedChecklistItems = data.filter(
+    (item) =>
       item.StartbirdingData[0].status === "submittedchecklist" &&
-      item.userId === userId);
+      item.userId === userId
+  );
 
   if (submittedChecklistItems.length === 0) {
     return (

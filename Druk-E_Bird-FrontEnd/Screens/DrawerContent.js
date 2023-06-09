@@ -15,7 +15,6 @@ export function DrawerContent(props) {
   const { logout, userInfo } = useContext(AuthContext);
 
   const handleSignOut = () => {
-    // Handle sign out logic here
     Alert.alert("Logout", "Are you sure you want to exit?", [
       { text: "NO", style: "cancel" },
       { text: "YES", onPress: () => logout() },

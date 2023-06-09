@@ -31,6 +31,7 @@ const DatePicker = ({ onDateSelected }) => {
                     display="default"
                     value={selectedDate}
                     onChange={handleDateChange}
+                    style={{ color: 'red' }}
                 />
             )}
         </View>

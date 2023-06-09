@@ -53,11 +53,11 @@ const EditInfo = () => {
   const handleUpload = (image) => {
     const data = new FormData();
     data.append("file", image);
-    data.append("upload_preset", "DrukEBird");
-    data.append("cloud_name", "cheki");
-    data.append("folder", "DrukEBird/UserProfile");
+    data.append("upload_preset", "DrukeBird");
+    data.append("cloud_name", "drukebird");
+    data.append("folder", "DrukeBird/UserProfile");
     setIsLoading(true);
-    fetch("https://api.cloudinary.com/v1_1/cheki/image/upload", {
+    fetch("https://api.cloudinary.com/v1_1/drukebird/image/upload", {
       method: "post",
       body: data,
     })

@@ -6,9 +6,9 @@ import axios from "axios";
 import Toast from 'react-native-root-toast';
 import { useNavigation } from "@react-navigation/native";
 import { heightPercentageToDP as hp, widthPercentageToDP as wp } from 'react-native-responsive-screen';
+import { postCheckList } from "../Api/Api";
 
-
-const getCheckList = "https://druk-ebirds.onrender.com/api/v1/checkList";
+const getCheckList = postCheckList;
 
 function ObservedSpecies() {
   const [data, setData] = useState([]);

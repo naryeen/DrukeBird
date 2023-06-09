@@ -6,14 +6,13 @@ import axios from "axios";
 import { useNavigation } from "@react-navigation/native";
 import { AuthContext } from "../Context/AuthContext";
 import { ActivityIndicator, MD2Colors } from "react-native-paper";
-import {
-  widthPercentageToDP as wp,
-  heightPercentageToDP as hp,
-  listenOrientationChange as lor,
-  removeOrientationListener as rol,
-} from "react-native-responsive-screen";
+import {widthPercentageToDP as wp,
+  heightPercentageToDP as hp,listenOrientationChange as lor,
+  removeOrientationListener as rol} from "react-native-responsive-screen";
+import { postCheckList } from "../Api/Api";
 
-const getCheckList = "https://druk-ebirds.onrender.com/api/v1/checkList";
+
+const getCheckList = postCheckList;
 
 const MyProfile = () => {
   const { userInfo } = useContext(AuthContext);
@@ -149,9 +148,6 @@ const MyProfile = () => {
     </View>
   );
 };
-
-const { width, height } = Dimensions.get("window");
-const paddingHorizontal = width * 0.05;
 
 const styles = StyleSheet.create({
   container: {
