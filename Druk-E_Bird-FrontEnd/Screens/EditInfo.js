@@ -20,6 +20,8 @@ import { AuthContext } from "../Context/AuthContext";
 import Button from "../Components/Button";
 import EditInfoHeader from "../Components/EditInfoHeader";
 import {postPhoto, postUpdateMe } from "../Api/Api";
+import { useNavigation } from "@react-navigation/native";
+
 
 const EditInfo = () => {
   const { userInfo, userToken, updateUserInfo } = useContext(AuthContext);
@@ -30,6 +32,8 @@ const EditInfo = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState("");
   const [isProfileUpdated, setIsProfileUpdated] = useState(false);
+  const navigation = useNavigation();
+
 
   const handleEditPicture = async () => {
     const permissionResult =
@@ -47,7 +51,6 @@ const EditInfo = () => {
         name: `profile.${selectedImage.uri.split(".")[1]}`,
       };
       handleUpload(newFile);
-      console.log(newFile);
     }
   };
 
@@ -102,8 +105,10 @@ const EditInfo = () => {
             duration: Toast.durations.SHORT,
             position: Toast.positions.CENTER,
           });
+          setTimeout(() => {
+            navigation.navigate("MyProfile");
+          }, 200);
         }
-        console.log(res.data);
         updateUserInfo(res.data.data);
         setIsLoading(false);
       })

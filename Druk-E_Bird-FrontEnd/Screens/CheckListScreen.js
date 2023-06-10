@@ -1,4 +1,10 @@
-import {Text,View,FlatList,TouchableOpacity,RefreshControl,} from "react-native";
+import {
+  Text,
+  View,
+  FlatList,
+  TouchableOpacity,
+  RefreshControl,
+} from "react-native";
 import React, { useEffect, useState, useContext } from "react";
 import axios from "axios";
 import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
@@ -6,7 +12,10 @@ import { ActivityIndicator, MD2Colors } from "react-native-paper";
 import { Swipeable } from "react-native-gesture-handler";
 import { useNavigation } from "@react-navigation/native";
 import Toast from "react-native-root-toast";
-import { heightPercentageToDP as hp, widthPercentageToDP as wp } from 'react-native-responsive-screen';
+import {
+  heightPercentageToDP as hp,
+  widthPercentageToDP as wp,
+} from "react-native-responsive-screen";
 import { postCheckList } from "../Api/Api";
 
 import { AuthContext } from "../Context/AuthContext";
@@ -60,7 +69,9 @@ function NotSubmitted() {
       .delete(`https://chekilhamo.serv00.net/api/v1/checkList/${itemId}`)
       .then(() => {
         setData((prevData) => prevData.filter((item) => item._id !== itemId));
-        Toast.show("Data successfully deleted", { duration: Toast.durations.SHORT });
+        Toast.show("Data successfully deleted", {
+          duration: Toast.durations.SHORT,
+        });
       })
       .catch((error) => {
         Toast.show(error, { duration: Toast.durations.SHORT });
@@ -74,13 +85,13 @@ function NotSubmitted() {
   };
 
   const renderSwipeableContent = (itemId) => (
-    <View style={{ flexDirection: "row", justifyContent: "flex-end" }}>
+    <View style={{ flexDirection: "row" }}>
       <TouchableOpacity
         style={{
           backgroundColor: "red",
-          paddingTop: 30,
-          height: "100%",
-          marginBottom: 20,
+          paddingTop: hp("4%"),
+          marginBottom: hp("1%"),
+          height: hp("100%"),
         }}
         onPress={() => handleDelete(itemId)}
       >
@@ -90,7 +101,10 @@ function NotSubmitted() {
   );
 
   const renderItem = ({ item }) => {
-    if (item.StartbirdingData[0].status === "draftchecklist" && item.userId === userId) {
+    if (
+      item.StartbirdingData[0].status === "draftchecklist" &&
+      item.userId === userId
+    ) {
       const checklistdata = {
         itemId: item._id,
         birdName: item.BirdName,
@@ -104,23 +118,36 @@ function NotSubmitted() {
           onSwipeableRightOpen={() => handleDelete(item._id)}
         >
           <TouchableOpacity onPress={() => handleItemClick(checklistdata)}>
-            <View>
-              <View style={{ marginLeft: 30 }}>
+            <View
+              style={{
+                marginHorizontal: wp("5%"),
+                borderBottomWidth: 0.7,
+                borderBottomColor: "#E2DFD2",
+              }}
+            >
+              <View style={{ marginTop: hp("2%") }}>
                 <Text style={{ fontWeight: "bold" }}>{item.BirdName}</Text>
                 <Text>
                   {item.StartbirdingData[0].selectedDate}{" "}
                   {item.StartbirdingData[0].selectedTime}
                 </Text>
-                <Text>{item.StartbirdingData[0].Totalcount} species report</Text>
-                <Text style={{ textAlign: "right", fontWeight: "bold", color: "green" }}>
-                  Not Submit
+                <Text>
+                  {item.StartbirdingData[0].Totalcount} species report
+                </Text>
+                <Text
+                  style={{
+                    textAlign: "right",
+                    fontWeight: "bold",
+                    color: "green",
+                    marginTop: hp("-4%"),
+                  }}
+                >
+                  Not Submitted
                 </Text>
               </View>
               <View
                 style={{
-                  borderBottomWidth: 0.5,
-                  borderBottomColor: "gray",
-                  marginVertical: 10,
+                  marginVertical: hp("1%"),
                 }}
               />
             </View>
@@ -157,7 +184,11 @@ function NotSubmitted() {
   if (loading) {
     return (
       <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
-        <ActivityIndicator animating={true} color={MD2Colors.green800} size="large" />
+        <ActivityIndicator
+          animating={true}
+          color={MD2Colors.green800}
+          size="large"
+        />
       </View>
     );
   }
@@ -182,12 +213,13 @@ function NotSubmitted() {
         data={notsubmittedChecklistItems}
         keyExtractor={(item) => item._id.toString()}
         renderItem={renderItem}
-        refreshControl={<RefreshControl refreshing={refreshing} onRefresh={handleRefresh} />}
+        refreshControl={
+          <RefreshControl refreshing={refreshing} onRefresh={handleRefresh} />
+        }
       />
     </View>
   );
 }
-
 
 function Submitted() {
   const [data, setData] = useState([]);
@@ -246,7 +278,7 @@ function Submitted() {
         item.StartbirdingData[0].EndpointLocation[0];
       return (
         <View>
-          <View style={{ marginLeft: 20, marginTop: 10 }}>
+          <View style={{ marginLeft: wp("5%"), marginTop: hp("1%") }}>
             <Text style={{ fontWeight: "bold" }}>{item.BirdName}</Text>
             <Text>
               {dzongkhag} {gewog} {village}
@@ -261,8 +293,8 @@ function Submitted() {
             style={{
               borderBottomWidth: 1,
               borderBottomColor: "#E2DFD2",
-              marginVertical: 10,
-              marginHorizontal: 20,
+              marginVertical: hp("1%"),
+              marginHorizontal: wp("4%"),
             }}
           />
         </View>
@@ -298,7 +330,11 @@ function Submitted() {
   if (loading) {
     return (
       <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
-        <ActivityIndicator animating={true} color={MD2Colors.green800} size="large" />
+        <ActivityIndicator
+          animating={true}
+          color={MD2Colors.green800}
+          size="large"
+        />
       </View>
     );
   }
@@ -340,7 +376,7 @@ function CheckList() {
       screenOptions={{
         tabBarActiveTintColor: "white",
         tabBarInactiveTintColor: "#E2DFD2",
-        tabBarLabelStyle: { fontSize: wp('4.3%') },
+        tabBarLabelStyle: { fontSize: wp("4.3%") },
         tabBarStyle: { backgroundColor: "#136D66" },
       }}
     >

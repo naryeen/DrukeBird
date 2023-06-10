@@ -104,7 +104,7 @@ const DraftCheckListSubmitted = ({ route }) => {
           // Data successfully posted to the database
           Toast.show("Data successfully posted", {duration: Toast.durations.SHORT, position: Toast.positions.CENTER});
           setTimeout(() => {
-            navigation.navigate("Checklist");
+            navigation.goBack("CheckList");
           }, 200);
         })
         .catch((error) => {

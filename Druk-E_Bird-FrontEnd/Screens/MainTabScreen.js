@@ -21,7 +21,6 @@ const MainTabScreen = () => (
       options={{
         tabBarLabel: "Home",
         tabBarIcon: ({ color, focused }) => (
-          //   <FontAwesome5 name='home' size={29} color={focused ? color : 'white'} />
           <MaterialCommunityIcons name="home-outline" size={30} color="white" />
         ),
       }}

@@ -6,13 +6,12 @@ import Button from "../Components/Button";
 import { useNavigation, CommonActions } from "@react-navigation/native";
 import axios from "axios";
 import { Ionicons } from "@expo/vector-icons";
-import {
-  widthPercentageToDP as wp,
-  heightPercentageToDP as hp,
-} from "react-native-responsive-screen";
+import {widthPercentageToDP as wp,heightPercentageToDP as hp} from "react-native-responsive-screen";
 import StartBirdingCounter from "../Components/StartBirdingCounter";
 import { AuthContext } from "../Context/AuthContext";
-import { getSpeciesdata, postCheckList} from "../Api/Api";
+import { postCheckList} from "../Api/Api";
+import { getSpeciesdata} from "../Api/Api";
+
 
 const formatTime = (time) => {
   const hours = Math.floor(time / 3600);

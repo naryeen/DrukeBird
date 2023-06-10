@@ -33,9 +33,11 @@ const MyDrawer = () => {
           height: headerHeight !== null ? headerHeight : undefined,
           ...headerShadow,
         },
-      }}>
-
+      }}
+    >
       <Drawer.Screen name="DrukeBird" component={MainTabScreen}/>
+      <Drawer.Screen name="CheckList" component={CheckList}/>
+
     </Drawer.Navigator>
   );
 };

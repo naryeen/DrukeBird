@@ -17,7 +17,6 @@ import ExploreBridInfo from "../Screens/ExploreBirdInfo";
 import BirdTypeInfo from "../Screens/BridTypeInfo";
 import DraftCheckListSubmitted from "../Screens/DraftCheckListSubmitted";
 import UnknownVerification from "../Navigation/UnknownVerification";
-import CheckList from "../Screens/CheckListScreen"
 
 const Stack = createStackNavigator();
 
@@ -39,7 +38,6 @@ const AppStack = () => {
       <Stack.Screen name="ExploreDzongkhagInfo" component={ExploreDzongkhagInfo} options={{ headerShown: false }} />
       <Stack.Screen name="ExploreBridInfo" component={ExploreBridInfo} options={{ headerShown: false }} />
       <Stack.Screen name="BirdTypeInfo" component={BirdTypeInfo} options={{ headerShown: false }} />
-      <Stack.Screen name="Checklist" component={CheckList} options={{ headerShown: false }} />
       <Stack.Screen name="DraftCheckListSubmitted" component={DraftCheckListSubmitted} options={{ headerShown: false }} />
       <Stack.Screen name="UnknownVerification" component={UnknownVerification} options={{ headerShown: false }} />
 

@@ -10,7 +10,9 @@ import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from "react-native-responsive-screen";
+import { useNavigation } from "@react-navigation/native";
 import { postUpdatePassword } from "../Api/Api";
+
 
 
 function validatePassword(newPassword, confirmPassword) {
@@ -48,6 +50,7 @@ function validatePassword(newPassword, confirmPassword) {
 
 
 const UpdatePassword = () => {
+  const navigation = useNavigation();
   const { userToken } = useContext(AuthContext);
   const [currentPassword, setCurrentPassword] = useState("");
   const [newPassword, setNewPassword] = useState("");
@@ -109,10 +112,14 @@ const UpdatePassword = () => {
             duration: Toast.durations.SHORT,
             position: Toast.positions.CENTER,
           });
+          
           setCurrentPassword("");
           setNewPassword("");
           setConfirmPassword("");
         }
+        setTimeout(() => {
+          navigation.navigate("MyProfile");
+        }, 200);
       })
       .catch((err) => {
         if (err.response.status === 401) {
@@ -204,8 +211,7 @@ const styles = StyleSheet.create({
     right: 0,
     bottom: 0,
     justifyContent: "center",
-    alignItems: "center",
-    backgroundColor: "rgba(0, 0, 0, 0.5)",
+    alignItems: "center"
   },
   inputStyle: {
     marginTop: hp('2%'),

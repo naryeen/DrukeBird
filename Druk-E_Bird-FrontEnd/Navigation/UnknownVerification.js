@@ -9,7 +9,6 @@ import Toast from "react-native-root-toast";
 
 import UnknownVerificationHeader from "../Components/UnknownVerificationHeader";
 
-
 const UnknownVerification = () => {
   const { userInfo } = useContext(AuthContext);
   const userId = userInfo.user._id;
@@ -95,8 +94,18 @@ const UnknownVerification = () => {
 
   if (loading) {
     return (
-      <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+      <View style={styles.loadingContainer}>
         <ActivityIndicator animating={true} color={MD2Colors.green800} size="large" />
+      </View>
+    );
+  }
+
+  if (notifications.length === 0) {
+    return (
+      <View style={styles.centerContainer}>
+        <UnknownVerificationHeader title={"Unknown Verification"} />
+        <Text style={styles.message}>No unknown birds here.</Text>
+        <StatusBar />
       </View>
     );
   }
@@ -141,7 +150,7 @@ const styles = StyleSheet.create({
     height: hp('12%'),
     width: wp('92%'),
     borderRadius: 1,
-    alignSelf:"center",
+    alignSelf: "center",
     elevation: 1,
     shadowOffset: { width: 1, height: 1 },
     shadowOpacity: 0.2,
@@ -185,6 +194,21 @@ const styles = StyleSheet.create({
     color: "white",
     fontWeight: "bold",
   },
+  loadingContainer: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  message: {
+    textAlign: "center",
+    justifyContent: "center",
+    marginTop: 300,
+  },
+  centerContainer: {
+    justifyContent: "center",
+    alignItems: "center",
+    
+  }
 });
 
 export default UnknownVerification;
