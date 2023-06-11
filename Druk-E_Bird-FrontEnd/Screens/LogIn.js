@@ -35,7 +35,6 @@ const LogIn = () => {
   return (
     <View style={styles.container}>
       <Image style={styles.image} source={require('../assets/Image/Logo.png')} />
-
       <TextInput
         style={styles.inputStyle}
         mode="outlined"
@@ -77,7 +76,7 @@ import { heightPercentageToDP as hp, widthPercentageToDP as wp } from 'react-nat
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    padding: wp('4%'), 
+    marginHorizontal: wp('4%'), 
   },
   inputStyle: {
     marginTop: hp('2%'), 
@@ -101,7 +100,7 @@ const styles = StyleSheet.create({
     maxWidth: wp('70%'), 
     maxHeight: hp('30%'), 
     alignSelf: 'center',
-    marginTop: hp('14%'), 
+    marginTop: hp('8%'), 
   },
   forgetpasswordtext: {
     fontSize: hp('1.8%'), 

@@ -62,7 +62,7 @@ const BirdTypeInfo = ({ route }) => {
       Toast.show("Please enter your juvenile", { duration: Toast.durations.SHORT });
       return;
     } else if (Remarks.trim() === "") {
-      Toast.show("Please enter your email", { duration: Toast.durations.SHORT });
+      Toast.show("Please provide some remarks", { duration: Toast.durations.SHORT });
       return;
     }
     else if (!selectedDzongkhag) {

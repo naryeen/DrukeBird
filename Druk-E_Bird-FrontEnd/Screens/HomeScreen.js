@@ -15,7 +15,6 @@ import { SliderBox } from "react-native-image-slider-box";
 import Button from "../Components/Button";
 import { useNavigation } from "@react-navigation/native";
 
-
 const HomeScreen = () => {
   const navigation = useNavigation();
 
@@ -42,10 +41,8 @@ const HomeScreen = () => {
       <SafeAreaView style={styles.contentContainer}>
         <View style={styles.centeredContainer}>
           <Text style={styles.highlight}>Discover, learn & connect</Text>
-          <Text style={styles.baseText}>
-            with
-            <Text style={styles.innerText}> DrukeBird</Text>
-          </Text>
+          <Text style={styles.baseText}>with</Text>
+          <Text style={styles.innerText}> DrukeBird</Text>
           <Text style={styles.innerText1}>
             {" "}
             The ultimate tool for anyone who
@@ -59,7 +56,7 @@ const HomeScreen = () => {
           How it works {">>"}
         </Button>
       </SafeAreaView>
-      <StatusBar/>
+      <StatusBar />
     </View>
   );
 };
@@ -67,16 +64,16 @@ const HomeScreen = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    paddingTop: hp('0.9%'),
+    paddingTop: hp("0.9%"),
   },
   image: {
-    height: hp('35%'),
+    height: hp("35%"),
     resizeMode: "contain",
   },
   contentContainer: {
     alignItems: "center",
     justifyContent: "center",
-    marginTop: hp('9%'),
+    marginTop: hp("8%"),
   },
   centeredContainer: {
     alignItems: "center",
@@ -85,25 +82,30 @@ const styles = StyleSheet.create({
   highlight: {
     color: "#136d66",
     fontWeight: "bold",
-    fontSize: wp('5%'),
+    fontSize: wp("5%"),
+    marginBottom: hp("2%")
   },
   innerText: {
     color: "#136d66",
     fontWeight: "bold",
-    fontSize: wp('5%'),
+    fontSize: wp("5%"),
+    
   },
   innerText1: {
     fontWeight: "bold",
-    fontSize: wp('4.3%'),
-    paddingTop: hp('5%'),
+    fontSize: wp("4.3%"),
+    paddingTop: hp("5%"),
+    
   },
   baseText: {
     fontWeight: "bold",
-    fontSize: wp('4.3%'),
+    fontSize: wp("4.3%"),
+    marginBottom: hp("2%")
+
   },
   buttonStyle: {
-    marginTop: hp('8%'),
-    width: wp('95%'),
+    marginTop: hp("5%"),
+    width: wp("95%"),
   },
 });
 

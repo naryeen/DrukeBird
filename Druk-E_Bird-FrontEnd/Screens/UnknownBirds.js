@@ -244,16 +244,10 @@ const UnknownBird = ({ route }) => {
           </TouchableOpacity>
         </View>
         <View style={styles.countBtn}>
-          <Button
-            icon="plus-box-outline"
-            onPress={() => handleButtonPress("increase")}
-          />
+          <Button icon="minus-box-outline" onPress={() => handleButtonPress("decrease")}/>
           <Text style={styles.countText}>{count}</Text>
           <Text style={styles.speciesText}>{UnknownBirdsdata.BirdName}</Text>
-          <Button
-            icon="minus-box-outline"
-            onPress={() => handleButtonPress("decrease")}
-          />
+          <Button icon="plus-box-outline" onPress={() => handleButtonPress("increase")}/>
         </View>
         <View style={styles.cont}>
           <Text style={styles.locationText}>Choose Your Location</Text>

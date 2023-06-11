@@ -66,7 +66,7 @@ function NotSubmitted() {
 
   const handleDelete = (itemId) => {
     axios
-      .delete(`https://chekilhamo.serv00.net/api/v1/checkList/${itemId}`)
+      .delete(`https://druk-ebirds.onrender.com/api/v1/checkList/${itemId}`)
       .then(() => {
         setData((prevData) => prevData.filter((item) => item._id !== itemId));
         Toast.show("Data successfully deleted", {
@@ -123,8 +123,7 @@ function NotSubmitted() {
                 marginHorizontal: wp("5%"),
                 borderBottomWidth: 0.7,
                 borderBottomColor: "#E2DFD2",
-              }}
-            >
+              }}>
               <View style={{ marginTop: hp("2%") }}>
                 <Text style={{ fontWeight: "bold" }}>{item.BirdName}</Text>
                 <Text>

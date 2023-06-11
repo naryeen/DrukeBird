@@ -29,10 +29,10 @@ const StartBirdingCounter = ({ Name, data, setData, item, setStartbirding1data }
 
   return (
     <View style={styles.container}>
-      <Button style={styles.plus} icon="plus-box-outline" onPress={() => handleButtonPress("increase")} />
+      <Button style={styles.plus} icon="minus-box-outline" onPress={() => handleButtonPress("decrease")} />
       <Text style={styles.countText}>{item.count}</Text>
       <Text style={styles.speciesText}>{Name}</Text>
-      <Button style={styles.plus} icon="minus-box-outline" onPress={() => handleButtonPress("decrease")} />
+      <Button style={styles.plus} icon="plus-box-outline" onPress={() => handleButtonPress("increase")} />
     </View>
   );
 };

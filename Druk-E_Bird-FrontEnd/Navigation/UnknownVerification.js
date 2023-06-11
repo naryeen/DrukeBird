@@ -104,7 +104,7 @@ const UnknownVerification = () => {
     return (
       <View style={styles.centerContainer}>
         <UnknownVerificationHeader title={"Unknown Verification"} />
-        <Text style={styles.message}>No unknown birds here.</Text>
+        <Text style={styles.message}>No unknown birds found.</Text>
         <StatusBar />
       </View>
     );

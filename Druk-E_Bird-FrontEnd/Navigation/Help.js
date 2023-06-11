@@ -18,7 +18,7 @@ const Help = () => {
         <Video
           ref={video}
           style={styles.video}
-          source={require('../assets/Video/pro.mp4')}
+          source={require('../assets/Video/Promotional-Video.mp4')}
           useNativeControls
           resizeMode="cover"
           isLooping

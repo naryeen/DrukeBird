@@ -219,7 +219,7 @@ const StartBirdingone = ({ route }) => {
         )
         .then((response) => {
           // Data successfully posted to the database
-          Toast.show("Data successfully posted", {
+          Toast.show("Data saved in draft", {
             duration: Toast.durations.SHORT,
             position: Toast.positions.CENTER,
           });

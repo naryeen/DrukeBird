@@ -105,7 +105,7 @@ function ExploreDzongkhagInfo({ route }) {
             backgroundGradientFrom: "#074643",
             backgroundGradientTo: "#136D66",
             decimalPlaces: 0,
-            color: (opacity) => (opacity === 1 ? "#FFFFFF" : "#FFFFFF"),
+            color: (opacity) => (opacity === 0 ? "orange" : "#FFFFFF"),
           }}
          
           style={{

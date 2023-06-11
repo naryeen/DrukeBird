@@ -5,7 +5,6 @@ import {
   Animated,
   StyleSheet,
   StatusBar,
-  SafeAreaView,
   ScrollView,
 } from "react-native";
 import { ActivityIndicator, MD2Colors } from "react-native-paper";
@@ -94,7 +93,6 @@ function ExploreBirdInfo({ route }) {
 
   return (
     <View style={styles.container1}>
-      <SafeAreaView>
         <UnknownHeader title={"Bird Information"} />
         <Text style={styles.text}>Bird Name: {birdName}</Text>
         <Animated.View>
@@ -114,7 +112,7 @@ function ExploreBirdInfo({ route }) {
               backgroundGradientFrom: "#074643",
               backgroundGradientTo: "#136D66",
               decimalPlaces: 0,
-              color: (opacity) => (opacity === 2 ? "#074643" : "#FFFFFF"),
+              color: (opacity) => (opacity === 2 ? "#FFFFFF" : "#FFFFFF"),
             }}
             style={{
               marginVertical:  hp('1%'),
@@ -133,7 +131,6 @@ function ExploreBirdInfo({ route }) {
             </View>
           ))}
         </ScrollView>
-      </SafeAreaView>
       <StatusBar />
     </View>
   );
