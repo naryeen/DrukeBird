@@ -29,7 +29,6 @@ exports.forgotPassword = async (req, res, next) => {
             to: email, 
             subject: "Password Reset",
             text: link,
-            html:`<p> Hi Please copy the token </p><br>`,
         };
 
         await transporter.sendMail(mailOptions);
