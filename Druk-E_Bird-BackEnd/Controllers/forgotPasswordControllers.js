@@ -27,7 +27,7 @@ exports.forgotPassword = async (req, res, next) => {
         var mailOptions = {
             from: process.env.EMAIL_USERNAME,
             to: email, 
-            subject: "Password Reset",
+            subject: "I hope this email finds you well. We have received a request to reset the password for your account.If you did not initiate this request, please ignore this email and ensure the security of your account.To proceed with the password reset, please click on the following link:",
             text: link,
         };
 
