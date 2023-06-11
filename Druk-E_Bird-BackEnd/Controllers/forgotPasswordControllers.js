@@ -28,8 +28,8 @@ exports.forgotPassword = async (req, res, next) => {
             from: process.env.EMAIL_USERNAME,
             to: email, 
             subject: "Password Reset",
+            text: link,
             html:`<p> Hi Please copy the token </p><br>`,
-            text: link
         };
 
         await transporter.sendMail(mailOptions);
