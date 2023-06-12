@@ -25,12 +25,12 @@ function validatePassword(newPassword, confirmPassword) {
 
   if (newPassword.length < 8) {
     Toast.show("Enter a password with more than 8 characters.", {
-      duration: Toast.durations.SHORT,
+      duration: Toast.durations.SHORT,position: Toast.positions.CENTER
     });
     return false;
   } else if (!/[a-z]/.test(newPassword)) {
     Toast.show("Enter at least one lowercase letter.", {
-      duration: Toast.durations.SHORT,
+      duration: Toast.durations.SHORT,position: Toast.positions.CENTER
     });
     return false;
   } else if (!/[A-Z]/.test(newPassword)) {
@@ -40,7 +40,7 @@ function validatePassword(newPassword, confirmPassword) {
     return false;
   } else if (!/\d/.test(newPassword)) {
     Toast.show("Enter at least one digit.", {
-      duration: Toast.durations.SHORT,
+      duration: Toast.durations.SHORT,position: Toast.positions.CENTER
     });
     return false;
   }
@@ -60,28 +60,28 @@ const UpdatePassword = () => {
   const handleUpdatePassword = () => {
     if (currentPassword === "") {
       Toast.show("Please enter your current password", {
-        duration: Toast.durations.SHORT,
+        duration: Toast.durations.SHORT,position: Toast.positions.CENTER
       });
       return;
     }
   
     if (newPassword === "") {
       Toast.show("Please enter your new password", {
-        duration: Toast.durations.SHORT,
+        duration: Toast.durations.SHORT,position: Toast.positions.CENTER
       });
       return;
     }
   
     if (confirmPassword === "") {
       Toast.show("Please confirm your new password", {
-        duration: Toast.durations.SHORT,
+        duration: Toast.durations.SHORT,position: Toast.positions.CENTER
       });
       return;
     }
   
     if (newPassword !== confirmPassword) {
       Toast.show("New password and confirm password do not match.", {
-        duration: Toast.durations.SHORT
+        duration: Toast.durations.SHORT, position: Toast.positions.CENTER
       });
       return;
     }

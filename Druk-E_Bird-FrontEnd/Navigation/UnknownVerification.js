@@ -37,6 +37,7 @@ const UnknownVerification = () => {
       .catch((error) => {
         Toast.show(error, {
           duration: Toast.durations.SHORT,
+          position: Toast.positions.CENTER
         });
       })
       .finally(() => setLoading(false));
@@ -48,7 +49,11 @@ const UnknownVerification = () => {
       .then(() => {
         setNotifications((prevNotifications) =>
           prevNotifications.filter((notification) => notification._id !== notificationId)
-        );
+        )
+        Toast.show("Data successfully deleted", {
+          duration: Toast.durations.SHORT,
+          position: Toast.positions.CENTER
+        });
       })
       .catch((error) => {
         Toast.show(error, {
@@ -81,8 +86,7 @@ const UnknownVerification = () => {
         <TouchableOpacity style={styles.deleteButton} onPress={() => deleteNotification(item._id)}>
           <Text style={styles.deleteButtonText}>Delete</Text>
         </TouchableOpacity>
-      )}
-    >
+      )}>
       <TouchableOpacity style={styles.content} onPress={() => openModal(item)}>
         <View>
           <Avatar.Image source={{ uri: item.photoUrl }} style={styles.image} />
@@ -117,14 +121,12 @@ const UnknownVerification = () => {
       <FlatList
         data={notifications}
         renderItem={renderItem}
-        keyExtractor={(item) => item._id.toString()}
-      />
+        keyExtractor={(item) => item._id.toString()}/>
       <Modal
         animationType="slide"
         transparent
         visible={modalVisible}
-        onRequestClose={closeModal}
-      >
+        onRequestClose={closeModal}>
         <View style={styles.modalContainer}>
           <View style={styles.modalContent}>
             {selectedNotification && (
@@ -140,7 +142,6 @@ const UnknownVerification = () => {
     </View>
   );
 };
-
 const styles = StyleSheet.create({
   container: {
     flex: 1,

@@ -47,7 +47,7 @@ function ExploreDzongkhagInfo({ route }) {
       
       })
       .catch((err) => {
-        Toast.show(err, { duration: Toast.durations.SHORT });
+        Toast.show(err, { duration: Toast.durations.SHORT, position: Toast.positions.CENTER });
 
       })
       .finally(() => {

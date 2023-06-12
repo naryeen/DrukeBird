@@ -1,27 +1,11 @@
 import React, { useState, useEffect, useContext } from "react";
-import {
-  FAB,
-  ActivityIndicator,
-  MD2Colors,
-  Searchbar,
-} from "react-native-paper";
-import {
-  StyleSheet,
-  View,
-  FlatList,
-  Alert,
-  Text,
-  SafeAreaView,
-  TouchableOpacity,
-} from "react-native";
+import {FAB,ActivityIndicator,MD2Colors,Searchbar} from "react-native-paper";
+import {StyleSheet,View,FlatList,Alert,Text,SafeAreaView,TouchableOpacity,} from "react-native";
 import Toast from "react-native-root-toast";
 import Button from "../Components/Button";
 import { useNavigation} from "@react-navigation/native";
 import axios from "axios";
-import {
-  widthPercentageToDP as wp,
-  heightPercentageToDP as hp,
-} from "react-native-responsive-screen";
+import {widthPercentageToDP as wp,heightPercentageToDP as hp,} from "react-native-responsive-screen";
 import StartBirdingCounter from "../Components/StartBirdingCounter";
 import { AuthContext } from "../Context/AuthContext";
 import HeaderDateTimePicker from "../Components/HeaderDateTimePicker"
@@ -83,7 +67,7 @@ const StartBirdingTwo = ({ route }) => {
         setFilteredData(speciesData);
       })
       .catch((error) => {
-        Toast.show(error, { duration: Toast.durations.SHORT });
+        Toast.show(error, { duration: Toast.durations.SHORT, position: Toast.positions.CENTER});
       })
       .finally(() => setLoading(false));
   }, []);
@@ -198,7 +182,7 @@ const StartBirdingTwo = ({ route }) => {
           });
         })
         .catch((error) => {
-          Toast.show(error, { duration: Toast.durations.SHORT });
+          Toast.show(error, { duration: Toast.durations.SHORT, position: Toast.positions.CENTER });
         })
         .finally(() => {
           setIsLoading(false);

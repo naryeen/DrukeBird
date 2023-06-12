@@ -109,7 +109,7 @@ const StartBirdingone = ({ route }) => {
         setFilteredData(speciesData);
       })
       .catch((error) => {
-        Toast.show(error, { duration: Toast.durations.SHORT });
+        Toast.show(error, { duration: Toast.durations.SHORT, position: Toast.positions.CENTER });
       })
       .finally(() => setLoading(false));
   }, []);
@@ -225,13 +225,13 @@ const StartBirdingone = ({ route }) => {
           });
         })
         .catch((error) => {
-          Toast.show(error, { duration: Toast.durations.SHORT });
+          Toast.show(error, { duration: Toast.durations.SHORT, position: Toast.positions.CENTER });
         })
         .finally(() => {
           setIsLoading(false);
         });
     } catch (error) {
-      Toast.show(error, { duration: Toast.durations.SHORT });
+      Toast.show(error, { duration: Toast.durations.SHORT, position: Toast.positions.CENTER});
     }
   };
   return (
@@ -358,6 +358,6 @@ const styles = StyleSheet.create({
     bottom: 0,
     justifyContent: "center",
     alignItems: "center"
-  },
+  }
 });
 export default StartBirdingone;

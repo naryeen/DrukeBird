@@ -1,13 +1,5 @@
 import React, { useState, useContext } from "react";
-import {
-  View,
-  Text,
-  TextInput,
-  StyleSheet,
-  TouchableOpacity,
-  StatusBar,
-  SafeAreaView,
-} from "react-native";
+import {View,Text,TextInput,StyleSheet,TouchableOpacity,StatusBar,SafeAreaView,} from "react-native";
 import * as ImagePicker from "expo-image-picker";
 import Toast from "react-native-root-toast";
 import { Avatar, IconButton, ActivityIndicator } from "react-native-paper";

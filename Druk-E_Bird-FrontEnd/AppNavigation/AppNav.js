@@ -5,7 +5,6 @@ import { AuthContext } from "../Context/AuthContext";
 import { RootSiblingParent } from 'react-native-root-siblings';
 import AppStack from "./AppStack";
 import AuthStack from "./AuthStack";
-import SignUp from "../Screens/SignUp";
 
 const AppNav = () => {
   const { isLoading, userToken } = useContext(AuthContext);

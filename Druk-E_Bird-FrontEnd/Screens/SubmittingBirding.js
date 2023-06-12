@@ -57,14 +57,13 @@ const SubmittingBirding = ({ route }) => {
   const StartbirdingonedataSave = () => {
     if (!selectedDzongkhag) {
       Toast.show("Please select Dzongkhag", {
-        duration: Toast.durations.SHORT,
-      });
+        duration: Toast.durations.SHORT,position: Toast.positions.CENTER});
       return;
     } else if (!selectedGewog) {
-      Toast.show("Please select Gewong", { duration: Toast.durations.SHORT });
+      Toast.show("Please select Gewong", { duration: Toast.durations.SHORT, position: Toast.positions.CENTER});
       return;
     } else if (!selectedVillage) {
-      Toast.show("Please select Village", { duration: Toast.durations.SHORT });
+      Toast.show("Please select Village", { duration: Toast.durations.SHORT, position: Toast.positions.CENTER});
       return;
     }
 
@@ -117,17 +116,16 @@ const SubmittingBirding = ({ route }) => {
         )
         .then((response) => {
           Toast.show("Data successfully posted", {
-            duration: Toast.durations.SHORT,
-          });
+            duration: Toast.durations.SHORT,position: Toast.positions.CENTER});
         })
         .catch((error) => {
-          Toast.show(error, { duration: Toast.durations.SHORT });
+          Toast.show(error, { duration: Toast.durations.SHORT, position: Toast.positions.CENTER});
         })
         .finally(() => {
           setLoading(false);
         });
     } catch (error) {
-      Toast.show(error, { duration: Toast.durations.SHORT });
+      Toast.show(error, { duration: Toast.durations.SHORT, position: Toast.positions.CENTER});
     }
   };
 

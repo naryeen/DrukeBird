@@ -109,7 +109,7 @@ const DraftCheckListSubmitted = ({ route }) => {
     setLoading(true);
     try {
       axios
-        .post(`https://druk-ebirds.onrender.com/api/v1/checkList/${itemId}`, detailOfBirds)
+        .post(postCheckList, detailOfBirds)
         .then((response) => {
           // Data successfully posted to the database
           Toast.show("Data successfully posted", {
@@ -141,8 +141,7 @@ const DraftCheckListSubmitted = ({ route }) => {
         <SelectDropdown
           data={Object.keys(BhutanDzongkhags)}
           onSelect={(selectedDzongkhag) =>
-            handleDzongkhagChange(selectedDzongkhag)
-          }
+            handleDzongkhagChange(selectedDzongkhag)}
           defaultButtonText="Select Dzongkhag"
           buttonTextAfterSelection={(selectedItem) => selectedItem}
           rowTextForSelection={(item) => item}
@@ -175,8 +174,7 @@ const DraftCheckListSubmitted = ({ route }) => {
           renderDropdownIcon={() => (
             <Icon name="chevron-down" size={18} color="gray" />
           )}
-          disabled={selectedDzongkhag === "" || selectedGewog === ""}
-        />
+          disabled={selectedDzongkhag === "" || selectedGewog === ""}/>
 
         <ScrollView>
           <View style={styles.birdname}>
@@ -201,20 +199,14 @@ const DraftCheckListSubmitted = ({ route }) => {
             <ActivityIndicator
               animating={true}
               color={MD2Colors.green800}
-              size="large"
-            />
+              size="large"/>
           </View>
         )}
 
      
       </View>
       <View style={styles.buttonContainer}>
-          <Button
-            styling={styles.buttonstyle}
-            onPress={StartbirdingonedataSave}
-          >
-            Continue
-          </Button>
+          <Button styling={styles.buttonstyle} onPress={StartbirdingonedataSave}>Continue</Button>
         </View>
       <StatusBar />
     </View>
@@ -284,20 +276,13 @@ const styles = StyleSheet.create({
 export default DraftCheckListSubmitted;
 
 
-// import React, { useState, useContext, useEffect } from "react";
-// import {
-//   View,
-//   StyleSheet,
-//   Text,
-//   Alert,
-//   StatusBar,
-//   ScrollView,
-// } from "react-native";
+// import React, { useState} from "react";
+// import {View,StyleSheet,Alert,StatusBar} from "react-native";
 // import Button from "../Components/Button";
-// import Toast from "react-native-root-toast";
+// import Toast from "react-native-root-toast"; // Add this import
 // import Icon from "react-native-vector-icons/FontAwesome";
 // import SelectDropdown from "react-native-select-dropdown";
-// import { ActivityIndicator, MD2Colors} from "react-native-paper";
+// import { ActivityIndicator, MD2Colors } from "react-native-paper";
 // import BhutanDzongkhags from "../Components/BhutanDzongkha";
 // import axios from "axios";
 // import { postCheckList } from "../Api/Api";
@@ -308,19 +293,14 @@ export default DraftCheckListSubmitted;
 // } from "react-native-responsive-screen";
 
 // const DraftCheckListSubmitted = ({ route }) => {
-//   const { checklistdata, checklistId } = route.params;
-//   console.log(checklistId)
-//   const [itemId, setItemId] = useState("");
+//   const { checklistId } = route.params;
 //   const [selectedDzongkhag, setSelectedDzongkhag] = useState("");
 //   const [selectedGewog, setSelectedGewog] = useState("");
 //   const [selectedVillage, setSelectedVillage] = useState("");
 //   const [gewogOptions, setGewogOptions] = useState([]);
 //   const [villageOptions, setVillageOptions] = useState([]);
+  
 //   const [loading, setLoading] = useState(false);
-
-//   useEffect(() => {
-//     setItemId(checklistId);
-//   }, [checklistId]);
 
 //   const handleDzongkhagChange = (value) => {
 //     setSelectedDzongkhag(value);
@@ -344,7 +324,6 @@ export default DraftCheckListSubmitted;
 //     }));
 //     setVillageOptions(villageOptions);
 //   };
-
 //   const StartbirdingonedataSave = () => {
 //     if (!selectedDzongkhag) {
 //       Toast.show("Please select Dzongkha", { duration: Toast.durations.SHORT });
@@ -356,27 +335,25 @@ export default DraftCheckListSubmitted;
 //       Toast.show("Please select Village", { duration: Toast.durations.SHORT });
 //       return;
 //     }
-
-//     var detailOfBirds = [];
-//     var dataSubmitted = false;
-//     var endpointLocation = {
+  
+//     const endpointLocation = {
 //       dzongkhag: selectedDzongkhag,
 //       gewog: selectedGewog,
 //       village: selectedVillage,
 //     };
-//     var temp = [
-//       {
-//         EndpointLocation: [endpointLocation],
-//         status: "submittedchecklist",
-//       },
-//     ];
-//     const StartbirdingoneData = {
-//       StartbirdingData: temp,
-//     };
-//     detailOfBirds.push(StartbirdingoneData);
+  
+//     var detailOfBirds = [];
+//     var dataSubmitted = false;
+  
+//     detailOfBirds.push({
+//       EndpointLocation: [endpointLocation],
+//       status: "submittedchecklist",
+//     });
+  
 //     dataSubmitted = true;
-
+  
 //     if (!dataSubmitted) {
+//       // Show the message that no data is submitted
 //       Alert.alert(
 //         "No Data Submitted",
 //         "Please select at least one bird count before submitting",
@@ -384,18 +361,32 @@ export default DraftCheckListSubmitted;
 //       );
 //       return;
 //     }
+  
 //     setLoading(true);
+  
 //     try {
 //       axios
-//         .patch(`https://druk-ebirds.onrender.com/api/v1/checkList/${itemId}`, detailOfBirds)
-//         .then((response) => {
-//           Toast.show("Data successfully posted", {
-//             duration: Toast.durations.SHORT,
-//             position: Toast.positions.CENTER,
-//           });
+//         .patch(`https://druk-ebirds.onrender.com/api/v1/checkList/${checklistId}`, detailOfBirds)
+//         .then((patchResponse) => {
+//           // Data successfully patched
+//           axios
+//             .post("https://druk-ebirds.onrender.com/api/v1/checkList", endpointLocation)
+//             .then((postResponse) => {
+//               // Data successfully posted
+//               Toast.show("Data successfully posted", {
+//                 duration: Toast.durations.SHORT,
+//                 position: Toast.positions.CENTER,
+//               });
+//             })
+//             .catch((postError) => {
+//               Toast.show(postError, {
+//                 duration: Toast.durations.SHORT,
+//                 position: Toast.positions.CENTER,
+//               });
+//             });
 //         })
-//         .catch((error) => {
-//           Toast.show(error.message, {
+//         .catch((patchError) => {
+//           Toast.show(patchError, {
 //             duration: Toast.durations.SHORT,
 //             position: Toast.positions.CENTER,
 //           });
@@ -427,8 +418,7 @@ export default DraftCheckListSubmitted;
 //           buttonTextStyle={styles.dropdown1BtnTxtStyle}
 //           renderDropdownIcon={() => (
 //             <Icon name="chevron-down" size={18} color="gray" />
-//           )}
-//         />
+//           )}/>
 //         <SelectDropdown
 //           data={gewogOptions}
 //           onSelect={(selectedGewog) => handleGewogChange(selectedGewog)}
@@ -455,6 +445,7 @@ export default DraftCheckListSubmitted;
 //           )}
 //           disabled={selectedDzongkhag === "" || selectedGewog === ""}
 //         />
+
 //         {loading && (
 //           <View style={styles.loadingContainer}>
 //             <ActivityIndicator
@@ -464,12 +455,17 @@ export default DraftCheckListSubmitted;
 //             />
 //           </View>
 //         )}
+
+     
 //       </View>
 //       <View style={styles.buttonContainer}>
-//         <Button styling={styles.buttonstyle} onPress={StartbirdingonedataSave}>
-//           Continue
-//         </Button>
-//       </View>
+//           <Button
+//             styling={styles.buttonstyle}
+//             onPress={StartbirdingonedataSave}
+//           >
+//             Continue
+//           </Button>
+//         </View>
 //       <StatusBar />
 //     </View>
 //   );
@@ -493,37 +489,45 @@ export default DraftCheckListSubmitted;
 //     marginHorizontal: wp("5%"),
 //     marginBottom: hp("2.5%"),
 //   },
-//   dropdown1BtnStyle: {
-//     width: wp("82.5%"),
-//     height: hp("6.25%"),
-//     backgroundColor: "#fff",
-//     paddingHorizontal: wp("2%"),
-//     paddingVertical: hp("2%"),
-//     borderColor: "#ccc",
-//     borderRadius: 5,
-//     borderWidth: 1,
-//   },
-//   dropdown1BtnTxtStyle: {
-//     color: "black",
-//     textAlign: "left",
-//     fontSize: wp("3.5%"),
-//   },
-//   dropdown1DropdownStyle: { backgroundColor: "#EFEFEF" },
-//   dropdown1RowStyle: {
-//     backgroundColor: "#EFEFEF",
-//     borderBottomColor: "#ccc",
-//   },
-//   dropdown1RowTxtStyle: { color: "black", textAlign: "left" },
 //   buttonstyle: {
-//     width: wp("35%"),
-//     height: hp("6.25%"),
-//     borderRadius: 5,
+//     width: wp("90%"),
 //     alignSelf: "center",
+//     position: "absolute",
+//     bottom: 0,
+//   },
+//   label: {
+//     fontSize: wp("4%"),
+//     marginTop: hp("2.5%"),
+//   },
+//   picker: {
+//     width: 200,
+//     height: 10,
+//     marginBottom: 16,
+//     backgroundColor: "#FFFFFF",
+//     borderRadius: 4,
 //   },
 //   loadingContainer: {
-//     flex: 1,
+//     position: "absolute",
+//     top: 0,
+//     left: 0,
+//     right: 0,
+//     bottom: 0,
 //     justifyContent: "center",
 //     alignItems: "center",
+//   },
+//   dropdown1BtnStyle: {
+//     width: "100%",
+//     backgroundColor: "#FFF",
+//     borderRadius: 5,
+//     borderWidth: 1,
+//     borderColor: "#ccc",
+//     marginTop: hp("2.5%"),
+//   },
+//   dropdown1BtnTxtStyle: { textAlign: "left" },
+//   birdname: {
+//     marginTop: wp("4%"),
+//     fontSize: wp("4%"),
+//     padding: 10,
 //   },
 // });
 

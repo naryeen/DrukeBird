@@ -20,13 +20,13 @@ const Verifying = () => {
   const Verify = () => {
     if (name.trim() === "") {
       Toast.show("Please enter your name", {
-        duration: Toast.durations.SHORT,
+        duration: Toast.durations.SHORT,position: Toast.positions.CENTER
       });
       return;
     }
     else if (email.trim() === "") {
       Toast.show("Please enter your email", {
-        duration: Toast.durations.SHORT,
+        duration: Toast.durations.SHORT,position: Toast.positions.CENTER
       });
       return;
     }
@@ -50,14 +50,14 @@ const Verifying = () => {
           typeof err.response !== 'undefined'
             ? err.response.data.message
             : err.message;
-        Toast.show(message, {duration: Toast.durations.SHORT,});
+        Toast.show(message, {duration: Toast.durations.SHORT,position: Toast.positions.CENTER});
       })
       .finally(() => setIsLoading(false));
   };
 
   const verifyOTP = () => {
     if (OTPValue.trim() === "") {
-      Toast.show("Please enter your OTP", {duration: Toast.durations.SHORT});
+      Toast.show("Please enter your OTP", {duration: Toast.durations.SHORT, position: Toast.positions.CENTER});
       return;
     }
 
@@ -69,12 +69,12 @@ const Verifying = () => {
       .post(postOTP, verifyOTPdata)
       .then(res => {
         if (res.data.status === "success") {
-          Toast.show("OTP matched", {duration: Toast.durations.SHORT});
+          Toast.show("OTP matched", {duration: Toast.durations.SHORT, position: Toast.positions.CENTER});
           setShowOTP(false); // Hide OTP modal
           navigation.navigate('SignUp');
         }
         else {
-          Toast.show("OTP does not matched", {duration: Toast.durations.SHORT});
+          Toast.show("OTP does not matched", {duration: Toast.durations.SHORT, position: Toast.positions.CENTER});
         }
       })
       .catch(err => {
@@ -82,7 +82,7 @@ const Verifying = () => {
           typeof err.response !== 'undefined'
             ? err.response.data.message
             : err.message;
-            Toast.show(message, {duration: Toast.durations.SHORT});
+            Toast.show(message, {duration: Toast.durations.SHORT, position: Toast.positions.CENTER});
       })
       .finally(() => setLoading(false));
   };

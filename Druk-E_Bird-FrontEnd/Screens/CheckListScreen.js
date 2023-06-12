@@ -65,6 +65,7 @@ function NotSubmitted() {
         setData((prevData) => prevData.filter((item) => item._id !== itemId));
         Toast.show("Data successfully deleted", {
           duration: Toast.durations.SHORT,
+          position: Toast.positions.CENTER
         });
       })
       .catch((error) => {
@@ -74,7 +75,7 @@ function NotSubmitted() {
 
   const handleItemClick = (checklistdata) => {
     navigation.navigate("DraftCheckListSubmitted", {
-      checklistId: checklistdata.itemId,
+      //checklistId: checklistdata.itemId,
       checklistdata: checklistdata,
     });
   };
@@ -88,12 +89,10 @@ function NotSubmitted() {
           marginBottom: hp("1%"),
           height: hp("100%"),
         }}
-        onPress={() => handleDelete(itemId)}
-      >
+        onPress={() => handleDelete(itemId)}>
         <Text style={{ color: "white" }}>Delete</Text>
       </TouchableOpacity>
-    </View>
-  );
+    </View>);
 
   const renderItem = ({ item }) => {
     if (
@@ -134,8 +133,7 @@ function NotSubmitted() {
                     fontWeight: "bold",
                     color: "green",
                     marginTop: hp("-4%"),
-                  }}
-                >
+                  }}>
                   Not Submitted
                 </Text>
               </View>
@@ -354,8 +352,7 @@ function Submitted() {
         keyExtractor={(item) => item._id.toString()}
         renderItem={renderItem}
         refreshControl={
-          <RefreshControl refreshing={refreshing} onRefresh={handleRefresh} />
-        }
+          <RefreshControl refreshing={refreshing} onRefresh={handleRefresh} />}
       />
     </View>
   );

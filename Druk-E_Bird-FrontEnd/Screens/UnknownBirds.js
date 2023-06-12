@@ -24,9 +24,6 @@ import BhutanDzongkhags from "../Components/BhutanDzongkha";
 import SelectDropdown from "react-native-select-dropdown";
 import { postCheckList, postPhoto } from "../Api/Api";
 
-
-const { width, height } = Dimensions.get("window");
-
 const UnknownBird = ({ route }) => {
   const { UnknownBirdsdata } = route.params;
   const { userInfo } = useContext(AuthContext);
@@ -153,19 +150,19 @@ const UnknownBird = ({ route }) => {
 
   const UnknownBirdsdataSave = () => {
     if (!selectedDzongkhag) {
-      Toast.show("Please select Dzongkha", { duration: Toast.durations.SHORT });
+      Toast.show("Please select Dzongkha", { duration: Toast.durations.SHORT, position: Toast.positions.CENTER});
       return;
     } else if (!selectedGewog) {
-      Toast.show("Please select Gewong", { duration: Toast.durations.SHORT });
+      Toast.show("Please select Gewong", { duration: Toast.durations.SHORT, position: Toast.positions.CENTER});
       return;
     } else if (!selectedVillage) {
-      Toast.show("Please select Village", { duration: Toast.durations.SHORT });
+      Toast.show("Please select Village", { duration: Toast.durations.SHORT, position: Toast.positions.CENTER});
       return;
     } else if (!image) {
-      Toast.show("Please select an image", { duration: Toast.durations.SHORT });
+      Toast.show("Please select an image", { duration: Toast.durations.SHORT, position: Toast.positions.CENTER});
       return;
     } else if (count === 0) {
-      Toast.show("Please set the count", { duration: Toast.durations.SHORT });
+      Toast.show("Please set the count", { duration: Toast.durations.SHORT, position: Toast.positions.CENTER});
       return;
     }
 
@@ -214,7 +211,7 @@ const UnknownBird = ({ route }) => {
         .catch((error) => {
           Toast.show(error, {
             duration: Toast.durations.SHORT,
-            position: Toast.positions.CENTER,
+            position: Toast.positions.CENTER
           });
         })
         .finally(() => {
@@ -223,7 +220,7 @@ const UnknownBird = ({ route }) => {
     } catch (error) {
       Toast.show(error, {
         duration: Toast.durations.SHORT,
-        position: Toast.positions.CENTER,
+        position: Toast.positions.CENTER
       });
     }
   };

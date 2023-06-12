@@ -56,7 +56,7 @@ function ExploreBirdInfo({ route }) {
         setIsLoading(false); // Data fetching complete
       })
       .catch((error) => {
-        Toast.show(error, { duration: Toast.durations.SHORT });
+        Toast.show(error, { duration: Toast.durations.SHORT, position: Toast.positions.CENTER });
         
       })
       .finally(() => {

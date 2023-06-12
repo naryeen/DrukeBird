@@ -21,10 +21,10 @@ const userSchema = new mongoose.Schema({
         default: `https://res.cloudinary.com/drukebird/image/upload/v1686213437/DrukeBird/UserProfile/ogx0bvfrd0n0usqvudzm.jpg`
         
     },
-
+    
     dob: {
         type: String,
-        required:[true, 'Enter Your date of birth'],
+        required: [true, 'Date'],
         default: moment().format('YYYY-MM-DD')
     },
    

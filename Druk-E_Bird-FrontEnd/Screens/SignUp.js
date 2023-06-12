@@ -53,7 +53,7 @@ const SignUp = () => {
           typeof err.response !== "undefined"
             ? err.response.data.message
             : err.message;
-        Toast.show(message, { duration: Toast.durations.SHORT });
+        Toast.show(message, { duration: Toast.durations.SHORT, position: Toast.positions.CENTER});
       })
       .finally(() => setIsLoading(false));
   };
@@ -122,14 +122,14 @@ const SignUp = () => {
       width: "100%",
       backgroundColor: "#FFF",
       borderRadius: 5,
-      borderWidth: 0.5,
+      borderWidth: 0.5
     },
     dropdown3BtnChildStyle: {
       flex: 1,
       flexDirection: 'row',
       justifyContent: 'space-between',
       alignItems: 'center',
-      paddingHorizontal: wp('1.5%'),
+      paddingHorizontal: wp('1.5%')
     },
     dropdown3BtnTxt: {
       fontSize: wp("4%"),
@@ -168,8 +168,8 @@ const SignUp = () => {
                   })
                   : ""
               }
-              editable={false} // Allow manual entry of date
-            />
+              editable={false}/>
+
             {showDatePicker && (
               <DateTimePicker
                 mode="date"
@@ -194,7 +194,7 @@ const SignUp = () => {
                     return (
                       <View style={styles.dropdown3BtnChildStyle}>
                         <Ionicons name="flag" color={'#444'} size={26} />
-                        <Text style={styles.dropdown3BtnTxt}>{selectedItem ? selectedItem : "Select Country"}</Text>
+                        <Text style={[styles.dropdown3BtnTxt, { textAlign: 'left',paddingLeft:13, flex: 1 }]}>{selectedItem ? selectedItem : "Select Country"}</Text>
                         <FontAwesome name="chevron-down" color={'#444'} size={18} />
                       </View>
                     );
@@ -210,8 +210,7 @@ const SignUp = () => {
                         <Text style={styles.dropdown3RowTxt}>{item}</Text>
                       </View>
                     );
-                  }}
-                />
+                  }}/>
 
               </ScrollView>
             </View>

@@ -56,23 +56,23 @@ const BirdTypeInfo = ({ route }) => {
   };
   const StartbirdingonedataSave = () => {
     if (Adult.trim() === "") {
-      Toast.show("Please enter your adult", { duration: Toast.durations.SHORT });
+      Toast.show("Please enter your adult", { duration: Toast.durations.SHORT, position: Toast.positions.CENTER});
       return;
     } else if (Juvenile.trim() === "") {
-      Toast.show("Please enter your juvenile", { duration: Toast.durations.SHORT });
+      Toast.show("Please enter your juvenile", { duration: Toast.durations.SHORT, position: Toast.positions.CENTER});
       return;
     } else if (Remarks.trim() === "") {
-      Toast.show("Please provide some remarks", { duration: Toast.durations.SHORT });
+      Toast.show("Please provide some remarks", { duration: Toast.durations.SHORT, position: Toast.positions.CENTER });
       return;
     }
     else if (!selectedDzongkhag) {
-      Toast.show("Please select Dzongkha", { duration: Toast.durations.SHORT });
+      Toast.show("Please select Dzongkha", { duration: Toast.durations.SHORT, position: Toast.positions.CENTER });
       return;
     } else if (!selectedGewog) {
-      Toast.show("Please select Gewong", { duration: Toast.durations.SHORT });
+      Toast.show("Please select Gewong", { duration: Toast.durations.SHORT, position: Toast.positions.CENTER });
       return;
     } else if (!selectedVillage) {
-      Toast.show("Please select Village", { duration: Toast.durations.SHORT });
+      Toast.show("Please select Village", { duration: Toast.durations.SHORT, position: Toast.positions.CENTER });
       return;
     }
     const adultCount = parseInt(Adult);
@@ -121,21 +121,20 @@ const BirdTypeInfo = ({ route }) => {
       axios
         .post(postCheckList, detailOfBirds)
         .then((response) => {
-          console.log(detailOfBirds);
           Toast.show("Data successfully posted", {
             duration: Toast.durations.SHORT,
             position: Toast.positions.CENTER
           });
         })
         .catch((error) => {
-          Toast.show(error, { duration: Toast.durations.SHORT });
+          Toast.show(error, { duration: Toast.durations.SHORT, position: Toast.positions.CENTER });
 
         })
         .finally(() => {
           setIsLoading(false);
         });
     } catch (error) {
-      Toast.show(error, { duration: Toast.durations.SHORT });
+      Toast.show(error, { duration: Toast.durations.SHORT, position: Toast.positions.CENTER });
     }
   };
 
@@ -187,36 +186,6 @@ const BirdTypeInfo = ({ route }) => {
     }
     setModalVisible(false);
   };
-
-
-  // const handleImageUpload = async () => {
-  //   const permissionResult = await ImagePicker.requestMediaLibraryPermissionsAsync();
-
-  //   if (permissionResult.granted === false) {
-  //     Alert.alert('Permission required', 'Please allow access to the device camera roll.');
-  //     return;
-  //   }
-
-  //   const pickerResult = await ImagePicker.launchImageLibraryAsync({
-  //     mediaTypes: ImagePicker.MediaTypeOptions.Images,
-  //     allowsEditing: true,
-  //     quality: 1,
-  //   });
-
-  //   if (!pickerResult.canceled) {
-  //     const capturedImage = pickerResult.assets[0];
-  //     let newFile = {
-  //       uri: capturedImage.uri,
-  //       type: `birdImage/${capturedImage.uri.split(".")[1]}`,
-  //       name: `birdImage.${capturedImage.uri.split(".")[1]}`,
-  //     };
-  //     handleUpload(newFile);
-
-  //   } else {
-  //     alert("You did not select any image.");
-  //   }
-
-  // };
   const handleUpload = (image) => {
     const data = new FormData();
     data.append("file", image);
@@ -233,13 +202,6 @@ const BirdTypeInfo = ({ route }) => {
         setIsLoading(false);
       });
   };
-  if (isLoading) {
-    return (
-      <View style={styles.loading}>
-        <ActivityIndicator animating={true} color={MD2Colors.green800} size="large" />
-      </View>
-    );
-  }
   return (
     <KeyboardAwareScrollView>
       <View style={styles.container1}>
@@ -326,15 +288,6 @@ const BirdTypeInfo = ({ route }) => {
               disabled={selectedDzongkhag === "" || selectedGewog === ""}
             />
             <Button styling={styles.submitbutton} onPress={StartbirdingonedataSave}>Submit</Button>
-            {isLoading && (
-              <View style={styles.loadingContainer}>
-                <ActivityIndicator
-                  animating={true}
-                  color={MD2Colors.green800}
-                  size="large"
-                />
-              </View>
-            )}
             <Modal animationType="slide" transparent={true} visible={modalVisible}>
               <View style={styles.modalContainer}>
                 <View style={styles.modalContent}>
@@ -348,8 +301,7 @@ const BirdTypeInfo = ({ route }) => {
                   </TouchableOpacity>
                   <TouchableOpacity
                     style={styles.optionButton}
-                    onPress={takePictureFromCamera}
-                  >
+                    onPress={takePictureFromCamera}>
                     <Text style={styles.optionButtonText}>
                       Take picture from camera
                     </Text>
@@ -364,7 +316,15 @@ const BirdTypeInfo = ({ route }) => {
               </View>
             </Modal>
           </View>
-
+          {isLoading && (
+              <View style={styles.loadingContainer}>
+                <ActivityIndicator
+                  animating={true}
+                  color={MD2Colors.green800}
+                  size="large"
+                />
+              </View>
+            )}
         </View>
       </View>
       <StatusBar />
@@ -475,13 +435,13 @@ const styles = StyleSheet.create({
     color: "red",
   },
   loadingContainer: {
-    position: 'absolute',
+    position: "absolute",
     top: 0,
     left: 0,
     right: 0,
     bottom: 0,
-    justifyContent: 'center',
-    alignItems: 'center',
+    justifyContent: "center",
+    alignItems: "center"
   },
 });
 

@@ -25,7 +25,7 @@ const LogIn = () => {
 
     else if (password.trim() === "") {
       Toast.show("Please enter your password", {
-        duration: Toast.durations.SHORT
+        duration: Toast.durations.SHORT, position: Toast.positions.CENTER
       });
       return;
     }
