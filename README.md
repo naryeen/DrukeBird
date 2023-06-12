@@ -100,23 +100,15 @@ Member 4 - Mr. Tshering Wangchuk (12190099)
 <br>
 
 ## Click the links given below:
-To view Front-End folder :
-(https://gitlab.com/)
-<br>
-<br>
-To view Backend Folder:
-(https://gitlab.com)
-<br>
-<br>
 Click Here to watch promotional Video:
-(https://youtu.be/CDIeRgd_c)
+(https://www.youtube.com/watch?v=WruSCN-oUuk)
 <br>
 <br>
 Click Here for Poster:
-(https://youtu.be/CDIeRgd_5)
+(https://gitlab.com/Humblewangss777/druk_e-bird/-/blob/main/Images/Final_Poster.jpeg)
 <br>
 <br>
 Click Here to view prototype:
-(https://youtu.be/CDIeRgd_5)
+(https://www.figma.com/file/1m0SoJJc6m58Z8Vlif2b32/Wireframe-Of-Ebird-Bhutan-App?type=design&node-id=51%3A129&t=x1yTPf588Wa8slNN-1)
 <br>
 <br>
