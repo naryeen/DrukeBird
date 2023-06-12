@@ -1,10 +1,4 @@
-import {
-  Text,
-  View,
-  FlatList,
-  TouchableOpacity,
-  RefreshControl,
-} from "react-native";
+import {Text,View,FlatList,TouchableOpacity,RefreshControl} from "react-native";
 import React, { useEffect, useState, useContext } from "react";
 import axios from "axios";
 import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
@@ -80,6 +74,7 @@ function NotSubmitted() {
 
   const handleItemClick = (checklistdata) => {
     navigation.navigate("DraftCheckListSubmitted", {
+      checklistId: checklistdata.itemId,
       checklistdata: checklistdata,
     });
   };

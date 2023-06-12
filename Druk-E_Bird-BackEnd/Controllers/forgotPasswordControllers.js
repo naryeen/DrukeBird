@@ -28,7 +28,7 @@ exports.forgotPassword = async (req, res, next) => {
             from: "drukebird@gmail.com",
             to: email,
             subject: "Password Reset",
-            text: `Hi \n please copy the token: \n ${link}`,
+            text: `Hi \n please click on the link below to reset your password: \n ${link}`,
         };
         await transporter.sendMail(mailOptions);
 

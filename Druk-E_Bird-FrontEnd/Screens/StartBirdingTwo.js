@@ -227,7 +227,7 @@ const StartBirdingTwo = ({ route }) => {
             animating={true}
             color={MD2Colors.green800}
             size="large"
-            style={{ marginVertical: hp("30%") }}
+            style={{ marginVertical: hp("35%") }}
           />
         ) : (
           <>
@@ -238,8 +238,7 @@ const StartBirdingTwo = ({ route }) => {
             )}
             <FlatList
               style={{
-                height: hp("65%"),
-                marginTop: hp("1%"),
+                height: hp("75%"),
                 borderRadius: 10,
               }}
               data={searchQuery.length > 0 ? filteredData : data}
@@ -248,21 +247,18 @@ const StartBirdingTwo = ({ route }) => {
             />
           </>
         )}
-        <FAB
+        <View style={styles.buttonContianer}>
+          <Button
+            styling={styles.submitbutton}
+            onPress={SubmittedBirdsdataSave}>Submit
+          </Button>
+          <FAB
           style={styles.fab}
           small
           color="white"
           icon="plus"
           onPress={UnknownBirdsdataSave}
         />
-
-        <View style={styles.buttonContianer}>
-          <Button
-            styling={styles.submitbutton}
-            onPress={SubmittedBirdsdataSave}
-          >
-            Submit
-          </Button>
           <Button styling={styles.stopbutton} onPress={StartbirdingonedataSave}>
             Stop
           </Button>
@@ -292,27 +288,31 @@ const styles = StyleSheet.create({
 
   buttonContianer: {
     flexDirection: "row",
-    marginTop: hp("1.5%"),
+    marginTop: hp("1%"),
     marginHorizontal: wp("4%"),
+    justifyContent: "space-between",
+    alignItems: "center",
   },
 
   submitbutton: {
-    width: wp("40%"),
+    width: wp("35%"),
     height: hp("7%"),
     borderRadius: 7,
+    marginRight: wp("2%"),
+
   },
   stopbutton: {
-    width: wp("40%"),
+    width: wp("35%"),
     height: hp("7%"),
     borderRadius: 7,
-    marginLeft: wp("11%"),
+    marginLeft: wp("2%"),
   },
   fab: {
-    width: wp("20%"),
-    marginTop: hp("1%"),
+    width: wp("15%"),
+    height: hp("7%"),
     backgroundColor: "#136D66",
-    alignItems: "center",
-    marginLeft: wp("75%"),
+    borderRadius: 7,
+
   },
   searchbar: {
     marginTop: hp("1%"),

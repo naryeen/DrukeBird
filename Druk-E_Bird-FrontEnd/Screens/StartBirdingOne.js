@@ -1,16 +1,16 @@
 import React, { useState, useEffect, useContext } from "react";
-import {FAB,ActivityIndicator,MD2Colors,Searchbar,} from "react-native-paper";
-import {StyleSheet,View,FlatList,Alert,Text,SafeAreaView,TouchableOpacity,} from "react-native";
+import { FAB, ActivityIndicator, MD2Colors, Searchbar, } from "react-native-paper";
+import { StyleSheet, View, FlatList, Alert, Text, SafeAreaView, TouchableOpacity, } from "react-native";
 import Toast from "react-native-root-toast";
 import Button from "../Components/Button";
 import { useNavigation, CommonActions } from "@react-navigation/native";
 import axios from "axios";
 import { Ionicons } from "@expo/vector-icons";
-import {widthPercentageToDP as wp,heightPercentageToDP as hp} from "react-native-responsive-screen";
+import { widthPercentageToDP as wp, heightPercentageToDP as hp } from "react-native-responsive-screen";
 import StartBirdingCounter from "../Components/StartBirdingCounter";
 import { AuthContext } from "../Context/AuthContext";
-import { postCheckList} from "../Api/Api";
-import { getSpeciesdata} from "../Api/Api";
+import { postCheckList } from "../Api/Api";
+import { getSpeciesdata } from "../Api/Api";
 
 
 const formatTime = (time) => {
@@ -42,10 +42,10 @@ const StartBirdingone = ({ route }) => {
   );
   const [Isloading, setIsLoading] = useState(false);
 
-  
+
   useEffect(() => {
     handleSearch(query);
-  }, [data,startbirding1data,query]);
+  }, [data, startbirding1data, query]);
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -163,7 +163,7 @@ const StartBirdingone = ({ route }) => {
     };
     handleFabPress(UnknownBirdsdata);
   };
-  
+
 
   //data pass to SubmittingBirding
   const SubmittedBirdsdataSave = () => {
@@ -204,7 +204,7 @@ const StartBirdingone = ({ route }) => {
       // Show the message that no data is submitted
       Alert.alert(
         "No Data Submitted",
-        "Please select at least one bird count before stopping.",
+        "Select a bird before stopping",
         [{ text: "OK" }]
       );
       return;
@@ -239,18 +239,16 @@ const StartBirdingone = ({ route }) => {
       <SafeAreaView>
         <Searchbar
           placeholder="Search any birds"
-          onChangeText={(text) => {setQuery(text);handleSearch(text);}}
+          onChangeText={(text) => { setQuery(text); handleSearch(text); }}
           value={searchQuery}
           inputStyle={{ paddingBottom: hp("0.1%") }}
-          style={styles.searchbar}
-        />
-
+          style={styles.searchbar}/>
         {loading ? (
           <ActivityIndicator
             animating={true}
             color={MD2Colors.green800}
             size="large"
-            style={{ marginVertical: hp("30%") }}
+            style={{ marginVertical: hp("35%") }}
           />
         ) : (
           <>
@@ -261,8 +259,7 @@ const StartBirdingone = ({ route }) => {
             )}
             <FlatList
               style={{
-                height: hp("65%"),
-                marginTop: hp("1%"),
+                height: hp("75%"),
                 borderRadius: 10,
               }}
               data={searchQuery.length > 0 ? filteredData : data}
@@ -274,21 +271,16 @@ const StartBirdingone = ({ route }) => {
             />
           </>
         )}
-        <FAB
-          style={styles.fab}
-          small
-          color="white"
-          icon="plus"
-          onPress={UnknownBirdsdataSave}
-        />
-
         <View style={styles.buttonContianer}>
           <Button
             styling={styles.submitbutton}
-            onPress={SubmittedBirdsdataSave}
-          >
-            Submit
-          </Button>
+            onPress={SubmittedBirdsdataSave}>Submit</Button>
+          <FAB
+            style={styles.fab}
+            color="white"
+            icon="plus"
+            onPress={UnknownBirdsdataSave}
+          />
           <Button styling={styles.stopbutton} onPress={StartbirdingonedataSave}>
             Stop
           </Button>
@@ -318,27 +310,31 @@ const styles = StyleSheet.create({
 
   buttonContianer: {
     flexDirection: "row",
-    marginTop: hp("1.5%"),
+    marginTop: hp("1%"),
     marginHorizontal: wp("4%"),
+    justifyContent: "space-between",
+    alignItems: "center",
   },
 
   submitbutton: {
-    width: wp("40%"),
+    width: wp("35%"),
     height: hp("7%"),
     borderRadius: 7,
+    marginRight: wp("2%"),
+
   },
   stopbutton: {
-    width: wp("40%"),
+    width: wp("35%"),
     height: hp("7%"),
     borderRadius: 7,
-    marginLeft: wp("11%"),
+    marginLeft: wp("2%"),
   },
   fab: {
-    width: wp("20%"),
-    marginTop: hp("1%"),
+    width: wp("15%"),
+    height: hp("7%"),
     backgroundColor: "#136D66",
-    alignItems: "center",
-    marginLeft: wp("75%"),
+    borderRadius: 7,
+
   },
   searchbar: {
     marginTop: hp("1%"),

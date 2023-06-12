@@ -28,7 +28,7 @@ const sendResetPasswordMail = async(name,email,token)=>{
           from:"drukebird@gmail.com",
           to: email,
           subject:'Verifying User',
-          html:`<p> Hi `+name+`, Please copy the token </p><br>
+          html:`<p> Hi `+name+`, register with DrukeBird using the token below: </p><br>
           <h1>`+token+`</h1><br> 
           <p>enter OTP to reset your password</p>` 
       }

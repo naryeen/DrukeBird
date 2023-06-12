@@ -7,9 +7,11 @@ import ForgotPasswordHeader from "../Components/ForgotPasswordHeader";
 import Toast from 'react-native-root-toast';
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { postForgetpassword } from "../Api/Api";
+import { ActivityIndicator, MD2Colors} from "react-native-paper";
 
 const ForgetPassword = () => {
   const [email, setEmail] = useState("");
+  const [Isloading, setIsLoading] = useState(false);
 
   const forgetPassword = () => {
     if (!email) {
@@ -23,7 +25,7 @@ const ForgetPassword = () => {
     let user = {
       email: email,
     };
-
+    setIsLoading(true);
     axios.post(postForgetpassword, user)
       .then(res => {
         if (res.status === 201) {
@@ -37,7 +39,8 @@ const ForgetPassword = () => {
       .catch(err => {
         let message = typeof err.response !== 'undefined' ? err.response.data.message : err.message;
         Toast.show(message, {duration: Toast.durations.SHORT,});
-      });
+      })
+      .finally(() => setIsLoading(false));
   };
 
   return (
@@ -64,6 +67,11 @@ const ForgetPassword = () => {
           value={email}
         />
       <Button styling={styles.buttonStyle} onPress={() => forgetPassword()}>Send</Button>
+      {Isloading && (
+            <View style={styles.loadingContainer}>
+              <ActivityIndicator animating={true} color={MD2Colors.green800} size="large" />
+            </View>
+          )}
     </View>
     <StatusBar />
     </View>
@@ -113,6 +121,15 @@ const styles = StyleSheet.create({
     marginTop: hp('2%'),
     marginLeft: wp('8%'),
     fontSize: wp('4%'),
+  },
+  loadingContainer: {
+    position: "absolute",
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
+    justifyContent: "center",
+    alignItems: "center"
   },
 });
 
