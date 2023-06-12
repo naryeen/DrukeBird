@@ -59,7 +59,7 @@ exports.getCheckList = async (req, res) => {
 exports.updateCheckList = async (req, res) => {
   try {
     const { id } = req.params; // Get the ID of the checklist from the request parameters
-    const { status, endpointLocation } = req.body; // Get the new status and endpointLocation from the request body
+    const { status, dzongkhag,gewog,village} = req.body; // Get the new status and endpointLocation from the request body
 
     // Find the checklist by ID and update the status and EndpointLocation in the StartbirdingData array
     const updatedChecklist = await checklists.findByIdAndUpdate(
