@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
-import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
+import { View, TouchableOpacity, StyleSheet } from 'react-native';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import Icon from 'react-native-vector-icons/FontAwesome';
-import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
+import { widthPercentageToDP as wp } from 'react-native-responsive-screen';
 
 const DatePicker = ({ onDateSelected }) => {
   const [showPicker, setShowPicker] = useState(false);
@@ -25,9 +25,9 @@ const DatePicker = ({ onDateSelected }) => {
   };
 
   return (
-    <View style={styles.pickerContainer}>
+    <View>
       <TouchableOpacity onPress={handleShowPicker}>
-        <Icon name="calendar" size={20} color="black" style={styles.dateicon} />
+        <Icon name="calendar" size={25} color="#136d66" style={styles.dateIcon} />
       </TouchableOpacity>
       {showPicker && (
         <DateTimePicker
@@ -43,13 +43,8 @@ const DatePicker = ({ onDateSelected }) => {
 };
 
 const styles = StyleSheet.create({
-  pickerContainer: {
-    alignItems: 'center',
-    marginVertical: hp('2%'),
-  },
-  dateicon: {
-    padding: wp('5.56%'),
-    marginRight: wp('5.56%'),
+  dateIcon: {
+    marginLeft: wp('28%'),
   },
 });
 

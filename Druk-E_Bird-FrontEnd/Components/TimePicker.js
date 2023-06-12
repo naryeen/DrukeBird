@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { View, StyleSheet, TouchableOpacity } from 'react-native';
 import DateTimePicker from '@react-native-community/datetimepicker';
-import Icon from 'react-native-vector-icons/FontAwesome';
+import Icon from 'react-native-vector-icons/MaterialIcons';
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 
 
@@ -22,9 +22,9 @@ const TimePicker = ({ onTimeSelected }) => {
   };
 
   return (
-    <View style={styles.pickerContainer}>
+    <View>
       <TouchableOpacity onPress={handleShowPicker}>
-        <Icon name="clock-o" size={26} color="black" style={styles.timeicon} />
+        <Icon name="access-time" size={30} color="#136d66" style={styles.timeicon} />
       </TouchableOpacity>
       {showPicker && (
         <DateTimePicker
@@ -39,17 +39,12 @@ const TimePicker = ({ onTimeSelected }) => {
 };
 
 const styles = StyleSheet.create({
-  pickerContainer: {
-    alignItems: 'center',
-    marginVertical: hp('2%'),
-  },
   pickerText: {
     fontSize: wp('4%'),
     color: '#2196F3',
   },
   timeicon: {
-    padding: wp('5.56%'), 
-    marginRight: wp('5.56%'),
-    },
+    marginLeft: wp('35%'),
+  },
 });
 export default TimePicker

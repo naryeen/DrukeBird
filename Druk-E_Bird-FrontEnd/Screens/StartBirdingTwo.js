@@ -294,6 +294,7 @@ const styles = StyleSheet.create({
   fab: {
     width: wp("15%"),
     height: hp("7%"),
+    alignItems:'center',
     backgroundColor: "#136D66",
     borderRadius: 7,
 

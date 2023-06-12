@@ -1,14 +1,14 @@
-import React, { useEffect} from 'react';
+import React, { useEffect } from 'react';
 import { View, Switch, Alert, Text, StyleSheet } from 'react-native';
 import * as Location from 'expo-location';
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 
 
-const RecordTrack = ({isLocationEnabled, setIsLocationEnabled , currentLocation, setCurrentLocation}) => {
+const RecordTrack = ({ isLocationEnabled, setIsLocationEnabled, currentLocation, setCurrentLocation }) => {
 
   useEffect(() => {
-        currentLocation;
-      }, [currentLocation]);
+    currentLocation;
+  }, [currentLocation]);
   useEffect(() => {
     checkLocationPermission();
   }, []);
@@ -70,13 +70,14 @@ const RecordTrack = ({isLocationEnabled, setIsLocationEnabled , currentLocation,
 
   return (
     <View style={styles.container}>
-      <Text style={{ fontSize: 16, fontWeight: 'bold' }}>Record Track</Text>
+      <Text style={{ fontSize: 16, marginLeft: wp("5%") }}>Record Track</Text>
       <Switch
-        trackColor={{ false: '#767577', true: '#767577' }}
+        trackColor={{ false: '#767577', true: '#136D66' }}
         thumbColor={isLocationEnabled ? '#24B78B' : '#136D66'}
         ios_backgroundColor="#3e3e3e"
         value={isLocationEnabled}
         onValueChange={handleToggleSwitch}
+        style={styles.switch}
       />
     </View>
   );
@@ -84,11 +85,12 @@ const RecordTrack = ({isLocationEnabled, setIsLocationEnabled , currentLocation,
 
 const styles = StyleSheet.create({
   container: {
-    alignItems: 'center',
-    justifyContent: 'center',
+    alignItems:'center',
     flexDirection: 'row',
-    marginTop: hp("2%")
   },
+  switch: {
+    marginLeft: wp("40%")
+  }
 });
 
 export default RecordTrack;

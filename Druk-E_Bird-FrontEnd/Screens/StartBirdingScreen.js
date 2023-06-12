@@ -7,7 +7,11 @@ import React, { useState, useEffect, useContext } from "react";
 import RecordTrack from '../Components/RecordTrack';
 import moment from 'moment';
 import { AuthContext } from "../Context/AuthContext";
-
+import image66 from "../assets/Image/image1.png";
+import image2 from "../assets/Image/image2.png";
+import image3 from "../assets/Image/image3.png";
+import { SliderBox } from "react-native-image-slider-box";
+import { AntDesign } from '@expo/vector-icons';
 
 
 function StartbirdingScreen() {
@@ -27,6 +31,10 @@ function StartbirdingScreen() {
 
   const handleTimeSelected = (time) => {
     setSelectedTime(time);
+  };
+  const handleTimeChange = (selectedTime) => {
+    setTime(selectedTime);
+    onTimeSelected(selectedTime);
   };
 
   const [selectedDate, setSelectedDate] = useState(new Date());
@@ -52,10 +60,27 @@ function StartbirdingScreen() {
     navigateHandler(StartbirdingData);
   };
 
+
+  const images = [image66, image2, image3];
+
   return (
     <View style={styles.container}>
+      <View style={styles.im}>
+        <SliderBox
+          images={images}
+          ImageComponentStyle={styles.image}
+          dotColor="red"
+          inactiveDotColor="black"
+          dotStyle={{ height: 10, width: 10, borderRadius: 50 }}
+          imageLoadingColor="black"
+          autoplay
+          autoplayTimeout={10000}
+          loop
+          autoplayInterval={9000}
+          CircleLoop={true}
+        />
+      </View>
       <View style={styles.Tcontainer}>
-        <TimePicker onTimeSelected={handleTimeSelected} />
         <View>
           {selectedTime && (
             <Text style={styles.Ttext}>
@@ -63,10 +88,10 @@ function StartbirdingScreen() {
             </Text>
           )}
         </View>
+        <TimePicker onTimeSelected={handleTimeSelected} />
       </View>
 
       <View style={styles.Dcontainer}>
-        <DatePicker onDateSelected={handleDateSelected} />
         <View>
           {selectedDate && (
             <Text style={styles.Dtext}>
@@ -74,15 +99,22 @@ function StartbirdingScreen() {
             </Text>
           )}
         </View>
+        <DatePicker onDateSelected={handleDateSelected} />
       </View>
 
-      <RecordTrack
-        isLocationEnabled={isLocationEnabled}
-        setIsLocationEnabled={setIsLocationEnabled}
-        currentLocation={currentLocation}
-        setCurrentLocation={setCurrentLocation}
-        style={styles.recordTrack}
-      />
+      <View style={styles.Dcontainer}>
+        <View>
+          <RecordTrack
+            isLocationEnabled={isLocationEnabled}
+            setIsLocationEnabled={setIsLocationEnabled}
+            currentLocation={currentLocation}
+            setCurrentLocation={setCurrentLocation}
+            style={styles.recordTrack}
+          />
+        </View>
+      </View>
+
+
 
       <Button onPress={StartbirdingdataSave} styling={styles.buttonview}>
         Start Checklist
@@ -96,53 +128,61 @@ import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-nat
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    padding: wp('5%'),
-    marginTop: wp('8%'),
+  },
+  image: {
+    height: hp('35%'),
+    resizeMode: "contain",
+    marginTop: hp('0.8%'),
+    width: wp('100%'),
   },
   Tcontainer: {
     backgroundColor: '#fff',
     borderRadius: 8,
     padding: wp('3%'),
     flexDirection: 'row',
-    marginLeft: '-3%',
-    marginTop: hp('2%'),
+    marginLeft: '3%',
+    marginTop: hp('3%'),
     alignItems: 'center',
-    paddingLeft: wp('13%'),
-    height: wp('40%'),
+    paddingLeft: wp('5%'),
+    height: wp('20%'),
     width: wp('95%'),
     ...Platform.select({
       ios: {
         shadowColor: "#000",
-        shadowOffset: { width: 0, height: hp('0.13%') }, 
+        shadowOffset: { width: 0, height: hp('0.13%') },
         shadowOpacity: 0.2,
-        shadowRadius: wp('0.278%'), 
+        shadowRadius: wp('0.278%'),
       },
       android: {
         elevation: 5,
       },
     }),
   },
+
+
   Ttext: {
     fontSize: wp('4.5%'),
     color: '#333',
+    marginLeft: '10%',
+
+
   },
   Dcontainer: {
     backgroundColor: '#fff',
     borderRadius: 8,
-    padding: wp('3%'),
     flexDirection: 'row',
-    marginLeft: '-3%',
-    marginTop: hp('3%'),
+    marginLeft: '3%',
+    marginTop: hp('1%'),
     alignItems: 'center',
-    paddingLeft: wp('13%'),
-    height: wp('40%'),
+    paddingLeft: wp('5%'),
+    height: wp('20%'),
     width: wp('95%'),
     ...Platform.select({
       ios: {
         shadowColor: "#000",
-        shadowOffset: { width: 0, height: hp('0.13%') }, 
+        shadowOffset: { width: 0, height: hp('0.13%') },
         shadowOpacity: 0.2,
-        shadowRadius: wp('0.278%'), 
+        shadowRadius: wp('0.278%'),
       },
       android: {
         elevation: 5,
@@ -152,15 +192,15 @@ const styles = StyleSheet.create({
   Dtext: {
     fontSize: wp('4.5%'),
     color: '#333',
-  },
-  recordTrack: {
-    marginTop: hp('10%'),
+    marginLeft: '10%',
+
   },
   buttonview: {
     width: wp('95%'),
-    marginTop: hp('8%'),
-    marginLeft: '-3%',
+    marginTop: hp('5%'),
+    marginLeft: '3%',
   },
+
 });
 
 export default StartbirdingScreen;

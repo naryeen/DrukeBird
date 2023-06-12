@@ -122,8 +122,6 @@ const EditInfo = () => {
     );
   }
 
-  const formattedDOB = dob.split("T")[0];
-
   return (
     <View style={styles.container2}>
       <SafeAreaView>
@@ -151,11 +149,12 @@ const EditInfo = () => {
           <TextInput
             style={styles.input}
             placeholder="Date of Birth"
-            value={formattedDOB}
+            value={dob}
             onChangeText={(text) => {
               setDob(text);
               setIsProfileUpdated(true); 
-            }}/>
+            }}
+            />
 
           <TextInput
             style={styles.input}
