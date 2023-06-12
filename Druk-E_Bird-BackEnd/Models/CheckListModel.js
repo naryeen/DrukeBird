@@ -17,15 +17,18 @@ const currentLocation = new mongoose.Schema({
 const EndpointLocation =new mongoose.Schema({
     dzongkhag: {
       type: String,
-      default: "null",
+      required: [true, 'dzongkhag'],
+      default: "null"
     },
     gewog: {
       type: String,
-      default: "null",
+      required: [true, 'gewog'],
+      default: "null"
     },
     village: {
       type: String,
-      default: "null",
+      required: [true, 'village'],
+      default: "null"
     },
   })
 
