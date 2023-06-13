@@ -48,11 +48,11 @@ changeStream.on("change", async (change) => {
       return;
     }
 
-    // Update the checklist data in CheckListModel
-    await CheckListModel.updateOne(
-      { _id: change.documentKey._id },
-      { $set: { BirdName: updatedField } }
-    );
+    // // Update the checklist data in CheckListModel
+    // await CheckListModel.updateOne(
+    //   { _id: change.documentKey._id },
+    //   { $set: { BirdName: updatedField } }
+    // );
 
     const photo = checklist.StartbirdingData[0].photo
     const userId = checklist.userId
