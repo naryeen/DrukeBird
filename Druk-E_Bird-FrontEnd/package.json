@@ -1,0 +1,50 @@
+{
+  "name": "druk-e_bird-frontend",
+  "version": "1.0.0",
+  "main": "node_modules/expo/AppEntry.js",
+  "scripts": {
+    "start": "expo start",
+    "android": "expo start --android",
+    "ios": "expo start --ios",
+    "web": "expo start --web"
+  },
+  "dependencies": {
+    "@react-native-async-storage/async-storage": "^1.18.1",
+    "@react-native-community/datetimepicker": "^6.7.3",
+    "@react-native-picker/picker": "^2.4.10",
+    "@react-navigation/bottom-tabs": "^6.5.7",
+    "@react-navigation/drawer": "^6.6.2",
+    "@react-navigation/material-bottom-tabs": "^6.2.15",
+    "@react-navigation/material-top-tabs": "^6.6.2",
+    "@react-navigation/native": "^6.1.6",
+    "@react-navigation/stack": "^6.3.16",
+    "axios": "^1.4.0",
+    "expo": "~48.0.11",
+    "expo-av": "^13.2.1",
+    "expo-image-picker": "^14.1.1",
+    "expo-location": "^15.1.1",
+    "expo-mail-composer": "~12.1.1",
+    "expo-status-bar": "~1.4.4",
+    "moment": "^2.29.4",
+    "react": "18.2.0",
+    "react-native": "0.71.7",
+    "react-native-chart-kit": "^6.12.0",
+    "react-native-gesture-handler": "^2.10.1",
+    "react-native-image-slider-box": "^2.0.7",
+    "react-native-keyboard-aware-scrollview": "^2.1.0",
+    "react-native-paper": "^5.7.0",
+    "react-native-permissions": "^3.8.0",
+    "react-native-reanimated": "~2.14.4",
+    "react-native-responsive-screen": "^1.4.2",
+    "react-native-root-toast": "^3.4.1",
+    "react-native-select-dropdown": "^3.3.3",
+    "react-native-simple-radio-button": "^2.7.4",
+    "react-native-svg": "13.4.0"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.20.0",
+    "babel-plugin-module-resolver": "^5.0.0",
+    "deprecated-react-native-prop-types": "^4.1.0"
+  },
+  "private": true
+}

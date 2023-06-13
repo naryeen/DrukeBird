@@ -1,0 +1,27 @@
+{
+  "name": "drukebird",
+  "version": "1.0.1",
+  "description": "This is a project to keep record of birds in bhutan ",
+  "main": "app.js",
+  "scripts": {
+    "start": "nodemon server.js"
+  },
+  "author": "Tshering Wangchuk",
+  "license": "ISC",
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "cors": "^2.8.5",
+    "dotenv": "^16.0.3",
+    "express": "^4.18.2",
+    "jsonwebtoken": "^9.0.0",
+    "moment": "^2.29.4",
+    "mongoose": "^7.0.4",
+    "nodemailer": "^6.9.1",
+    "randomstring": "^1.2.3",
+    "socket.io": "^4.6.2",
+    "validator": "^13.9.0"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.22"
+  }
+}
