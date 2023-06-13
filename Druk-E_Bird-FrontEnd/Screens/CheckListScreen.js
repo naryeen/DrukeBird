@@ -75,7 +75,6 @@ function NotSubmitted() {
 
   const handleItemClick = (checklistdata) => {
     navigation.navigate("DraftCheckListSubmitted", {
-      //checklistId: checklistdata.itemId,
       checklistdata: checklistdata,
     });
   };

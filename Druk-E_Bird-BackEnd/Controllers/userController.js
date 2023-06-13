@@ -54,7 +54,6 @@ exports.signupVerification = async(req,res, next)=>{
     
       const randomString = randomstring.generate(6);
       OTP = randomString;
-      console.log(OTP)
       sendResetPasswordMail(name,email,randomString);
 
       res.name = name

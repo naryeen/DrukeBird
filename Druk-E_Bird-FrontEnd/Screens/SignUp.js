@@ -150,7 +150,7 @@ const SignUp = () => {
             <TextInput
               style={styles.inputStyle}
               mode="outlined"
-              label="DoB"
+              label="Date of B"
               placeholder="MM/DD/YYYY"
               left={
                 <TextInput.Icon

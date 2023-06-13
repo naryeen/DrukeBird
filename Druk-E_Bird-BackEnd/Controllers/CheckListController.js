@@ -34,27 +34,6 @@ exports.getCheckList = async (req, res) => {
       res.status(500).json({error: err.message});
   }
 }
- 
-// exports.updateCheckList = async (req, res) => {
-//   try {
-//     const checklists1 = await checklists.findByIdAndUpdate(req.params.id, req.body, {
-//       new: true,
-//       runValidators: true,
-//     })
- 
-//     res.status(200).json({
-//       status: 'success',
-//       data: {
-//         checklists1,
-//       },
-//     })
-//   } catch (err) {
-//     res.status(404).json({
-//       status: 'fail',
-//       message: err,
-//     })
-//   }
-// }
 
 exports.updateCheckList = async (req, res) => {
   try {
