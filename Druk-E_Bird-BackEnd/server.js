@@ -4,12 +4,12 @@ dotenv.config({ path: "./config.env" });
 const app = require("./app");
 const http = require("http");
 const { Server } = require("socket.io");
-const cors = require("cors");
+// const cors = require("cors");
 
-app.use(cors({
-  origin: '*',
-  methods: 'GET, POST, PUT, DELETE, PATCH',
-  allowedHeaders: 'Origin, X-Requested-With, Content-Type, Accept'}));
+// app.use(cors({
+//   origin: '*',
+//   methods: 'GET, POST, PUT, DELETE, PATCH',
+//   allowedHeaders: 'Origin, X-Requested-With, Content-Type, Accept'}));
 
 const DB = process.env.DATABASE.replace(
   "PASSWORD",
@@ -47,12 +47,6 @@ changeStream.on("change", async (change) => {
     if (!checklist) {
       return;
     }
-
-    // // Update the checklist data in CheckListModel
-    // await CheckListModel.updateOne(
-    //   { _id: change.documentKey._id },
-    //   { $set: { BirdName: updatedField } }
-    // );
 
     const photo = checklist.StartbirdingData[0].photo
     const userId = checklist.userId
